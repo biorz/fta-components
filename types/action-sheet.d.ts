@@ -1,8 +1,8 @@
-import AtComponent from '@fta/common/types/base'
 import { CommonEvent } from '@tarojs/components/types/common'
 import { ComponentClass, CSSProperties } from 'react'
+import BaseComponent from './base'
 
-export interface ActionSheetProps extends AtComponent {
+export interface ActionSheetProps extends BaseComponent {
   /**
    * 是否展示元素
    * @default false
@@ -43,15 +43,15 @@ export interface ActionSheetState {
   _isOpened: boolean
 }
 
-export interface ActionSheetHeaderProps extends AtComponent {}
+export interface ActionSheetHeaderProps extends BaseComponent {}
 
-export interface ActionSheetFooterProps extends AtComponent {
+export interface ActionSheetFooterProps extends BaseComponent {
   onClick?: Function
 }
 
-export interface ActionSheetBodyProps extends AtComponent {}
+export interface ActionSheetBodyProps extends BaseComponent {}
 
-export interface ActionSheetItemProps extends AtComponent {
+export interface ActionSheetItemProps extends BaseComponent {
   /**
    * 点击 Item 触发的事件
    */

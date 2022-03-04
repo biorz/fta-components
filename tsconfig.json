@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "commonjs",
+    "baseUrl": "./",
+    "typeRoots": ["node_modules/@types", "types"],
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "jsx": "react",
+    "jsxFactory": "React.createElement",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "preserveConstEnums": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "resolveJsonModule": true
+  },
+  "compileOnSave": false,
+  "include": ["index.ts", "global.d.ts", "components/*", "common/*"],
+  "exclude": ["node_modules/*", "dist/*"]
+}

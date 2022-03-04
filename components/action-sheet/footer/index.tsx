@@ -2,8 +2,9 @@ import { Text, View } from '@tarojs/components'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
-import { ActionSheetFooterProps } from '../../types'
+import { ActionSheetFooterProps } from '../../../types/action-sheet'
 import './style.scss'
+
 export default class ActionSheetFooter extends React.Component<ActionSheetFooterProps> {
   public static defaultProps: ActionSheetFooterProps
   public static propTypes: InferProps<ActionSheetFooterProps>
