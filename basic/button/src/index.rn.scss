@@ -1,0 +1,232 @@
+$u-main-color: #303133;
+$u-content-color: #606266;
+$u-tips-color: #909399;
+$u-light-color: #c0c4cc;
+$u-border-color: #e4e7ed;
+$u-bg-color: #f3f4f6;
+
+$u-type-primary: #2979ff;
+$u-type-primary-light: #ecf5ff;
+$u-type-primary-disabled: #a0cfff;
+$u-type-primary-dark: #2b85e4;
+
+$u-type-warning: #ff9900;
+$u-type-warning-disabled: #fcbd71;
+$u-type-warning-dark: #f29100;
+$u-type-warning-light: #fdf6ec;
+
+$u-type-success: #19be6b;
+$u-type-success-disabled: #71d5a1;
+$u-type-success-dark: #18b566;
+$u-type-success-light: #dbf1e1;
+
+$u-type-error: #fa3534;
+$u-type-error-disabled: #fab6b6;
+$u-type-error-dark: #dd6161;
+$u-type-error-light: #fef0f0;
+
+$u-type-info: #909399;
+$u-type-info-disabled: #c8c9cc;
+$u-type-info-dark: #82848a;
+$u-type-info-light: #f4f4f5;
+
+$u-form-item-height: 70px;
+$u-form-item-border-color: #dcdfe6;
+
+.fta-btn {
+  position: relative;
+  border: 0;
+  overflow: visible;
+  // line-height: 1;
+  align-items: center;
+  justify-content: center;
+  // cursor: pointer;
+  padding: 0 40px;
+  z-index: 1;
+  // box-sizing: border-box;
+  // transition: all 0.15s;
+
+  &--bold-border {
+    border: 1px solid #ffffff;
+  }
+
+  &--default {
+    color: $u-content-color;
+    border-color: #c0c4cc;
+    background-color: #ffffff;
+  }
+
+  &--primary {
+    color: #ffffff;
+    border-color: $u-type-primary;
+    background-color: $u-type-primary;
+  }
+  &--primary::after {
+    border: 0;
+  }
+  &--success {
+    color: #ffffff;
+    border-color: $u-type-success;
+    background-color: $u-type-success;
+  }
+  &--success::after {
+    border: 0;
+  }
+  &--error {
+    color: #ffffff;
+    border-color: $u-type-error;
+    background-color: $u-type-error;
+  }
+  &--error::after {
+    border: 0;
+  }
+  &--warning {
+    color: #ffffff;
+    border-color: $u-type-warning;
+    background-color: $u-type-warning;
+  }
+  &--warning::after {
+    border: 0;
+  }
+  &--default--disabled {
+    color: #e4e7ed;
+    border-color: #e4e7ed;
+    background-color: #ffffff;
+  }
+
+  &--primary--disabled {
+    color: #ffffff;
+    border-color: $u-type-primary-disabled;
+    background-color: $u-type-primary-disabled;
+  }
+
+  &--success--disabled {
+    color: #ffffff;
+    border-color: $u-type-success-disabled;
+    background-color: $u-type-success-disabled;
+  }
+
+  &--error--disabled {
+    color: #ffffff;
+    border-color: $u-type-error-disabled;
+    background-color: $u-type-error-disabled;
+  }
+
+  &--warning--disabled {
+    color: #ffffff;
+    border-color: $u-type-warning-disabled;
+    background-color: $u-type-warning-disabled;
+  }
+
+  &--primary--plain {
+    color: $u-type-primary;
+    border-color: $u-type-primary-disabled;
+    background-color: $u-type-primary-light;
+  }
+
+  &--success--plain {
+    color: $u-type-success;
+    border-color: $u-type-success-disabled;
+    background-color: $u-type-success-light;
+  }
+
+  &--error--plain {
+    color: $u-type-error;
+    border-color: $u-type-error-disabled;
+    background-color: $u-type-error-light;
+  }
+
+  &--warning--plain {
+    color: $u-type-warning;
+    border-color: $u-type-warning-disabled;
+    background-color: $u-type-warning-light;
+  }
+  &-size-default {
+    font-size: 30px;
+    height: 80px;
+    line-height: 80px;
+  }
+
+  &-size-medium {
+    width: auto;
+    font-size: 26px;
+    height: 70px;
+    line-height: 70px;
+    padding: 0 80px;
+  }
+
+  &-size-mini {
+    width: auto;
+    font-size: 22px;
+    padding-top: 1px;
+    height: 50px;
+    line-height: 50px;
+    padding: 0 20px;
+  }
+  &-round-circle {
+    border-radius: 100px;
+  }
+  &-round-circle::after {
+    border-radius: 100px;
+  }
+  &-primary-plain-hover {
+    color: #ffffff;
+    background: $u-type-primary-dark;
+  }
+
+  &-default-plain-hover {
+    color: $u-type-primary-dark;
+    background: $u-type-primary-light;
+  }
+
+  &-success-plain-hover {
+    color: #ffffff;
+    background: $u-type-success-dark;
+  }
+
+  &-warning-plain-hover {
+    color: #ffffff;
+    background: $u-type-warning-dark;
+  }
+
+  &-error-plain-hover {
+    color: #ffffff;
+    background: $u-type-error-dark;
+  }
+
+  &-info-plain-hover {
+    color: #ffffff;
+    background: $u-type-info-dark;
+  }
+
+  &-default-hover {
+    color: $u-type-primary-dark;
+    border-color: $u-type-primary-dark;
+    background-color: $u-type-primary-light;
+  }
+
+  &-primary-hover {
+    background: $u-type-primary-dark;
+    color: #fff;
+  }
+
+  &-success-hover {
+    background: $u-type-success-dark;
+    color: #fff;
+  }
+
+  &-info-hover {
+    background: $u-type-info-dark;
+    color: #fff;
+  }
+
+  &-warning-hover {
+    background: $u-type-warning-dark;
+    color: #fff;
+  }
+
+  &-error-hover {
+    background: $u-type-error-dark;
+    color: #fff;
+  }
+}

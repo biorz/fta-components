@@ -1,0 +1,85 @@
+@import '@fta/common/function.scss';
+
+@mixin fit-content() {
+  /* #ifndef rn */
+  width: fit-content;
+  margin: 0 auto;
+  /* #endif */
+  /* #ifdef rn */
+  align-self: center;
+  /* #endif */
+}
+
+.fta-badge {
+  border-radius: 1000px;
+  padding: 4px 10px;
+  display: flex;
+  align-self: center;
+  /* #ifdef h5 */
+  width: fit-content;
+  /* #endif */
+  &-text {
+    color: #fff;
+    font-size: 22px;
+    line-height: 22px;
+    /* #ifndef rn */
+    white-space: nowrap;
+    /* #endif */
+    align-self: center;
+    flex-shrink: 1;
+    text-align: left;
+  }
+
+  &-text--care {
+    font-size: care(22px);
+    line-height: care(22px);
+  }
+}
+
+.fta-badge--care {
+  padding: care(4px) care(10px);
+}
+
+.fta-badge--error {
+  background-color: #f56c6c;
+}
+
+.fta-badge--warning {
+  background-color: #f9ae3d;
+}
+
+.fta-badge--success {
+  background-color: #5ac725;
+}
+
+.fta-badge--info {
+  background-color: #909399;
+}
+
+.fta-badge--primary {
+  background-color: #3c9cff;
+}
+
+.fta-badge--dot {
+  padding: 0px;
+  width: 16px;
+  height: 16px;
+  border-radius: 100px;
+}
+
+.fta-badge--dot--care {
+  width: care(16px);
+  height: care(16px);
+}
+
+.fta-badge--horn {
+  border-bottom-left-radius: 0;
+}
+
+.fta-badge--square {
+  border-radius: 0;
+}
+
+.fta-badge--absolute {
+  position: absolute;
+}

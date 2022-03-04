@@ -1,0 +1,41 @@
+{
+  "name": "@fta/components-image",
+  "version": "1.0.1",
+  "description": "图片",
+  "source": "src/index.tsx",
+  "sideEffects": [
+    "*.scss",
+    "*.css"
+  ],
+  "types": "types/index.d.ts",
+  "keywords": [
+    "taro",
+    "image"
+  ],
+  "author": "程志国 <zhiguo.cheng@amh-group.com>",
+  "dingTalk": "peterczg",
+  "homepage": "http://fta.amh-group.com/view/#/components/basic/image",
+  "license": "MIT",
+  "scripts": {
+    "dev": "yarn run dev:lib",
+    "dev:lib": "tsc --project ./tsconfig.build.json --watch --incremental"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "@tarojs/components": "~3.3.0",
+    "@tarojs/react": "~3.3.0",
+    "@tarojs/taro": "~3.3.0",
+    "@tarojs/runtime": "~3.3.0"
+  },
+  "peerDependencies": {
+    "@tarojs/components": ">=3",
+    "@tarojs/react": ">=3",
+    "@tarojs/taro": ">=3",
+    "@tarojs/runtime": ">=3",
+    "taro-ui": ">=3",
+    "react": ">=16.13.0",
+    "react-dom": ">=16.13.0"
+  }
+}

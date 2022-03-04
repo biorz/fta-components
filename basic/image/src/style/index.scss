@@ -1,0 +1,40 @@
+.fta-image {
+  width: 240px;
+  height: 240px;
+  // overflow: hidden;
+  /* #ifndef rn */
+  // 消除空白幽灵节点
+  vertical-align: middle;
+  /* #endif */
+}
+
+.fta-image--circle {
+  border-radius: 10000px;
+  overflow: hidden;
+}
+
+.fta-image--loading {
+  position: absolute;
+  /* #ifndef rn */
+  width: 0;
+  height: 0;
+  /* #endif */
+
+  /* #ifdef rn */
+  // RN宽高为0时不会发送图片请求
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  /* #endif */
+}
+
+.fta-image--flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f3f4f6;
+
+  &__text {
+    color: #666;
+  }
+}

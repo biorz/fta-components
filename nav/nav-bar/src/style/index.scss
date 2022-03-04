@@ -1,0 +1,84 @@
+@import '@fta/common/function.scss';
+
+$nav-bar-height: 88px;
+
+.fta-nav-bar {
+  position: relative;
+  background-color: #fff;
+
+  &-left-button {
+    margin-left: 16px;
+  }
+
+  &-right-button {
+    margin-right: 16px;
+  }
+
+  &-title-container {
+    display: flex;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &-title-text {
+    font-size: 34px;
+    letter-spacing: 1px;
+    color: #333;
+    font-weight: 500;
+  }
+
+  &-title-text--care {
+    font-size: care(34px);
+  }
+
+  &-custom-title {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 14px;
+    align-items: center;
+  }
+
+  &-back {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 32px;
+    &__image {
+      width: 34px;
+      height: 34px;
+    }
+
+    &__image--care {
+      width: care(34px);
+      height: care(34px);
+    }
+  }
+}
+
+.fta-nav-bar-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  // stretch
+  height: $nav-bar-height;
+}
+
+.fta-status-bar {
+  height: 44px;
+}
+
+.fta-nav-bar-button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  position: relative;
+  z-index: 10;
+}

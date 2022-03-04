@@ -1,0 +1,32 @@
+/* #ifndef rn */
+$hover-class: 'fta-view-hover';
+$dot: '.';
+
+@for $i from 0 through 10 {
+  .#{$hover-class}__#{$i} {
+    @if $i == 0 {
+      opacity: 0;
+    } @else if $i == 10 {
+      opacity: 1;
+    } @else {
+      // prettier-ignore
+      opacity: #{$dot}#{$i};
+    }
+  }
+}
+
+.#{$hover-class}__black {
+  background-color: #000;
+}
+
+.#{$hover-class}__white {
+  background-color: #fff;
+}
+
+/* #endif*/
+
+.fta-view {
+  &-disabled {
+    opacity: 0.8;
+  }
+}

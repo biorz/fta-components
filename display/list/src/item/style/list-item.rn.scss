@@ -1,0 +1,160 @@
+@import '@fta/common/style/variables/default.scss';
+@import '@fta/common/style/mixins/index.scss';
+@import '@fta/common/function.scss';
+
+$at-list-item-horizontal-padding: 24px;
+$at-border-color: #d6e4ef;
+
+@mixin squareImg($size: 56px) {
+  width: $size;
+  height: $size;
+
+  &__info {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.fta-list {
+  /* elements */
+  &__item-container {
+    flex-direction: row;
+    align-items: center;
+
+    .item-icon {
+      margin-right: $at-list-item-horizontal-padding;
+    }
+  }
+
+  .item-border-line {
+    border-bottom-width: 1px;
+    border-bottom-color: $at-border-color;
+    margin-left: $spacing-h-lg;
+  }
+
+  &__item {
+    padding: $spacing-v-lg $spacing-h-lg;
+    position: relative;
+
+    // box-sizing: border-box;
+    // color: $at-list-text-color;
+    // font-size: $font-size-lg;
+    // line-height: $line-height-zh * $font-size-lg;
+    // @include active;
+    // @include hairline-bottom-relative($left: $spacing-h-lg);
+
+    &--thumb {
+      .item-thumb {
+        margin-right: $at-list-item-horizontal-padding;
+        @include squareImg($at-list-thumb-size);
+      }
+
+      .item-thumb--care {
+        @include squareImg(care($at-list-thumb-size));
+      }
+    }
+
+    &--disabled {
+      opacity: $opacity-disabled;
+      .at-list__item-container {
+        // opacity: $opacity-disabled;
+      }
+
+      &:active {
+        background-color: transparent !important;
+      }
+    }
+
+    .item-extra {
+      position: relative;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      // justify-content: center;
+      // align-items: center;
+      // flex: 1;
+      // align-self: stretch;
+
+      &__info {
+        @include line(1);
+        max-width: 100%;
+        color: $at-list-extra-color;
+        padding-right: 30px;
+        font-size: $font-size-lg;
+        // vertical-align: middle;
+        // box-sizing: border-box;
+      }
+
+      &__info--care {
+        font-size: care($font-size-lg);
+      }
+
+      &__icon {
+        right: -12px;
+        position: absolute;
+
+        &-arrow {
+          @include squareImg($font-size-lg);
+        }
+
+        &-arrow--care {
+          @include squareImg(care($font-size-lg));
+        }
+      }
+
+      &__image {
+        @include squareImg($at-list-thumb-size);
+
+        // vertical-align: middle;
+        margin-right: 30px;
+
+        &-info {
+          width: 100%;
+          height: 100%;
+        }
+      }
+
+      &__image--care {
+        @include squareImg(care($at-list-thumb-size));
+      }
+    }
+  }
+
+  &__item-content {
+    @include flex(1);
+    overflow: hidden;
+    margin-right: 40px;
+  }
+
+  &__item-extra {
+    // @include flex(0, 0, $at-list-extra-width);
+    max-width: $at-list-extra-width;
+    text-align: right;
+  }
+}
+
+.item-content__info {
+  &-title {
+    // @include line(1);
+    color: $at-list-text-color;
+    font-size: $font-size-lg;
+    line-height: $line-height-zh * $font-size-lg;
+    // line-height: $line-height-zh;
+  }
+
+  &-title--care {
+    font-size: care($font-size-lg);
+    line-height: care($line-height-zh * $font-size-lg);
+  }
+
+  &-note {
+    color: $at-list-content-color;
+    font-size: $font-size-base;
+    line-height: $line-height-zh * $font-size-base;
+  }
+
+  &-note--care {
+    font-size: care($font-size-base);
+    line-height: care($line-height-zh * $font-size-base);
+  }
+}

@@ -1,0 +1,38 @@
+/* #ifdef h5 */
+
+@mixin safearea($position, $useMargin: false) {
+  $attr: if($useMargin, margin, padding);
+  #{$attr}-#{$position}: 0;
+  #{$attr}-#{$position}: constant(safe-area-inset-#{$position});
+  #{$attr}-#{$position}: env(safe-area-inset-#{$position});
+}
+.fta-safe-area-top {
+  @include safearea(top);
+}
+
+.fta-safe-area-top__margin {
+  @include safearea(top, true);
+}
+
+.fta-safe-area-bottom {
+  @include safearea(bottom);
+}
+
+.fta-safe-area-bottom__margin {
+  @include safearea(bottom, true);
+}
+
+.fta-safe-area-container {
+  @include safearea(top);
+  @include safearea(right);
+  @include safearea(bottom);
+  @include safearea(left);
+}
+
+.fta-safe-area-container__margin {
+  @include safearea(top, true);
+  @include safearea(right, true);
+  @include safearea(bottom, true);
+  @include safearea(left, true);
+}
+/* #endif */

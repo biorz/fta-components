@@ -1,0 +1,95 @@
+@import './mixin.scss';
+@import '@fta/common/function.scss';
+
+.fta-divider {
+  @include flex-center();
+  &-line {
+    border: 0;
+    flex: 1;
+    /* #ifdef rn */
+    // prettier-ignore
+    border-bottom-width: 0.5PX;
+    border-style: solid;
+    border-bottom-color: #dcdfe6;
+    /* #endif */
+
+    /* #ifndef rn */
+    width: 100%;
+    // prettier-ignore
+    border-bottom: 1PX solid #dcdfe6;
+    transform: scaleY(0.5);
+    vertical-align: middle;
+    /* #endif */
+  }
+
+  &-line--care {
+    /* #ifdef rn */
+    // prettier-ignore
+    border-bottom-width: 1PX;
+    /* #endif */
+    /* #ifndef rn */
+    transform: scaleY(1);
+    /* #endif */
+  }
+
+  &-line--offset {
+    width: 120px;
+    flex: 0 0 auto;
+  }
+
+  &-line--bold {
+    /* #ifndef rn */
+    transform: none;
+    /* #endif */
+
+    /* #ifdef rn */
+    // prettier-ignore
+    border-bottom-width:1PX ;
+    /* #endif */
+  }
+
+  &-line--bold--care {
+    // prettier-ignore
+    border-bottom-width:2PX ;
+  }
+
+  &-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 100px;
+    background-color: #909399;
+  }
+
+  &-dot--care {
+    width: care(16px);
+    height: care(16px);
+  }
+
+  &-line--dashed {
+    /* #ifndef rn */
+    border-style: dashed;
+    /* #endif */
+    /* #ifdef rn */
+    border-style: dashed;
+    // prettier-ignore
+    border-radius: 1PX;
+    // border-width: 2px;
+    // prettier-ignore
+    // border-width: 1PX;
+    /* #endif */
+  }
+
+  &-text {
+    margin: 0 30px;
+    &__label {
+      font-size: 28px;
+      line-height: 32px;
+      color: #909399;
+    }
+
+    &__label--care {
+      font-size: care(28px);
+      line-height: care(32px);
+    }
+  }
+}

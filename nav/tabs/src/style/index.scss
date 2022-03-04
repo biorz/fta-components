@@ -1,0 +1,99 @@
+@import '@fta/common/function.scss';
+
+@mixin flex {
+  display: flex;
+  flex-direction: row;
+}
+
+@mixin border-box {
+  /* #ifndef rn */
+  box-sizing: border-box;
+  /* #endif */
+}
+
+@mixin fit-content {
+  /* #ifndef rn */
+  width: fit-content;
+  /* #endif */
+
+  /* #ifdef rn */
+  align-self: flex-start;
+  /* #endif */
+}
+// prettier-ignore
+@mixin border-bottom($width:2PX, $color: transparent){
+  border-bottom-width: $width;
+  border-bottom-color: $color;
+  /* #ifndef rn */
+  border-bottom-style: solid;
+  /* #endif */
+}
+
+.fta-tabs {
+  /* #ifndef alipay */
+  @include flex();
+  /* #endif */
+  // prettier-ignore
+  @include border-bottom(1PX, #efefef);
+  /* #ifndef h5 rn*/
+  width: 100%;
+  white-space: nowrap;
+  /* #endif */
+}
+
+.fta-tabs--vertical {
+  @include fit-content();
+  flex-direction: column;
+  border-bottom-width: 0;
+  margin: 0;
+}
+
+.fta-tab {
+  @include flex();
+  @include fit-content();
+  @include border-bottom();
+  // flex: auto;
+  margin: 0 20px;
+  justify-content: center;
+  align-items: center;
+  height: 82px;
+  /* #ifndef rn */
+  transition: 0.2s ease;
+  /* #endif */
+
+  /* #ifndef rn h5 */
+  display: inline-flex;
+  /* #endif */
+
+  &__text {
+    font-size: 36px;
+    color: #333;
+  }
+
+  &__text--care {
+    font-size: care(36px);
+  }
+
+  taro-text-core {
+    /* #ifdef h5 */
+    white-space: nowrap;
+    /* #endif */
+  }
+}
+
+.fta-tab--vertical {
+  margin: 0;
+  padding: 0 20px;
+}
+
+.fta-tab--active {
+  border-bottom-color: #409eff;
+
+  &__text {
+    color: #409eff;
+  }
+}
+
+.fta-tab--active--care {
+  border-bottom-width: 5px;
+}

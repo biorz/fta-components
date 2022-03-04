@@ -1,0 +1,24 @@
+{
+  "name": "@fta/common",
+  "version": "1.0.8",
+  "description": "fta的公共样式 / utils",
+  "main": "dist/index.cjs.js",
+  "author": "孙建 <jian.sun1@amh-group.com>, 程志国 <zhiguo.cheng@amh-group.com>",
+  "license": "MIT",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "source": "index.ts",
+  "private": false,
+  "scripts": {
+    "build": "rollup --config node:@fta/rollup-config-taro3"
+  },
+  "devDependencies": {
+    "rollup": "^2.3.1",
+    "@fta/rollup-config-taro3": "^1.0.0"
+  },
+  "peerDependencies": {
+    "@tarojs/components": ">=3",
+    "@tarojs/taro": ">=3",
+    "classnames": "^2.3.1"
+  }
+}

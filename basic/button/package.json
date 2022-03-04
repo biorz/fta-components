@@ -1,0 +1,32 @@
+{
+  "name": "@fta/components-button",
+  "version": "1.0.0",
+  "description": "基于taro的三端按钮组件",
+  "author": "苑蒙",
+  "source": "src/index.tsx",
+  "module": "lib/index.esm.js",
+  "types": "./types/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "dev": "yarn run dev:lib",
+    "dev:lib": "tsc --project ./tsconfig.build.json --watch --incremental",
+    "prepublishOnly": "yarn run clean && yarn run build",
+    "clean": "rimraf lib"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^11.0.2",
+    "@rollup/plugin-node-resolve": "^7.1.1",
+    "rollup": "^2.3.1",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-postcss": "^4.0.0"
+  },
+  "peerDependencies": {
+    "@tarojs/components": ">=3",
+    "@tarojs/react": ">=3",
+    "react": ">=16.13.0",
+    "react-dom": ">=16.13.0",
+    "classnames": ">=2",
+    "typescript": ">=4"
+  }
+}

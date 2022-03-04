@@ -1,0 +1,16 @@
+@import '@fta/common/style/variables/default.scss';
+@import '@fta/common/style/mixins/index.scss';
+
+.fta-list {
+  background-color: $color-bg;
+  @include hairline-top-bottom();
+
+  /* modifiers */
+  &--no-border {
+    &::after,
+    &::before {
+      content: initial;
+      border: none;
+    }
+  }
+}

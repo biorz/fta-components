@@ -1,0 +1,39 @@
+@import './variable.scss';
+@import './function.scss';
+@import './mixin.scss';
+
+#{$prefix}-flex {
+  @include flex(column);
+}
+
+#{$prefix}-flex__row {
+  @include flex(row);
+}
+
+#{$prefix}-flex-center {
+  @include flex();
+}
+
+#{$prefix}-flex-center__row {
+  @include flex(row);
+}
+
+#{$prefix}-full {
+  @include full($fta-full-z-index);
+}
+
+#{$prefix}-flex-center__row {
+  @include flex(row);
+}
+
+#{$prefix}-fit-content {
+  @include fit-content();
+}
+
+#{$prefix}-border {
+  @include border();
+}
+
+#{$prefix}-text {
+  @include text($fta-text-font-size, $fta-text-color, $fta-text-line-height, $fta-text-font-weight);
+}

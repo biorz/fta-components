@@ -1,0 +1,41 @@
+@import '@fta/common/style/variables/default.scss';
+@import '@fta/common/style/mixins/index.scss';
+
+$at-segmented-control-min-width: 120px;
+
+.at-segmented-control {
+  flex-direction: row;
+  flex: 0;
+  position: relative;
+  width: 100%;
+  text-align: center;
+  border-radius: $border-radius-md;
+  overflow: hidden;
+  border: 1px solid $at-segmented-control-color;
+
+  /* elements */
+  &__item {
+    flex: 1;
+    min-width: $at-segmented-control-min-width;
+    overflow: hidden;
+    &__text {
+      color: $at-segmented-control-color;
+      text-align: center;
+      background-color: $at-segmented-control-bg-color;
+      font-size: $at-segmented-control-font-size;
+      padding: $spacing-v-xs $spacing-h-sm;
+    }
+    &--active {
+      &__text {
+        color: $at-segmented-control-color-active;
+        background-color: $at-segmented-control-color;
+        padding: $spacing-v-xs $spacing-h-sm;
+      }
+    }
+  }
+
+  /* modifiers */
+  &--disabled {
+    opacity: $opacity-disabled;
+  }
+}

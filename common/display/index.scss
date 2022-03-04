@@ -1,0 +1,192 @@
+@import '@fta/common/function.scss';
+
+$border-color: #8f8f8f;
+$navbar-height: 80px;
+
+@mixin flex($direction: column) {
+  display: flex;
+  flex-direction: $direction;
+}
+
+.fta-demo {
+  @include flex();
+  position: relative;
+  background-color: #efefef;
+  overflow: hidden;
+  height: 100vh;
+
+  &-container {
+    @include flex();
+    flex: 1;
+    // margin-top: 30px;
+    /* #ifndef rn */
+    overflow: auto;
+    /* #endif */
+
+    /* #ifndef rn */
+    box-sizing: border-box;
+    /* #endif */
+    // padding-bottom: 30px;
+    margin-bottom: 30px;
+  }
+
+  &-tabs {
+    background: #fff;
+  }
+
+  &-tab {
+    min-width: 60px;
+  }
+
+  &-title {
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 20px;
+    position: relative;
+
+    &__text {
+      font-size: 32px;
+      text-align: center;
+      color: #555;
+    }
+
+    &__text--care {
+      font-size: care(32px);
+    }
+
+    &__copy {
+      font-size: 28px;
+      position: absolute;
+      right: 30px;
+      color: #888;
+      font-weight: 400;
+      /* #ifdef h5*/
+      cursor: pointer;
+      /* #endif*/
+    }
+
+    &__copy--care {
+      font-size: care(28px);
+    }
+  }
+
+  &-title--no-margin {
+    margin-bottom: 0;
+    position: relative;
+    top: 24px;
+  }
+
+  &-wrap {
+    border-width: 1px;
+    border-color: #ddd;
+    border-style: dashed;
+    background-color: #fafafa;
+    padding: 20px 20px 30px;
+    margin: 30px 20px 0;
+    border-radius: 50px;
+  }
+
+  &-label {
+    position: relative;
+    font-size: 0;
+    line-height: 0;
+    margin: 40px 10px 20px;
+
+    &__border {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 8px;
+      height: 40px;
+      background-color: $border-color;
+    }
+
+    &__text {
+      margin-left: 20px;
+      font-size: 30px;
+      line-height: 40px;
+      color: #666;
+    }
+
+    &__text--care {
+      font-size: care(30px);
+      line-height: care(40px);
+    }
+
+    &__text--no-border {
+      margin-left: 0;
+    }
+  }
+
+  &-props {
+    margin-top: 0px;
+  }
+
+  &-button {
+    @include flex();
+    flex: 1 0 auto;
+    height: 90px;
+    justify-content: center;
+    align-items: center;
+
+    // width: 500px;
+    // align-self: center;
+    margin: 0 14px;
+    background-color: #fff;
+    border-radius: 40px;
+    &__text {
+      font-size: 32px;
+      color: #666;
+      font-weight: 400;
+    }
+
+    &__text--care {
+      font-size: care(32px);
+    }
+  }
+
+  &-button--care {
+    margin: 0 care(14px);
+    border-radius: care(40px);
+    height: care(90px);
+  }
+
+  &-block {
+    @include flex(row);
+    align-items: flex-start;
+    justify-content: flex-start;
+    background-color: #fff;
+    padding: 30px 20px;
+    // hack 阿里小程序子元素溢出
+    // flex: 1 0 auto;
+  }
+
+  &-block--pure {
+    flex-direction: column;
+    align-items: stretch;
+    background-color: transparent;
+    padding: 0;
+    align-self: stretch;
+    // flex: 0 1 auto;
+  }
+
+  &-back-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* #ifdef h5 */
+    cursor: pointer;
+    /* #endif */
+
+    &__text {
+      margin-left: 6px;
+      color: #333;
+      font-size: 34px;
+      font-weight: 400;
+    }
+
+    &__text--care {
+      font-size: care(34px);
+    }
+  }
+}

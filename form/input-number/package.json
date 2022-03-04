@@ -1,0 +1,27 @@
+{
+  "name": "@fta/components-input-number",
+  "version": "1.0.0",
+  "description": "数字输入框",
+  "types": "types/index.d.ts",
+  "keywords": [
+    "taro",
+    "inputnumber",
+    "input",
+    "number"
+  ],
+  "author": "孙健 <jian.sun1@amh-group.com>",
+  "homepage": "http://fta.amh-group.com/view/#/",
+  "license": "MIT",
+  "dependencies": {
+    "lodash.tostring": "^4.1.4"
+  },
+  "peerDependencies": {
+    "@tarojs/components": ">=3",
+    "@tarojs/react": ">=3",
+    "@tarojs/taro": ">=3",
+    "react": ">=16.13.0",
+    "react-dom": ">=16.13.0",
+    "classnames": ">=2",
+    "typescript": ">=4"
+  }
+}
