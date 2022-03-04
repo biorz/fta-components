@@ -1,0 +1,291 @@
+$skeleton-color: rgba(190, 190, 190, 0.2);
+
+// Button
+@mixin skeleton-element-button() {
+  display: inline-block;
+  vertical-align: top;
+  background: $skeleton-color;
+  border-radius: 4px;
+
+  @include skeleton-element-button-size(64px);
+
+  &-lg {
+    @include skeleton-element-button-size(80px);
+  }
+
+  &-sm {
+    @include skeleton-element-button-size(48px);
+  }
+}
+// Avatar
+@mixin skeleton-element-avatar {
+  display: inline-block;
+  vertical-align: top;
+  background: $skeleton-color;
+
+  @include skeleton-element-avatar-size(64px);
+
+  &-lg {
+    @include skeleton-element-avatar-size(80px);
+  }
+
+  &-sm {
+    @include skeleton-element-avatar-size(48px);
+  }
+}
+
+// Input
+@mixin skeleton-element-input() {
+  display: inline-block;
+  vertical-align: top;
+  background: $skeleton-color;
+
+  @include skeleton-element-input-size(64px);
+
+  &-lg {
+    @include skeleton-element-input-size(80px);
+  }
+
+  &-sm {
+    @include skeleton-element-input-size(48px);
+  }
+}
+
+// Image
+@mixin skeleton-element-image() {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: top;
+  background: $skeleton-color;
+  &-icon {
+    background-image: url("data:image/svg+xml,%3Csvg class='icon' viewBox='0 0 1024 1024' xmlns='http://www.w3.org/2000/svg' %3E%3Cpath d='M938.667 832H85.334V213.333h853.333V832zM128 789.333h768V256H128v533.333zM85.333 642.667l276.011-278.656 336.661 323.328-39.68-95.68 110.848-101.163L938.666 656v154.667L85.333 808z' fill='%23bfbfbf'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    width: 200px;
+    height: 200px;
+  }
+  @include skeleton-element-image-size(96px * 2);
+
+  &-path {
+    fill: #bfbfbf;
+  }
+
+  &-svg {
+    @include skeleton-element-image-size(96px);
+    max-width: 96px * 4;
+    max-height: 96px * 4;
+  }
+}
+
+@mixin skeleton-element-avatar-size($size) {
+  width: $size;
+  @include skeleton-element-common-size($size);
+
+  &.ta-skeleton-avatar-circle {
+    border-radius: 50%;
+  }
+}
+
+@mixin skeleton-element-button-size($size) {
+  width: $size * 2;
+  min-width: $size * 2;
+  @include skeleton-element-common-size($size);
+
+  &.fta-skeleton-button-circle {
+    width: $size;
+    min-width: $size;
+    border-radius: 50%;
+  }
+
+  &.fta-skeleton-button-round {
+    border-radius: $size;
+  }
+}
+
+@mixin skeleton-element-input-size($size) {
+  width: 100%;
+  @include skeleton-element-common-size($size);
+}
+
+@mixin skeleton-element-image-size($size) {
+  width: $size;
+  @include skeleton-element-common-size($size);
+
+  &.fta-skeleton-image-circle {
+    border-radius: 50%;
+  }
+}
+
+@mixin skeleton-element-common-size($size) {
+  height: $size;
+  line-height: $size;
+}
+
+@keyframes fta-skeleton-loading {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+
+@mixin skeleton-color-animation {
+  background: linear-gradient(
+    90deg,
+    $skeleton-color 25%,
+    #d9d9d9 37%,
+    $skeleton-color 63%
+  );
+  background-size: 400% 100%;
+  animation: fta-skeleton-loading 1.4s ease infinite;
+}
+
+.fta-skeleton-page {
+  overflow: hidden;
+}
+
+.fta-skeleton {
+  display: table;
+  width: 100%;
+
+  &-header {
+    display: table-cell;
+    padding-right: 32px;
+    vertical-align: top;
+
+    // Avatar
+    .fta-skeleton-avatar {
+      @include skeleton-element-avatar;
+    }
+  }
+
+  &-content {
+    display: table-cell;
+    width: 100%;
+    vertical-align: top;
+    overflow: hidden;
+
+    // Title
+    .fta-skeleton-title {
+      width: 100%;
+      height: 50px;
+      margin-top: 32px;
+      background: $skeleton-color;
+      border-radius: 8px;
+
+      + .fta-skeleton-paragraph {
+        margin-top: 48px;
+      }
+    }
+
+    .fta-skeleton-image {
+      @include skeleton-color-animation();
+
+      path {
+        @include skeleton-color-animation();
+      }
+    }
+    // paragraph
+    .fta-skeleton-paragraph {
+      padding: 0;
+
+      &-item {
+        width: 100%;
+        height: 50px;
+        list-style: none;
+        background: $skeleton-color;
+        border-radius: 8px;
+
+        &:last-child:not(:first-child):not(:nth-child(2)) {
+          width: 61%;
+        }
+
+        + .fta-skeleton-paragraph-item {
+          margin-top: 28px;
+        }
+      }
+    }
+  }
+
+  &-with-avatar &-content {
+    // Title
+    .fta-skeleton-title {
+      margin-top: 24px;
+
+      + .fta-skeleton-paragraph {
+        margin-top: 56px;
+      }
+    }
+  }
+
+  &-round &-content {
+    .fta-skeleton-title,
+    .fta-skeleton-paragraph > li {
+      border-radius: 100px;
+    }
+  }
+
+  // With active animation
+  &.fta-skeleton-active {
+    .fta-skeleton-content {
+      .fta-skeleton-title,
+      .fta-skeleton-paragraph {
+        &-item {
+          @include skeleton-color-animation();
+        }
+      }
+    }
+
+    .fta-skeleton-title {
+      @include skeleton-color-animation();
+    }
+
+    .fta-skeleton-avatar {
+      @include skeleton-color-animation();
+    }
+
+    .fta-skeleton-button {
+      @include skeleton-color-animation();
+    }
+
+    .fta-skeleton-input {
+      @include skeleton-color-animation();
+    }
+
+    .fta-skeleton-image {
+      @include skeleton-color-animation();
+    }
+  }
+
+  // Skeleton Block Button
+  &.fta-skeleton-block {
+    width: 100%;
+
+    .fta-skeleton-button {
+      width: 100%;
+    }
+  }
+
+  // Skeleton element
+  &-element {
+    display: inline-block;
+    width: auto;
+
+    .fta-skeleton-button {
+      @include skeleton-element-button();
+    }
+
+    .fta-skeleton-avatar {
+      @include skeleton-element-avatar();
+    }
+
+    .fta-skeleton-input {
+      @include skeleton-element-input();
+    }
+
+    .fta-skeleton-image {
+      @include skeleton-element-image();
+    }
+  }
+}
