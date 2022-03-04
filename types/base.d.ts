@@ -1,9 +1,9 @@
 import { CSSProperties } from 'react'
 
-interface FTAComponent {
+interface BaseComponent {
   className?: string
 
-  style?: CSSProperties
+  customStyle?: CSSProperties
 }
 
-export { FTAComponent, FTAComponent as default }
+export { BaseComponent, BaseComponent as default }
