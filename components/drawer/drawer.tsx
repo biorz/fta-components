@@ -1,12 +1,13 @@
-import Modal from '@fta/common/components/modal'
-import List, { ListItem } from '@fta/components-list'
-import SafeArea from '@fta/components-safe-area'
 import { View } from '@tarojs/components'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React, { Fragment } from 'react'
-import './style/drawer.scss'
-import { DrawerProps, DrawerState } from './types'
+import Modal from '../../common/components/modal'
+import '../../style/components/divider/index.scss'
+import { DrawerProps, DrawerState } from '../../types/drawer'
+import List, { ListItem } from '../list'
+import SafeArea from '../safe-area'
+
 export default class Drawer extends React.Component<DrawerProps, DrawerState> {
   public static defaultProps: DrawerProps
   public static propTypes: InferProps<DrawerProps>

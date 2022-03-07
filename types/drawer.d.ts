@@ -1,7 +1,7 @@
-import AtComponent from '@fta/common/types/base'
 import { ComponentClass } from 'react'
+import BaseComponent from './base'
 
-export interface DrawerProps extends AtComponent {
+export interface DrawerProps extends BaseComponent {
   /**
    * 展示或隐藏
    * @default false
@@ -46,6 +46,6 @@ export interface DrawerState {
   _show: boolean
 }
 
-declare const AtDrawer: ComponentClass<DrawerProps>
+declare const Drawer: ComponentClass<DrawerProps>
 
-export default AtDrawer
+export default Drawer
