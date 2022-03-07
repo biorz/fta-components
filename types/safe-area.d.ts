@@ -1,5 +1,4 @@
 import { ComponentClass, Consumer, CSSProperties, Provider, ReactNode } from 'react'
-import { _safeArea } from '../src/utils'
 
 export interface SafeAreaContext {
   /**
@@ -47,12 +46,19 @@ export interface SafeAreaProps extends BaseSafeAreaViewProps {
    * 底部安全区
    * @default true
    */
-  bottom?: safeAreaPosition
+  bottom?: boolean
 
   /**
    * 子节点
    */
   children?: ReactNode
+}
+
+interface SafeAreaSize {
+  top: number
+  bottom: number
+  left: number
+  right: number
 }
 
 declare const SafeArea: ComponentClass<SafeAreaProps> & {
@@ -61,8 +67,8 @@ declare const SafeArea: ComponentClass<SafeAreaProps> & {
   View: typeof SafeAreaView
 }
 
-declare const _safeArea: typeof _safeArea
+declare const _safeArea: SafeAreaSize
 
 export default SafeArea
 
-export { SafeAreaView }
+export { SafeAreaView, _safeArea }

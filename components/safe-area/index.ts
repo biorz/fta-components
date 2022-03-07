@@ -1,5 +1,2 @@
-import SafeArea from './src'
-
-export default SafeArea
-
-export * from './src'
+export * from './safe-area'
+export { default } from './safe-area'

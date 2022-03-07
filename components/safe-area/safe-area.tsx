@@ -1,10 +1,10 @@
-import { inAlipay, px, upperCase } from '@fta/common'
 import { View } from '@tarojs/components'
 import classNames from 'classnames'
 import React, { Component, CSSProperties, Fragment } from 'react'
-import { SafeAreaProps, SafeAreaViewProps } from '../types'
+import { inAlipay, px, upperCase } from '../../common'
+import '../../style/components/safe-area/index.scss'
+import { SafeAreaProps, SafeAreaViewProps } from '../../types/safe-area'
 import Context, { useSafeArea } from './context'
-import './style/index.scss'
 import { _safeArea } from './utils'
 
 export { SafeAreaView, useSafeArea, _safeArea }
