@@ -1,9 +1,9 @@
-import { ConfigConsumer, useClassWithCare } from '@fta/common'
 import { Text, View } from '@tarojs/components'
 import classNames from 'classnames'
 import React, { Component, CSSProperties } from 'react'
-import { DividerProps, TextPosition } from '../types'
-import './style/index.scss'
+import { ConfigConsumer, useClassWithCare } from '../../common'
+import '../../style/components/divider/index.scss'
+import { DividerProps, TextPosition } from '../../types/divider'
 
 class Divider extends Component<DividerProps> {
   public static defaultProps: DividerProps

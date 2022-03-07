@@ -43,6 +43,6 @@ export interface DividerProps {
   lineColor?: string
 }
 
-declare const Divider: ComponentClass<DividerProps, DividerState>
+declare const Divider: ComponentClass<DividerProps>
 
 export default Divider

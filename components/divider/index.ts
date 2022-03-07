@@ -1,3 +1,1 @@
-import Divider from './src'
-
-export default Divider
+export { default } from './divider'

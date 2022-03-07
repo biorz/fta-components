@@ -1,5 +1,11 @@
-@import './mixin.scss';
 @import '../../mixins/index.scss';
+
+@mixin flex-center {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
 
 .fta-divider {
   @include flex-center();
