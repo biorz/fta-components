@@ -1,0 +1,76 @@
+@import '../../variables/default.scss';
+@import '../..//mixins/libs/overlay.scss';
+@import '../..//mixins/libs/absolute-center.scss';
+@import '../..//mixins/libs/hairline.scss';
+@import '../..//mixins/libs/line.scss';
+@import '../..//mixins/libs/flex.scss';
+@import '../..//mixins/libs/active.scss';
+
+%button {
+  color: $fta-modal-btn-default-color;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-normal;
+  margin-top: 0;
+  border: 0;
+  border-radius: 0;
+}
+
+.fta-modal {
+  &__footer {
+    @include display-flex;
+    @include hairline-top-relative($color: $color-grey-4);
+
+    .fta-modal__action {
+      @include display-flex;
+      justify-content: center;
+      flex: 1;
+
+      &__button {
+        @include line(1);
+        @include active;
+
+        /* #ifndef rn */
+        @include flex(auto);
+        @extend %button;
+
+        background-color: transparent;
+        flex: 1;
+        /* #endif */
+
+        /* #ifdef rn */
+        @include flex-center();
+        /* #endif */
+        height: $fta-modal-footer-height;
+
+        &::after {
+          border: 0;
+          border-radius: 0;
+          width: initial;
+          height: initial;
+        }
+
+        &:not(:first-child) {
+          @include hairline-left-relative($color: $color-grey-4);
+        }
+      }
+
+      /* #ifdef rn */
+      .button {
+        @extend %button;
+      }
+
+      .button--border {
+        border-left-width: 0.5px;
+        border-color: $color-grey-4;
+      }
+
+      .button-confirm__text {
+        color: $fta-modal-btn-confirm-color;
+      }
+      /* #endif */
+      &__button--confirm {
+        color: $fta-modal-btn-confirm-color;
+      }
+    }
+  }
+}

@@ -1,15 +1,15 @@
-import { handleTouchScroll } from '@fta/common'
 import { Button, Text, View } from '@tarojs/components'
 import { CommonEvent } from '@tarojs/components/types/common'
 import Taro from '@tarojs/taro'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
-import { ModalProps, ModalState } from '../types'
-import ModalAction from './action/index'
-import ModalContent from './content/index'
-import ModalHeader from './header/index'
-import './index.scss'
+import { handleTouchScroll } from '../../common'
+import '../../style/components/modal/index.scss'
+import { ModalProps, ModalState } from '../../types/modal'
+import ModalAction from './action'
+import ModalContent from './content'
+import ModalHeader from './header'
 
 export default class Modal extends React.Component<ModalProps, ModalState> {
   public static defaultProps: ModalProps

@@ -2,8 +2,8 @@ import { View } from '@tarojs/components'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
-import { ModalActionProps } from '../../types'
-import '../index.scss'
+import '../../../style/components/modal/action.scss'
+import { ModalActionProps } from '../../../types/modal'
 
 export default class AtModalAction extends React.Component<ModalActionProps> {
   public static defaultProps: ModalActionProps

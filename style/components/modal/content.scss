@@ -1,0 +1,28 @@
+@import '../../variables/default.scss';
+@import '../..//mixins/libs/overlay.scss';
+@import '../..//mixins/libs/absolute-center.scss';
+@import '../..//mixins/libs/hairline.scss';
+@import '../..//mixins/libs/line.scss';
+@import '../..//mixins/libs/flex.scss';
+@import '../..//mixins/libs/active.scss';
+
+%content {
+  color: $fta-modal-content-text-color;
+  font-size: $font-size-base;
+  font-weight: $font-weight-normal;
+  line-height: $line-height-base * $font-size-base;
+}
+
+.fta-modal {
+  &__content {
+    /* #ifndef rn */
+    @extend %content;
+    box-sizing: border-box;
+    /* #endif */
+
+    padding: $spacing-v-xl $spacing-h-max $spacing-v-max;
+    min-height: 180px;
+    max-height: 840px;
+    text-align: center;
+  }
+}

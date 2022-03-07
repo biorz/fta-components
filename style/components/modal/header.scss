@@ -1,0 +1,27 @@
+@import '../../variables/default.scss';
+@import '../..//mixins/libs/overlay.scss';
+@import '../..//mixins/libs/absolute-center.scss';
+@import '../..//mixins/libs/hairline.scss';
+@import '../..//mixins/libs/line.scss';
+@import '../..//mixins/libs/flex.scss';
+@import '../..//mixins/libs/active.scss';
+
+.fta-modal {
+  &__header {
+    // @include hairline-bottom-relative($color: $color-grey-4);
+    // @include line(1);
+    // padding: $spacing-v-md $spacing-h-lg;
+    padding: $fta-modal-header-top-padding $fta-modal-header-horizon-padding 0;
+    /* #ifndef rn*/
+    text-align: center;
+    /* #endif */
+    &-text {
+      color: $fta-modal-header-text-color;
+      font-size: $font-size-lg;
+      font-weight: $font-weight-bolder;
+      /* #ifdef rn*/
+      text-align: center;
+      /* #endif */
+    }
+  }
+}

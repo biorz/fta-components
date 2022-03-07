@@ -1,5 +1,3 @@
-import { handleTouchScroll } from '@fta/common'
-import { TouchableOpacity as Button } from '@fta/components-view'
 import { Text, View } from '@tarojs/components'
 import { CommonEvent } from '@tarojs/components/types/common'
 import Taro from '@tarojs/taro'
@@ -7,12 +5,13 @@ import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React, { Fragment } from 'react'
 import { Modal } from 'react-native'
-import { ModalProps, ModalState } from '../types'
+import { handleTouchScroll } from '../../common'
+import '../../style/components/modal/index.scss'
+import { ModalProps, ModalState } from '../../types/modal'
+import { TouchableOpacity as Button } from '../view'
 import FTAModalAction from './action/index'
 import FTAModalContent from './content/index'
 import FTAModalHeader from './header/index'
-import './index.scss'
-
 export default class FTAModal extends React.Component<ModalProps, ModalState> {
   public static defaultProps: ModalProps
   public static propTypes: InferProps<ModalProps>

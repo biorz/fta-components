@@ -1,8 +1,8 @@
-import AtComponent from '@fta/common/types/base'
 import { CommonEventFunction } from '@tarojs/components/types/common'
 import { ComponentClass, CSSProperties } from 'react'
+import BaseComponent from './base'
 
-export interface ModalProps extends AtComponent {
+export interface ModalProps extends BaseComponent {
   /**
    * 元素的标题
    */
@@ -64,13 +64,13 @@ export interface ModalState {
   isWEB: boolean
 }
 
-export interface ModalActionProps extends AtComponent {
+export interface ModalActionProps extends BaseComponent {
   isSimple?: boolean
 }
 
-export interface ModalContentProps extends AtComponent {}
+export interface ModalContentProps extends BaseComponent {}
 
-export interface ModalHeaderProps extends AtComponent {}
+export interface ModalHeaderProps extends BaseComponent {}
 
 declare const Modal: ComponentClass<ModalProps>
 
