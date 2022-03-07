@@ -1,13 +1,13 @@
-import AtComponent from '@fta/common/types/base'
 import { CommonEvent, CommonEventFunction } from '@tarojs/components/types/common'
 import { ComponentClass, CSSProperties } from 'react'
+import BaseComponent from './base'
 
 export interface InputError {
   type: 'OVER' | 'LOW' | 'DISABLED'
   errorValue: number
 }
 
-export interface InputNumberProps extends AtComponent {
+export interface InputNumberProps extends BaseComponent {
   /**
    * 输入框类型
    * @type {'number' | 'digit'}

@@ -1,10 +1,10 @@
-import { ConfigConsumer, mergeStyle, useClassesWithCare } from '@fta/common'
 import { Image, Text, View } from '@tarojs/components'
 import { ITouchEvent } from '@tarojs/components/types/common'
 import classNames, { Argument } from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
-import { ListItemProps } from '../../types'
+import { ConfigConsumer, mergeStyle, useClassesWithCare } from '../../common'
+import { ListItemProps } from '../../types/list'
 import './style/list-item.scss'
 
 const arrowIcon = {

@@ -1,10 +1,10 @@
-import { ComponentClass } from 'react'
 import { BaseEventOrig, ITouchEvent } from '@tarojs/components/types/common'
-import { InputProps } from '@tarojs/components/types/Input'
-import AtComponent from '@fta/common/types/base'
+import { InputProps as TaroInputProps } from '@tarojs/components/types/Input'
+import { ComponentClass } from 'react'
+import BaseComponent from './base'
 
 declare type OmitInputProps = Omit<
-  InputProps,
+  TaroInputProps,
   'className' | 'type' | 'onBlur' | 'onFocus' | 'onChange' | 'onConfirm' | 'onKeyboardHeightChange'
 >
 
@@ -41,7 +41,7 @@ export declare type KeyboardHeightEventDetail = {
   duration: number
 }
 
-export interface AtInputProps extends AtComponent, OmitInputProps {
+export interface InputProps extends BaseComponent, OmitInputProps {
   /**
    * 输入框的唯一标识，有传入点击 title 会聚焦输入框
    */
@@ -143,6 +143,6 @@ export interface AtInputProps extends AtComponent, OmitInputProps {
   onErrorClick?: (event?: ITouchEvent) => void
 }
 
-declare const AtInput: ComponentClass<AtInputProps>
+declare const Input: ComponentClass<InputProps>
 
-export default AtInput
+export default Input

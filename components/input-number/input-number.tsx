@@ -1,12 +1,12 @@
-import { pxTransform } from '@fta/common'
 import { Input, Text, View } from '@tarojs/components'
 import { CommonEvent, ITouchEvent } from '@tarojs/components/types/common'
 import classNames from 'classnames'
 import _toString from 'lodash.tostring'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
-import { InputError, InputNumberProps } from '../types'
-import './style/index.scss'
+import { pxTransform } from '../../common'
+import '../../style/components/input-number/index.scss'
+import { InputError, InputNumberProps } from '../../types/input-number'
 // TODO: Check all types
 
 // 实现两数相加并保留小数点后最短尾数

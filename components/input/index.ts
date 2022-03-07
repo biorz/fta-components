@@ -1,3 +1,1 @@
-import Input from './src/input'
-
-export default Input
+export { default } from './input'

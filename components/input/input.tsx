@@ -4,20 +4,20 @@ import { InputProps } from '@tarojs/components/types/Input'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
+import '../../style/components/input/index.scss'
 import {
-  AtInputProps,
   BlurEventDetail,
   ConfirmEventDetail,
   FocusEventDetail,
   InputEventDetail,
+  InputProps as FTAInputProps,
   KeyboardHeightEventDetail,
-} from '../types/index'
-import './style/index.scss'
+} from '../../types/input'
 
-type PickAtInputProps = Pick<AtInputProps, 'maxlength' | 'disabled' | 'password'>
-type GetInputPropsReturn = PickAtInputProps & Pick<InputProps, 'type'>
+type PickFTAInputProps = Pick<FTAInputProps, 'maxlength' | 'disabled' | 'password'>
+type GetInputPropsReturn = PickFTAInputProps & Pick<InputProps, 'type'>
 
-function getInputProps(props: AtInputProps): GetInputPropsReturn {
+function getInputProps(props: FTAInputProps): GetInputPropsReturn {
   const actualProps = {
     type: props.type,
     maxlength: props.maxlength,
@@ -43,9 +43,9 @@ function getInputProps(props: AtInputProps): GetInputPropsReturn {
   return actualProps as GetInputPropsReturn
 }
 
-export default class AtInput extends React.Component<AtInputProps> {
-  public static defaultProps: AtInputProps
-  public static propTypes: InferProps<AtInputProps>
+export default class FTAInput extends React.Component<FTAInputProps> {
+  public static defaultProps: FTAInputProps
+  public static propTypes: InferProps<FTAInputProps>
   // TODO: 有待考证是否为合理方式处理 #840
   private inputClearing = false
 
@@ -63,7 +63,7 @@ export default class AtInput extends React.Component<AtInputProps> {
       this.props.onBlur(event.detail.value, event)
     }
     if (event.type === 'blur' && !this.inputClearing) {
-      // fix # 583 AtInput 不触发 onChange 的问题
+      // fix # 583 FTAInput 不触发 onChange 的问题
       this.props.onChange(event.detail.value, event as BaseEventOrig<InputEventDetail>)
     }
     // 还原状态
@@ -197,9 +197,9 @@ export default class AtInput extends React.Component<AtInputProps> {
   }
 }
 
-AtInput.defaultProps = {
+FTAInput.defaultProps = {
   className: '',
-  customStyle: '',
+  customStyle: {},
   value: '',
   name: '',
   placeholder: '',
@@ -226,7 +226,7 @@ AtInput.defaultProps = {
   onChange: (): void => {},
 }
 
-AtInput.propTypes = {
+FTAInput.propTypes = {
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   customStyle: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

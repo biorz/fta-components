@@ -3,8 +3,8 @@ import { View } from '@tarojs/components'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
-import { ListProps } from '../types'
-import ListItem from './item/list-item'
+import { ListProps } from '../../types/list'
+import ListItem from './list-item'
 import './style/list.scss'
 export { ListItem }
 

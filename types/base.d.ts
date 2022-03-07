@@ -6,4 +6,20 @@ interface BaseComponent {
   customStyle?: CSSProperties
 }
 
-export { BaseComponent, BaseComponent as default }
+interface BaseIconProps2 extends BaseComponent {
+  value: string
+
+  color?: string
+}
+
+interface BaseIconProps extends BaseComponent {
+  value: string
+
+  color?: string
+
+  prefixClass?: string
+
+  size?: number | string
+}
+
+export { BaseComponent, BaseComponent as default, BaseIconProps, BaseIconProps2 }

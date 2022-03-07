@@ -1,8 +1,8 @@
-import AtComponent, { AtIconBaseProps } from '@fta/common/types/base'
 import { CommonEventFunction } from '@tarojs/components/types/common'
 import { ComponentClass } from 'react'
+import BaseComponent, { BaseIconProps } from './base'
 
-export interface ListProps extends AtComponent {
+export interface ListProps extends BaseComponent {
   /**
    * 是否有边框
    * @default true
@@ -10,7 +10,7 @@ export interface ListProps extends AtComponent {
   hasBorder?: boolean
 }
 
-export interface ListItemProps extends AtComponent {
+export interface ListItemProps extends BaseComponent {
   /**
    * 是否有边框
    */
@@ -55,7 +55,7 @@ export interface ListItemProps extends AtComponent {
   /**
    * icon 信息(不支持react-native)
    */
-  iconInfo?: AtIconBaseProps
+  iconInfo?: BaseIconProps
   /**
    * 箭头的方向
    */

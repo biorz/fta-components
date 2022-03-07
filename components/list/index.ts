@@ -1,3 +1,3 @@
-import List, { ListItem } from './src/list'
+import List, { ListItem } from './list'
 
 export { List, ListItem, List as default }

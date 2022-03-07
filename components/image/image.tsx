@@ -2,8 +2,8 @@ import { BaseEventOrig, Image as TaroImage, Text, View } from '@tarojs/component
 import { ImageProps as TaroImageProps } from '@tarojs/components/types/Image'
 import classNames from 'classnames'
 import React, { Component, CSSProperties, Fragment, ReactNode } from 'react'
-import { ImageProps, ImageState } from '../types'
-import './style/index.scss'
+import '../../style/components/image/index.scss'
+import { ImageProps, ImageState } from '../../types/image'
 
 const isString = (val: unknown): val is string => typeof val === 'string'
 
