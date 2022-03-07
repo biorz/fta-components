@@ -1,91 +1,224 @@
-import { Button as TaroButton } from '@tarojs/components'
+import { mergeStyle } from '@fta/common'
+import Loading from '@fta/components-loading/src'
+import { Button, Form, Text, View } from '@tarojs/components'
+import { ButtonProps } from '@tarojs/components/types/Button'
+import { BaseEventOrig, CommonEvent } from '@tarojs/components/types/common'
+import Taro from '@tarojs/taro'
 import classNames from 'classnames'
+import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
-import './index.scss'
-import { IButtonProps, IButtonState } from './types'
+import { AtButtonProps, AtButtonState } from '../types'
+import './style/index.scss'
 
-export default class Button extends React.Component<IButtonProps, IButtonState> {
-  static defaultProps = {
-    size: 'default',
-    type: 'primary',
-    plain: false,
-    disabled: false,
-    shape: 'square',
-    hoverStartTime: 0,
-    hoverStayTime: 50,
-    hoverStopPropagation: false,
-    hoverClass: '',
-    loading: false,
-    lang: 'zh',
+const SIZE_CLASS = {
+  normal: 'normal',
+  small: 'small',
+}
+
+const TYPE_CLASS = {
+  primary: 'primary',
+  secondary: 'secondary',
+}
+
+export default class AtButton extends React.Component<AtButtonProps, AtButtonState> {
+  public static defaultProps: AtButtonProps
+  public static propTypes: InferProps<AtButtonProps>
+
+  public constructor(props: AtButtonProps) {
+    super(props)
+    this.state = {
+      isWEB: Taro.getEnv() === Taro.ENV_TYPE.WEB,
+      isWEAPP: Taro.getEnv() === Taro.ENV_TYPE.WEAPP,
+      isALIPAY: Taro.getEnv() === Taro.ENV_TYPE.ALIPAY,
+    }
   }
-  render() {
+
+  private onClick(event: CommonEvent): void {
+    if (!this.props.disabled) {
+      this.props.onClick && this.props.onClick(event)
+    }
+  }
+
+  private onGetUserInfo(event: CommonEvent): void {
+    this.props.onGetUserInfo && this.props.onGetUserInfo(event)
+  }
+
+  private onContact(event: BaseEventOrig<ButtonProps.onContactEventDetail>): void {
+    this.props.onContact && this.props.onContact(event)
+  }
+
+  private onGetPhoneNumber(event: CommonEvent): void {
+    this.props.onGetPhoneNumber && this.props.onGetPhoneNumber(event)
+  }
+
+  private onError(event: CommonEvent): void {
+    this.props.onError && this.props.onError(event)
+  }
+
+  private onOpenSetting(event: CommonEvent): void {
+    this.props.onOpenSetting && this.props.onOpenSetting(event)
+  }
+
+  private onSumit(event: CommonEvent): void {
+    if (this.state.isWEAPP || this.state.isWEB) {
+      // TODO: 3.0 this.$scope
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
+      this.$scope.triggerEvent('submit', event.detail, {
+        bubbles: true,
+        composed: true,
+      })
+    }
+  }
+
+  private onReset(event: CommonEvent): void {
+    if (this.state.isWEAPP || this.state.isWEB) {
+      // TODO: 3.0 this.$scope
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
+      this.$scope.triggerEvent('reset', event.detail, {
+        bubbles: true,
+        composed: true,
+      })
+    }
+  }
+
+  public render(): JSX.Element {
     const {
-      size,
-      children,
-      type,
-      plain,
+      size = 'normal',
+      type = '',
+      circle,
+      full,
+      loading,
       disabled,
-      shape,
-      hoverStartTime,
-      hoverStayTime,
+      customStyle,
       formType,
       openType,
-      appParameter,
-      hoverStopPropagation,
-      sendMessageTitle,
-      sendMessagePath,
       lang,
       sessionFrom,
+      sendMessageTitle,
+      sendMessagePath,
       sendMessageImg,
       showMessageCard,
-      hoverClass,
-      loading,
-      customStyle,
-      onClick,
-      onGetPhoneNumber,
-      onGetUserInfo,
-      onError,
-      onOpenSetting,
-      onLaunchapp,
+      appParameter,
+      style,
+      textStyle,
     } = this.props
-    let _hoverClass = hoverClass || 'button-hover'
-    if (!loading && !disabled && !hoverClass) {
-      _hoverClass = plain ? `fta-btn-${type}-plain-hover` : `fta-btn-${type}-hover`
-      // console.log(123, _hoverClass)
+    const { isWEAPP, isALIPAY, isWEB } = this.state
+    let rootClassName = classNames(
+      'at-button',
+      {
+        [`at-button--${SIZE_CLASS[size]}`]: SIZE_CLASS[size],
+        'at-button--disabled': disabled,
+        [`at-button--${type}`]: TYPE_CLASS[type],
+        'at-button--circle': circle,
+        'at-button--full': full,
+      },
+      this.props.className
+    )
+
+    const textClassName = classNames(
+      'at-button__text',
+      `at-button__text--${TYPE_CLASS[type] || 'default'}`
+    )
+
+    const loadingColor = type === 'primary' ? '#fff' : ''
+    const loadingSize = size === 'small' ? '30' : 0
+    let loadingComponent: JSX.Element | null = null
+    if (loading) {
+      loadingComponent = (
+        <View className='at-button__icon'>
+          <Loading color={loadingColor} size={loadingSize} />
+        </View>
+      )
+      rootClassName = classNames(rootClassName, 'at-button--icon')
     }
 
-    const className = classNames('fta-btn', `fta-btn-size-${size}`, `fta-btn--${type}`, {
-      [`fta-btn--${type}--plain`]: plain,
-      [`fta-btn--${type}--disabled`]: disabled,
-      'fta-btn-round-circle': shape === 'circle',
-    })
-    return (
-      <TaroButton
-        onClick={onClick}
-        className={className}
-        style={customStyle}
-        hoverStartTime={Number(hoverStartTime)}
-        hoverStayTime={Number(hoverStayTime)}
-        disabled={disabled}
+    const webButton = (
+      <Button className='at-button__wxbutton' lang={lang} formType={formType}></Button>
+    )
+
+    const button = (
+      <Button
+        className='at-button__wxbutton'
         formType={formType}
         openType={openType}
-        appParameter={appParameter}
-        hoverStopPropagation={hoverStopPropagation}
-        sendMessageTitle={sendMessageTitle}
-        sendMessagePath={sendMessagePath}
         lang={lang}
         sessionFrom={sessionFrom}
+        sendMessageTitle={sendMessageTitle}
+        sendMessagePath={sendMessagePath}
         sendMessageImg={sendMessageImg}
         showMessageCard={showMessageCard}
-        hoverClass={_hoverClass}
-        loading={loading}
-        onGetPhoneNumber={onGetPhoneNumber}
-        onGetUserInfo={onGetUserInfo}
-        onError={onError}
-        onOpenSetting={onOpenSetting}
-        onLaunchapp={onLaunchapp}>
-        {children}
-      </TaroButton>
+        appParameter={appParameter}
+        onGetUserInfo={this.onGetUserInfo.bind(this)}
+        onGetPhoneNumber={this.onGetPhoneNumber.bind(this)}
+        onOpenSetting={this.onOpenSetting.bind(this)}
+        onError={this.onError.bind(this)}
+        onContact={this.onContact.bind(this)}></Button>
+    )
+
+    return (
+      <View
+        className={rootClassName}
+        style={mergeStyle(style, customStyle)}
+        onClick={this.onClick.bind(this)}>
+        {isWEB && !disabled && webButton}
+        {isWEAPP && !disabled && (
+          <Form onSubmit={this.onSumit.bind(this)} onReset={this.onReset.bind(this)}>
+            {button}
+          </Form>
+        )}
+        {isALIPAY && !disabled && button}
+        {loadingComponent}
+        <Text className={textClassName} style={mergeStyle(textStyle)}>
+          {this.props.children}
+        </Text>
+      </View>
     )
   }
+}
+
+AtButton.propTypes = {
+  size: PropTypes.oneOf(['normal', 'small']),
+  type: PropTypes.oneOf(['primary', 'secondary', '']),
+  circle: PropTypes.bool,
+  full: PropTypes.bool,
+  loading: PropTypes.bool,
+  disabled: PropTypes.bool,
+  onClick: PropTypes.func,
+  customStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+  style: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+  textStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+  formType: PropTypes.oneOf(['submit', 'reset', '']),
+  openType: PropTypes.oneOf([
+    'contact',
+    'share',
+    'getUserInfo',
+    'getPhoneNumber',
+    'launchApp',
+    'openSetting',
+    'feedback',
+    'getRealnameAuthInfo',
+    'getAuthorize',
+    'contactShare',
+    '',
+  ]),
+  lang: PropTypes.string,
+  sessionFrom: PropTypes.string,
+  sendMessageTitle: PropTypes.string,
+  sendMessagePath: PropTypes.string,
+  sendMessageImg: PropTypes.string,
+  showMessageCard: PropTypes.bool,
+  appParameter: PropTypes.string,
+  onGetUserInfo: PropTypes.func,
+  onContact: PropTypes.func,
+  onGetPhoneNumber: PropTypes.func,
+  onError: PropTypes.func,
+  onOpenSetting: PropTypes.func,
+}
+
+AtButton.defaultProps = {
+  customStyle: {},
+  style: {},
+  textStyle: {},
 }

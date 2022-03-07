@@ -18,7 +18,7 @@
 - `prop-types`
 - `classnames`
 - `react-motion`
-- `Taro`&`React`
+- `Taro` & `React` & `React Native`
 
 在安装`@fta/components`前请确保您的项目中已经安装上述依赖，详见`package.json`
 

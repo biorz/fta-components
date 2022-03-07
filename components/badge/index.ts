@@ -1,3 +1,1 @@
-import Badge from './src'
-
-export default Badge
+export { default } from './badge'

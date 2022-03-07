@@ -1,8 +1,8 @@
 import { Text, View } from '@tarojs/components'
 import classNames from 'classnames'
 import React from 'react'
+import '../../../style/components/action-sheet/header.scss'
 import { ActionSheetHeaderProps } from '../../../types/action-sheet'
-import './style.scss'
 
 export default class AtActionSheetHeader extends React.Component<ActionSheetHeaderProps> {
   public render(): JSX.Element {

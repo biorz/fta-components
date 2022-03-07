@@ -1,2 +1,2 @@
-export * from './src'
-export { default } from './src'
+export * from './action-sheet'
+export { default } from './action-sheet'

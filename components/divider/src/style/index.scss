@@ -1,5 +1,5 @@
 @import './mixin.scss';
-@import '@fta/common/function.scss';
+@import '../../mixins/index.scss';
 
 .fta-divider {
   @include flex-center();

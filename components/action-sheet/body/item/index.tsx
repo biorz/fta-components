@@ -2,8 +2,8 @@ import { View } from '@tarojs/components'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
+import '../../../../style/components/action-sheet/body-item.scss'
 import { ActionSheetItemProps } from '../../../../types/action-sheet'
-import './style.scss'
 
 export default class AtActionSheetItem extends React.Component<ActionSheetItemProps> {
   public static defaultProps: ActionSheetItemProps
