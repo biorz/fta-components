@@ -1,5 +1,5 @@
-import Component from '@fta/common/types/base'
 import { ComponentClass } from 'react'
+import Component from './base'
 
 export interface LoadingProps extends Component {
   /**

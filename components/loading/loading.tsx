@@ -1,13 +1,9 @@
-import { pxTransform } from '@fta/common'
 import { View } from '@tarojs/components'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
-import './style/index.scss'
-
-interface LoadingProps {
-  size?: string | number
-  color?: string | number
-}
+import { pxTransform } from '../../common'
+import '../../style/components/loading/index.scss'
+import { LoadingProps } from '../../types/loading'
 
 export default class Loading extends React.Component<LoadingProps> {
   public static defaultProps: LoadingProps

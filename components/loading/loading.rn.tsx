@@ -1,9 +1,8 @@
-// @ts-nocheck
-import { pxTransform } from '@fta/taro-rn'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
 import { ActivityIndicator } from 'react-native'
-import './style/index.scss'
+import { pxTransform } from '../../common'
+import '../../style/components/loading/index.scss'
 
 const defaultLoadingSize = 36
 interface LoadingProps {
@@ -17,7 +16,8 @@ export default class Loading extends React.Component<LoadingProps> {
 
   public render(): JSX.Element {
     const { color, size = defaultLoadingSize } = this.props
-    const roundSize = Math.floor(pxTransform(size || defaultLoadingSize))
+    // TODO: check function
+    const roundSize = Math.floor(pxTransform((size as number) || defaultLoadingSize) as number)
     console.log(this.props, roundSize)
     return <ActivityIndicator color={color} size={14} />
   }
