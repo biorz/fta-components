@@ -1,11 +1,12 @@
-import '@fta/common/style/icon.scss'
 import { Text, View } from '@tarojs/components'
 import { CommonEvent } from '@tarojs/components/types/common'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
-import { RadioOption, RadioProps } from '../types'
-import './style/index.scss'
+// TODO: icon
+import '../../style/components/icon/index.scss'
+import '../../style/components/radio/index.scss'
+import { RadioOption, RadioProps } from '../../types/radio'
 
 export default class Radio extends React.Component<RadioProps<any>> {
   public static defaultProps: RadioProps<any>

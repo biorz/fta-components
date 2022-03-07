@@ -1,3 +1,1 @@
-import Result from './src'
-
-export default Result
+export { default } from './result'

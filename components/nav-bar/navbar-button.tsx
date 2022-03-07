@@ -1,11 +1,11 @@
-import { useCareClass } from '@fta/common'
-import { TouchableOpacity } from '@fta/components-view'
 import { Text, View } from '@tarojs/components'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { NavBarButtonProps } from '../types'
-import './style/navbar-button.scss'
+import { useCareClass } from '../../common'
+import '../../style/components/nav-bar/navbar-button.scss'
+import { NavBarButtonProps } from '../../types/nav-bar'
+import { TouchableOpacity } from '../view'
 
 export default function NavbarButton(props: NavBarButtonProps): JSX.Element {
   const textClz = useCareClass(['fta-nav-bar-button__text'])

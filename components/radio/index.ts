@@ -1,3 +1,1 @@
-import Radio from './src/radio'
-
-export default Radio
+export { default } from './radio'

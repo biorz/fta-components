@@ -1,15 +1,21 @@
-import { ConfigConsumer, inAndroid, inIOS, useCarelessClass, useClassWithCare } from '@fta/common'
-import SafeArea from '@fta/components-safe-area'
-import { TouchableOpacity } from '@fta/components-view'
 import { Image, Text, View } from '@tarojs/components'
 import { FC } from '@tarojs/taro'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React, { Component, CSSProperties, Fragment, ReactElement } from 'react'
-import { BackIconProps, ButtonProps, NavBarProps, StatusBarProps, TitleProps } from '../types'
+import { ConfigConsumer, inAndroid, inIOS, useCarelessClass, useClassWithCare } from '../../common'
+import '../../style/components/nav-bar/index.scss'
+import {
+  BackIconProps,
+  ButtonProps,
+  NavBarProps,
+  StatusBarProps,
+  TitleProps,
+} from '../../types/nav-bar'
+import SafeArea from '../safe-area'
+import { TouchableOpacity } from '../view'
 import NavbarButton from './navbar-button'
 import StatusBar from './status-bar/status-bar'
-import './style/index.scss'
 
 function useBackIcon(props: BackIconProps): JSX.Element {
   const { className, style, color, ...extraProps } = props

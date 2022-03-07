@@ -1,5 +1,5 @@
-import { TouchableOpacityProps } from '@fta/components-view/types'
 import { ComponentClass, CSSProperties, FC, ReactElement } from 'react'
+import { TouchableOpacityProps } from './view'
 
 export interface NavBarButtonProps {
   style?: CSSProperties
@@ -10,30 +10,6 @@ export interface NavBarButtonProps {
   disabled?: boolean
   accessible?: boolean
   accessibilityLabel?: string
-}
-
-export type StatusBarProps = {
-  /**
-   * 状态栏样式
-   * 'default'	string	Default status bar style (dark for iOS, light for Android)
-   * 'light-content'	string	Dark background, white texts and icons
-   * 'dark-content'	string	Light background, dark texts and icons (requires API>=23 on Android)
-   */
-  style?: 'default' | 'light-content' | 'dark-content'
-  /**
-   * The background color of the status bar.
-   * default system StatusBar background color, or 'black' if not defined
-   * @supported Android
-   * @default 'black'
-   */
-  backgroundColor?: string
-  /**
-   * If the status bar is hidden.
-   * @default false
-   */
-  hidden?: boolean
-
-  [key: string]: any
 }
 
 export interface ButtonProps {
@@ -105,6 +81,13 @@ export interface StatusBarProps {
    */
   tintColor?: string
   /**
+   * The background color of the status bar.
+   * default system StatusBar background color, or 'black' if not defined
+   * @supported Android
+   * @default 'black'
+   */
+  backgroundColor?: string
+  /**
    * 隐藏时的动画
    */
   hideAnimation?: StatusBarAnimation
@@ -112,6 +95,8 @@ export interface StatusBarProps {
    * 出现时的动画
    */
   showAnimation?: StatusBarAnimation
+
+  [key: string]: any
 }
 
 export interface NavBarProps {

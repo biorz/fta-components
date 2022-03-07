@@ -1,8 +1,8 @@
-import AtComponent from '@fta/common/types/base'
 import { CommonEvent } from '@tarojs/components/types/common'
 import { ComponentClass } from 'react'
+import BaseComponent from './base'
 
-export interface NoticeBarProps extends AtComponent {
+export interface NoticeBarProps extends BaseComponent {
   /**
    * 是否需要关闭按钮
    * @default false

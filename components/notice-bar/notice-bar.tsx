@@ -1,13 +1,13 @@
-import { ConfigConsumer, useClassesWithCare } from '@fta/common'
-import '@fta/common/style/icon.scss'
 import { Text, View } from '@tarojs/components'
 import { CommonEvent } from '@tarojs/components/types/common'
 import Taro from '@tarojs/taro'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
-import { NoticeBarProps, NoticeBarState } from '../types'
-import './style/notice-bar.scss'
+import { ConfigConsumer, useClassesWithCare } from '../../common'
+import '../../style/components/icon/index.scss'
+import '../../style/components/notice-bar/index.scss'
+import { NoticeBarProps, NoticeBarState } from '../../types/notice-bar'
 
 export default class Noticebar extends React.Component<NoticeBarProps, NoticeBarState> {
   public static defaultProps: NoticeBarProps

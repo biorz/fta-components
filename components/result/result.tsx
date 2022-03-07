@@ -1,10 +1,10 @@
-import { ConfigConsumer, useClassesWithCare } from '@fta/common'
-import { TouchableOpacity } from '@fta/components-view'
 import { Image, Text, View } from '@tarojs/components'
 import PropTypes, { InferProps } from 'prop-types'
 import React, { Component } from 'react'
-import { ResultProps, ResultType } from '../types'
-import './style/index.scss'
+import { ConfigConsumer, useClassesWithCare } from '../../common'
+import '../../style/components/result/index.scss'
+import { ResultProps, ResultType } from '../../types/result'
+import { TouchableOpacity } from '../view'
 
 const STATUS: Record<ResultType, ResultProps> = {
   success: {

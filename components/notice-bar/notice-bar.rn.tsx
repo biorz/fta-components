@@ -1,10 +1,10 @@
-import { ConfigConsumer, useClassesWithCare } from '@fta/common'
 import { Image, Text, View } from '@tarojs/components'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
-import { NoticeBarProps, NoticeBarState } from '../types'
-import './style/notice-bar.rn.scss'
+import { ConfigConsumer, useClassesWithCare } from '../../common'
+import '../../style/components/notice-bar/index.scss'
+import { NoticeBarProps, NoticeBarState } from '../../types/notice-bar'
 
 const ICON = {
   close: 'https://image.ymm56.com/ymmfile/operation-biz/a5e1c2a8-e59e-4bb8-9a59-c8092d058258.png',

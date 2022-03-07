@@ -1,6 +1,6 @@
-import AtComponent from '@fta/common/types/base'
 import { CommonEvent } from '@tarojs/components/types/common'
 import { ComponentClass } from 'react'
+import BaseComponent from './base'
 
 export interface RadioOption<T> {
   /**
@@ -22,7 +22,7 @@ export interface RadioOption<T> {
   disabled?: boolean
 }
 
-export interface RadioProps<T> extends AtComponent {
+export interface RadioProps<T> extends BaseComponent {
   /**
    * 输入框当前值，用户需要通过 onClick 事件来更新 value 值，必填
    */
@@ -37,6 +37,6 @@ export interface RadioProps<T> extends AtComponent {
   onClick: (vaule: T, event: CommonEvent) => void
 }
 
-declare const AtRadio: ComponentClass<AtRadioProps<any>>
+declare const Radio: ComponentClass<RadioProps<any>>
 
-export default AtRadio
+export default Radio
