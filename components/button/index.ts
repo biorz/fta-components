@@ -1,3 +1,1 @@
-import Button from './src/index'
-
-export default Button
+export { default } from './button'

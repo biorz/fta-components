@@ -1,3 +1,1 @@
-import Curtain from './src/curtain'
-
-export default Curtain
+export { default } from './curtain'

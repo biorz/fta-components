@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "target": "es2017",
-    "module": "commonjs",
-    "baseUrl": "./",
+    "module": "esnext",
+    "baseUrl": ".",
     "typeRoots": ["node_modules/@types", "types"],
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,

@@ -1,3 +1,1 @@
-import Checkbox from './src/checkbox'
-
-export default Checkbox
+export { default } from './checkbox'

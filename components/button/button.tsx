@@ -1,5 +1,3 @@
-import { mergeStyle } from '@fta/common'
-import Loading from '@fta/components-loading/src'
 import { Button, Form, Text, View } from '@tarojs/components'
 import { ButtonProps } from '@tarojs/components/types/Button'
 import { BaseEventOrig, CommonEvent } from '@tarojs/components/types/common'
@@ -7,8 +5,10 @@ import Taro from '@tarojs/taro'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
-import { AtButtonProps, AtButtonState } from '../types'
-import './style/index.scss'
+import { mergeStyle } from '../../common'
+import '../../style/components/button'
+import { ButtonProps as FTAButtonProps, ButtonState as FTAButtonState } from '../../types/button'
+import Loading from '../loading'
 
 const SIZE_CLASS = {
   normal: 'normal',
@@ -20,11 +20,11 @@ const TYPE_CLASS = {
   secondary: 'secondary',
 }
 
-export default class AtButton extends React.Component<AtButtonProps, AtButtonState> {
-  public static defaultProps: AtButtonProps
-  public static propTypes: InferProps<AtButtonProps>
+export default class FTAButton extends React.Component<FTAButtonProps, FTAButtonState> {
+  public static defaultProps: FTAButtonProps
+  public static propTypes: InferProps<FTAButtonProps>
 
-  public constructor(props: AtButtonProps) {
+  public constructor(props: FTAButtonProps) {
     super(props)
     this.state = {
       isWEB: Taro.getEnv() === Taro.ENV_TYPE.WEB,
@@ -106,20 +106,20 @@ export default class AtButton extends React.Component<AtButtonProps, AtButtonSta
     } = this.props
     const { isWEAPP, isALIPAY, isWEB } = this.state
     let rootClassName = classNames(
-      'at-button',
+      'fta-button',
       {
-        [`at-button--${SIZE_CLASS[size]}`]: SIZE_CLASS[size],
-        'at-button--disabled': disabled,
-        [`at-button--${type}`]: TYPE_CLASS[type],
-        'at-button--circle': circle,
-        'at-button--full': full,
+        [`fta-button--${SIZE_CLASS[size]}`]: SIZE_CLASS[size],
+        'fta-button--disabled': disabled,
+        [`fta-button--${type}`]: TYPE_CLASS[type],
+        'fta-button--circle': circle,
+        'fta-button--full': full,
       },
       this.props.className
     )
 
     const textClassName = classNames(
-      'at-button__text',
-      `at-button__text--${TYPE_CLASS[type] || 'default'}`
+      'fta-button__text',
+      `fta-button__text--${TYPE_CLASS[type] || 'default'}`
     )
 
     const loadingColor = type === 'primary' ? '#fff' : ''
@@ -127,20 +127,20 @@ export default class AtButton extends React.Component<AtButtonProps, AtButtonSta
     let loadingComponent: JSX.Element | null = null
     if (loading) {
       loadingComponent = (
-        <View className='at-button__icon'>
+        <View className='fta-button__icon'>
           <Loading color={loadingColor} size={loadingSize} />
         </View>
       )
-      rootClassName = classNames(rootClassName, 'at-button--icon')
+      rootClassName = classNames(rootClassName, 'fta-button--icon')
     }
 
     const webButton = (
-      <Button className='at-button__wxbutton' lang={lang} formType={formType}></Button>
+      <Button className='fta-button__wxbutton' lang={lang} formType={formType}></Button>
     )
 
     const button = (
       <Button
-        className='at-button__wxbutton'
+        className='fta-button__wxbutton'
         formType={formType}
         openType={openType}
         lang={lang}
@@ -178,7 +178,7 @@ export default class AtButton extends React.Component<AtButtonProps, AtButtonSta
   }
 }
 
-AtButton.propTypes = {
+FTAButton.propTypes = {
   size: PropTypes.oneOf(['normal', 'small']),
   type: PropTypes.oneOf(['primary', 'secondary', '']),
   circle: PropTypes.bool,
@@ -217,7 +217,7 @@ AtButton.propTypes = {
   onOpenSetting: PropTypes.func,
 }
 
-AtButton.defaultProps = {
+FTAButton.defaultProps = {
   customStyle: {},
   style: {},
   textStyle: {},

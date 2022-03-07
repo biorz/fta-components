@@ -2,8 +2,8 @@ import { Text, View } from '@tarojs/components'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
-import { CheckboxProps } from '../types'
-import './style/index.scss'
+import '../../style/components/checkbox/index.scss'
+import { CheckboxProps } from '../../types/checkbox'
 
 export default class Checkbox extends React.Component<CheckboxProps<any>> {
   public static defaultProps: CheckboxProps<any>
@@ -62,7 +62,7 @@ export default class Checkbox extends React.Component<CheckboxProps<any>> {
 }
 
 Checkbox.defaultProps = {
-  customStyle: '',
+  customStyle: {},
   className: '',
   options: [],
   selectedList: [],

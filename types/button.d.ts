@@ -1,7 +1,7 @@
-import AtComponent from '@fta/common/types/base'
 import { ButtonProps } from '@tarojs/components/types/Button'
 import { CommonEventFunction } from '@tarojs/components/types/common'
 import { ComponentClass } from 'react'
+import AtComponent from './base'
 
 type TaroButtonProps = Pick<
   ButtonProps,
@@ -21,7 +21,7 @@ type TaroButtonProps = Pick<
   | 'onError'
 >
 
-export interface AtButtonProps extends AtComponent, TaroButtonProps {
+export interface ButtonProps extends AtComponent, TaroButtonProps {
   /**
    * 按钮的大小
    * @default 'normal'
@@ -63,12 +63,12 @@ export interface AtButtonProps extends AtComponent, TaroButtonProps {
   textClassName?: string
 }
 
-export interface AtButtonState {
+export interface ButtonState {
   isWEB: boolean
   isWEAPP: boolean
   isALIPAY: boolean
 }
 
-declare const AtButton: ComponentClass<AtButtonProps>
+declare const Button: ComponentClass<ButtonProps>
 
-export default AtButton
+export default Button

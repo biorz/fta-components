@@ -1,5 +1,5 @@
-import AtComponent from '@fta/common/types/base'
 import { ComponentClass } from 'react'
+import BaseComponent from './base'
 
 export interface CheckboxOption<T> {
   value: T
@@ -8,7 +8,7 @@ export interface CheckboxOption<T> {
   disabled?: boolean
 }
 
-export interface CheckboxProps<T> extends AtComponent {
+export interface CheckboxProps<T> extends BaseComponent {
   options: Array<CheckboxOption<T>>
 
   selectedList: Array<T>

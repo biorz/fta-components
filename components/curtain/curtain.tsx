@@ -3,8 +3,8 @@ import { CommonEvent } from '@tarojs/components/types/common'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
-import { CurtainProps } from '../types'
-import './style/curtain.scss'
+import '../../style/components/curtain/index.scss'
+import { CurtainProps } from '../../types/curtain'
 
 export default class Curtain extends React.Component<CurtainProps> {
   public static defaultProps: CurtainProps

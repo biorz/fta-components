@@ -1,8 +1,8 @@
-import AtComponent from '@fta/common/types/base'
 import { CommonEventFunction } from '@tarojs/components/types/common'
 import { ComponentClass } from 'react'
+import BaseComponent from './base'
 
-export interface AtCurtainProps extends AtComponent {
+export interface CurtainProps extends BaseComponent {
   /**
    * 是否开启
    * @default false
@@ -20,6 +20,6 @@ export interface AtCurtainProps extends AtComponent {
   onClose: CommonEventFunction
 }
 
-declare const AtCurtain: ComponentClass<AtCurtainProps>
+declare const Curtain: ComponentClass<CurtainProps>
 
-export default AtCurtain
+export default Curtain
