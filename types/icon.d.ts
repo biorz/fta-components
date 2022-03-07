@@ -1,6 +1,6 @@
-import Component from '@fta/common/types/base'
 import { CommonEventFunction } from '@tarojs/components/types/common'
-import { ComponentClass, CSSProperties } from 'react'
+import { ComponentClass } from 'react'
+import Component from './base'
 
 export interface IconProps extends Component {
   /**
@@ -11,10 +11,6 @@ export interface IconProps extends Component {
    * icon颜色
    */
   color?: string
-  /**
-   * 自定义行内样式
-   */
-  customStyle?: CSSProperties
   /**
    * 自定义样式前缀
    * @default 'fta-icon'

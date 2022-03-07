@@ -1,6 +1,7 @@
-import { ComponentClass, CSSProperties } from 'react'
+import { ComponentClass } from 'react'
+import BaseComponent from './base'
 
-export interface GapProps {
+export interface GapProps extends BaseComponent {
   /**
    * 背景颜色
    */
@@ -29,14 +30,6 @@ export interface GapProps {
    * 与右边元素的距离，单位px
    */
   right?: number
-  /**
-   * 类名
-   */
-  className?: string
-  /**
-   * 内联样式
-   */
-  style?: CSSProperties
 
   [key: string]: any
 }

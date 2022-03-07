@@ -1,0 +1,9 @@
+@import '../../variables/default.scss';
+@import '../..//mixins/libs/hairline.rn.scss';
+$fta-form-bg-color: $color-bg;
+
+.fta-form {
+  display: block;
+  background-color: $fta-form-bg-color;
+  @include hairline-top-bottom();
+}

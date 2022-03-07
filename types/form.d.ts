@@ -1,11 +1,10 @@
-import { MouseEvent, ComponentClass } from 'react'
 import { CommonEvent } from '@tarojs/components/types/common'
+import { ComponentClass } from 'react'
+import BaseComponent from './base'
 
 declare type FormFunction = (event: CommonEvent) => void
 
-import AtComponent from '@fta/common/types/base'
-
-export interface AtFormProps extends AtComponent {
+export interface FormProps extends BaseComponent {
   /**
    * 是否返回 formId 用于发送模板消息
    * @default false
@@ -21,6 +20,6 @@ export interface AtFormProps extends AtComponent {
   onReset?: FormFunction
 }
 
-declare const AtForm: ComponentClass<AtFormProps>
+declare const Form: ComponentClass<FormProps>
 
-export default AtForm
+export default Form

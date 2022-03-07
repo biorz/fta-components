@@ -1,9 +1,9 @@
-import { ConfigConsumer, useClassesWithCare } from '@fta/common'
-import { TouchableOpacity } from '@fta/components-view'
 import { Image, Text, View } from '@tarojs/components'
 import React, { Component } from 'react'
-import { EmptyProps, EmptyType } from '../types'
-import './style/index.scss'
+import { ConfigConsumer, useClassesWithCare } from '../../common'
+import '../../style/components/empty/index.scss'
+import { EmptyProps, EmptyType } from '../../types/empty'
+import { TouchableOpacity } from '../view'
 
 const defaultDesc: Record<EmptyType, { title: string; desc: string; src: string }> = {
   empty: {

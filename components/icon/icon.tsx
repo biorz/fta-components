@@ -1,10 +1,10 @@
-import { ConfigConsumer, scale as Scale } from '@fta/common'
 import { Text } from '@tarojs/components'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
-import { IconProps } from '../types'
-import './style/index.scss'
+import { ConfigConsumer, scale as Scale } from '../../common'
+import '../../style/components/icon/index.scss'
+import { IconProps } from '../../types/icon'
 
 export default class Icon extends React.Component<IconProps> {
   public static defaultProps: IconProps

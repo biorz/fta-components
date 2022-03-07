@@ -1,3 +1,1 @@
-import Empty from './src'
-
-export default Empty
+export { default } from './empty'

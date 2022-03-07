@@ -1,12 +1,13 @@
+import { Form } from '@tarojs/components'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
-import { Form } from '@tarojs/components'
-import { AtFormProps } from '../types'
+import '../../style/components/form/index.scss'
+import { FormProps } from '../../types/form'
 
-export default class AtForm extends React.Component<AtFormProps> {
-  public static defaultProps: AtFormProps
-  public static propTypes: InferProps<AtFormProps>
+export default class FTAForm extends React.Component<FormProps> {
+  public static defaultProps: FormProps
+  public static propTypes: InferProps<FormProps>
 
   private onSubmit(): void {
     this.props.onSubmit && this.props.onSubmit(arguments as any)
@@ -17,8 +18,8 @@ export default class AtForm extends React.Component<AtFormProps> {
   }
 
   public render(): JSX.Element {
-    const { customStyle, className, reportSubmit } = this.props
-    const rootCls = classNames('at-form', className)
+    const { customStyle, className, reportSubmit, children } = this.props
+    const rootCls = classNames('fta-form', className)
 
     return (
       <Form
@@ -27,21 +28,21 @@ export default class AtForm extends React.Component<AtFormProps> {
         onSubmit={this.onSubmit.bind(this)}
         reportSubmit={reportSubmit}
         onReset={this.onReset.bind(this)}>
-        {this.props.children}
+        {children}
       </Form>
     )
   }
 }
 
-AtForm.defaultProps = {
-  customStyle: '',
+Form.defaultProps = {
+  // customStyle: null,
   className: '',
   reportSubmit: false,
 }
 
-AtForm.propTypes = {
-  customStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-  className: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
+Form.propTypes = {
+  // customStyle: PropTypes.object,
+  className: PropTypes.string,
   reportSubmit: PropTypes.bool,
   onSubmit: PropTypes.func,
   onReset: PropTypes.func,
