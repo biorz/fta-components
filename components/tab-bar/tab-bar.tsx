@@ -1,7 +1,7 @@
 import { View } from '@tarojs/components'
 import React, { Component } from 'react'
-import { TabBarItemProps, TabBarProps, TabBarState } from '../types'
-import './style/index.scss'
+import '../../style/components/tab-bar'
+import { TabBarItemProps, TabBarProps, TabBarState } from '../../types/tab-bar'
 
 class TabBarItem extends Component<TabBarItemProps> {
   render() {

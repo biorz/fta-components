@@ -1,3 +1,1 @@
-import TabBar from './src'
-
-export default TabBar
+export { default } from './tab-bar'

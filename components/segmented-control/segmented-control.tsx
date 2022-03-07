@@ -1,14 +1,14 @@
-import { mergeStyle, pxTransform } from '@fta/common'
 import { Text, View } from '@tarojs/components'
 import { CommonEvent } from '@tarojs/components/types/common'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
-import { AtSegmentedControlProps } from '../types'
+import { mergeStyle, pxTransform } from '../../common'
+import { SegmentedControlProps } from '../../types/segmented-control'
 import './index.scss'
-export default class AtSegmentedControl extends React.Component<AtSegmentedControlProps> {
-  public static defaultProps: AtSegmentedControlProps
-  public static propTypes: InferProps<AtSegmentedControlProps>
+export default class SegmentedControl extends React.Component<SegmentedControlProps> {
+  public static defaultProps: SegmentedControlProps
+  public static propTypes: InferProps<SegmentedControlProps>
 
   private handleClick(index: number, event: CommonEvent): void {
     if (this.props.disabled) return
@@ -79,8 +79,8 @@ export default class AtSegmentedControl extends React.Component<AtSegmentedContr
   }
 }
 
-AtSegmentedControl.defaultProps = {
-  customStyle: '',
+SegmentedControl.defaultProps = {
+  customStyle: {},
   className: '',
   current: 0,
   color: '#fff',
@@ -92,8 +92,8 @@ AtSegmentedControl.defaultProps = {
   onClick: (): void => {},
 }
 
-AtSegmentedControl.propTypes = {
-  customStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+SegmentedControl.propTypes = {
+  customStyle: PropTypes.object,
   className: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
   current: PropTypes.number,
   color: PropTypes.string,

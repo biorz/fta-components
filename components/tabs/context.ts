@@ -1,5 +1,5 @@
 import { createContext } from 'react'
-import { TabsContext } from '../types'
+import { TabsContext } from '../../types/tabs'
 
 export const TabContext = createContext<TabsContext>({
   disabled: false,

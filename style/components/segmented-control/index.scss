@@ -1,9 +1,9 @@
 @import '../../variables/default.scss';
 @import '../../mixins/index.scss';
 
-$at-segmented-control-min-width: 120px;
+$fta-segmented-control-min-width: 120px;
 
-.at-segmented-control {
+.fta-segmented-control {
   display: inline-flex;
   position: relative;
   width: 100%;
@@ -12,30 +12,30 @@ $at-segmented-control-min-width: 120px;
   box-sizing: border-box;
   white-space: nowrap;
   overflow: hidden;
-  @include border-thin($color: $at-segmented-control-color, $width: 1px);
+  @include border-thin($color: $fta-segmented-control-color, $width: 1px);
 
   /* elements */
   &__item {
     flex: 1;
     box-sizing: border-box;
     padding: $spacing-v-xs $spacing-h-sm;
-    min-width: $at-segmented-control-min-width;
-    color: $at-segmented-control-color;
-    font-size: $at-segmented-control-font-size;
+    min-width: $fta-segmented-control-min-width;
+    color: $fta-segmented-control-color;
+    font-size: $fta-segmented-control-font-size;
     white-space: nowrap;
     text-overflow: ellipsis;
-    background-color: $at-segmented-control-bg-color;
+    background-color: $fta-segmented-control-bg-color;
     overflow: hidden;
     transition: all 0.2s;
 
     &--active {
-      color: $at-segmented-control-color-active;
-      background-color: $at-segmented-control-color;
+      color: $fta-segmented-control-color-active;
+      background-color: $fta-segmented-control-color;
     }
   }
 
   &__item + &__item {
-    @include border-thin-left($color: $at-segmented-control-color, $width: 1px);
+    @include border-thin-left($color: $fta-segmented-control-color, $width: 1px);
   }
 
   /* modifiers */

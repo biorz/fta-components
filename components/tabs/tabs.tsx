@@ -1,4 +1,3 @@
-import { ConfigConsumer, useClassWithCare } from '@fta/common'
 import { ScrollView, Text, View } from '@tarojs/components'
 import classNames from 'classnames'
 import { InferProps } from 'prop-types'
@@ -10,9 +9,10 @@ import React, {
   ReactNode,
   ReactNodeArray,
 } from 'react'
-import { TabProps, TabsProps, TabsState } from '../types'
+import { ConfigConsumer, useClassWithCare } from '../../common'
+import '../../style/components/tabs/index.scss'
+import { TabProps, TabsProps, TabsState } from '../../types/tabs'
 import { TabContext } from './context'
-import './style/index.scss'
 
 /**
  * 克隆子节点（数组）

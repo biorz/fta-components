@@ -1,8 +1,8 @@
-import { MouseEvent, ComponentClass } from 'react'
 import { CommonEvent } from '@tarojs/components/types/common'
-import AtComponent from '@fta/common/types/base'
+import { ComponentClass } from 'react'
+import BaseComponent from './base'
 
-export interface AtSegmentedControlProps extends AtComponent {
+export interface SegmentedControlProps extends BaseComponent {
   /**
    * 当前选中的 tab 索引值，从 0 计数
    * @default 0
@@ -38,6 +38,6 @@ export interface AtSegmentedControlProps extends AtComponent {
   onClick: (index: number, event: CommonEvent) => void
 }
 
-declare const AtSegmentedControl: ComponentClass<AtSegmentedControlProps>
+declare const SegmentedControl: ComponentClass<SegmentedControlProps>
 
-export default AtSegmentedControl
+export default SegmentedControl
