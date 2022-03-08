@@ -1,7 +1,7 @@
 @import '../../variables/default.scss';
 // @import '../../mixins/index.scss';
-@import '@fta/common/style/mixins/libs/hairline.rn.scss';
-@import '@fta/common/style/mixins/libs/placeholder.scss';
+@import '../../mixins/libs/hairline.rn.scss';
+@import '../../mixins/libs/placeholder.scss';
 
 .fta-input {
   position: relative;

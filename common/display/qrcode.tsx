@@ -1,4 +1,4 @@
-import { useCareClass, useConfig } from '@fta/common'
+import { useCareClass, useConfig } from '@fta/components/common'
 import { Text, View } from '@tarojs/components'
 // @ts-ignore
 import ReactQRCode from 'qrcode.react'

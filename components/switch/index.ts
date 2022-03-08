@@ -1,3 +1,1 @@
-import Switch from './src/switch'
-
-export default Switch
+export { default } from './switch'

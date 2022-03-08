@@ -1,4 +1,3 @@
-import Modal from '@fta/common/components/modal'
 import { View } from '@tarojs/components'
 import classNames from 'classnames'
 import React, {
@@ -11,6 +10,7 @@ import React, {
   useState,
 } from 'react'
 import { useEnhancedState } from '../../common'
+import Modal from '../../common/components/modal'
 import '../../style/components/toast/index.scss'
 import { ToastProps, ToastRefMethods } from '../../types/toast'
 import { Text } from '../typography'

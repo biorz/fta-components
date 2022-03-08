@@ -1,4 +1,4 @@
-import { inAndroid, inNotch, inRN, inWeb, systemInfo } from '@fta/common'
+import { inAndroid, inNotch, inRN, inWeb, systemInfo } from '../../../common'
 
 export const safeArea: Taro.General.SafeAreaResult = systemInfo.safeArea || {
   top: 0,

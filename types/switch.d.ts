@@ -1,7 +1,7 @@
-import AtComponent from '@fta/common/types/base'
 import { ComponentClass } from 'react'
+import BaseComponent from './base'
 
-export interface SwitchProps extends AtComponent {
+export interface SwitchProps extends BaseComponent {
   /**
    * 标签名
    */

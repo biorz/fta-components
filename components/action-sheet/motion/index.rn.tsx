@@ -1,6 +1,6 @@
-import { systemInfo } from '@fta/common'
 import React from 'react'
 import { Motion, spring } from 'react-motion'
+import { systemInfo } from '../../../common'
 import { Props } from './types'
 
 export default function (props: Props) {

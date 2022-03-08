@@ -2,9 +2,9 @@ import { Switch as TaroSwitch, View } from '@tarojs/components'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
+import '../../style/components/switch/index.scss'
 // import { CommonEvent } from '@tarojs/components/types/common'
-import { SwitchProps } from '../types'
-import './style/index.scss'
+import { SwitchProps } from '../../types/switch'
 
 export default class Switch extends React.Component<SwitchProps> {
   public static defaultProps: SwitchProps

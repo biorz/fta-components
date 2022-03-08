@@ -1,0 +1,482 @@
+/**
+ * Default variables
+ */
+
+@import '../mixins/libs/tint';
+@import '../functions/index.scss';
+
+$hd: 2 !default; // 基本单位
+
+/* The Color of O2Team Brand */
+$color-brand: #fa871e !default;
+$color-brand-light: #78a4f4 !default;
+$color-brand-dark: #346fc2 !default;
+
+/* Color */
+$color-success: #13ce66 !default;
+$color-error: #ff4949 !default;
+$color-warning: #ffc82c !default;
+$color-info: #78a4fa !default;
+
+/* Color Palette */
+$color-black-0: #000 !default;
+$color-black-1: #333 !default;
+$color-black-2: #7f7f7f !default;
+$color-black-3: #b2b2b2 !default;
+
+$color-grey-0: #333 !default;
+$color-grey-1: #666 !default;
+$color-grey-2: #999 !default;
+$color-grey-3: #ccc !default;
+$color-grey-4: #e8e8e8 !default;
+$color-grey-5: #f0f0f0 !default;
+$color-grey-6: #f7f7f7 !default;
+
+$color-white: #fff !default;
+
+/* Text Color */
+$color-text-base: #333 !default; // 文字的基本色
+$color-text-base-inverse: #fff !default; // 反色
+$color-text-secondary: #36d57d !default; // 辅助色
+$color-text-placeholder: #c9c9c9 !default;
+$color-text-disabled: #ccc !default;
+$color-text-title: #2c405a !default; // 文章标题
+$color-text-paragraph: #3f536e !default; // 文章段落
+
+/* Link */
+$color-link: #6190e8 !default;
+$color-link-hover: #79a1eb !default;
+$color-link-active: #4f7de2 !default;
+$color-link-disabled: #bfbfbf !default;
+
+/* 背景色 */
+$color-bg: #fff !default;
+$color-bg-base: #fafbfc !default;
+$color-bg-light: #ecf5fd !default;
+$color-bg-lighter: tint($color-bg-light, 50%) !default;
+$color-bg-grey: #f7f7f7 !default;
+
+/* 边框颜色 */
+$color-border-base: #c5d9e8 !default;
+$color-border-split: tint($color-border-base, 20%) !default; // 分割线
+$color-border-light: tint($color-border-base, 30%) !default;
+$color-border-lighter: tint($color-border-base, 50%) !default;
+$color-border-lightest: tint($color-border-base, 80%) !default;
+$color-border-grey: #ccc !default;
+
+/* 图标颜色 */
+$color-icon-base: #ccc !default;
+
+/* Border Radius */
+$border-radius-xs: zoom(2px * $hd) !default;
+$border-radius-sm: zoom(4px * $hd) !default;
+$border-radius-md: zoom(6px * $hd) !default;
+$border-radius-lg: zoom(8px * $hd) !default;
+$border-radius-xl: zoom(10px * $hd) !default;
+$border-radius-xxl: zoom(12px * $hd) !default;
+/* #ifdef rn */
+$border-radius-circle: 50% !default;
+/* #endif */
+
+/* 透明度 */
+$opacity-active: 0.6 !default; // Button 等组件点击态额透明度
+$opacity-disabled: 0.3 !default; // Button 等组件禁用态的透明度
+
+/* Font Size*/
+$font-size-xs: zoom(12px * $hd) !default; // 非常用字号，用于标签
+$font-size-sm: zoom(14px * $hd) !default; // 用于辅助信息
+$font-size-base: zoom(16px * $hd) !default; // 常用字号
+$font-size-lg: zoom(18px * $hd) !default; // 常规标题
+$font-size-xl: zoom(20px * $hd) !default; // 大标题
+$font-size-xxl: zoom(22px * $hd) !default; // 用于大号的数字
+
+$font-size-xs--care: cares(12px * $hd) !default; // 非常用字号，用于标签
+$font-size-sm--care: cares(14px * $hd) !default; // 用于辅助信息
+$font-size-base--care: cares(16px * $hd) !default; // 常用字号
+$font-size-lg--care: cares(18px * $hd) !default; // 常规标题
+$font-size-xl--care: cares(20px * $hd) !default; // 大标题
+$font-size-xxl--care: cares(22px * $hd) !default; // 用于大号的数字
+
+/* Font Weight */
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-bold: 500;
+$font-weight-bolder: 600;
+$font-weight-boldest: 700;
+
+/* Line Height */
+$line-height-base: 1.3 !default; // 单行
+$line-height-en: 1.3 !default; // 英文多行
+$line-height-zh: 1.5 !default; // 中文多行
+
+/* 水平间距 */
+$spacing-h-sm: zoom(4px * $hd) !default;
+$spacing-h-md: zoom(8px * $hd) !default;
+$spacing-h-lg: zoom(12px * $hd) !default;
+$spacing-h-xl: zoom(16px * $hd) !default;
+$spacing-h-max: zoom(30px * $hd) !default;
+
+/* 垂直间距 */
+$spacing-v-xs: zoom(4px * $hd) !default;
+$spacing-v-sm: zoom(6px * $hd) !default;
+$spacing-v-md: zoom(8px * $hd) !default;
+$spacing-v-lg: zoom(10px * $hd) !default;
+$spacing-v-xl: zoom(12px * $hd) !default;
+// $spacing-v-xxl: zoom(14px * $hd) !default;
+$spacing-v-max: zoom(30px * $hd) !default;
+
+/* 图标尺寸 */
+$icon-size-sm: zoom(18px * $hd) !default;
+$icon-size-md: zoom(22px * $hd) !default;
+$icon-size-lg: zoom(36px * $hd) !default;
+
+/* z-index */
+$zindex-divider: 100 !default;
+$zindex-steps: 500 !default;
+$zindex-tab: 600 !default;
+$zindex-form: 700 !default;
+$zindex-nav: 800 !default;
+$zindex-search-bar: 800 !default;
+$zindex-indexes: 805 !default;
+$zindex-flot-layout: 810 !default;
+$zindex-drawer: 900 !default;
+$zindex-modal: 1000 !default;
+$zindex-action-sheet: 1010 !default;
+$zindex-picker: 1010 !default;
+$zindex-curtain: 1080 !default;
+$zindex-message: 1090 !default;
+$zindex-toast: 1090 !default;
+
+/* timing function */
+$timing-func: cubic-bezier(0.36, 0.66, 0.04, 1) !default;
+
+/**
+* CSS cubic-bezier timing functions
+* http://bourbon.io/docs/#timing-functions
+*/
+$ease-in-quad: cubic-bezier(0.55, 0.085, 0.68, 0.53) !default;
+$ease-in-cubic: cubic-bezier(0.55, 0.055, 0.675, 0.19) !default;
+$ease-in-quart: cubic-bezier(0.895, 0.03, 0.685, 0.22) !default;
+$ease-in-quint: cubic-bezier(0.755, 0.05, 0.855, 0.06) !default;
+$ease-in-sine: cubic-bezier(0.47, 0, 0.745, 0.715) !default;
+$ease-in-expo: cubic-bezier(0.95, 0.05, 0.795, 0.035) !default;
+$ease-in-circ: cubic-bezier(0.6, 0.04, 0.98, 0.335) !default;
+$ease-in-back: cubic-bezier(0.6, -0.28, 0.735, 0.045) !default;
+
+$ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94) !default;
+$ease-out-cubic: cubic-bezier(0.215, 0.61, 0.355, 1) !default;
+$ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1) !default;
+$ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1) !default;
+$ease-out-sine: cubic-bezier(0.39, 0.575, 0.565, 1) !default;
+$ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1) !default;
+$ease-out-circ: cubic-bezier(0.075, 0.82, 0.165, 1) !default;
+$ease-out-back: cubic-bezier(0.175, 0.885, 0.32, 1.275) !default;
+
+$ease-in-out-quad: cubic-bezier(0.455, 0.03, 0.515, 0.955) !default;
+$ease-in-out-cubic: cubic-bezier(0.645, 0.045, 0.355, 1) !default;
+$ease-in-out-quart: cubic-bezier(0.77, 0, 0.175, 1) !default;
+$ease-in-out-quint: cubic-bezier(0.86, 0, 0.07, 1) !default;
+$ease-in-out-sine: cubic-bezier(0.445, 0.05, 0.55, 0.95) !default;
+$ease-in-out-expo: cubic-bezier(1, 0, 0, 1) !default;
+$ease-in-out-circ: cubic-bezier(0.785, 0.135, 0.15, 0.86) !default;
+$ease-in-out-back: cubic-bezier(0.68, -0.55, 0.265, 1.55) !default;
+
+/**
+ * 组件变量
+ */
+
+/* Accordion */
+$fta-accordion-color-arrow: $color-grey-3 !default;
+
+/* Activity Indicator */
+$fta-activity-indicator-font-size: 28px !default;
+$fta-activity-indicator-font-color: $color-grey-2 !default;
+
+/* Avatar */
+$fta-avatar-color: $color-white !default;
+$fta-avatar-bg-color: $color-grey-4 !default;
+$fta-avatar-size-sm: 80px !default;
+$fta-avatar-size-md: 100px !default;
+$fta-avatar-size-lg: 120px !default;
+
+/* Badge */
+$fta-badge-color: $color-white !default;
+$fta-badge-bg-color: $color-error !default;
+$fta-badge-bg: $fta-badge-bg-color !default;
+$fta-badge-font-size: $font-size-xs !default;
+$fta-badge-dot-size: 20px !default;
+
+/* Button */
+$fta-button-height: 92px !default;
+$fta-button-height-sm: 60px !default;
+$fta-button-color: $color-brand !default;
+$fta-button-border-color-primary: $color-brand !default;
+$fta-button-border-color-secondary: $color-brand !default;
+$fta-button-bg: $fta-button-color !default;
+
+/* Float Button */
+$fta-fab-size: 56px * $hd !default;
+$fta-fab-size-sm: 40px * $hd !default;
+$fta-fab-icon-size: 24px * $hd !default;
+$fta-fab-bg-color: $color-brand;
+$fta-fab-bg-color-active: $color-brand-dark;
+$fta-fab-box-shadow: 0 6px 10px -2px rgba(0, 0, 0, 0.2), 0 12px 20px 0 rgba(0, 0, 0, 0.14),
+  0 2px 36px 0 rgba(0, 0, 0, 0.12) !default;
+$fta-fab-box-shadow-active: 0 14px 16px -8px rgba(0, 0, 0, 0.2), 0 24px 34px 4px rgba(0, 0, 0, 0.14),
+  0 10px 44px 8px rgba(0, 0, 0, 0.12) !default;
+
+/* Calendar */
+$fta-calendar-day-size: 72px !default;
+$fta-calendar-mark-size: 8px !default;
+$fta-calendar-header-color: #b8bfc6 !default;
+$fta-calendar-main-color: $color-brand !default;
+$fta-calendar-day-color: #7c86a2 !default;
+
+/* Card */
+$fta-card-thumb-size: 32px !default;
+$fta-card-icon-size: 32px !default;
+$fta-card-title-color: $color-text-title !default;
+$fta-card-extra-color: $color-text-title !default;
+$fta-card-info-color: $color-text-base !default;
+$fta-card-note-color: $color-grey-2 !default;
+
+/* Checkbox */
+$fta-checkbox-circle-size: 40px !default;
+$fta-checkbox-icon-size: $font-size-sm !default;
+$fta-checkbox-icon-color: $color-brand !default;
+$fta-checkbox-icon-color-checked: $color-white !default;
+$fta-checkbox-title-color: $color-text-base !default;
+$fta-checkbox-title-font-size: $font-size-lg !default;
+$fta-checkbox-desc-font-size: $font-size-sm !default;
+$fta-checkbox-desc-color: $color-grey-2 !default;
+
+/* Countdown */
+$fta-countdown-font-size: $font-size-lg !default;
+$fta-countdown-num-color: $color-text-base !default;
+$fta-countdown-card-num-color: #ff4949 !default;
+$fta-countdown-card-num-bg-color: $color-white !default;
+
+/* Curtain */
+$fta-curtain-btn-color: $color-white !default;
+
+/* Divider */
+$fta-divider-height: 112px;
+$fta-divider-content-color: $color-brand !default;
+$fta-divider-font-size: $font-size-lg !default;
+$fta-divider-line-color: $color-grey-3 !default;
+
+/* Drawer */
+$fta-drawer-content-width: 460px !default;
+
+/* FloatLayout */
+$float-layout-height-min: 600px !default;
+$float-layout-height-max: 950px !default;
+$float-layout-header-bg-color: $color-bg-grey !default;
+$float-layout-title-color: $color-text-base !default;
+$float-layout-title-font-size: $font-size-lg !default;
+$float-layout-btn-color: $color-grey-3 !default;
+
+/* Grid */
+$fta-grid-text-color: $color-text-base !default;
+$fta-grid-font-size: $font-size-lg !default;
+$fta-grid-img-size: 80px !default;
+$fta-gird-img-size-sm: 50px !default;
+
+/* ImagePicker */
+$fta-image-picker-btn-add-color: $color-grey-3 !default;
+$fta-image-picker-btn-remove-color: $color-white !default;
+$fta-image-picker-btn-remove-bg-color: $color-grey-2 !default;
+
+/* Indexes */
+$fta-indexes-nav-color: $color-link !default;
+$fta-indexes-nav-font-size: $font-size-sm !default;
+$fta-indexes-title-color: $color-black-2 !default;
+$fta-indexes-title-font-size: $font-size-sm !default;
+$fta-indexes-title-bg-color: $color-grey-6 !default;
+
+/* InputNumber */
+$fta-input-number-text-color: $color-text-base !default;
+$fta-input-number-font-size: $font-size-base !default;
+$fta-input-number-font-size-lg: $font-size-xl !default;
+$fta-input-number-btn-color: $color-brand !default;
+$fta-input-number-btn-size: 30px !default;
+$fta-input-number-btn-size-lg: 36px !default;
+$fta-input-number-width-min: 80px !default;
+$fta-input-number-width-min-lg: 120px !default;
+
+/* Input */
+$fta-input-label-color: $color-text-base !default;
+$fta-input-text-color: $color-text-base !default;
+$fta-input-font-size: $font-size-lg !default;
+$fta-input-placeholder-color: $color-grey-3 !default;
+
+/* List */
+$fta-list-thumb-size: 56px !default;
+$fta-list-arrow-color: $color-grey-3 !default;
+$fta-list-text-color: $color-text-base !default;
+$fta-list-content-color: $color-grey-2 !default;
+$fta-list-extra-color: $color-grey-2 !default;
+$fta-list-extra-width: 235px !default;
+
+/* LoadMore */
+$fta-load-more-height: 80px !default;
+$fta-load-more-tips-color: $color-grey-1 !default;
+$fta-load-more-tips-size: $font-size-lg !default;
+
+/* Loading */
+$fta-loading-size: 36px !default;
+$fta-loading-color: $color-brand !default;
+
+/* Message */
+$fta-message-color: $color-white !default;
+$fta-message-font-size: $font-size-base !default;
+$fta-message-bg-color: $color-info !default;
+
+/* Modal */
+$fta-modal-width: zoom(590px) !default;
+$fta-modal-header-top-padding: $spacing-v-max !default;
+$fta-modal-header-horizon-padding: $spacing-h-max !default;
+$fta-modal-content-horizon-padding: $spacing-h-max !default;
+$fta-modal-content-top-padding: $spacing-v-lg !default;
+$fta-modal-content-bottom-padding: $spacing-v-max !default;
+$fta-modal-header-text-color: $color-text-base !default;
+$fta-modal-content-text-color: $color-text-base !default;
+$fta-modal-btn-default-color: $color-text-base !default;
+$fta-modal-btn-confirm-color: $color-brand !default;
+$fta-modal-bg-color: $color-white !default;
+$fta-modal-footer-height: zoom(100px) !default;
+
+/* NavBar */
+$fta-nav-bar-title-color: $color-text-base !default;
+$fta-nav-bar-link-color: $color-brand !default;
+
+/* NoticeBar */
+$fta-noticebar-text-color: #de8c17 !default;
+$fta-noticebar-bg-color: #fcf6ed !default;
+$fta-noticebar-font-size: $font-size-sm !default;
+$fta-noticebar-icon-size: 30px !default;
+$fta-noticebar-btn-close-size: 32px !default;
+$fta-noticebar-btn-close-color: $color-grey-3 !default;
+
+/* Pagination */
+$fta-pagination-margin: 40px !default;
+$fta-pagination-num-color: $color-text-base !default;
+$fta-pagination-num-font-size: $font-size-base !default;
+$fta-pagination-current-num-color: $color-brand !default;
+$fta-pagination-icon-color: $color-text-base !default;
+$fta-pagination-icon-font-size: 32px !default;
+
+/* Progress */
+$fta-progress-height: 16px !default;
+$fta-progress-text-size: $font-size-sm !default;
+$fta-progress-icon-size: $font-size-xl !default;
+$fta-progress-inner-bg-color: $color-grey-6 !default;
+$fta-progress-bar-bg-color: $color-brand-light !default;
+$fta-progress-bar-bg-color-active: $color-white !default;
+
+/* Radio */
+$fta-radio-title-color: $color-text-base !default;
+$fta-radio-title-size: $font-size-lg !default;
+$fta-radio-desc-color: $color-grey-2 !default;
+$fta-radio-desc-size: $font-size-sm !default;
+$fta-radio-check-color: $color-brand !default;
+
+/* Range */
+$fta-range-slider-size: 28px !default;
+$fta-range-rail-height: 2px !default;
+$fta-range-rail-bg-color: #e9e9e9 !default;
+$fta-range-track-bg-color: $color-brand !default;
+$fta-range-slider-color: $color-white !default;
+$fta-range-slider-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2) !default;
+
+/* Rate */
+$fta-rate-icon-size: 20px !default;
+$fta-rate-star-color: #ececec !default;
+$fta-rate-star-color-on: #ffca3e !default;
+
+/* SearchBar */
+$fta-search-bar-btn-color: $color-white !default;
+$fta-search-bar-btn-bg-color: $color-brand !default;
+
+/* SegmentedControl */
+$fta-segmented-control-color: $color-brand !default;
+$fta-segmented-control-color-active: $color-white !default;
+$fta-segmented-control-bg-color: transparent !default;
+$fta-segmented-control-font-size: $font-size-base !default;
+
+/* Slider */
+$fta-slider-text-color: $color-grey-2 !default;
+$fta-slider-text-size: $font-size-base !default;
+
+/* Steps */
+$fta-steps-circle-size: 56px !default;
+$fta-steps-icon-size: $font-size-sm !default;
+$fta-steps-color: $color-white !default;
+$fta-steps-color-active: $color-grey-2 !default;
+$fta-steps-bg-color: $color-grey-4 !default;
+$fta-steps-bg-color-active: $color-brand !default;
+$fta-steps-line-color: $color-grey-3 !default;
+$fta-steps-title-color: $color-black-0 !default;
+$fta-steps-title-size: $font-size-lg !default;
+$fta-steps-desc-color: $color-grey-3 !default;
+$fta-steps-desc-size: $font-size-sm !default;
+
+/* SwipeAction */
+$fta-swipe-action-color: $color-white !default;
+$fta-swipe-action-font-size: $font-size-base !default;
+$fta-swipe-action-bg-color: $color-white !default;
+$fta-swipe-action-option-bg-color: $color-grey-2 !default;
+
+/* Switch */
+$fta-switch-title-color: $color-text-base !default;
+$fta-switch-title-size: $font-size-base !default;
+
+/* TabBar */
+$fta-tab-bar-bg-color: $color-white !default;
+$fta-tab-bar-color: $color-text-base !default;
+$fta-tab-bar-color-active: $color-brand !default;
+$fta-tab-bar-font-size: $font-size-base !default;
+$fta-tab-bar-icon-color: $color-grey-0 !default;
+$fta-tab-bar-icon-font-size: 48px !default;
+$fta-tab-bar-icon-image-size: 50px !default;
+
+/* Tabs */
+$fta-tabs-color: $color-text-base !default;
+$fta-tabs-color-active: $color-brand !default;
+$fta-tabs-font-size: $font-size-base !default;
+$fta-tabs-line-height: 1px !default;
+$fta-tabs-underline-color: $color-grey-5 !default;
+$fta-tabs-bg-color: $color-bg !default;
+
+/* Tag */
+$fta-tag-height: 60px !default;
+$fta-tag-height-sm: 40px !default;
+$fta-tag-color: $color-grey-1 !default;
+$fta-tag-color-primary: $color-grey-1 !default;
+$fta-tag-color-active: $color-brand-light !default;
+$fta-tag-color-primary-active: $color-text-base-inverse !default;
+$fta-tag-font-size: $font-size-base !default;
+$fta-tag-font-size-sm: $font-size-xs !default;
+$fta-tag-bg-color: $color-bg-grey !default;
+$fta-tag-bg-color-primary: $color-bg-grey !default;
+$fta-tag-bg-color-active: $color-white !default;
+$fta-tag-bg-color-primary-active: $fta-tag-color-active !default;
+$fta-tag-border-color: $fta-tag-bg-color !default;
+$fta-tag-border-color-primary: $fta-tag-bg-color !default;
+$fta-tag-border-color-active: $fta-tag-color-active !default;
+
+/* Textarea */
+$fta-textarea-font-size: $font-size-lg !default;
+$fta-textarea-tips-color: $color-text-placeholder !default;
+$fta-textarea-tips-size: $font-size-base !default;
+
+/* Timeline */
+$fta-timeline-offset-left: 40px !default;
+$fta-timeline-title-color: $color-grey-0 !default;
+$fta-timeline-title-font-size: $font-size-base !default;
+$fta-timeline-desc-color: $color-grey-1 !default;
+$fta-timeline-desc-font-size: $font-size-sm !default;
+$fta-timeline-dot-size: 24px !default;
+$fta-timeline-dot-color: $color-bg !default;
+$fta-timeline-dot-border-color: $color-brand-light !default;
+$fta-timeline-line-color: $color-border-lighter !default;
