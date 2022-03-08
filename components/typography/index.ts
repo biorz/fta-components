@@ -1,4 +1,1 @@
-import Typography from './src'
-
-export * from './src'
-export default Typography
+export { Text } from './typography'

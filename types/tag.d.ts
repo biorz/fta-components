@@ -1,4 +1,4 @@
-import { Component } from 'react'
+import { ComponentClass } from 'react'
 interface IProps {
   text: string
   shape?: string
@@ -15,9 +15,7 @@ interface IProps {
 interface Istate {
   isRN: boolean
 }
-export default class App extends Component<IProps, Istate> {
-  state: {
-    isRN: boolean
-  }
-  render(): JSX.Element
-}
+
+declare const Tag: ComponentClass<IProps>
+
+export default Tag

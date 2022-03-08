@@ -1,0 +1,87 @@
+@import '../../variables/default.scss';
+@import '../../mixins/index.scss';
+@import '@fta/common/style/functions/index.scss';
+
+$fta-toast-bg: rgba(
+  $color: #000000,
+  $alpha: 0.75,
+) !default;
+$fta-toast-padding: 19px 30px !default;
+$fta-toast-radius: 20px !default;
+$fta-toast-z-index: 99 !default;
+$fta-toast-max-width: 690px !default;
+$fta-toast-min-width: 200px !default;
+$fta-toast-offset: 200px !default;
+
+$toast-prefix: 'fta-toast';
+
+%absolute-fill {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.#{$toast-prefix} {
+  /* #ifdef rn */
+  position: absolute;
+  /* #endif */
+  /* #ifndef rn */
+  position: fixed;
+  /* #endif */
+  @extend %absolute-fill;
+  flex: 1;
+  z-index: $fta-toast-z-index;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  &__text {
+    /* #ifndef rn */
+    display: block;
+    pointer-events: auto;
+    animation: fta-toast-text 0.2s ease;
+    /* #endif */
+    background-color: $fta-toast-bg;
+    padding: $fta-toast-padding;
+    border-radius: $fta-toast-radius;
+    color: $color-white;
+    max-width: $fta-toast-max-width;
+    min-width: $fta-toast-min-width;
+    text-align: center;
+  }
+}
+
+@keyframes fta-toast-text {
+  from {
+    opacity: 0.2;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.#{$toast-prefix}--overlay {
+  @include overlay;
+}
+
+/* #ifndef rn */
+.#{$toast-prefix}--transparent {
+  pointer-events: none;
+}
+/* #endif */
+
+.#{$toast-prefix}--center {
+  align-items: center;
+}
+
+.#{$toast-prefix}--top {
+  align-items: flex-start;
+  padding-top: $fta-toast-offset;
+}
+
+.#{$toast-prefix}--bottom {
+  align-items: flex-end;
+  padding-bottom: $fta-toast-offset;
+}

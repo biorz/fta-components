@@ -1,3 +1,1 @@
-import Timeline from './src'
-
-export default Timeline
+export { default, TimelineItem } from './timeline'
