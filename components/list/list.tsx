@@ -3,9 +3,9 @@ import { View } from '@tarojs/components'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
+import '../../style/components/list/index.scss'
 import { ListProps } from '../../types/list'
 import ListItem from './list-item'
-import './style/list.scss'
 export { ListItem }
 
 export default class List extends React.Component<ListProps> {

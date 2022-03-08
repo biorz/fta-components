@@ -6,7 +6,7 @@ import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
 import { mergeStyle } from '../../common'
-import '../../style/components/button'
+import '../../style/components/button/index.scss'
 import { ButtonProps as FTAButtonProps, ButtonState as FTAButtonState } from '../../types/button'
 import Loading from '../loading'
 

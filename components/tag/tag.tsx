@@ -1,7 +1,7 @@
 import { Image, Text, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import React, { Component } from 'react'
-import './index.scss'
+import '../../style/components/tag/index.scss'
 
 interface IProps {
   text: string

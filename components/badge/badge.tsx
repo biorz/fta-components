@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
 import { useCareClass, useCarelessClass } from '../../common'
-import '../../style/components/badge'
+import '../../style/components/badge/index.scss'
 import { BadgeProps, BadgeShape, BadgeType, NumberType } from '../../types/badge'
 
 const shapes: BadgeShape[] = ['circle', 'horn', 'square']

@@ -15,7 +15,7 @@ export { default as Input } from './components/input'
 export { default as InputNumber } from './components/input-number'
 export { default as List, ListItem } from './components/list'
 export { default as Loading } from './components/loading'
-export { default as modal, ModalAction, ModalContent, ModalHeader } from './components/modal'
+export { default as Modal, ModalAction, ModalContent, ModalHeader } from './components/modal'
 export { default as NavBar, NavBarButton } from './components/nav-bar'
 export { default as NoticeBar } from './components/notice-bar'
 export { default as Radio } from './components/radio'
@@ -31,4 +31,9 @@ export { default as Textarea } from './components/textarea'
 export { default as Timeline, TimelineItem } from './components/timeline'
 export { default as Toast, useToast } from './components/toast'
 export { Text } from './components/typography'
-export { default as LayoutView, TouchableHighlight, TouchableOpacity } from './components/view'
+export {
+  default as LayoutView,
+  TouchableHighlight,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from './components/view'

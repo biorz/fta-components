@@ -4,8 +4,8 @@ import classNames, { Argument } from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
 import { ConfigConsumer, mergeStyle, useClassesWithCare } from '../../common'
+import '../../style/components/list/list-item.scss'
 import { ListItemProps } from '../../types/list'
-import './style/list-item.scss'
 
 const arrowIcon = {
   true: 'https://imagecdn.ymm56.com/ymmfile/common-operation/65dd3d3d-1b53-4d36-b47a-160fce6d40f6.png',

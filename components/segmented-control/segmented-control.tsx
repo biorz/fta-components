@@ -4,8 +4,8 @@ import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
 import { mergeStyle, pxTransform } from '../../common'
+import '../../style/components/segmented-control/index.scss'
 import { SegmentedControlProps } from '../../types/segmented-control'
-import './index.scss'
 export default class SegmentedControl extends React.Component<SegmentedControlProps> {
   public static defaultProps: SegmentedControlProps
   public static propTypes: InferProps<SegmentedControlProps>

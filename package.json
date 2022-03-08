@@ -13,7 +13,9 @@
     "Taro"
   ],
   "author": "FTA View DEV Group",
-  "dependencies": {},
+  "dependencies": {
+    "lodash.tostring": "^4.1.4"
+  },
   "devDependencies": {
     "react": "^16.13.0",
     "react-dom": "^16.13.0",

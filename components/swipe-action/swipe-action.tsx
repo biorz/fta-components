@@ -1,8 +1,8 @@
 import { ITouchEvent, Text, View } from '@tarojs/components'
 import classNames from 'classnames'
 import React, { Fragment, useEffect, useRef, useState } from 'react'
-import { SwipeActionProps, SwipeActionRef } from '../types'
-import './style/index.scss'
+import '../../style/components/swipe-action/index.scss'
+import { SwipeActionProps, SwipeActionRef } from '../../types/swipe-action'
 import { PolyCreateSelectorQuery } from './utils'
 
 const inRN = process.env.TARO_ENV === 'rn'
