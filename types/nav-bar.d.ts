@@ -132,4 +132,8 @@ declare const NavBar: ComponentClass<NavBarProps> & {
   BackIcon: FC<BackIconProps>
 }
 
+declare const NavBarButton: FC<NavBarButtonProps>
+
+export { NavBarButton }
+
 export default NavBar
