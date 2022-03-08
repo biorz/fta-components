@@ -43,9 +43,9 @@ export default class SegmentedControl extends React.Component<SegmentedControlPr
       backgroundColor: selectedColor,
     }
     const rootCls = classNames(
-      'at-segmented-control',
+      'fta-segmented-control',
       {
-        'at-segmented-control--disabled': disabled,
+        'fta-segmented-control--disabled': disabled,
       },
       className
     )
@@ -55,8 +55,8 @@ export default class SegmentedControl extends React.Component<SegmentedControlPr
       <View className={rootCls} style={{ borderColor: selectedColor, ...customStyle }}>
         {values.map((value, i) => (
           <View
-            className={classNames('at-segmented-control__item', {
-              'at-segmented-control__item--active': current === i,
+            className={classNames('fta-segmented-control__item', {
+              'fta-segmented-control__item--active': current === i,
             })}
             style={current === i ? { ...selectedItemStyle } : { ...itemStyle }}
             key={value}
@@ -67,8 +67,8 @@ export default class SegmentedControl extends React.Component<SegmentedControlPr
                   ? { color, fontSize: pxTransform(fontSize) }
                   : { color: selectedColor, fontSize: pxTransform(fontSize) }
               }
-              className={classNames('at-segmented-control__item__text', {
-                'at-segmented-control__item--active__text': current === i,
+              className={classNames('fta-segmented-control__item__text', {
+                'fta-segmented-control__item--active__text': current === i,
               })}>
               {value}
             </Text>
