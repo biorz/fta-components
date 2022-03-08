@@ -97,6 +97,13 @@ function withCare<P extends object = {}>(
 }
 
 /**
+ * 关怀模式Hook，返回当前是否处于关怀模式
+ */
+function useCareMode() {
+  return useConfig('careMode') as boolean
+}
+
+/**
  * 获取全局配置
  * @example
  *
@@ -144,4 +151,4 @@ function useCareComponent<P extends object = {}>(
  */
 const ConfigConsumer = Context.Consumer
 
-export { ConfigProvider, ConfigConsumer, useConfig, useCareComponent, withCare }
+export { ConfigProvider, ConfigConsumer, useConfig, useCareComponent, withCare, useCareMode }
