@@ -18,8 +18,8 @@
 
   &__title {
     flex: 6;
-    color: $at-radio-title-color;
-    font-size: $at-radio-title-size;
+    color: $fta-radio-title-color;
+    font-size: $fta-radio-title-size;
     text-align: left;
     line-height: $line-height-zh;
     word-break: break-all;
@@ -27,7 +27,7 @@
 
   &__icon {
     flex: 1;
-    font-size: $at-radio-title-size;
+    font-size: $fta-radio-title-size;
     text-align: right;
     overflow: hidden;
     visibility: hidden;
@@ -37,15 +37,15 @@
     }
 
     .fta-icon {
-      color: $at-radio-check-color;
+      color: $fta-radio-check-color;
     }
   }
 
   &__desc {
     display: flex;
     width: 86%;
-    color: $at-radio-desc-color;
-    font-size: $at-radio-desc-size;
+    color: $fta-radio-desc-color;
+    font-size: $fta-radio-desc-size;
     text-align: left;
     line-height: $line-height-zh;
     letter-spacing: 0;

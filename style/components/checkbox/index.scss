@@ -20,8 +20,8 @@ $component: '.fta-checkbox';
 
   &__title {
     display: inline-flex;
-    color: $at-checkbox-title-color;
-    font-size: $at-checkbox-title-font-size;
+    color: $fta-checkbox-title-color;
+    font-size: $fta-checkbox-title-font-size;
     line-height: $line-height-zh;
     text-align: left;
   }
@@ -32,13 +32,13 @@ $component: '.fta-checkbox';
     justify-content: center;
     margin-top: 4px;
     margin-right: $spacing-h-lg;
-    width: $at-checkbox-circle-size;
-    min-width: $at-checkbox-circle-size;
-    height: $at-checkbox-circle-size;
+    width: $fta-checkbox-circle-size;
+    min-width: $fta-checkbox-circle-size;
+    height: $fta-checkbox-circle-size;
     color: transparent;
-    font-size: $at-checkbox-icon-size;
+    font-size: $fta-checkbox-icon-size;
     line-height: 1;
-    border: 2px solid rgba($color: $at-checkbox-icon-color, $alpha: 0.2);
+    border: 2px solid rgba($color: $fta-checkbox-icon-color, $alpha: 0.2);
     border-radius: $border-radius-circle;
     background-color: $color-bg;
     box-sizing: border-box;
@@ -47,9 +47,9 @@ $component: '.fta-checkbox';
 
   &__desc {
     display: block;
-    padding-left: $at-checkbox-circle-size + $spacing-h-lg;
-    color: $at-checkbox-desc-color;
-    font-size: $at-checkbox-desc-font-size;
+    padding-left: $fta-checkbox-circle-size + $spacing-h-lg;
+    color: $fta-checkbox-desc-color;
+    font-size: $fta-checkbox-desc-font-size;
     text-align: left;
     line-height: $line-height-zh;
     letter-spacing: 0;
@@ -72,9 +72,9 @@ $component: '.fta-checkbox';
 
     &--selected {
       #{$component}__icon-cnt {
-        color: $at-checkbox-icon-color-checked;
+        color: $fta-checkbox-icon-color-checked;
         border: none;
-        background-color: $at-checkbox-icon-color;
+        background-color: $fta-checkbox-icon-color;
       }
     }
   }

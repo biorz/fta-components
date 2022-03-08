@@ -2,8 +2,8 @@
 @import '../../mixins/index.scss';
 @import '../../mixins/index.scss';
 
-$at-list-item-horizontal-padding: 24px;
-$at-border-color: #d6e4ef;
+$fta-list-item-horizontal-padding: 24px;
+$fta-border-color: #d6e4ef;
 
 @mixin squareImg($size: 56px) {
   width: $size;
@@ -22,13 +22,13 @@ $at-border-color: #d6e4ef;
     align-items: center;
 
     .item-icon {
-      margin-right: $at-list-item-horizontal-padding;
+      margin-right: $fta-list-item-horizontal-padding;
     }
   }
 
   .item-border-line {
     border-bottom-width: 1px;
-    border-bottom-color: $at-border-color;
+    border-bottom-color: $fta-border-color;
     margin-left: $spacing-h-lg;
   }
 
@@ -37,7 +37,7 @@ $at-border-color: #d6e4ef;
     position: relative;
 
     // box-sizing: border-box;
-    // color: $at-list-text-color;
+    // color: $fta-list-text-color;
     // font-size: $font-size-lg;
     // line-height: $line-height-zh * $font-size-lg;
     // @include active;
@@ -45,12 +45,12 @@ $at-border-color: #d6e4ef;
 
     &--thumb {
       .item-thumb {
-        margin-right: $at-list-item-horizontal-padding;
-        @include squareImg($at-list-thumb-size);
+        margin-right: $fta-list-item-horizontal-padding;
+        @include squareImg($fta-list-thumb-size);
       }
 
       .item-thumb--care {
-        @include squareImg(care($at-list-thumb-size));
+        @include squareImg(care($fta-list-thumb-size));
       }
     }
 
@@ -78,7 +78,7 @@ $at-border-color: #d6e4ef;
       &__info {
         @include line(1);
         max-width: 100%;
-        color: $at-list-extra-color;
+        color: $fta-list-extra-color;
         padding-right: 30px;
         font-size: $font-size-lg;
         // vertical-align: middle;
@@ -103,7 +103,7 @@ $at-border-color: #d6e4ef;
       }
 
       &__image {
-        @include squareImg($at-list-thumb-size);
+        @include squareImg($fta-list-thumb-size);
 
         // vertical-align: middle;
         margin-right: 30px;
@@ -115,7 +115,7 @@ $at-border-color: #d6e4ef;
       }
 
       &__image--care {
-        @include squareImg(care($at-list-thumb-size));
+        @include squareImg(care($fta-list-thumb-size));
       }
     }
   }
@@ -127,8 +127,8 @@ $at-border-color: #d6e4ef;
   }
 
   &__item-extra {
-    // @include flex(0, 0, $at-list-extra-width);
-    max-width: $at-list-extra-width;
+    // @include flex(0, 0, $fta-list-extra-width);
+    max-width: $fta-list-extra-width;
     text-align: right;
   }
 }
@@ -136,7 +136,7 @@ $at-border-color: #d6e4ef;
 .item-content__info {
   &-title {
     // @include line(1);
-    color: $at-list-text-color;
+    color: $fta-list-text-color;
     font-size: $font-size-lg;
     line-height: $line-height-zh * $font-size-lg;
     // line-height: $line-height-zh;
@@ -148,7 +148,7 @@ $at-border-color: #d6e4ef;
   }
 
   &-note {
-    color: $at-list-content-color;
+    color: $fta-list-content-color;
     font-size: $font-size-base;
     line-height: $line-height-zh * $font-size-base;
   }

@@ -2,15 +2,15 @@
 @import '../../mixins/index.scss';
 
 $component: '.fta-input-number';
-$at-input-number-btn-padding: 12px;
-$at-input-number-btn-padding-lg: 20px;
+$fta-input-number-btn-padding: 12px;
+$fta-input-number-btn-padding-lg: 20px;
 
 #{$component} {
   display: flex;
   flex-direction: row;
   // @include border-thin($width: 1PX);
 
-  font-size: $at-input-number-font-size;
+  font-size: $fta-input-number-font-size;
   border-radius: $border-radius-md;
   background-color: $color-bg;
   overflow: hidden;
@@ -21,8 +21,8 @@ $at-input-number-btn-padding-lg: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: $at-input-number-btn-padding;
-    color: $at-input-number-btn-color;
+    padding: $fta-input-number-btn-padding;
+    color: $fta-input-number-btn-color;
     font-size: 0;
     text-align: center;
     // line-height: $line-height-base;
@@ -31,19 +31,19 @@ $at-input-number-btn-padding-lg: 20px;
 
     &-subtract,
     &-add {
-      font-size: $at-input-number-btn-size;
-      // line-height: $at-input-number-btn-size;
+      font-size: $fta-input-number-btn-size;
+      // line-height: $fta-input-number-btn-size;
     }
   }
 
   &__input,
   input {
     display: flex;
-    width: $at-input-number-width-min;
+    width: $fta-input-number-width-min;
     height: auto;
     border-radius: 0;
-    color: $at-input-number-text-color;
-    font-size: $at-input-number-font-size;
+    color: $fta-input-number-text-color;
+    font-size: $fta-input-number-font-size;
     text-align: center;
     // line-height: $line-height-zh;
     // @include border-thin($width: 1PX, $directions: left right);
@@ -60,20 +60,20 @@ $at-input-number-btn-padding-lg: 20px;
 
   &--lg {
     #{$component}__btn {
-      padding: $at-input-number-btn-padding-lg;
-      font-size: $at-input-number-font-size-lg;
+      padding: $fta-input-number-btn-padding-lg;
+      font-size: $fta-input-number-font-size-lg;
 
       &-subtract,
       &-add {
-        font-size: $at-input-number-btn-size-lg;
+        font-size: $fta-input-number-btn-size-lg;
       }
     }
 
     input,
     #{$component}__input {
       padding: $spacing-v-sm;
-      font-size: $at-input-number-font-size-lg;
-      width: $at-input-number-width-min-lg;
+      font-size: $fta-input-number-font-size-lg;
+      width: $fta-input-number-width-min-lg;
     }
   }
 }

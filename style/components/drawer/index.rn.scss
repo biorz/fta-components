@@ -1,6 +1,6 @@
 @import '../../variables/default.scss';
 @import '../../mixins/index.scss';
-$at-drawer-duration: 300ms !default;
+$fta-drawer-duration: 300ms !default;
 
 .fta-drawer {
   position: relative;
@@ -14,14 +14,14 @@ $at-drawer-duration: 300ms !default;
     top: 0;
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.3);
-    // transition: opacity $at-drawer-duration $timing-func;
+    // transition: opacity $fta-drawer-duration $timing-func;
   }
 
   &__content {
     position: absolute;
     top: 0;
     bottom: 0;
-    width: $at-drawer-content-width;
+    width: $fta-drawer-content-width;
     text-align: left;
     background-color: $color-bg;
     // overflow-y: auto;

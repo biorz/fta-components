@@ -186,87 +186,87 @@ $ease-in-out-back: cubic-bezier(0.68, -0.55, 0.265, 1.55) !default;
  */
 
 /* Accordion */
-$at-accordion-color-arrow: $color-grey-3 !default;
+$fta-accordion-color-arrow: $color-grey-3 !default;
 
 /* Activity Indicator */
-$at-activity-indicator-font-size: 28px !default;
-$at-activity-indicator-font-color: $color-grey-2 !default;
+$fta-activity-indicator-font-size: 28px !default;
+$fta-activity-indicator-font-color: $color-grey-2 !default;
 
 /* Avatar */
-$at-avatar-color: $color-white !default;
-$at-avatar-bg-color: $color-grey-4 !default;
-$at-avatar-size-sm: 80px !default;
-$at-avatar-size-md: 100px !default;
-$at-avatar-size-lg: 120px !default;
+$fta-avatar-color: $color-white !default;
+$fta-avatar-bg-color: $color-grey-4 !default;
+$fta-avatar-size-sm: 80px !default;
+$fta-avatar-size-md: 100px !default;
+$fta-avatar-size-lg: 120px !default;
 
 /* Badge */
-$at-badge-color: $color-white !default;
-$at-badge-bg-color: $color-error !default;
-$at-badge-bg: $at-badge-bg-color !default;
-$at-badge-font-size: $font-size-xs !default;
-$at-badge-dot-size: 20px !default;
+$fta-badge-color: $color-white !default;
+$fta-badge-bg-color: $color-error !default;
+$fta-badge-bg: $fta-badge-bg-color !default;
+$fta-badge-font-size: $font-size-xs !default;
+$fta-badge-dot-size: 20px !default;
 
 /* Button */
-$at-button-height: 92px !default;
-$at-button-height-sm: 60px !default;
-$at-button-color: $color-brand !default;
-$at-button-border-color-primary: $color-brand !default;
-$at-button-border-color-secondary: $color-brand !default;
-$at-button-bg: $at-button-color !default;
+$fta-button-height: 92px !default;
+$fta-button-height-sm: 60px !default;
+$fta-button-color: $color-brand !default;
+$fta-button-border-color-primary: $color-brand !default;
+$fta-button-border-color-secondary: $color-brand !default;
+$fta-button-bg: $fta-button-color !default;
 
 /* Float Button */
-$at-fab-size: 56px * $hd !default;
-$at-fab-size-sm: 40px * $hd !default;
-$at-fab-icon-size: 24px * $hd !default;
-$at-fab-bg-color: $color-brand;
-$at-fab-bg-color-active: $color-brand-dark;
-$at-fab-box-shadow: 0 6px 10px -2px rgba(0, 0, 0, 0.2), 0 12px 20px 0 rgba(0, 0, 0, 0.14),
+$fta-fab-size: 56px * $hd !default;
+$fta-fab-size-sm: 40px * $hd !default;
+$fta-fab-icon-size: 24px * $hd !default;
+$fta-fab-bg-color: $color-brand;
+$fta-fab-bg-color-active: $color-brand-dark;
+$fta-fab-box-shadow: 0 6px 10px -2px rgba(0, 0, 0, 0.2), 0 12px 20px 0 rgba(0, 0, 0, 0.14),
   0 2px 36px 0 rgba(0, 0, 0, 0.12) !default;
-$at-fab-box-shadow-active: 0 14px 16px -8px rgba(0, 0, 0, 0.2), 0 24px 34px 4px rgba(0, 0, 0, 0.14),
+$fta-fab-box-shadow-active: 0 14px 16px -8px rgba(0, 0, 0, 0.2), 0 24px 34px 4px rgba(0, 0, 0, 0.14),
   0 10px 44px 8px rgba(0, 0, 0, 0.12) !default;
 
 /* Calendar */
-$at-calendar-day-size: 72px !default;
-$at-calendar-mark-size: 8px !default;
-$at-calendar-header-color: #b8bfc6 !default;
-$at-calendar-main-color: $color-brand !default;
-$at-calendar-day-color: #7c86a2 !default;
+$fta-calendar-day-size: 72px !default;
+$fta-calendar-mark-size: 8px !default;
+$fta-calendar-header-color: #b8bfc6 !default;
+$fta-calendar-main-color: $color-brand !default;
+$fta-calendar-day-color: #7c86a2 !default;
 
 /* Card */
-$at-card-thumb-size: 32px !default;
-$at-card-icon-size: 32px !default;
-$at-card-title-color: $color-text-title !default;
-$at-card-extra-color: $color-text-title !default;
-$at-card-info-color: $color-text-base !default;
-$at-card-note-color: $color-grey-2 !default;
+$fta-card-thumb-size: 32px !default;
+$fta-card-icon-size: 32px !default;
+$fta-card-title-color: $color-text-title !default;
+$fta-card-extra-color: $color-text-title !default;
+$fta-card-info-color: $color-text-base !default;
+$fta-card-note-color: $color-grey-2 !default;
 
 /* Checkbox */
-$at-checkbox-circle-size: 40px !default;
-$at-checkbox-icon-size: $font-size-sm !default;
-$at-checkbox-icon-color: $color-brand !default;
-$at-checkbox-icon-color-checked: $color-white !default;
-$at-checkbox-title-color: $color-text-base !default;
-$at-checkbox-title-font-size: $font-size-lg !default;
-$at-checkbox-desc-font-size: $font-size-sm !default;
-$at-checkbox-desc-color: $color-grey-2 !default;
+$fta-checkbox-circle-size: 40px !default;
+$fta-checkbox-icon-size: $font-size-sm !default;
+$fta-checkbox-icon-color: $color-brand !default;
+$fta-checkbox-icon-color-checked: $color-white !default;
+$fta-checkbox-title-color: $color-text-base !default;
+$fta-checkbox-title-font-size: $font-size-lg !default;
+$fta-checkbox-desc-font-size: $font-size-sm !default;
+$fta-checkbox-desc-color: $color-grey-2 !default;
 
 /* Countdown */
-$at-countdown-font-size: $font-size-lg !default;
-$at-countdown-num-color: $color-text-base !default;
-$at-countdown-card-num-color: #ff4949 !default;
-$at-countdown-card-num-bg-color: $color-white !default;
+$fta-countdown-font-size: $font-size-lg !default;
+$fta-countdown-num-color: $color-text-base !default;
+$fta-countdown-card-num-color: #ff4949 !default;
+$fta-countdown-card-num-bg-color: $color-white !default;
 
 /* Curtain */
-$at-curtain-btn-color: $color-white !default;
+$fta-curtain-btn-color: $color-white !default;
 
 /* Divider */
-$at-divider-height: 112px;
-$at-divider-content-color: $color-brand !default;
-$at-divider-font-size: $font-size-lg !default;
-$at-divider-line-color: $color-grey-3 !default;
+$fta-divider-height: 112px;
+$fta-divider-content-color: $color-brand !default;
+$fta-divider-font-size: $font-size-lg !default;
+$fta-divider-line-color: $color-grey-3 !default;
 
 /* Drawer */
-$at-drawer-content-width: 460px !default;
+$fta-drawer-content-width: 460px !default;
 
 /* FloatLayout */
 $float-layout-height-min: 600px !default;
@@ -277,60 +277,60 @@ $float-layout-title-font-size: $font-size-lg !default;
 $float-layout-btn-color: $color-grey-3 !default;
 
 /* Grid */
-$at-grid-text-color: $color-text-base !default;
-$at-grid-font-size: $font-size-lg !default;
-$at-grid-img-size: 80px !default;
-$at-gird-img-size-sm: 50px !default;
+$fta-grid-text-color: $color-text-base !default;
+$fta-grid-font-size: $font-size-lg !default;
+$fta-grid-img-size: 80px !default;
+$fta-gird-img-size-sm: 50px !default;
 
 /* ImagePicker */
-$at-image-picker-btn-add-color: $color-grey-3 !default;
-$at-image-picker-btn-remove-color: $color-white !default;
-$at-image-picker-btn-remove-bg-color: $color-grey-2 !default;
+$fta-image-picker-btn-add-color: $color-grey-3 !default;
+$fta-image-picker-btn-remove-color: $color-white !default;
+$fta-image-picker-btn-remove-bg-color: $color-grey-2 !default;
 
 /* Indexes */
-$at-indexes-nav-color: $color-link !default;
-$at-indexes-nav-font-size: $font-size-sm !default;
-$at-indexes-title-color: $color-black-2 !default;
-$at-indexes-title-font-size: $font-size-sm !default;
-$at-indexes-title-bg-color: $color-grey-6 !default;
+$fta-indexes-nav-color: $color-link !default;
+$fta-indexes-nav-font-size: $font-size-sm !default;
+$fta-indexes-title-color: $color-black-2 !default;
+$fta-indexes-title-font-size: $font-size-sm !default;
+$fta-indexes-title-bg-color: $color-grey-6 !default;
 
 /* InputNumber */
-$at-input-number-text-color: $color-text-base !default;
-$at-input-number-font-size: $font-size-base !default;
-$at-input-number-font-size-lg: $font-size-xl !default;
-$at-input-number-btn-color: $color-brand !default;
-$at-input-number-btn-size: 30px !default;
-$at-input-number-btn-size-lg: 36px !default;
-$at-input-number-width-min: 80px !default;
-$at-input-number-width-min-lg: 120px !default;
+$fta-input-number-text-color: $color-text-base !default;
+$fta-input-number-font-size: $font-size-base !default;
+$fta-input-number-font-size-lg: $font-size-xl !default;
+$fta-input-number-btn-color: $color-brand !default;
+$fta-input-number-btn-size: 30px !default;
+$fta-input-number-btn-size-lg: 36px !default;
+$fta-input-number-width-min: 80px !default;
+$fta-input-number-width-min-lg: 120px !default;
 
 /* Input */
-$at-input-label-color: $color-text-base !default;
-$at-input-text-color: $color-text-base !default;
-$at-input-font-size: $font-size-lg !default;
-$at-input-placeholder-color: $color-grey-3 !default;
+$fta-input-label-color: $color-text-base !default;
+$fta-input-text-color: $color-text-base !default;
+$fta-input-font-size: $font-size-lg !default;
+$fta-input-placeholder-color: $color-grey-3 !default;
 
 /* List */
-$at-list-thumb-size: 56px !default;
-$at-list-arrow-color: $color-grey-3 !default;
-$at-list-text-color: $color-text-base !default;
-$at-list-content-color: $color-grey-2 !default;
-$at-list-extra-color: $color-grey-2 !default;
-$at-list-extra-width: 235px !default;
+$fta-list-thumb-size: 56px !default;
+$fta-list-arrow-color: $color-grey-3 !default;
+$fta-list-text-color: $color-text-base !default;
+$fta-list-content-color: $color-grey-2 !default;
+$fta-list-extra-color: $color-grey-2 !default;
+$fta-list-extra-width: 235px !default;
 
 /* LoadMore */
-$at-load-more-height: 80px !default;
-$at-load-more-tips-color: $color-grey-1 !default;
-$at-load-more-tips-size: $font-size-lg !default;
+$fta-load-more-height: 80px !default;
+$fta-load-more-tips-color: $color-grey-1 !default;
+$fta-load-more-tips-size: $font-size-lg !default;
 
 /* Loading */
-$at-loading-size: 36px !default;
-$at-loading-color: $color-brand !default;
+$fta-loading-size: 36px !default;
+$fta-loading-color: $color-brand !default;
 
 /* Message */
-$at-message-color: $color-white !default;
-$at-message-font-size: $font-size-base !default;
-$at-message-bg-color: $color-info !default;
+$fta-message-color: $color-white !default;
+$fta-message-font-size: $font-size-base !default;
+$fta-message-bg-color: $color-info !default;
 
 /* Modal */
 $fta-modal-width: zoom(590px) !default;
@@ -347,136 +347,136 @@ $fta-modal-bg-color: $color-white !default;
 $fta-modal-footer-height: zoom(100px) !default;
 
 /* NavBar */
-$at-nav-bar-title-color: $color-text-base !default;
-$at-nav-bar-link-color: $color-brand !default;
+$fta-nav-bar-title-color: $color-text-base !default;
+$fta-nav-bar-link-color: $color-brand !default;
 
 /* NoticeBar */
-$at-noticebar-text-color: #de8c17 !default;
-$at-noticebar-bg-color: #fcf6ed !default;
-$at-noticebar-font-size: $font-size-sm !default;
-$at-noticebar-icon-size: 30px !default;
-$at-noticebar-btn-close-size: 32px !default;
-$at-noticebar-btn-close-color: $color-grey-3 !default;
+$fta-noticebar-text-color: #de8c17 !default;
+$fta-noticebar-bg-color: #fcf6ed !default;
+$fta-noticebar-font-size: $font-size-sm !default;
+$fta-noticebar-icon-size: 30px !default;
+$fta-noticebar-btn-close-size: 32px !default;
+$fta-noticebar-btn-close-color: $color-grey-3 !default;
 
 /* Pagination */
-$at-pagination-margin: 40px !default;
-$at-pagination-num-color: $color-text-base !default;
-$at-pagination-num-font-size: $font-size-base !default;
-$at-pagination-current-num-color: $color-brand !default;
-$at-pagination-icon-color: $color-text-base !default;
-$at-pagination-icon-font-size: 32px !default;
+$fta-pagination-margin: 40px !default;
+$fta-pagination-num-color: $color-text-base !default;
+$fta-pagination-num-font-size: $font-size-base !default;
+$fta-pagination-current-num-color: $color-brand !default;
+$fta-pagination-icon-color: $color-text-base !default;
+$fta-pagination-icon-font-size: 32px !default;
 
 /* Progress */
-$at-progress-height: 16px !default;
-$at-progress-text-size: $font-size-sm !default;
-$at-progress-icon-size: $font-size-xl !default;
-$at-progress-inner-bg-color: $color-grey-6 !default;
-$at-progress-bar-bg-color: $color-brand-light !default;
-$at-progress-bar-bg-color-active: $color-white !default;
+$fta-progress-height: 16px !default;
+$fta-progress-text-size: $font-size-sm !default;
+$fta-progress-icon-size: $font-size-xl !default;
+$fta-progress-inner-bg-color: $color-grey-6 !default;
+$fta-progress-bar-bg-color: $color-brand-light !default;
+$fta-progress-bar-bg-color-active: $color-white !default;
 
 /* Radio */
-$at-radio-title-color: $color-text-base !default;
-$at-radio-title-size: $font-size-lg !default;
-$at-radio-desc-color: $color-grey-2 !default;
-$at-radio-desc-size: $font-size-sm !default;
-$at-radio-check-color: $color-brand !default;
+$fta-radio-title-color: $color-text-base !default;
+$fta-radio-title-size: $font-size-lg !default;
+$fta-radio-desc-color: $color-grey-2 !default;
+$fta-radio-desc-size: $font-size-sm !default;
+$fta-radio-check-color: $color-brand !default;
 
 /* Range */
-$at-range-slider-size: 28px !default;
-$at-range-rail-height: 2px !default;
-$at-range-rail-bg-color: #e9e9e9 !default;
-$at-range-track-bg-color: $color-brand !default;
-$at-range-slider-color: $color-white !default;
-$at-range-slider-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2) !default;
+$fta-range-slider-size: 28px !default;
+$fta-range-rail-height: 2px !default;
+$fta-range-rail-bg-color: #e9e9e9 !default;
+$fta-range-track-bg-color: $color-brand !default;
+$fta-range-slider-color: $color-white !default;
+$fta-range-slider-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2) !default;
 
 /* Rate */
-$at-rate-icon-size: 20px !default;
-$at-rate-star-color: #ececec !default;
-$at-rate-star-color-on: #ffca3e !default;
+$fta-rate-icon-size: 20px !default;
+$fta-rate-star-color: #ececec !default;
+$fta-rate-star-color-on: #ffca3e !default;
 
 /* SearchBar */
-$at-search-bar-btn-color: $color-white !default;
-$at-search-bar-btn-bg-color: $color-brand !default;
+$fta-search-bar-btn-color: $color-white !default;
+$fta-search-bar-btn-bg-color: $color-brand !default;
 
 /* SegmentedControl */
-$at-segmented-control-color: $color-brand !default;
-$at-segmented-control-color-active: $color-white !default;
-$at-segmented-control-bg-color: transparent !default;
-$at-segmented-control-font-size: $font-size-base !default;
+$fta-segmented-control-color: $color-brand !default;
+$fta-segmented-control-color-active: $color-white !default;
+$fta-segmented-control-bg-color: transparent !default;
+$fta-segmented-control-font-size: $font-size-base !default;
 
 /* Slider */
-$at-slider-text-color: $color-grey-2 !default;
-$at-slider-text-size: $font-size-base !default;
+$fta-slider-text-color: $color-grey-2 !default;
+$fta-slider-text-size: $font-size-base !default;
 
 /* Steps */
-$at-steps-circle-size: 56px !default;
-$at-steps-icon-size: $font-size-sm !default;
-$at-steps-color: $color-white !default;
-$at-steps-color-active: $color-grey-2 !default;
-$at-steps-bg-color: $color-grey-4 !default;
-$at-steps-bg-color-active: $color-brand !default;
-$at-steps-line-color: $color-grey-3 !default;
-$at-steps-title-color: $color-black-0 !default;
-$at-steps-title-size: $font-size-lg !default;
-$at-steps-desc-color: $color-grey-3 !default;
-$at-steps-desc-size: $font-size-sm !default;
+$fta-steps-circle-size: 56px !default;
+$fta-steps-icon-size: $font-size-sm !default;
+$fta-steps-color: $color-white !default;
+$fta-steps-color-active: $color-grey-2 !default;
+$fta-steps-bg-color: $color-grey-4 !default;
+$fta-steps-bg-color-active: $color-brand !default;
+$fta-steps-line-color: $color-grey-3 !default;
+$fta-steps-title-color: $color-black-0 !default;
+$fta-steps-title-size: $font-size-lg !default;
+$fta-steps-desc-color: $color-grey-3 !default;
+$fta-steps-desc-size: $font-size-sm !default;
 
 /* SwipeAction */
-$at-swipe-action-color: $color-white !default;
-$at-swipe-action-font-size: $font-size-base !default;
-$at-swipe-action-bg-color: $color-white !default;
-$at-swipe-action-option-bg-color: $color-grey-2 !default;
+$fta-swipe-action-color: $color-white !default;
+$fta-swipe-action-font-size: $font-size-base !default;
+$fta-swipe-action-bg-color: $color-white !default;
+$fta-swipe-action-option-bg-color: $color-grey-2 !default;
 
 /* Switch */
-$at-switch-title-color: $color-text-base !default;
-$at-switch-title-size: $font-size-base !default;
+$fta-switch-title-color: $color-text-base !default;
+$fta-switch-title-size: $font-size-base !default;
 
 /* TabBar */
-$at-tab-bar-bg-color: $color-white !default;
-$at-tab-bar-color: $color-text-base !default;
-$at-tab-bar-color-active: $color-brand !default;
-$at-tab-bar-font-size: $font-size-base !default;
-$at-tab-bar-icon-color: $color-grey-0 !default;
-$at-tab-bar-icon-font-size: 48px !default;
-$at-tab-bar-icon-image-size: 50px !default;
+$fta-tab-bar-bg-color: $color-white !default;
+$fta-tab-bar-color: $color-text-base !default;
+$fta-tab-bar-color-active: $color-brand !default;
+$fta-tab-bar-font-size: $font-size-base !default;
+$fta-tab-bar-icon-color: $color-grey-0 !default;
+$fta-tab-bar-icon-font-size: 48px !default;
+$fta-tab-bar-icon-image-size: 50px !default;
 
 /* Tabs */
-$at-tabs-color: $color-text-base !default;
-$at-tabs-color-active: $color-brand !default;
-$at-tabs-font-size: $font-size-base !default;
-$at-tabs-line-height: 1px !default;
-$at-tabs-underline-color: $color-grey-5 !default;
-$at-tabs-bg-color: $color-bg !default;
+$fta-tabs-color: $color-text-base !default;
+$fta-tabs-color-active: $color-brand !default;
+$fta-tabs-font-size: $font-size-base !default;
+$fta-tabs-line-height: 1px !default;
+$fta-tabs-underline-color: $color-grey-5 !default;
+$fta-tabs-bg-color: $color-bg !default;
 
 /* Tag */
-$at-tag-height: 60px !default;
-$at-tag-height-sm: 40px !default;
-$at-tag-color: $color-grey-1 !default;
-$at-tag-color-primary: $color-grey-1 !default;
-$at-tag-color-active: $color-brand-light !default;
-$at-tag-color-primary-active: $color-text-base-inverse !default;
-$at-tag-font-size: $font-size-base !default;
-$at-tag-font-size-sm: $font-size-xs !default;
-$at-tag-bg-color: $color-bg-grey !default;
-$at-tag-bg-color-primary: $color-bg-grey !default;
-$at-tag-bg-color-active: $color-white !default;
-$at-tag-bg-color-primary-active: $at-tag-color-active !default;
-$at-tag-border-color: $at-tag-bg-color !default;
-$at-tag-border-color-primary: $at-tag-bg-color !default;
-$at-tag-border-color-active: $at-tag-color-active !default;
+$fta-tag-height: 60px !default;
+$fta-tag-height-sm: 40px !default;
+$fta-tag-color: $color-grey-1 !default;
+$fta-tag-color-primary: $color-grey-1 !default;
+$fta-tag-color-active: $color-brand-light !default;
+$fta-tag-color-primary-active: $color-text-base-inverse !default;
+$fta-tag-font-size: $font-size-base !default;
+$fta-tag-font-size-sm: $font-size-xs !default;
+$fta-tag-bg-color: $color-bg-grey !default;
+$fta-tag-bg-color-primary: $color-bg-grey !default;
+$fta-tag-bg-color-active: $color-white !default;
+$fta-tag-bg-color-primary-active: $fta-tag-color-active !default;
+$fta-tag-border-color: $fta-tag-bg-color !default;
+$fta-tag-border-color-primary: $fta-tag-bg-color !default;
+$fta-tag-border-color-active: $fta-tag-color-active !default;
 
 /* Textarea */
-$at-textarea-font-size: $font-size-lg !default;
-$at-textarea-tips-color: $color-text-placeholder !default;
-$at-textarea-tips-size: $font-size-base !default;
+$fta-textarea-font-size: $font-size-lg !default;
+$fta-textarea-tips-color: $color-text-placeholder !default;
+$fta-textarea-tips-size: $font-size-base !default;
 
 /* Timeline */
-$at-timeline-offset-left: 40px !default;
-$at-timeline-title-color: $color-grey-0 !default;
-$at-timeline-title-font-size: $font-size-base !default;
-$at-timeline-desc-color: $color-grey-1 !default;
-$at-timeline-desc-font-size: $font-size-sm !default;
-$at-timeline-dot-size: 24px !default;
-$at-timeline-dot-color: $color-bg !default;
-$at-timeline-dot-border-color: $color-brand-light !default;
-$at-timeline-line-color: $color-border-lighter !default;
+$fta-timeline-offset-left: 40px !default;
+$fta-timeline-title-color: $color-grey-0 !default;
+$fta-timeline-title-font-size: $font-size-base !default;
+$fta-timeline-desc-color: $color-grey-1 !default;
+$fta-timeline-desc-font-size: $font-size-sm !default;
+$fta-timeline-dot-size: 24px !default;
+$fta-timeline-dot-color: $color-bg !default;
+$fta-timeline-dot-border-color: $color-brand-light !default;
+$fta-timeline-line-color: $color-border-lighter !default;

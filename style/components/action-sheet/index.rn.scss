@@ -1,7 +1,7 @@
 @import '../../variables/default.scss';
 @import '../../mixins/index.scss';
 
-$at-action-sheet-duration: 300ms;
+$fta-action-sheet-duration: 300ms;
 
 .fta-action-sheet {
   // position: absolute;
@@ -12,14 +12,14 @@ $at-action-sheet-duration: 300ms;
   z-index: $zindex-action-sheet;
   display: none;
   // visibility: hidden;
-  // transition: visibility $at-action-sheet-duration $timing-func;
+  // transition: visibility $fta-action-sheet-duration $timing-func;
 
   /* elements */
   &__overlay {
     @include overlay;
 
     opacity: 0;
-    // transition: opacity $at-action-sheet-duration ease-in;
+    // transition: opacity $fta-action-sheet-duration ease-in;
   }
 
   &__container {
@@ -32,7 +32,7 @@ $at-action-sheet-duration: 300ms;
     background-color: $color-white;
     // border-radius: 32px 32px 0 0;
     // transform: translate3d(0, 100%, 0);
-    // transition: transform $at-action-sheet-duration $timing-func;
+    // transition: transform $fta-action-sheet-duration $timing-func;
   }
 
   /* modifiers */

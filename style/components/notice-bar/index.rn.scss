@@ -11,7 +11,7 @@
   padding: $spacing-v-sm $spacing-h-lg;
 
   // font-size: 0;
-  background-color: $at-noticebar-bg-color;
+  background-color: $fta-noticebar-bg-color;
   flex-direction: row;
 
   /* elements */
@@ -24,14 +24,14 @@
       // display: inline;
     }
     &-textarea {
-      font-size: $at-noticebar-font-size;
-      color: $at-noticebar-text-color;
-      line-height: $line-height-zh * $at-noticebar-font-size;
+      font-size: $fta-noticebar-font-size;
+      color: $fta-noticebar-text-color;
+      line-height: $line-height-zh * $fta-noticebar-font-size;
     }
 
     &-textarea--care {
-      font-size: care($at-noticebar-font-size);
-      line-height: care($line-height-zh * $at-noticebar-font-size);
+      font-size: care($fta-noticebar-font-size);
+      line-height: care($line-height-zh * $fta-noticebar-font-size);
     }
 
     // &-inner {
@@ -60,22 +60,22 @@
     position: absolute;
     top: 50%;
     left: $spacing-h-lg;
-    width: $at-noticebar-btn-close-size;
-    height: $at-noticebar-btn-close-size;
+    width: $fta-noticebar-btn-close-size;
+    height: $fta-noticebar-btn-close-size;
     // transform: translate3d(0, -50%, 0);
 
     .fta-icon-close {
-      @include squareImg($at-noticebar-btn-close-size);
+      @include squareImg($fta-noticebar-btn-close-size);
     }
 
     .fta-icon-close--care {
-      @include squareImg(care($at-noticebar-btn-close-size));
+      @include squareImg(care($fta-noticebar-btn-close-size));
     }
   }
 
   &__close--care {
-    width: care($at-noticebar-btn-close-size);
-    height: care($at-noticebar-btn-close-size);
+    width: care($fta-noticebar-btn-close-size);
+    height: care($fta-noticebar-btn-close-size);
   }
 
   &__more {
@@ -83,15 +83,15 @@
     font-size: 0;
 
     .text {
-      font-size: $at-noticebar-font-size;
+      font-size: $fta-noticebar-font-size;
       color: #999;
-      line-height: $line-height-zh * $at-noticebar-font-size;
+      line-height: $line-height-zh * $fta-noticebar-font-size;
       // vertical-align: middle;
     }
 
     .text--care {
-      font-size: care($at-noticebar-font-size);
-      line-height: care($line-height-zh * $at-noticebar-font-size);
+      font-size: care($fta-noticebar-font-size);
+      line-height: care($line-height-zh * $fta-noticebar-font-size);
     }
   }
 
@@ -134,7 +134,7 @@
   //       // display: inline-block;
   //       // white-space: nowrap;
   //       padding-left: 100%;
-  //       height: $at-noticebar-font-size * 1.5;
+  //       height: $fta-noticebar-font-size * 1.5;
   //       // animation: marquee 1s linear infinite both;
   //       // transform: translateZ(0);
   //     }

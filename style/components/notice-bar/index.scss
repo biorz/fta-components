@@ -5,9 +5,9 @@
 .fta-noticebar {
   position: relative;
   padding: $spacing-v-sm $spacing-h-lg;
-  color: $at-noticebar-text-color;
+  color: $fta-noticebar-text-color;
   font-size: 0;
-  background: $at-noticebar-bg-color;
+  background: $fta-noticebar-bg-color;
 
   /* elements */
   &__content {
@@ -21,23 +21,23 @@
       vertical-align: top;
 
       .fta-icon {
-        font-size: $at-noticebar-icon-size;
-        line-height: $at-noticebar-font-size * 1.5;
+        font-size: $fta-noticebar-icon-size;
+        line-height: $fta-noticebar-font-size * 1.5;
       }
 
       .fta-icon--care {
-        font-size: care($at-noticebar-icon-size);
-        line-height: care($at-noticebar-font-size * 1.5);
+        font-size: care($fta-noticebar-icon-size);
+        line-height: care($fta-noticebar-font-size * 1.5);
       }
     }
 
     &-text {
       display: inline;
-      font-size: $at-noticebar-font-size;
+      font-size: $fta-noticebar-font-size;
     }
 
     &-text--care {
-      font-size: care($at-noticebar-font-size);
+      font-size: care($fta-noticebar-font-size);
     }
 
     &-inner {
@@ -49,17 +49,17 @@
     position: absolute;
     top: 50%;
     left: $spacing-h-lg;
-    width: $at-noticebar-btn-close-size;
-    height: $at-noticebar-btn-close-size;
+    width: $fta-noticebar-btn-close-size;
+    height: $fta-noticebar-btn-close-size;
     transform: translate3d(0, -50%, 0);
 
     .fta-icon-close {
-      color: $at-noticebar-btn-close-color;
-      font-size: $at-noticebar-btn-close-size;
+      color: $fta-noticebar-btn-close-color;
+      font-size: $fta-noticebar-btn-close-size;
     }
 
     .fta-icon-close--care {
-      font-size: care($at-noticebar-btn-close-size);
+      font-size: care($fta-noticebar-btn-close-size);
     }
 
     + .fta-noticebar__content {
@@ -68,8 +68,8 @@
   }
 
   &__close--care {
-    width: care($at-noticebar-btn-close-size);
-    height: care($at-noticebar-btn-close-size);
+    width: care($fta-noticebar-btn-close-size);
+    height: care($fta-noticebar-btn-close-size);
 
     + .fta-noticebar__content {
       margin-left: care(50px);
@@ -81,33 +81,33 @@
     font-size: 0;
 
     &-text {
-      font-size: $at-noticebar-font-size;
+      font-size: $fta-noticebar-font-size;
       line-height: $line-height-zh;
       vertical-align: middle;
     }
 
     &-text--care {
-      font-size: care($at-noticebar-font-size);
+      font-size: care($fta-noticebar-font-size);
       line-height: care($line-height-zh);
     }
 
     &-icon {
       display: inline-block;
       // FIXME: icon溢出
-      width: $at-noticebar-font-size * 1.5;
+      width: $fta-noticebar-font-size * 1.5;
       vertical-align: middle;
       overflow: hidden;
 
       .fta-icon-chevron-right {
-        font-size: $at-noticebar-font-size;
+        font-size: $fta-noticebar-font-size;
       }
 
       .fta-icon-chevron-right--care {
-        font-size: care($at-noticebar-font-size);
+        font-size: care($fta-noticebar-font-size);
       }
 
       // .fta-icon--care {
-      //   font-size: care($at-noticebar-font-size);
+      //   font-size: care($fta-noticebar-font-size);
       // }
     }
   }
@@ -151,7 +151,7 @@
         display: inline-block;
         white-space: nowrap;
         padding-left: 100%;
-        height: $at-noticebar-font-size * 1.5;
+        height: $fta-noticebar-font-size * 1.5;
         animation: fta-marquee 1s linear infinite both;
         transform: translateZ(0);
       }

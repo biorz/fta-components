@@ -14,8 +14,8 @@
 .fta-loading {
   // display: inline-block;
   position: relative;
-  width: $at-loading-size;
-  height: $at-loading-size;
+  width: $fta-loading-size;
+  height: $fta-loading-size;
 
   &__ring {
     /* #ifndef rn */
@@ -25,12 +25,12 @@
     border-radius: 50%;
     animation: fta-loading 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
     /* #endif */
-    width: $at-loading-size;
-    height: $at-loading-size;
+    width: $fta-loading-size;
+    height: $fta-loading-size;
     margin: 1px;
     border-width: 1px;
     border-style: solid;
-    border-color: $at-loading-color transparent transparent transparent;
+    border-color: $fta-loading-color transparent transparent transparent;
 
     &:nth-child(1) {
       animation-delay: -0.45s;

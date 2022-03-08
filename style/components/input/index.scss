@@ -4,7 +4,7 @@
 .fta-input {
   position: relative;
   padding: $spacing-v-lg 0;
-  color: $at-input-label-color;
+  color: $fta-input-label-color;
   background-color: $color-bg;
   padding-left: $spacing-h-xl;
   margin-left: 0;
@@ -35,7 +35,7 @@
   &__title {
     margin-right: $spacing-h-md;
     width: 172px;
-    font-size: $at-input-font-size;
+    font-size: $fta-input-font-size;
     line-height: $line-height-zh;
     vertical-align: middle;
     text-align: left;
@@ -57,17 +57,17 @@
     flex: 1;
     display: inline-block;
     padding-right: $spacing-v-md;
-    color: $at-input-text-color;
-    font-size: $at-input-font-size;
+    color: $fta-input-text-color;
+    font-size: $fta-input-font-size;
     line-height: $line-height-zh;
     vertical-align: middle;
-    @include placeholder($at-input-placeholder-color);
+    @include placeholder($fta-input-placeholder-color);
   }
 
   input {
-    color: $at-input-text-color;
-    font-size: $at-input-font-size;
-    height: $at-input-font-size * 1.4;
+    color: $fta-input-text-color;
+    font-size: $fta-input-font-size;
+    height: $fta-input-font-size * 1.4;
     line-height: $line-height-zh;
     border: none;
     &:focus,
@@ -85,7 +85,7 @@
     width: 40px;
     min-width: 40px;
     height: 100%;
-    font-size: $at-input-font-size;
+    font-size: $fta-input-font-size;
     text-align: center;
     line-height: 1;
 
@@ -111,7 +111,7 @@
       display: inline-block;
       padding: 0 $spacing-v-md;
       color: $color-brand-dark;
-      font-size: $at-input-font-size;
+      font-size: $fta-input-font-size;
       text-align: center;
     }
 

@@ -1,10 +1,10 @@
 /* #ifdef h5 */
 
 @mixin safearea($position, $useMargin: false) {
-  $attr: if($useMargin, margin, padding);
-  #{$attr}-#{$position}: 0;
-  #{$attr}-#{$position}: constant(safe-area-inset-#{$position});
-  #{$attr}-#{$position}: env(safe-area-inset-#{$position});
+  $ftatr: if($useMargin, margin, padding);
+  #{$ftatr}-#{$position}: 0;
+  #{$ftatr}-#{$position}: constant(safe-area-inset-#{$position});
+  #{$ftatr}-#{$position}: env(safe-area-inset-#{$position});
 }
 .fta-safe-area-top {
   @include safearea(top);

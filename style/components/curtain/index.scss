@@ -1,7 +1,7 @@
 @import '../../variables/default.scss';
 @import '../../mixins/index.scss';
 
-$at-curtain-btn-size: 56px;
+$fta-curtain-btn-size: 56px;
 
 .fta-curtain {
   display: block;
@@ -34,14 +34,14 @@ $at-curtain-btn-size: 56px;
   &__btn-close {
     display: flex;
     position: absolute;
-    width: $at-curtain-btn-size;
-    height: $at-curtain-btn-size;
-    margin-left: -$at-curtain-btn-size / 2;
+    width: $fta-curtain-btn-size;
+    height: $fta-curtain-btn-size;
+    margin-left: -$fta-curtain-btn-size / 2;
     left: 50%;
-    bottom: -($at-curtain-btn-size + 24px);
+    bottom: -($fta-curtain-btn-size + 24px);
     align-items: center;
     justify-content: center;
-    border: 2px solid $at-curtain-btn-color;
+    border: 2px solid $fta-curtain-btn-color;
     border-radius: 50%;
     box-sizing: border-box;
     z-index: $zindex-curtain;
@@ -56,7 +56,7 @@ $at-curtain-btn-size: 56px;
       width: 34px;
       height: 2px;
       border-radius: 1px;
-      background: $at-curtain-btn-color;
+      background: $fta-curtain-btn-color;
     }
 
     &::before {
@@ -68,38 +68,38 @@ $at-curtain-btn-size: 56px;
     }
 
     &--top {
-      margin-left: -$at-curtain-btn-size / 2;
-      top: -($at-curtain-btn-size + 24px);
+      margin-left: -$fta-curtain-btn-size / 2;
+      top: -($fta-curtain-btn-size + 24px);
       left: 50%;
       bottom: auto;
     }
 
     &--top-left {
-      top: -($at-curtain-btn-size + 24px);
+      top: -($fta-curtain-btn-size + 24px);
       left: 0;
       bottom: auto;
     }
 
     &--top-right {
-      top: -($at-curtain-btn-size + 24px);
+      top: -($fta-curtain-btn-size + 24px);
       left: auto;
       right: 0;
       bottom: auto;
     }
 
     &--bottom {
-      margin-left: -$at-curtain-btn-size / 2;
-      bottom: -($at-curtain-btn-size + 24px);
+      margin-left: -$fta-curtain-btn-size / 2;
+      bottom: -($fta-curtain-btn-size + 24px);
       left: 50%;
     }
 
     &--bottom-left {
-      bottom: -($at-curtain-btn-size + 24px);
+      bottom: -($fta-curtain-btn-size + 24px);
       left: 0;
     }
 
     &--bottom-right {
-      bottom: -($at-curtain-btn-size + 24px);
+      bottom: -($fta-curtain-btn-size + 24px);
       left: auto;
       right: 0;
     }
