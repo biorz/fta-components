@@ -22,14 +22,18 @@
 }
 
 .fta-avatar {
+  /* #ifndef rn */
   text-align: center;
+  /* #endif*/
   border-radius: $border-radius-md;
   background: $fta-avatar-bg-color;
   // box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.05);
   overflow: hidden;
 
   &__text {
+    /* #ifdef rn */
     text-align: center;
+    /* #endif*/
     color: $fta-avatar-color;
     font-weight: $fta-avatar-weight;
   }
