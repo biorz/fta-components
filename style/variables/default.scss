@@ -195,9 +195,10 @@ $fta-activity-indicator-font-color: $color-grey-2 !default;
 /* Avatar */
 $fta-avatar-color: $color-white !default;
 $fta-avatar-bg-color: $color-grey-4 !default;
-$fta-avatar-size-sm: 80px !default;
-$fta-avatar-size-md: 100px !default;
-$fta-avatar-size-lg: 120px !default;
+$fta-avatar-size-xs: zoom(48px) !default;
+$fta-avatar-size-sm: zoom(56px) !default;
+$fta-avatar-size-md: zoom(72px) !default;
+$fta-avatar-size-lg: zoom(96px) !default;
 
 /* Badge */
 $fta-badge-color: $color-white !default;

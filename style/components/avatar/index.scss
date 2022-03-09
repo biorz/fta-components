@@ -1,2 +1,49 @@
+@import '../../variables/default.scss';
+@import '../../mixins/index.scss';
+
 .fta-avatar {
+  width: $fta-avatar-size-md;
+  height: $fta-avatar-size-md;
+  color: $fta-avatar-color;
+  font-size: $fta-avatar-size-md / 2.5;
+  line-height: $fta-avatar-size-md;
+  text-align: center;
+  border-radius: $border-radius-md;
+  background: $fta-avatar-bg-color;
+  box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+
+  /* elements */
+  &__img {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* modifiers */
+  &--large {
+    width: $fta-avatar-size-lg;
+    height: $fta-avatar-size-lg;
+    font-size: $fta-avatar-size-lg / 2.5;
+    line-height: $fta-avatar-size-lg;
+  }
+
+  &--small {
+    width: $fta-avatar-size-sm;
+    height: $fta-avatar-size-sm;
+    font-size: $fta-avatar-size-sm / 2.5;
+    line-height: $fta-avatar-size-sm;
+  }
+
+  &--mini {
+    width: $fta-avatar-size-xs;
+    height: $fta-avatar-size-xs;
+    font-size: $fta-avatar-size-xs / 2.5;
+    line-height: $fta-avatar-size-xs;
+  }
+
+  &--circle {
+    border-radius: 50%;
+    background-clip: border-box;
+    overflow: hidden;
+  }
 }
