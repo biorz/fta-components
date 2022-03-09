@@ -1,3 +1,4 @@
+import { Gap, NavBar, SafeArea, Tabs, TouchableOpacity } from '@fta/components'
 import {
   inWeapp,
   useCareClass,
@@ -5,8 +6,7 @@ import {
   useCarelessClass,
   useConfig,
   withCare as nativeWithCare,
-} from '@fta/common'
-import { Gap, NavBar, SafeArea, Tabs, TouchableOpacity } from '@fta/components'
+} from '@fta/components/common'
 import { ScrollView, Text, View } from '@tarojs/components'
 import { ViewProps } from '@tarojs/components/types/View'
 import Taro from '@tarojs/taro'

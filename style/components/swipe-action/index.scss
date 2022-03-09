@@ -1,6 +1,11 @@
 @import '../../variables/default.scss';
 @import '../../mixins/index.scss';
 
+@mixin flex($direction: column) {
+  display: flex;
+  flex-direction: $direction;
+}
+
 .fta-swipe-action {
   position: relative;
   overflow: hidden;

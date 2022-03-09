@@ -105,7 +105,7 @@ class NavBar extends Component<NavBarProps> {
   }
 
   public customizeStatusBar() {
-    const { statusBar } = this.props
+    const { statusBar = {} } = this.props
     if (inIOS) {
       if (statusBar.style) {
         // @ts-ignore
@@ -137,7 +137,7 @@ class NavBar extends Component<NavBarProps> {
       ...props
     } = this.props
 
-    const customTintColor: CSSProperties = tintColor ? { backgroundColor: tintColor } : null
+    const customTintColor: CSSProperties = tintColor ? { backgroundColor: tintColor } : {}
 
     const customStatusBarTintColor: CSSProperties = this.props.statusBar?.tintColor
       ? { backgroundColor: this.props.statusBar.tintColor }
@@ -175,6 +175,7 @@ class NavBar extends Component<NavBarProps> {
               <View style={rootStyle} className={rootClass} {...props}>
                 {/* <SafeArea top /> */}
                 <View className={classNames('fta-nav-bar-container', className)} style={style}>
+                  {/* {console.log('关怀模式改变', careMode)} */}
                   {getTitleElement(title, careMode)}
                   {getButtonElement(leftButton, 'fta-nav-bar-left-button')}
                   {getButtonElement(rightButton, 'fta-nav-bar-right-button')}

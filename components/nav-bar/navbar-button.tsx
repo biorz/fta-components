@@ -24,7 +24,7 @@ export default function NavbarButton(props: NavBarButtonProps): JSX.Element {
       // @ts-ignore
       accessibilityLabel={accessibilityLabel}>
       <View style={style}>
-        <Text className={textClz} style={tintColor ? { color: tintColor } : null}>
+        <Text className={textClz} style={tintColor ? { color: tintColor } : {}}>
           {title}
         </Text>
       </View>
