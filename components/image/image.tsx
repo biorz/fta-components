@@ -58,7 +58,7 @@ class Image extends Component<ImageProps, ImageState> {
   }
 
   public getInlineStyle(): CSSProperties {
-    const style = { ...this.props.style }
+    const style = { ...this.props.customStyle }
     let i: string
     if ((i = this.props.bgColor)) {
       style.backgroundColor = i
@@ -101,7 +101,7 @@ class Image extends Component<ImageProps, ImageState> {
       showError,
       errorIcon,
       // ignore
-      style,
+      customStyle,
       bgColor,
       onError,
       onLoad,
@@ -116,14 +116,12 @@ class Image extends Component<ImageProps, ImageState> {
       ((showLoading && this.isLoading) || (showError && _errored)) && 'fta-image--loading'
     )
 
-    console.log('image-root-class', this.props)
-
     return (
       <Fragment>
         {/* 加载中 */}
-        {this.renderIntermediate(this.needLoading, loadingIcon, loadingClass, style!)}
+        {this.renderIntermediate(this.needLoading, loadingIcon, loadingClass, customStyle!)}
         {/* 加载失败 */}
-        {this.renderIntermediate(this.needError, errorIcon, loadingClass, style!)}
+        {this.renderIntermediate(this.needError, errorIcon, loadingClass, customStyle!)}
         <TaroImage
           src={src}
           className={rootClass}

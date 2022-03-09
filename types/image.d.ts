@@ -3,7 +3,7 @@ import { ComponentClass, CSSProperties, ReactNode } from 'react'
 
 export type ImageShape = 'square' | 'circle'
 
-export interface ImageProps extends TaroImageProps {
+export interface ImageProps extends Omit<TaroImageProps, 'style'> {
   /**
    * 图片形状，circle-圆形，square-方形
    * @default 'square'
@@ -36,7 +36,7 @@ export interface ImageProps extends TaroImageProps {
   /**
    * 内联样式
    */
-  style?: CSSProperties
+  customStyle?: CSSProperties
 }
 
 export interface ImageState {

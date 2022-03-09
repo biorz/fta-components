@@ -1,7 +1,7 @@
 @import '../../variables/default.scss';
 @import '../../mixins/index.scss';
 
-@mixin avatar-props($size: $fta-avatar-size-md, $radius: $fta-avatar-radius-md) {
+@mixin avatar-props($size, $radius) {
   /* #ifdef rn */
   width: $size;
   height: $size;
@@ -9,16 +9,23 @@
   /* #ifndef rn */
   width: $size !important;
   height: $size !important;
-  /* #endif */
   line-height: $size;
+  /* #endif */
   border-radius: $radius;
+}
+
+@mixin text($size, $line-height) {
+  font-size: $size;
+  /* #ifdef rn */
+  line-height: $line-height;
+  /* #endif */
 }
 
 .fta-avatar {
   text-align: center;
   border-radius: $border-radius-md;
   background: $fta-avatar-bg-color;
-  box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.05);
+  // box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.05);
   overflow: hidden;
 
   &__text {
@@ -38,7 +45,7 @@
     @include avatar-props($fta-avatar-size-lg, $fta-avatar-radius-lg);
 
     &__text {
-      font-size: $fta-avatar-text-lg;
+      @include text($fta-avatar-text-lg, $fta-avatar-size-lg);
     }
   }
 
@@ -46,7 +53,7 @@
     @include avatar-props($fta-avatar-size-md, $fta-avatar-radius-md);
 
     &__text {
-      font-size: $fta-avatar-text-md;
+      @include text($fta-avatar-text-md, $fta-avatar-size-md);
     }
   }
 
@@ -54,7 +61,7 @@
     @include avatar-props($fta-avatar-size-sm, $fta-avatar-radius-sm);
 
     &__text {
-      font-size: $fta-avatar-text-sm;
+      @include text($fta-avatar-text-sm, $fta-avatar-size-sm);
     }
   }
 
@@ -62,12 +69,12 @@
     @include avatar-props($fta-avatar-size-xs, $fta-avatar-radius-xs);
 
     &__text {
-      font-size: $fta-avatar-text-xs;
+      @include text($fta-avatar-text-xs, $fta-avatar-size-xs);
     }
   }
 
   &--circle {
-    border-radius: 1000px;
+    border-radius: 10000px;
     /* #ifndef rn */
     background-clip: border-box;
     /* #endif */
