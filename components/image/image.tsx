@@ -113,15 +113,17 @@ class Image extends Component<ImageProps, ImageState> {
 
     const rootClass = classNames(
       loadingClass,
-      ((showLoading && this.isLoading) || (showError && _errored)) && this && 'fta-image--loading'
+      ((showLoading && this.isLoading) || (showError && _errored)) && 'fta-image--loading'
     )
+
+    console.log('image-root-class', this.props)
 
     return (
       <Fragment>
         {/* 加载中 */}
-        {this.renderIntermediate(this.isLoading, loadingIcon, loadingClass, style)}
+        {this.renderIntermediate(this.needLoading, loadingIcon, loadingClass, style!)}
         {/* 加载失败 */}
-        {this.renderIntermediate(this.needError, errorIcon, loadingClass, style)}
+        {this.renderIntermediate(this.needError, errorIcon, loadingClass, style!)}
         <TaroImage
           src={src}
           className={rootClass}
@@ -140,7 +142,7 @@ Image.defaultProps = {
   showError: true,
   loadingIcon: <Text className='fta-image--flex__text'>加载中</Text>,
   errorIcon: <Text className='fta-image--flex__text'>加载失败</Text>,
-  src: null,
+  src: '',
 }
 
 export default Image

@@ -1,9 +1,10 @@
-import { FC } from 'react'
+import { CSSProperties, FC } from 'react'
 import BaseComponent from './base'
+import { ImageProps } from './image'
 
-export type AvatarSize = 'mini' | 'small' | 'normal' | 'large'
+export type AvatarSize = 'mini' | 'small' | 'medium' | 'large'
 
-export interface AvatarProps extends BaseComponent {
+export interface AvatarProps extends BaseComponent, Omit<ImageProps, 'src'> {
   /**
    * 头像是否圆形
    * mini - 48px
@@ -23,9 +24,17 @@ export interface AvatarProps extends BaseComponent {
    */
   text?: string
   /**
+   * 文本类名
+   */
+  textClassName?: string
+  /**
+   * 文本内联样式
+   */
+  textStyle?: CSSProperties
+  /**
    * 头像图片地址
    */
-  image?: string
+  src?: string
   /**
    * 参考微信[开放数据](https://developers.weixin.qq.com/miniprogram/dev/component/open-data.html)
    *
