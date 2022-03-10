@@ -34,11 +34,11 @@ function Avatar(props: AvatarProps): JSX.Element {
   if (inWeapp && openData && openData.type === 'userAvatarUrl') {
     elem = <OpenData type={openData.type}></OpenData>
   } else if (src) {
-    console.log(classNames(rootClassName, classObject, className))
+    // console.log(classNames(rootClassName, classObject, className))
     return (
       <Image
         className={classNames(rootClassName, classObject, className)}
-        style={customStyle}
+        customStyle={customStyle}
         src={src}
         {...imageProps}
       />

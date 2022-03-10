@@ -1,9 +1,15 @@
-import { CSSProperties } from 'react'
+import { CSSProperties, ReactNode } from 'react'
 
 interface BaseComponent {
   className?: string
 
   customStyle?: CSSProperties
+}
+
+interface BaseTextComponent {
+  textClassName?: string
+
+  textStyle?: CSSProperties
 }
 
 interface BaseIconProps2 extends BaseComponent {
@@ -22,4 +28,15 @@ interface BaseIconProps extends BaseComponent {
   size?: number | string
 }
 
-export { BaseComponent, BaseComponent as default, BaseIconProps, BaseIconProps2 }
+interface PropsWithChildren {
+  children?: ReactNode
+}
+
+export {
+  BaseComponent,
+  BaseTextComponent,
+  PropsWithChildren,
+  BaseIconProps,
+  BaseIconProps2,
+  BaseComponent as default,
+}

@@ -4,6 +4,7 @@
 
 @import '../mixins/libs/tint';
 @import '../functions/index.scss';
+@import './custom.scss';
 
 $hd: 2 !default; // 基本单位
 
@@ -13,10 +14,10 @@ $color-brand-light: #78a4f4 !default;
 $color-brand-dark: #346fc2 !default;
 
 /* Color */
-$color-success: #13ce66 !default;
-$color-error: #ff4949 !default;
-$color-warning: #ffc82c !default;
-$color-info: #78a4fa !default;
+$color-success: #28aa91 !default;
+$color-error: #ff5b60 !default;
+$color-warning: #ff8843 !default;
+$color-info: #3ca0e6 !default;
 
 /* Color Palette */
 $color-black-0: #000 !default;
@@ -33,6 +34,7 @@ $color-grey-5: #f0f0f0 !default;
 $color-grey-6: #f7f7f7 !default;
 
 $color-white: #fff !default;
+$color-transparent: transparent !default;
 
 /* Text Color */
 $color-text-base: #333 !default; // 文字的基本色
@@ -273,10 +275,16 @@ $fta-countdown-card-num-bg-color: $color-white !default;
 $fta-curtain-btn-color: $color-white !default;
 
 /* Divider */
-$fta-divider-height: 112px;
+$fta-divider-height: 112px !default;
 $fta-divider-content-color: $color-brand !default;
 $fta-divider-font-size: $font-size-lg !default;
 $fta-divider-line-color: $color-grey-3 !default;
+
+/* Image */
+$fta-image-width: 240px !default;
+$fta-image-height: 240px !default;
+$fta-image-text-color: $color-grey-1;
+$fta-image-bg-color: $color-bg-base;
 
 /* Drawer */
 $fta-drawer-content-width: 460px !default;
@@ -462,7 +470,28 @@ $fta-tabs-underline-color: $color-grey-5 !default;
 $fta-tabs-bg-color: $color-bg !default;
 
 /* Tag */
-$fta-tag-height: 60px !default;
+$fta-tag-height: zoom(40px) !default;
+$fta-tag-radius: $border-radius-sm !default;
+$fta-tag-horizon-padding: zoom(12px) !default;
+$fta-tag-font-size: zoom(24px) !default;
+$fta-tag-font-size--care: care($fta-tag-font-size) !default;
+$fta-tag-font-weight: $font-weight-normal !default;
+
+$fta-tag-color-primary: $color-brand !default;
+$fta-tag-color-success: $color-success !default;
+$fta-tag-color-warning: $color-warning !default;
+$fta-tag-color-info: $color-info !default;
+$fta-tag-color-error: $color-error !default;
+
+$fta-tag-border-color-primary: $color-brand !default;
+$fta-tag-border-color-success: $color-success !default;
+$fta-tag-border-color-warning: $color-warning !default;
+$fta-tag-border-color-info: $color-info !default;
+$fta-tag-border-color-error: $color-error !default;
+
+$fta-tag-bg-color: $color-white !default;
+
+// deprecated
 $fta-tag-height-sm: 40px !default;
 $fta-tag-color: $color-grey-1 !default;
 $fta-tag-color-primary: $color-grey-1 !default;
