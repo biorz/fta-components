@@ -222,14 +222,17 @@ $fta-badge-dot-size: zoom(16px) !default;
 $fta-badge-height: zoom(32px) !default;
 $fta-badge-min-width: $fta-badge-height !default;
 $fta-badge-horizon-padding: zoom(11px) !default;
-
 $fta-badge-text-size: zoom(24px);
+$fta-badge-coupon-size: zoom(12px);
+$fta-badge-coupon-color: $color-white;
+$fta-badge-sector-size: zoom(80px);
+$fta-badge-sector-text-size: zoom(24px);
 
-$fta-tag-bg-color-primary: $color-brand !default;
-$fta-tag-bg-color-success: $color-success !default;
-$fta-tag-bg-color-warning: $color-warning !default;
-$fta-tag-bg-color-info: $color-info !default;
-$fta-tag-bg-color-error: $color-error !default;
+$fta-badge-bg-color-primary: $color-brand !default;
+$fta-badge-bg-color-success: $color-success !default;
+$fta-badge-bg-color-warning: $color-warning !default;
+$fta-badge-bg-color-info: $color-info !default;
+$fta-badge-bg-color-error: $color-error !default;
 
 /* Button */
 $fta-button-height: 92px !default;

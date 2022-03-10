@@ -1,28 +1,13 @@
 import { CSSProperties, FC } from 'react'
+import BaseComponent, { BaseTextComponent } from './base'
 
 export type BadgeType = 'warning' | 'primary' | 'info' | 'success' | 'error'
 
 export type NumberType = 'overflow' | 'ellipsis' | 'limit'
 
-export type BadgeShape = 'circle' | 'horn' | 'square'
+export type BadgeShape = 'circle' | 'horn' | 'square' | 'coupon' | 'sector'
 
-export interface BadgeProps {
-  /**
-   * 类名
-   */
-  className?: string
-  /**
-   * 内联样式
-   */
-  style?: CSSProperties
-  /**
-   * 文字类名
-   */
-  textClassName?: string
-  /**
-   * 文字内联样式
-   */
-  textStyle?: CSSProperties
+export interface BadgeProps extends BaseComponent, BaseTextComponent {
   /**
    * 不展示数字，只有一个小点
    * @default false

@@ -6,7 +6,7 @@ import { useCareClass, useCarelessClass } from '../../common'
 import '../../style/components/badge/index.scss'
 import { BadgeProps, BadgeShape, BadgeType, NumberType } from '../../types/badge'
 
-const shapes: BadgeShape[] = ['circle', 'horn', 'square']
+const shapes: BadgeShape[] = ['circle', 'horn', 'square', 'sector', 'coupon']
 const types: BadgeType[] = ['primary', 'info', 'success', 'warning', 'error']
 const numberTypes: NumberType[] = ['ellipsis', 'limit', 'overflow']
 // 给定的prop是否在prop列表中，如果是，返回类名，否则返回null
@@ -61,7 +61,7 @@ function Badge(props: BadgeProps): JSX.Element {
     showZero,
     absolute,
     offset,
-    style,
+    customStyle,
     max,
     color,
     bgColor,
@@ -77,26 +77,27 @@ function Badge(props: BadgeProps): JSX.Element {
 
   const realVal = handleValue(value!, max!, numberType!)
   const isSingle = String(realVal).length === 1
-
+  const typeClz = hit<BadgeType>(type!, types, 'fta-badge--')
   const rootClass = classNames(
+    typeClz,
     careClz,
     // 'fta-badge',
     // hit<BadgeType>(type, types, 'fta-badge--'),
     // hit<BadgeShape>(shape, shapes, 'fta-badge--'),
-    hit<BadgeType>(type!, types, 'fta-badge--'),
+
     absolute && 'fta-badge--absolute',
-    isSingle && 'fta-badge--rimless',
+    isSingle && shape === 'circle' && 'fta-badge--rimless',
     className
   )
   const textClz = useCarelessClass(['fta-badge-text'], [textClassName])
   const rootStyle =
     absolute && offset
       ? {
-          ...style,
+          ...customStyle,
           top: offset[0],
           right: offset[1],
         }
-      : { ...style }
+      : { ...customStyle }
   if (bgColor) {
     rootStyle.backgroundColor = bgColor
   }
@@ -113,6 +114,15 @@ function Badge(props: BadgeProps): JSX.Element {
           {realVal}
         </Text>
       )}
+      {shape === 'coupon' ? (
+        <Fragment>
+          <View className={useCareClass(['fta-badge-coupon', 'coupon-left'])} />
+          <View className={useCareClass(['fta-badge-coupon', 'coupon-right'])} />
+        </Fragment>
+      ) : null}
+      {shape === 'sector' ? (
+        <View className={useCarelessClass(['fta-badge-sector'], [typeClz])} />
+      ) : null}
     </View>
   )
 }

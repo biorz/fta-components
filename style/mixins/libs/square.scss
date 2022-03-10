@@ -1,0 +1,11 @@
+@import './radius.scss';
+
+@mixin square($size) {
+  width: $size;
+  height: $size;
+}
+
+@mixin square-circle($size) {
+  @include square($size);
+  @include circle();
+}

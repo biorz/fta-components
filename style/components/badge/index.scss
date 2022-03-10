@@ -14,6 +14,8 @@
 .fta-badge {
   @include flex-center();
   @include circle();
+  @include relative();
+  overflow: hidden;
   height: $fta-badge-height;
   padding: 0 $fta-badge-horizon-padding;
   min-width: $fta-badge-min-width;
@@ -23,6 +25,8 @@
   /* #endif */
 
   &-text {
+    @include relative();
+    z-index: 1;
     color: #fff;
     font-size: $fta-badge-text-size;
     line-height: $fta-badge-height;
@@ -40,23 +44,23 @@
   }
 
   &--error {
-    background-color: $fta-tag-bg-color-error;
+    background-color: $fta-badge-bg-color-error;
   }
 
   &--warning {
-    background-color: $fta-tag-bg-color-warning;
+    background-color: $fta-badge-bg-color-warning;
   }
 
   &--success {
-    background-color: $fta-tag-bg-color-success;
+    background-color: $fta-badge-bg-color-success;
   }
 
   &--info {
-    background-color: $fta-tag-bg-color-info;
+    background-color: $fta-badge-bg-color-info;
   }
 
   &--primary {
-    background-color: $fta-tag-bg-color-primary;
+    background-color: $fta-badge-bg-color-primary;
   }
 
   &--dot {
@@ -92,5 +96,68 @@
 
   &--rimless {
     padding: 0;
+  }
+
+  &--coupon {
+    border-radius: 0;
+  }
+
+  &--sector {
+    @include square($fta-badge-sector-size);
+  }
+
+  &-coupon {
+    @include square-circle($fta-badge-coupon-size);
+    position: absolute;
+    top: zoom(($fta-badge-height - $fta-badge-coupon-size) / 2);
+    background-color: $fta-badge-coupon-color;
+
+    &--care {
+      @include square-circle(care($fta-badge-coupon-size));
+      top: care(zoom(($fta-badge-height - $fta-badge-coupon-size) / 2));
+    }
+  }
+
+  .coupon-left {
+    left: -$fta-badge-coupon-size / 2;
+
+    &--care {
+      left: care(-$fta-badge-coupon-size / 2);
+    }
+  }
+
+  .coupon-right {
+    right: care(-$fta-badge-coupon-size / 2);
+
+    &--care {
+      right: care(-$fta-badge-coupon-size / 2);
+    }
+  }
+
+  &--sector {
+    @include square($fta-badge-sector-size);
+    border-radius: 0;
+    background-color: transparent;
+    flex-direction: row;
+    align-items: flex-start;
+    align-self: flex-start;
+    align-content: flex-start;
+
+    &--care {
+      @include square(care($fta-badge-sector-size));
+    }
+  }
+
+  &-sector {
+    position: absolute;
+    z-index: 0;
+    @include square-circle(2 * $fta-badge-sector-size);
+    bottom: 0;
+    right: -$fta-badge-sector-size;
+
+    &--care {
+      @include square-circle(care(2 * $fta-badge-sector-size));
+      right: care(-$fta-badge-sector-size);
+    }
   }
 }
