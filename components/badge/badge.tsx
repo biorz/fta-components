@@ -1,7 +1,7 @@
 import { Text, View } from '@tarojs/components'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
-import React from 'react'
+import React, { Fragment } from 'react'
 import { useCareClass, useCarelessClass } from '../../common'
 import '../../style/components/badge/index.scss'
 import { BadgeProps, BadgeShape, BadgeType, NumberType } from '../../types/badge'
@@ -68,20 +68,24 @@ function Badge(props: BadgeProps): JSX.Element {
     ...extraProps
   } = props
   // 隐藏直接返回null即可
-  if (!show || (value === 0 && !showZero && !isDot)) return null
+  if (!show || (value === 0 && !showZero && !isDot)) return <Fragment></Fragment>
   const careClz = useCareClass([
     'fta-badge',
-    hit<BadgeShape>(shape, shapes, 'fta-badge--'),
+    hit<BadgeShape>(shape!, shapes, 'fta-badge--'),
     isDot && 'fta-badge--dot',
   ])
+
+  const realVal = handleValue(value!, max!, numberType!)
+  const isSingle = String(realVal).length === 1
 
   const rootClass = classNames(
     careClz,
     // 'fta-badge',
     // hit<BadgeType>(type, types, 'fta-badge--'),
     // hit<BadgeShape>(shape, shapes, 'fta-badge--'),
-    hit<BadgeType>(type, types, 'fta-badge--'),
+    hit<BadgeType>(type!, types, 'fta-badge--'),
     absolute && 'fta-badge--absolute',
+    isSingle && 'fta-badge--rimless',
     className
   )
   const textClz = useCarelessClass(['fta-badge-text'], [textClassName])
@@ -106,7 +110,7 @@ function Badge(props: BadgeProps): JSX.Element {
     <View className={rootClass} style={rootStyle} {...extraProps}>
       {isDot ? null : (
         <Text className={textClz} style={textStyles}>
-          {handleValue(value, max, numberType)}
+          {realVal}
         </Text>
       )}
     </View>
@@ -115,15 +119,14 @@ function Badge(props: BadgeProps): JSX.Element {
 
 const defaultProps: BadgeProps = {
   isDot: false,
-  offset: null,
   show: true,
   type: 'error',
   shape: 'circle',
   showZero: false,
   max: 99,
   numberType: 'overflow',
-  color: null,
-  bgColor: null,
+  color: '',
+  bgColor: '',
 }
 const propTypes: InferProps<BadgeProps> = {
   type: PropTypes.oneOf(types),

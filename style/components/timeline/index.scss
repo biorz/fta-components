@@ -26,7 +26,7 @@
   }
 
   &-dot {
-    border-radius: 100px;
+    @include circle();
     width: 16px;
     height: 16px;
     background-color: #ddd;

@@ -12,7 +12,7 @@
 }
 
 .fta-image--circle {
-  border-radius: 10000px;
+  @include circle();
   overflow: hidden;
 }
 

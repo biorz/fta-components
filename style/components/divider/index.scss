@@ -62,7 +62,7 @@
   &-dot {
     width: 16px;
     height: 16px;
-    border-radius: 100px;
+    @include circle();
     background-color: #909399;
   }
 

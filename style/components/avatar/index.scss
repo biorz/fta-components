@@ -78,7 +78,7 @@
   }
 
   &--circle {
-    border-radius: 10000px;
+    @include circle();
     /* #ifndef rn */
     background-clip: border-box;
     /* #endif */

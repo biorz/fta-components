@@ -216,10 +216,20 @@ $fta-avatar-text-lg: zoom(36px * $hd) !default;
 
 /* Badge */
 $fta-badge-color: $color-white !default;
-$fta-badge-bg-color: $color-error !default;
-$fta-badge-bg: $fta-badge-bg-color !default;
 $fta-badge-font-size: $font-size-xs !default;
-$fta-badge-dot-size: 20px !default;
+$fta-badge-dot-size: zoom(16px) !default;
+
+$fta-badge-height: zoom(32px) !default;
+$fta-badge-min-width: $fta-badge-height !default;
+$fta-badge-horizon-padding: zoom(11px) !default;
+
+$fta-badge-text-size: zoom(24px);
+
+$fta-tag-bg-color-primary: $color-brand !default;
+$fta-tag-bg-color-success: $color-success !default;
+$fta-tag-bg-color-warning: $color-warning !default;
+$fta-tag-bg-color-info: $color-info !default;
+$fta-tag-bg-color-error: $color-error !default;
 
 /* Button */
 $fta-button-height: 92px !default;
@@ -492,20 +502,20 @@ $fta-tag-border-color-error: $color-error !default;
 $fta-tag-bg-color: $color-white !default;
 
 // deprecated
-$fta-tag-height-sm: 40px !default;
-$fta-tag-color: $color-grey-1 !default;
-$fta-tag-color-primary: $color-grey-1 !default;
-$fta-tag-color-active: $color-brand-light !default;
-$fta-tag-color-primary-active: $color-text-base-inverse !default;
-$fta-tag-font-size: $font-size-base !default;
-$fta-tag-font-size-sm: $font-size-xs !default;
-$fta-tag-bg-color: $color-bg-grey !default;
-$fta-tag-bg-color-primary: $color-bg-grey !default;
-$fta-tag-bg-color-active: $color-white !default;
-$fta-tag-bg-color-primary-active: $fta-tag-color-active !default;
-$fta-tag-border-color: $fta-tag-bg-color !default;
-$fta-tag-border-color-primary: $fta-tag-bg-color !default;
-$fta-tag-border-color-active: $fta-tag-color-active !default;
+// $fta-tag-height-sm: 40px !default;
+// $fta-tag-color: $color-grey-1 !default;
+// $fta-tag-color-primary: $color-grey-1 !default;
+// $fta-tag-color-active: $color-brand-light !default;
+// $fta-tag-color-primary-active: $color-text-base-inverse !default;
+// $fta-tag-font-size: $font-size-base !default;
+// $fta-tag-font-size-sm: $font-size-xs !default;
+// $fta-tag-bg-color: $color-bg-grey !default;
+// $fta-tag-bg-color-primary: $color-bg-grey !default;
+// $fta-tag-bg-color-active: $color-white !default;
+// $fta-tag-bg-color-primary-active: $fta-tag-color-active !default;
+// $fta-tag-border-color: $fta-tag-bg-color !default;
+// $fta-tag-border-color-primary: $fta-tag-bg-color !default;
+// $fta-tag-border-color-active: $fta-tag-color-active !default;
 
 /* Textarea */
 $fta-textarea-font-size: $font-size-lg !default;
