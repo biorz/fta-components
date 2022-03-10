@@ -74,7 +74,7 @@ function Badge(props: BadgeProps): JSX.Element {
     hit<BadgeShape>(shape!, shapes, 'fta-badge--'),
     isDot && 'fta-badge--dot',
   ])
-
+  const isSector = shape === 'sector'
   const realVal = handleValue(value!, max!, numberType!)
   const isSingle = String(realVal).length === 1
   const typeClz = hit<BadgeType>(type!, types, 'fta-badge--')
@@ -89,7 +89,10 @@ function Badge(props: BadgeProps): JSX.Element {
     isSingle && shape === 'circle' && 'fta-badge--rimless',
     className
   )
-  const textClz = useCarelessClass(['fta-badge-text'], [textClassName])
+  const textClz = useCarelessClass(
+    ['fta-badge-text', isSector && 'fta-badge--sector__text'],
+    [textClassName]
+  )
   const rootStyle =
     absolute && offset
       ? {
@@ -120,9 +123,7 @@ function Badge(props: BadgeProps): JSX.Element {
           <View className={useCareClass(['fta-badge-coupon', 'coupon-right'])} />
         </Fragment>
       ) : null}
-      {shape === 'sector' ? (
-        <View className={useCarelessClass(['fta-badge-sector'], [typeClz])} />
-      ) : null}
+      {isSector ? <View className={useCarelessClass(['fta-badge-sector'], [typeClz])} /> : null}
     </View>
   )
 }
