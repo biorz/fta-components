@@ -128,9 +128,10 @@ $spacing-v-xl: zoom(12px * $hd) !default;
 $spacing-v-max: zoom(30px * $hd) !default;
 
 /* 图标尺寸 */
-$icon-size-sm: zoom(18px * $hd) !default;
-$icon-size-md: zoom(22px * $hd) !default;
-$icon-size-lg: zoom(36px * $hd) !default;
+$icon-size-sm: zoom(16px * $hd) !default;
+$icon-size-md: zoom(24px * $hd) !default;
+$icon-size-lg: zoom(48px * $hd) !default;
+$icon-radius: zoom(3px * $hd) !default;
 
 /* z-index */
 $zindex-divider: 100 !default;

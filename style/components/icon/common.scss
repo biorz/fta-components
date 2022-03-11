@@ -1,0 +1,30 @@
+@import '../../variables/default.scss';
+@import '../../mixins/index.scss';
+
+.fta-icon {
+  border-radius: $icon-radius;
+
+  &--small {
+    @include square($icon-size-sm);
+
+    &--care {
+      @include square(care($icon-size-sm));
+    }
+  }
+
+  &--medium {
+    @include square($icon-size-md);
+
+    &--care {
+      @include square(care($icon-size-md));
+    }
+  }
+
+  &--large {
+    @include square($icon-size-lg);
+
+    &--care {
+      @include square(care($icon-size-lg));
+    }
+  }
+}

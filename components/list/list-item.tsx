@@ -18,7 +18,6 @@ const arrowIcon = {
 export default class ListItem extends React.Component<ListItemProps> {
   public static defaultProps: ListItemProps
   public static propTypes: InferProps<ListItemProps>
-  public inRN = process.env.TARO_ENV === 'rn'
 
   private handleClick = (event: ITouchEvent): void => {
     if (typeof this.props.onClick === 'function' && !this.props.disabled) {

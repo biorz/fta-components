@@ -1,8 +1,8 @@
-import { Text } from '@tarojs/components'
+import { Image, Text } from '@tarojs/components'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
-import { ConfigConsumer, scale as Scale } from '../../common'
+import { ConfigConsumer, inRN, isNumber, scale as Scale, useClassWithCare } from '../../common'
 import '../../style/components/icon/index.scss'
 import { IconProps } from '../../types/icon'
 
@@ -20,26 +20,41 @@ export default class Icon extends React.Component<IconProps> {
   }
 
   public render(): JSX.Element {
-    const { customStyle, className, prefixClass, value, size, color, scale } = this.props
-
+    const { customStyle, className, prefixClass, value, size, color, scale, src, image } =
+      this.props
+    const IconAdaptor = inRN || image ? Image : Text
     return (
       <ConfigConsumer>
         {({ careMode }) => {
-          const _size = careMode ? size * 1.3 : size
+          let careClass = ''
           const rootStyle = {
-            fontSize: scale ? Scale(_size) : _size,
             ...customStyle,
           }
+          if (isNumber(size)) {
+            const _size = careMode ? size * 1.3 : size
+            if (inRN) {
+              rootStyle.height = scale ? Scale(_size) : _size
+              rootStyle.width = rootStyle.height
+            } else {
+              rootStyle.fontSize = scale ? Scale(_size) : _size
+            }
+          } else {
+            careClass = useClassWithCare(careMode, [`fta-icon--${size}`])
+          }
+
           if (color) {
-            rootStyle.color = color
+            rootStyle[inRN ? 'tintColor' : 'color'] = color
           }
 
           const iconName = value ? `${prefixClass}-${value}` : ''
 
           return (
-            <Text
+            <IconAdaptor
+              src={src!}
               style={rootStyle}
-              className={classNames(prefixClass, iconName, className)}
+              // @ts-ignore
+              tintColor={color}
+              className={classNames(prefixClass, iconName, careClass, className)}
               onClick={this.handleClick}
             />
           )
@@ -56,7 +71,9 @@ Icon.defaultProps = {
   prefixClass: 'fta-icon',
   value: '',
   color: '',
+  src: 'https://imagecdn.ymm56.com/ymmfile/common-operation/65dd3d3d-1b53-4d36-b47a-160fce6d40f6.png',
   size: 24,
+  image: false,
 }
 
 Icon.propTypes = {
