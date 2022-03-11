@@ -1,11 +1,13 @@
-import { Image, Text } from '@tarojs/components'
+import { Image, Text, View } from '@tarojs/components'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
-import React from 'react'
+import React, { Fragment, ReactNode } from 'react'
 import { ConfigConsumer, inRN, isNumber, scale as Scale, useClassWithCare } from '../../common'
 import '../../style/components/icon/index.scss'
 import { IconProps } from '../../types/icon'
+import Badge from '../badge'
 
+const ContainerAdaptor = inRN ? View : Fragment
 export default class Icon extends React.Component<IconProps> {
   public static defaultProps: IconProps
   public static propTypes: InferProps<IconProps>
@@ -13,16 +15,35 @@ export default class Icon extends React.Component<IconProps> {
   constructor(props: IconProps) {
     super(props)
     this.handleClick = this.handleClick.bind(this)
+    // this.renderBadge = this.renderBadge.bind(this)
   }
 
   private handleClick(): void {
     this.props.onClick?.(arguments as any)
   }
 
+  private renderBadge(): ReactNode {
+    const { badge, size } = this.props
+    if (badge) {
+      const { customStyle, className, isDot, ...props } = badge
+      const rootClz = classNames(
+        `fta-icon__${isDot ? 'dot' : 'badge'}`,
+        `fta-icon-${size}__badge${isDot ? '--dot' : ''}`,
+        className
+      )
+      return (
+        <Badge absolute {...props} isDot={isDot} customStyle={customStyle} className={rootClz} />
+      )
+    }
+    return null
+  }
+
   public render(): JSX.Element {
-    const { customStyle, className, prefixClass, value, size, color, scale, src, image } =
+    const { customStyle, className, prefixClass, value, size, color, scale, src, image, badge } =
       this.props
+
     const IconAdaptor = inRN || image ? Image : Text
+
     return (
       <ConfigConsumer>
         {({ careMode }) => {
@@ -49,14 +70,18 @@ export default class Icon extends React.Component<IconProps> {
           const iconName = value ? `${prefixClass}-${value}` : ''
 
           return (
-            <IconAdaptor
-              src={src!}
-              style={rootStyle}
-              // @ts-ignore
-              tintColor={color}
-              className={classNames(prefixClass, iconName, careClass, className)}
-              onClick={this.handleClick}
-            />
+            <ContainerAdaptor>
+              <IconAdaptor
+                src={src!}
+                style={rootStyle}
+                // @ts-ignore
+                tintColor={color}
+                className={classNames(prefixClass, iconName, careClass, className)}
+                onClick={this.handleClick}>
+                {!inRN && badge ? this.renderBadge() : null}
+              </IconAdaptor>
+              {inRN && badge ? this.renderBadge() : null}
+            </ContainerAdaptor>
           )
         }}
       </ConfigConsumer>

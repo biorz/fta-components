@@ -1,15 +1,34 @@
 @import '../../variables/default.scss';
 @import '../../mixins/index.scss';
 
+%badge-offset {
+  top: -$icon-size-md-badge-offset;
+  left: $icon-size-md - $icon-size-md-badge-offset;
+}
+
+%dot-offset {
+  top: -$icon-size-md-dot-offset;
+  left: $icon-size-md - $icon-size-md-dot-offset;
+}
+
 .fta-icon {
   border-radius: $icon-radius;
+  @include relative();
 
-  &--small {
-    @include square($icon-size-sm);
+  // &--small {
+  //   @include square($icon-size-sm);
 
-    &--care {
-      @include square(care($icon-size-sm));
-    }
+  //   &--care {
+  //     @include square(care($icon-size-sm));
+  //   }
+  // }
+
+  &__badge {
+    @extend %badge-offset;
+  }
+
+  &__dot {
+    @extend %dot-offset;
   }
 
   &--medium {
@@ -18,6 +37,13 @@
     &--care {
       @include square(care($icon-size-md));
     }
+
+    // &__badge {
+
+    //   &--dot {
+
+    //   }
+    // }
   }
 
   &--large {
@@ -25,6 +51,16 @@
 
     &--care {
       @include square(care($icon-size-lg));
+    }
+
+    &__badge {
+      top: -$icon-size-lg-badge-offset;
+      left: $icon-size-md - $icon-size-md-badge-offset;
+
+      &--dot {
+        top: -$icon-size-md-dot-offset;
+        left: $icon-size-md - $icon-size-md-dot-offset;
+      }
     }
   }
 }

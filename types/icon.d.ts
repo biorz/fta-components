@@ -1,8 +1,9 @@
 import { CommonEventFunction } from '@tarojs/components/types/common'
 import { ComponentClass } from 'react'
+import { BadgeProps } from './badge'
 import Component from './base'
 
-export type IconSize = 'small' | 'medium' | 'large' | number
+export type IconSize = 'medium' | 'large' | number
 export interface IconProps extends Component {
   /**
    * icon名称
@@ -37,9 +38,12 @@ export interface IconProps extends Component {
    */
   src?: string
   /**
+   * 徽标信息
+   */
+  badge?: BadgeProps
+  /**
    * 点击图标时的回调
    */
-
   onClick?: CommonEventFunction
 }
 
