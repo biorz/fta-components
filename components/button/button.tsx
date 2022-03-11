@@ -1,36 +1,32 @@
 import { Button, Form, Text, View } from '@tarojs/components'
 import { ButtonProps } from '@tarojs/components/types/Button'
 import { BaseEventOrig, CommonEvent } from '@tarojs/components/types/common'
-import Taro from '@tarojs/taro'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
-import React from 'react'
-import { mergeStyle } from '../../common'
+import React, { Component } from 'react'
+import { inAlipay, inWeapp, inWeb } from '../../common'
 import '../../style/components/button/index.scss'
-import { ButtonProps as FTAButtonProps, ButtonState as FTAButtonState } from '../../types/button'
+import { ButtonProps as FTAButtonProps } from '../../types/button'
 import Loading from '../loading'
 
 const SIZE_CLASS = {
-  normal: 'normal',
   small: 'small',
+  medium: 'medium',
+  large: 'large',
 }
 
 const TYPE_CLASS = {
   primary: 'primary',
   secondary: 'secondary',
+  tertiary: 'tertiary',
 }
 
-export default class FTAButton extends React.Component<FTAButtonProps, FTAButtonState> {
+export default class FTAButton extends Component<FTAButtonProps> {
   public static defaultProps: FTAButtonProps
   public static propTypes: InferProps<FTAButtonProps>
 
   public constructor(props: FTAButtonProps) {
     super(props)
-    this.state = {
-      isWEB: Taro.getEnv() === Taro.ENV_TYPE.WEB,
-      isWEAPP: Taro.getEnv() === Taro.ENV_TYPE.WEAPP,
-      isALIPAY: Taro.getEnv() === Taro.ENV_TYPE.ALIPAY,
-    }
   }
 
   private onClick(event: CommonEvent): void {
@@ -59,8 +55,18 @@ export default class FTAButton extends React.Component<FTAButtonProps, FTAButton
     this.props.onOpenSetting && this.props.onOpenSetting(event)
   }
 
+  private get hoverStyle() {
+    const { disabled, hoverStyle } = this.props
+    return disabled ? undefined : hoverStyle
+  }
+
+  private get hoverClass() {
+    const { disabled, hoverClassName, type } = this.props
+    return disabled ? undefined : classNames(`fta-button--${type}--active`, hoverClassName)
+  }
+
   private onSumit(event: CommonEvent): void {
-    if (this.state.isWEAPP || this.state.isWEB) {
+    if (inWeapp || inWeb) {
       // TODO: 3.0 this.$scope
       // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
@@ -72,7 +78,7 @@ export default class FTAButton extends React.Component<FTAButtonProps, FTAButton
   }
 
   private onReset(event: CommonEvent): void {
-    if (this.state.isWEAPP || this.state.isWEB) {
+    if (inWeapp || inWeb) {
       // TODO: 3.0 this.$scope
       // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
@@ -101,25 +107,28 @@ export default class FTAButton extends React.Component<FTAButtonProps, FTAButton
       sendMessageImg,
       showMessageCard,
       appParameter,
-      style,
+      textClassName,
       textStyle,
     } = this.props
-    const { isWEAPP, isALIPAY, isWEB } = this.state
+
     let rootClassName = classNames(
       'fta-button',
       {
         [`fta-button--${SIZE_CLASS[size]}`]: SIZE_CLASS[size],
-        'fta-button--disabled': disabled,
         [`fta-button--${type}`]: TYPE_CLASS[type],
-        'fta-button--circle': circle,
+        [`fta-button--${size}--circle`]: circle,
         'fta-button--full': full,
       },
+      disabled && ['fta-button--disabled', `fta-button--${type}--disabled`],
       this.props.className
     )
 
-    const textClassName = classNames(
+    const textClass = classNames(
       'fta-button__text',
-      `fta-button__text--${TYPE_CLASS[type] || 'default'}`
+      `fta-button__text--${SIZE_CLASS[size] || 'default'}`,
+      `fta-button__text--${TYPE_CLASS[type] || 'default'}`,
+      disabled && `fta-button__text--${type}--disabled`,
+      textClassName
     )
 
     const loadingColor = type === 'primary' ? '#fff' : ''
@@ -128,14 +137,18 @@ export default class FTAButton extends React.Component<FTAButtonProps, FTAButton
     if (loading) {
       loadingComponent = (
         <View className='fta-button__icon'>
-          <Loading color={loadingColor} size={loadingSize} />
+          <Loading color={loadingColor} size={loadingSize as number} />
         </View>
       )
       rootClassName = classNames(rootClassName, 'fta-button--icon')
     }
 
     const webButton = (
-      <Button className='fta-button__wxbutton' lang={lang} formType={formType}></Button>
+      <Button
+        className='fta-button__wxbutton'
+        lang={lang}
+        disabled={disabled}
+        formType={formType}></Button>
     )
 
     const button = (
@@ -160,17 +173,21 @@ export default class FTAButton extends React.Component<FTAButtonProps, FTAButton
     return (
       <View
         className={rootClassName}
-        style={mergeStyle(style, customStyle)}
-        onClick={this.onClick.bind(this)}>
-        {isWEB && !disabled && webButton}
-        {isWEAPP && !disabled && (
+        style={customStyle}
+        onClick={this.onClick.bind(this)}
+        // @ts-ignore
+        hoverClassName={this.hoverClass}
+        hoverStyle={this.hoverStyle}
+        hoverClass={this.hoverClass}>
+        {inWeb && !disabled && webButton}
+        {inWeapp && !disabled && (
           <Form onSubmit={this.onSumit.bind(this)} onReset={this.onReset.bind(this)}>
             {button}
           </Form>
         )}
-        {isALIPAY && !disabled && button}
+        {inAlipay && !disabled && button}
         {loadingComponent}
-        <Text className={textClassName} style={mergeStyle(textStyle)}>
+        <Text className={textClass} style={textStyle}>
           {this.props.children}
         </Text>
       </View>
@@ -179,16 +196,15 @@ export default class FTAButton extends React.Component<FTAButtonProps, FTAButton
 }
 
 FTAButton.propTypes = {
-  size: PropTypes.oneOf(['normal', 'small']),
-  type: PropTypes.oneOf(['primary', 'secondary', '']),
+  size: PropTypes.oneOf(['small', 'medium', 'large']),
+  type: PropTypes.oneOf(['primary', 'secondary', 'tertiary']),
   circle: PropTypes.bool,
   full: PropTypes.bool,
   loading: PropTypes.bool,
   disabled: PropTypes.bool,
   onClick: PropTypes.func,
-  customStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-  style: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-  textStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+  customStyle: PropTypes.object,
+  textStyle: PropTypes.object,
   formType: PropTypes.oneOf(['submit', 'reset', '']),
   openType: PropTypes.oneOf([
     'contact',
@@ -219,6 +235,8 @@ FTAButton.propTypes = {
 
 FTAButton.defaultProps = {
   customStyle: {},
-  style: {},
   textStyle: {},
+  type: 'primary',
+  // size: 'medium',
+  // circle: false,
 }

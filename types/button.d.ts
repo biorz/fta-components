@@ -1,10 +1,10 @@
-import { ButtonProps } from '@tarojs/components/types/Button'
+import { NativeButtonProps } from '@tarojs/components/types/Button'
 import { CommonEventFunction } from '@tarojs/components/types/common'
-import { ComponentClass } from 'react'
-import AtComponent from './base'
+import { ComponentClass, CSSProperties } from 'react'
+import BaseComponent, { BaseTextComponent } from './base'
 
 type TaroButtonProps = Pick<
-  ButtonProps,
+  NativeButtonProps,
   | 'formType'
   | 'openType'
   | 'lang'
@@ -21,16 +21,19 @@ type TaroButtonProps = Pick<
   | 'onError'
 >
 
-export interface ButtonProps extends AtComponent, TaroButtonProps {
+export type ButtonSize = 'small' | 'medium' | 'large'
+export type ButtonType = 'primary' | 'secondary' | 'tertiary'
+
+export interface ButtonProps extends BaseComponent, BaseTextComponent, Partial<TaroButtonProps> {
   /**
    * 按钮的大小
-   * @default 'normal'
+   * @default 'medium'
    */
-  size?: 'normal' | 'small'
+  size?: ButtonSize
   /**
    * 按钮的类型
    */
-  type?: 'primary' | 'secondary'
+  type?: ButtonType
   /**
    * 设置按钮圆角
    * @default false
@@ -52,21 +55,24 @@ export interface ButtonProps extends AtComponent, TaroButtonProps {
    */
   disabled?: boolean
   /**
+   * 按钮激活时的类名
+   * @unsupported rn
+   */
+  hoverClass?: string
+  /**
+   * 按钮激活时的样式
+   * @supported rn
+   */
+  hoverStyle?: CSSProperties
+  /**
+   * 按钮激活时的类名，全平台兼容n, h5和小程序
+   *
+   */
+  hoverClassName?: string
+  /**
    * 点击按钮时触发
    */
   onClick?: CommonEventFunction
-
-  style?: Record<string, any>
-
-  textStyle?: Record<string, any>
-
-  textClassName?: string
-}
-
-export interface ButtonState {
-  isWEB: boolean
-  isWEAPP: boolean
-  isALIPAY: boolean
 }
 
 declare const Button: ComponentClass<ButtonProps>

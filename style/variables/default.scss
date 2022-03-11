@@ -88,16 +88,17 @@ $opacity-disabled: 0.3 !default; // Button 等组件禁用态的透明度
 $font-size-xs: zoom(12px * $hd) !default; // 非常用字号，用于标签
 $font-size-sm: zoom(14px * $hd) !default; // 用于辅助信息
 $font-size-base: zoom(16px * $hd) !default; // 常用字号
+$font-size-md: zoom(16px * $hd) !default; // 常用字号
 $font-size-lg: zoom(18px * $hd) !default; // 常规标题
 $font-size-xl: zoom(20px * $hd) !default; // 大标题
 $font-size-xxl: zoom(22px * $hd) !default; // 用于大号的数字
 
-$font-size-xs--care: cares(12px * $hd) !default; // 非常用字号，用于标签
-$font-size-sm--care: cares(14px * $hd) !default; // 用于辅助信息
-$font-size-base--care: cares(16px * $hd) !default; // 常用字号
-$font-size-lg--care: cares(18px * $hd) !default; // 常规标题
-$font-size-xl--care: cares(20px * $hd) !default; // 大标题
-$font-size-xxl--care: cares(22px * $hd) !default; // 用于大号的数字
+// $font-size-xs--care: cares(12px * $hd) !default; // 非常用字号，用于标签
+// $font-size-sm--care: cares(14px * $hd) !default; // 用于辅助信息
+// $font-size-base--care: cares(16px * $hd) !default; // 常用字号
+// $font-size-lg--care: cares(18px * $hd) !default; // 常规标题
+// $font-size-xl--care: cares(20px * $hd) !default; // 大标题
+// $font-size-xxl--care: cares(22px * $hd) !default; // 用于大号的数字
 
 /* Font Weight */
 $font-weight-light: 300;
@@ -240,11 +241,82 @@ $fta-badge-bg-color-info: $color-info !default;
 $fta-badge-bg-color-error: $color-error !default;
 
 /* Button */
-$fta-button-height: 92px !default;
+$fta-button-height: zoom(92px) !default;
+$fta-button-height-lg: zoom(88px) !default;
+$fta-button-height-md: zoom(64px) !default;
+$fta-button-height-sm: zoom(48px) !default;
+
+$fta-button-width-lg: zoom(660px) !default;
+$fta-button-width-md: zoom(320px) !default;
+
+$fta-button-padding-lg: zoom(24px) !default;
+$fta-button-padding-md: zoom(24px) !default;
+$fta-button-padding-sm: zoom(24px) !default;
+
+$fta-button-radius-lg: zoom(16px) !default;
+$fta-button-radius-md: zoom(12px) !default;
+$fta-button-radius-sm: zoom(8px) !default;
+
+$fta-button-circle-radius-lg: zoom(50px) !default;
+$fta-button-circle-radius-md: zoom(36px) !default;
+$fta-button-circle-radius-sm: zoom(28px) !default;
+
+$fta-button-bg-color-primary: $color-brand !default;
+$fta-button-bg-color-secondary: $color-white !default;
+$fta-button-bg-color-tertiary: $color-white !default;
+
+$fta-button-bg-color-active-primary: $color-brand !default;
+$fta-button-bg-color-active-secondary: $color-white !default;
+$fta-button-bg-color-active-tertiary: $color-white !default;
+
+$fta-button-opacity-active-primary: 0.8 !default;
+$fta-button-opacity-active-secondary: 0.8 !default;
+$fta-button-opacity-active-tertiary: 0.8 !default;
+
+$fta-button-bg-color-active-primary: $color-brand !default;
+$fta-button-bg-color-active-secondary: $color-white !default;
+$fta-button-bg-color-active-tertiary: $color-white !default;
+// 禁用
+$fta-button-bg-color-disabled-primary: $color-brand !default;
+$fta-button-bg-color-disabled-secondary: $color-white !default;
+$fta-button-bg-color-disabled-tertiary: $color-white !default;
+
+$fta-button-opacity-disabled-primary: 0.4 !default;
+$fta-button-opacity-disabled-secondary: 0.4 !default;
+$fta-button-opacity-disabled-tertiary: 0.4 !default;
+
+$fta-button-color-disabled-primary: $color-white !default;
+$fta-button-color-disabled-secondary: $color-brand !default;
+$fta-button-color-disabled-tertiary: $color-brand !default;
+
+$fta-button-color-primary: $color-white !default;
+$fta-button-color-secondary: $color-brand !default;
+$fta-button-color-tertiary: $color-brand !default;
+
+$fta-button-border-color-primary: $color-brand !default;
+$fta-button-border-color-secondary: $color-brand !default;
+$fta-button-border-color-tertiary: $color-brand !default;
+
+$fta-button-border-color-active-primary: $color-brand !default;
+$fta-button-border-color-active-secondary: $color-brand !default;
+$fta-button-border-color-active-tertiary: $color-white !default;
+
+$fta-button-font-size-lg: $font-size-md !default;
+$fta-button-font-size-md: $font-size-sm !default;
+$fta-button-font-size-sm: $font-size-xs !default;
+
+// prettier-ignore
+$fta-button-border-width-primary: 0 !default;
+// prettier-ignore
+$fta-button-border-width-secondary: 1PX !default;
+// prettier-ignore
+$fta-button-border-width-tertiary: 1PX !default;
+
 $fta-button-height-sm: 60px !default;
 $fta-button-color: $color-brand !default;
 $fta-button-border-color-primary: $color-brand !default;
 $fta-button-border-color-secondary: $color-brand !default;
+$fta-button-border-color-tertiary: $color-brand !default;
 $fta-button-bg: $fta-button-color !default;
 
 /* Float Button */

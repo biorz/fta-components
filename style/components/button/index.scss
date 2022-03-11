@@ -1,52 +1,43 @@
 @import '../../variables/default.scss';
-// @import '../../mixins/index.scss';
+@import '../../mixins/index.scss';
 
-.at-web-button {
-  border: 0;
-  background: transparent;
-  padding: 0;
-  // outline: none;
-  box-shadow: none;
-}
+// .at-web-button {
+//   border: 0;
+//   background: transparent;
+//   padding: 0;
+//   // outline: none;
+//   box-shadow: none;
+// }
 
 .fta-button {
-  position: relative;
+  @include relative();
+
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   margin: 0 auto;
   padding: 0 $spacing-h-xl;
-  height: $fta-button-height;
+  height: $fta-button-height-lg;
   color: $color-text-base;
   font-size: $font-size-lg;
   line-height: $fta-button-height - 2;
   text-align: center;
   border-radius: $border-radius-md;
-  border: 1px solid $color-border-base;
+  // prettier-ignore
+  border: 1PX solid $color-border-base;
   // box-sizing: border-box;
   // @include line();
 
-  &:active {
-    opacity: $opacity-active;
-  }
+  // &:active {
+  //   opacity: $opacity-active;
+  // }
 
   /* elements */
 
   &__icon {
     // display: inline-block;
     margin: 2px 20px 0 20px;
-  }
-
-  &__text {
-    // display: inline;
-    &--primary {
-      color: $color-text-base-inverse;
-    }
-
-    &--secondary {
-      color: $fta-button-color;
-    }
   }
 
   &__wxbutton {
@@ -75,46 +66,160 @@
   &--disabled {
     opacity: $opacity-disabled;
 
-    &:active {
-      opacity: $opacity-disabled;
+    // &:active {
+    //   opacity: $opacity-disabled;
+    // }
+  }
+
+  &--large {
+    height: $fta-button-height-lg;
+    padding: 0 $fta-button-padding-lg;
+    border-radius: $fta-button-radius-lg;
+    width: $fta-button-width-lg;
+
+    &--circle {
+      border-radius: $fta-button-circle-radius-lg;
     }
   }
 
-  &--primary {
-    border: 1px solid $fta-button-border-color-primary;
-    background: $fta-button-bg;
+  &--medium {
+    height: $fta-button-height-md;
+    padding: 0 $fta-button-padding-md;
+    border-radius: $fta-button-radius-md;
+    width: $fta-button-width-md;
+
+    &--circle {
+      border-radius: $fta-button-circle-radius-md;
+    }
   }
 
+  &--small {
+    height: $fta-button-height-sm;
+    padding: 0 $fta-button-padding-sm;
+    border-radius: $fta-button-radius-sm;
+
+    &--circle {
+      border-radius: $fta-button-circle-radius-sm;
+    }
+  }
+
+  // 一级主要按钮
+  &--primary {
+    border: $fta-button-border-width-primary solid $fta-button-border-color-primary;
+    background-color: $fta-button-bg-color-primary;
+
+    &--disabled {
+      background-color: $fta-button-bg-color-disabled-primary;
+      opacity: $fta-button-opacity-disabled-primary;
+    }
+
+    &--active {
+      background-color: $fta-button-bg-color-active-primary;
+      opacity: $fta-button-opacity-active-primary;
+    }
+  }
+
+  // 二级次要按钮
   &--secondary {
-    border: 1px solid $fta-button-border-color-secondary;
-    background-color: $color-white;
+    border: $fta-button-border-width-secondary solid $fta-button-border-color-secondary;
+    background-color: $fta-button-bg-color-secondary;
+
+    &--disabled {
+      background-color: $fta-button-bg-color-disabled-secondary;
+      opacity: $fta-button-opacity-disabled-secondary;
+    }
+
+    &--active {
+      background-color: $fta-button-bg-color-active-secondary;
+      opacity: $fta-button-opacity-active-secondary;
+    }
+  }
+
+  // 三级次要按钮
+  &--tertiary {
+    border: $fta-button-border-width-tertiary solid $fta-button-border-color-tertiary;
+    background-color: $fta-button-bg-color-tertiary;
+
+    &--disabled {
+      background-color: $fta-button-bg-color-disabled-tertiary;
+      opacity: $fta-button-opacity-disabled-tertiary;
+    }
+
+    &--active {
+      background-color: $fta-button-bg-color-active-tertiary;
+      opacity: $fta-button-opacity-active-tertiary;
+    }
+  }
+
+  &__text {
+    /* #ifndef rn*/
+    white-space: nowrap;
+    /* #endif */
+    // display: inline;
+    &--primary {
+      color: $fta-button-color-primary;
+
+      &--disabled {
+        color: $fta-button-color-disabled-primary;
+      }
+    }
+
+    &--secondary {
+      color: $fta-button-color-secondary;
+
+      &--disabled {
+        color: $fta-button-color-disabled-secondary;
+      }
+    }
+
+    &--tertiary {
+      color: $fta-button-color-tertiary;
+
+      &--disabled {
+        color: $fta-button-color-disabled-tertiary;
+      }
+    }
+
+    &--large {
+      font-size: $fta-button-font-size-lg;
+    }
+
+    &--medium {
+      font-size: $fta-button-font-size-md;
+    }
+
+    &--small {
+      font-size: $fta-button-font-size-sm;
+    }
   }
 
   &--circle {
     border-radius: $fta-button-height / 2;
-    // background-clip: border-box;
+    /* #ifndef rn */
+    background-clip: border-box;
+    /* #endif */
     overflow: hidden;
   }
 
-  &--small {
-    padding: 0 $spacing-h-md;
-    width: auto;
-    min-width: 100px;
-    max-width: 710px;
-    height: $fta-button-height-sm;
-    font-size: $font-size-base;
-    line-height: $fta-button-height-sm - 2;
+  // &--small {
+  //   padding: 0 $spacing-h-md;
+  //   width: auto;
+  //   min-width: 100px;
+  //   max-width: 710px;
+  //   height: $fta-button-height-sm;
+  //   font-size: $font-size-base;
+  //   line-height: $fta-button-height-sm - 2;
 
-    &.fta-button--circle {
-      border-radius: $fta-button-height-sm / 2;
-    }
-  }
+  //   &.fta-button--circle {
+  //     border-radius: $fta-button-height-sm / 2;
+  //   }
+  // }
 
   &--full {
     width: 100%;
     max-width: 100%;
     border-radius: 0;
-    // border-left: none;
-    // border-right: none;
+    border-left-width: 0;
+    border-right-width: 0;
   }
 }
