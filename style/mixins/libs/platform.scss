@@ -1,0 +1,97 @@
+// 条件编译
+
+@mixin rn {
+  /* #ifdef rn */
+  @content;
+  /* #endif */
+}
+
+@mixin nrn {
+  /* #ifndef rn */
+  @content;
+  /* #endif */
+}
+
+@mixin weapp {
+  /* #ifdef weapp */
+  @content;
+  /* #endif */
+}
+
+@mixin nweapp {
+  /* #ifndef weapp */
+  @content;
+  /* #endif */
+}
+
+@mixin h5 {
+  /* #ifdef h5 */
+  @content;
+  /* #endif */
+}
+
+@mixin nh5 {
+  /* #ifndef h5 */
+  @content;
+  /* #endif */
+}
+
+@mixin alipay {
+  /* #ifdef alipay */
+  @content;
+  /* #endif */
+}
+
+@mixin nalipay {
+  /* #ifndef alipay */
+  @content;
+  /* #endif */
+}
+
+@mixin tt {
+  /* #ifdef tt */
+  @content;
+  /* #endif */
+}
+
+@mixin ntt {
+  /* #ifndef tt */
+  @content;
+  /* #endif */
+}
+
+@mixin qq {
+  /* #ifdef qq */
+  @content;
+  /* #endif */
+}
+
+@mixin nqq {
+  /* #ifndef qq */
+  @content;
+  /* #endif */
+}
+
+@mixin swan {
+  /* #ifdef swan */
+  @content;
+  /* #endif */
+}
+
+@mixin nswan {
+  /* #ifndef swan */
+  @content;
+  /* #endif */
+}
+
+@mixin quickapp {
+  /* #ifdef quickapp */
+  @content;
+  /* #endif */
+}
+
+@mixin nquickapp {
+  /* #ifndef quickapp */
+  @content;
+  /* #endif */
+}

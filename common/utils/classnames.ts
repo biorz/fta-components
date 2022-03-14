@@ -67,7 +67,7 @@ const useCarelessClass = (
   const careMode = useConfig('careMode')
   return classNames(
     ...(nonCareClasszz ?? []).concat(
-      careMode ? careClazz.map((v) => `${v} ${v}${suffix}`) : careClazz
+      careMode ? careClazz.map((v) => (isString(v) ? `${v} ${v}${suffix}` : '')) : careClazz
     )
   )
 }

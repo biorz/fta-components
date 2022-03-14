@@ -15,7 +15,7 @@ export const inAlipay = TARO_ENV === 'alipay'
 /** 系统相关信息 */
 export const systemInfo = getSystemInfoSync()
 /** 像素比 */
-export const deviceRatio = systemInfo.windowWidth / 375
+export const deviceRatio = systemInfo.windowWidth / 750
 /** 统一尺寸后缀 */
 export const px = inRN ? (size: number) => size : (size: number) => size && `${size}px`
 /** 自动缩放  */

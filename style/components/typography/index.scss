@@ -1,126 +1,86 @@
-@import '../../../common/theme/variables/common/neutral.prod.scss';
+// @import '../../../common/theme/variables/common/neutral.prod.scss';
 @import '../../mixins/index.scss';
+@import '../../variables/default.scss';
 
-.fta-typography {
-}
+.fta-text {
+  @include nrn {
+    line-height: $line-height-base;
+  }
 
-@function scale($size) {
-  @return round($size * 720 / 750);
-}
+  &--1 {
+    color: $color-text-xxl;
+    font-size: $font-size-xxl;
+    line-height: $line-height-xxl;
+    &--care {
+      font-size: care($font-size-xxl);
+      @include rn {
+        line-height: care($line-height-xxl);
+      }
+    }
+  }
 
-.fta-text--1 {
-  color: $color-title;
-  font-size: scale(44px);
-}
+  &--2 {
+    color: $color-text-xl;
+    font-size: $font-size-xl;
+    line-height: $line-height-xl;
 
-.fta-text--2 {
-  color: $color-title;
-  font-size: scale(40px);
-}
+    &--care {
+      font-size: care($font-size-xl);
+      @include rn {
+        line-height: care($line-height-xl);
+      }
+    }
+  }
 
-.fta-text--3 {
-  color: $color-main;
-  font-size: scale(36px);
-}
+  &--3 {
+    color: $color-text-lg;
+    font-size: $font-size-lg;
+    line-height: $line-height-lg;
 
-.fta-text--4 {
-  color: $color-main;
-  font-size: scale(32px);
-}
+    &--care {
+      font-size: care($font-size-lg);
+      @include rn {
+        line-height: care($line-height-lg);
+      }
+    }
+  }
 
-.fta-text--5 {
-  color: $color-main;
-  font-size: scale(28px);
-}
+  &--4 {
+    color: $color-text-md;
+    font-size: $font-size-md;
+    line-height: $line-height-md;
 
-.fta-text--6 {
-  color: $color-primary;
-  font-size: scale(24px);
-}
+    &--care {
+      font-size: care($font-size-md);
+      @include rn {
+        line-height: care($line-height-md);
+      }
+    }
+  }
 
-.fta-text--1--care {
-  font-size: care(scale(44px));
-}
+  &--5 {
+    color: $color-text-sm;
+    font-size: $font-size-sm;
+    line-height: $line-height-sm;
 
-.fta-text--2--care {
-  font-size: care(scale(40px));
-}
+    &--care {
+      font-size: care($font-size-sm);
+      @include rn {
+        line-height: care($line-height-sm);
+      }
+    }
+  }
 
-.fta-text--3--care {
-  font-size: care(scale(36px));
-}
+  &--6 {
+    color: $color-text-xs;
+    font-size: $font-size-xs;
+    line-height: $line-height-xs;
 
-.fta-text--4--care {
-  font-size: care(scale(32px));
-}
-
-.fta-text--5--care {
-  font-size: care(scale(28px));
-}
-
-.fta-text--6--care {
-  font-size: care(scale(24px));
-}
-
-@import '../../mixins/index.scss';
-
-.fta-typography {
-}
-
-@function scale($size) {
-  @return round($size * 720 / 750);
-}
-
-.fta-text--1 {
-  color: $color-title;
-  font-size: scale(44px);
-}
-
-.fta-text--2 {
-  color: $color-title;
-  font-size: scale(40px);
-}
-
-.fta-text--3 {
-  color: $color-main;
-  font-size: scale(36px);
-}
-
-.fta-text--4 {
-  color: $color-main;
-  font-size: scale(32px);
-}
-
-.fta-text--5 {
-  color: $color-main;
-  font-size: scale(28px);
-}
-
-.fta-text--6 {
-  color: $color-primary;
-  font-size: scale(24px);
-}
-
-.fta-text--1--care {
-  font-size: care(scale(44px));
-}
-
-.fta-text--2--care {
-  font-size: care(scale(40px));
-}
-
-.fta-text--3--care {
-  font-size: care(scale(36px));
-}
-
-.fta-text--4--care {
-  font-size: care(scale(32px));
-}
-
-.fta-text--5--care {
-  font-size: care(scale(28px));
-}
-
-.fta-text--6--care {
-  font-size: care(scale(24px));
+    &--care {
+      font-size: care($font-size-xs);
+      @include rn {
+        line-height: care($line-height-xs);
+      }
+    }
+  }
 }

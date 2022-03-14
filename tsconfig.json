@@ -19,6 +19,6 @@
     "resolveJsonModule": true
   },
   "compileOnSave": false,
-  "include": ["index.ts", "global.d.ts", "components/*", "common/*"],
+  "include": ["index.ts", "global.d.ts", "components/**/*", "common/**/*"],
   "exclude": ["node_modules/*", "dist/*"]
 }
