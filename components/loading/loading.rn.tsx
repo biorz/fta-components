@@ -18,8 +18,7 @@ export default class Loading extends React.Component<LoadingProps> {
     const { color, size = defaultLoadingSize } = this.props
     // TODO: check function
     const roundSize = Math.floor(pxTransform((size as number) || defaultLoadingSize) as number)
-    console.log(this.props, roundSize)
-    return <ActivityIndicator color={color} size={14} />
+    return <ActivityIndicator color={color} size={roundSize} />
   }
 }
 

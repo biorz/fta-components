@@ -1,5 +1,5 @@
 @import '../../variables/default.scss';
-// @import '../../mixins/index.scss';
+@import '../../mixins/index.scss';
 
 @keyframes fta-loading {
   0% {
@@ -12,23 +12,22 @@
 }
 
 .fta-loading {
-  // display: inline-block;
-  position: relative;
-  width: $fta-loading-size;
-  height: $fta-loading-size;
+  @include relative();
+  @include square($fta-loading-size);
 
   &__ring {
-    /* #ifndef rn */
-    box-sizing: border-box;
-    display: block;
-    position: absolute;
-    border-radius: 50%;
-    animation: fta-loading 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    /* #endif */
-    width: $fta-loading-size;
-    height: $fta-loading-size;
+    @include nrn {
+      box-sizing: border-box;
+      display: block;
+      position: absolute;
+      border-radius: 50%;
+      animation: fta-loading 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    }
+
+    @include square($fta-loading-size);
     margin: 1px;
-    border-width: 1px;
+    // prettier-ignore
+    border-width: 2PX;
     border-style: solid;
     border-color: $fta-loading-color transparent transparent transparent;
 
@@ -42,6 +41,23 @@
 
     &:nth-child(3) {
       animation-delay: -0.15s;
+    }
+  }
+
+  &--custom {
+    @include square($fta-loading-size * 2);
+
+    &__image {
+      @include square(100%);
+      @include nrn {
+        animation: fta-loading 1s linear infinite;
+      }
+    }
+  }
+
+  &--circle {
+    @include nrn() {
+      border-radius: 50%;
     }
   }
 }
