@@ -12,52 +12,64 @@
 }
 
 .fta-loading {
+  overflow: hidden;
   @include relative();
   @include square($fta-loading-size);
+  @include nrn {
+    font-size: 0;
+  }
 
-  &__ring {
+  // border-color: $fta-loading-color;
+
+  &--small {
+    @include square($fta-loading-size-sm);
+  }
+
+  &--medium {
+    @include square($fta-loading-size-md);
+  }
+
+  &--large {
+    @include square($fta-loading-size-lg);
+  }
+
+  &__view {
     @include nrn {
       box-sizing: border-box;
-      display: block;
-      position: absolute;
-      border-radius: 50%;
-      animation: fta-loading 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+      animation: fta-loading 1s linear infinite;
     }
-
-    @include square($fta-loading-size);
-    margin: 1px;
+    @include circle();
+    @include square(100%);
     // prettier-ignore
-    border-width: 2PX;
+    border-width: $fta-loading-width-sm;
     border-style: solid;
-    border-color: $fta-loading-color transparent transparent transparent;
+    border-color: $fta-loading-color $fta-loading-color $fta-loading-color transparent;
+    // border-left-width: 0;
+    // border-left-style: dashed;
+    // border-left-color: transparent;
 
-    &:nth-child(1) {
-      animation-delay: -0.45s;
+    &--small {
+      border-width: $fta-loading-width-sm;
     }
 
-    &:nth-child(2) {
-      animation-delay: -0.3s;
+    &--medium {
+      border-width: $fta-loading-width-md;
     }
 
-    &:nth-child(3) {
-      animation-delay: -0.15s;
+    &--large {
+      border-width: $fta-loading-width-lg;
     }
   }
 
-  &--custom {
-    @include square($fta-loading-size * 2);
-
-    &__image {
-      @include square(100%);
-      @include nrn {
-        animation: fta-loading 1s linear infinite;
-      }
+  &__image {
+    @include square(100%);
+    @include nrn {
+      animation: fta-loading 1s linear infinite;
+      transform-origin: center;
     }
   }
 
   &--circle {
-    @include nrn() {
-      border-radius: 50%;
-    }
+    @include circle();
   }
 }

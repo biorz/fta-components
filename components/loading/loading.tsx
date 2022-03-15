@@ -1,43 +1,51 @@
-import { View } from '@tarojs/components'
-import PropTypes, { InferProps } from 'prop-types'
-import React from 'react'
-import { pxTransform } from '../../common'
+import { Image, View } from '@tarojs/components'
+import classNames from 'classnames'
+import React, { CSSProperties } from 'react'
 import '../../style/components/loading/index.scss'
 import { LoadingProps } from '../../types/loading'
+import { Assets } from './assets'
 
-export default class Loading extends React.Component<LoadingProps> {
-  public static defaultProps: LoadingProps
-  public static propTypes: InferProps<LoadingProps>
-
-  public render(): JSX.Element {
-    const { color, size } = this.props
-    const loadingSize = typeof size === 'string' ? size : String(size)
-    const sizeStyle = {
-      width: size ? `${pxTransform(parseInt(loadingSize))}` : '',
-      height: size ? `${pxTransform(parseInt(loadingSize))}` : '',
-    }
-    const colorStyle = {
-      border: color ? `1px solid ${color}` : '',
-      borderColor: color ? `${color} transparent transparent transparent` : '',
-    }
-    const ringStyle = Object.assign({}, colorStyle, sizeStyle)
-    // console.log('size', size, loadingSize, sizeStyle)
-    return (
-      <View className='fta-loading' style={sizeStyle}>
-        <View className='fta-loading__ring' style={ringStyle}></View>
-        <View className='fta-loading__ring' style={ringStyle}></View>
-        <View className='fta-loading__ring' style={ringStyle}></View>
-      </View>
-    )
+function Loading(props: LoadingProps): JSX.Element {
+  const { src, customStyle, className, stop, duration, easing, circle, useImage, size, color } =
+    props
+  const rootClz = classNames(
+    'fta-loading',
+    `fta-loading--${size}`,
+    circle && 'fta-loading--circle',
+    className
+  )
+  const imageStyle: CSSProperties = { animationDuration: `${duration}s` }
+  if (stop) {
+    imageStyle.animationPlayState = 'paused'
   }
+  if (color) {
+    imageStyle.borderColor = color
+    imageStyle.borderLeftColor = 'transparent'
+  }
+
+  imageStyle.animationTimingFunction = Array.isArray(easing)
+    ? `cubic-bezier(${easing.toString()})`
+    : easing
+
+  return (
+    <View className={rootClz} style={customStyle}>
+      {useImage ? (
+        <Image className='fta-loading__image' style={imageStyle} src={src!} />
+      ) : (
+        <View
+          className={classNames('fta-loading__view', `fta-loading__view--${size}`)}
+          style={imageStyle}
+        />
+      )}
+    </View>
+  )
 }
 
 Loading.defaultProps = {
-  size: 0,
-  color: '',
+  src: Assets.default,
+  duration: 1,
+  easing: 'linear',
+  size: 'medium',
 }
 
-Loading.propTypes = {
-  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  color: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-}
+export default Loading

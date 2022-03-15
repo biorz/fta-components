@@ -451,7 +451,16 @@ $fta-load-more-tips-color: $color-grey-1 !default;
 $fta-load-more-tips-size: $font-size-lg !default;
 
 /* Loading */
-$fta-loading-size: 36px !default;
+$fta-loading-size-sm: zoom(32px) !default;
+$fta-loading-size-md: zoom(40px) !default;
+$fta-loading-size-lg: zoom(48px) !default;
+$fta-loading-size: $fta-loading-size-sm !default;
+// prettier-ignore
+$fta-loading-width-sm: 1PX !default;
+// prettier-ignore
+$fta-loading-width-md: 2PX !default;
+// prettier-ignore
+$fta-loading-width-lg: 3PX !default;
 $fta-loading-color: $color-brand !default;
 
 /* Message */

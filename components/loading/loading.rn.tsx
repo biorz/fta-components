@@ -1,33 +1,107 @@
-import PropTypes, { InferProps } from 'prop-types'
-import React from 'react'
-import { ActivityIndicator } from 'react-native'
-import { pxTransform } from '../../common'
+import { View } from '@tarojs/components'
+import classNames from 'classnames'
+import React, { useEffect, useRef } from 'react'
+import { Animated, Easing } from 'react-native'
+import { inAndroid } from '../../common'
 import '../../style/components/loading/index.scss'
+import { BaseEasing, LoadingProps } from '../../types/loading'
+import { Assets } from './assets'
 
-const defaultLoadingSize = 36
-interface LoadingProps {
-  size?: string | number
-  color?: string | number
+const EASING: Record<BaseEasing, any> = {
+  ease: Easing.inOut(Easing.ease),
+  linear: Easing.linear,
+  'ease-in': Easing.in(Easing.ease),
+  'ease-out': Easing.out(Easing.ease),
+  'ease-in-out': Easing.inOut(Easing.ease),
 }
 
-export default class Loading extends React.Component<LoadingProps> {
-  public static defaultProps: LoadingProps
-  public static propTypes: InferProps<LoadingProps>
+function Loading(props: LoadingProps): JSX.Element {
+  const angleAnim = useRef<number>(new Animated.Value(0)).current
+  const animateRef = useRef({
+    stop: () => {},
+    start: () => {},
+  })
 
-  public render(): JSX.Element {
-    const { color, size = defaultLoadingSize } = this.props
-    // TODO: check function
-    const roundSize = Math.floor(pxTransform((size as number) || defaultLoadingSize) as number)
-    return <ActivityIndicator color={color} size={roundSize} />
+  const {
+    src,
+    customStyle,
+    className,
+    stop,
+    duration,
+    easing,
+    circle,
+    useImage,
+    size,
+    color,
+    tintColor,
+  } = props
+
+  const run = () => {
+    animateRef.current = Animated.loop(
+      Animated.timing(angleAnim, {
+        duration: duration! * 1000,
+        toValue: 1,
+        useNativeDriver: false,
+        easing: EASING[easing as BaseEasing] || Easing.bezier.apply(easing),
+      })
+    )
+    animateRef.current.start()
   }
+  // @ts-ignore
+  const spin = angleAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '360deg'],
+  })
+
+  useEffect(() => {
+    stop ? animateRef.current.stop?.() : run()
+    return animateRef.current.stop
+  }, [stop])
+
+  const rootClz = classNames('fta-loading', `fta-loading--${size}`, className)
+  const borderStyle = color
+    ? {
+        borderTopColor: color,
+        borderRightColor: color,
+        borderBottomColor: color,
+        borderLeftColor: 'transparent',
+      }
+    : {}
+  return (
+    <View className={rootClz} style={{ ...customStyle, borderRadius: circle ? 1000 : 0 }}>
+      {useImage ? (
+        <Animated.Image
+          source={{ uri: src }}
+          className='fta-loading__image'
+          style={[{ transform: [{ rotate: spin }] }]}
+        />
+      ) : (
+        <Animated.View
+          className={classNames('fta-loading__view', `fta-loading__view--${size}`)}
+          style={{ transform: [{ rotate: spin }], ...borderStyle }}>
+          {inAndroid ? (
+            <View
+              style={{
+                width: '100%',
+                height: '100%',
+                top: '50%',
+                left: '50%',
+                backgroundColor: tintColor,
+              }}
+            />
+          ) : null}
+        </Animated.View>
+      )}
+    </View>
+  )
 }
 
 Loading.defaultProps = {
-  size: 0,
-  color: '',
+  size: 'medium',
+  src: Assets.default,
+  duration: 1,
+  easing: 'linear',
+  tintColor: '#fff',
 }
 
-Loading.propTypes = {
-  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  color: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-}
+export default Loading
