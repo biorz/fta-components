@@ -91,8 +91,9 @@ export default class FTAButton extends Component<FTAButtonProps> {
 
   public render(): JSX.Element {
     const {
-      size = 'normal',
-      type = '',
+      // @ts-ignore
+      size,
+      type,
       circle,
       full,
       loading,
@@ -114,8 +115,8 @@ export default class FTAButton extends Component<FTAButtonProps> {
     let rootClassName = classNames(
       'fta-button',
       {
-        [`fta-button--${SIZE_CLASS[size]}`]: SIZE_CLASS[size],
-        [`fta-button--${type}`]: TYPE_CLASS[type],
+        [`fta-button--${SIZE_CLASS[size!]}`]: SIZE_CLASS[size!],
+        [`fta-button--${type}`]: TYPE_CLASS[type!],
         [`fta-button--${size}--circle`]: circle,
         'fta-button--full': full,
       },
@@ -125,22 +126,24 @@ export default class FTAButton extends Component<FTAButtonProps> {
 
     const textClass = classNames(
       'fta-button__text',
-      `fta-button__text--${SIZE_CLASS[size] || 'default'}`,
-      `fta-button__text--${TYPE_CLASS[type] || 'default'}`,
+      `fta-button__text--${SIZE_CLASS[size!] || 'default'}`,
+      `fta-button__text--${TYPE_CLASS[type!] || 'default'}`,
       disabled && `fta-button__text--${type}--disabled`,
       textClassName
     )
 
     const loadingColor = type === 'primary' ? '#fff' : ''
-    const loadingSize = size === 'small' ? '30' : 0
-    let loadingComponent: JSX.Element | null = null
-    if (loading) {
+    // const loadingSize = size === 'small' ? '30' : 0
+    let loadingComponent: JSX.Element
+    if (loading === true) {
       loadingComponent = (
         <View className='fta-button__icon'>
-          <Loading color={loadingColor} size={loadingSize as number} />
+          <Loading color={loadingColor} size={size} useImage />
         </View>
       )
-      rootClassName = classNames(rootClassName, 'fta-button--icon')
+      rootClassName = classNames(rootClassName)
+    } else {
+      loadingComponent = loading as JSX.Element
     }
 
     const webButton = (
@@ -237,6 +240,7 @@ FTAButton.defaultProps = {
   customStyle: {},
   textStyle: {},
   type: 'primary',
+  // size: 'medium',
   // size: 'medium',
   // circle: false,
 }

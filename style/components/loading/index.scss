@@ -17,6 +17,7 @@
   @include square($fta-loading-size);
   @include nrn {
     font-size: 0;
+    line-height: 0;
   }
 
   // border-color: $fta-loading-color;

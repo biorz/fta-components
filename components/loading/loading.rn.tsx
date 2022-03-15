@@ -42,7 +42,7 @@ function Loading(props: LoadingProps): JSX.Element {
         duration: duration! * 1000,
         toValue: 1,
         useNativeDriver: false,
-        easing: EASING[easing as BaseEasing] || Easing.bezier.apply(easing),
+        easing: EASING[easing as BaseEasing] || Easing.bezier(...(easing as number[])),
       })
     )
     animateRef.current.start()

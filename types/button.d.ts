@@ -48,7 +48,7 @@ export interface ButtonProps extends BaseComponent, BaseTextComponent, Partial<T
    * 设置按钮的载入状态
    * @default false
    */
-  loading?: boolean
+  loading?: boolean | JSX.Element
   /**
    * 设置按钮为禁用态（不可点击）
    * @default false
