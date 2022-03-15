@@ -41,10 +41,6 @@ export interface NoticeBarProps extends BaseComponent {
    * 关闭时触发
    */
   onClose?: (event: CommonEvent) => void
-  /**
-   * 点击”查看更多“时触发
-   */
-  onGotoMore?: (event: CommonEvent) => void
 }
 
 export interface NoticeBarState {

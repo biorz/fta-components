@@ -48,7 +48,7 @@
   &__close {
     position: absolute;
     top: 50%;
-    left: $spacing-h-lg;
+    right: $spacing-h-lg;
     width: $fta-noticebar-btn-close-size;
     height: $fta-noticebar-btn-close-size;
     transform: translate3d(0, -50%, 0);
@@ -74,6 +74,14 @@
     + .fta-noticebar__content {
       margin-left: care(50px);
     }
+  }
+
+  &__closable {
+    margin-right: 50px;
+  }
+
+  &__closable--care {
+    margin-right: care(50px);
   }
 
   &__more {
