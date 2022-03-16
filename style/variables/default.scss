@@ -487,9 +487,11 @@ $fta-nav-bar-title-color: $color-text-base !default;
 $fta-nav-bar-link-color: $color-brand !default;
 
 /* NoticeBar */
-$fta-noticebar-text-color: #de8c17 !default;
-$fta-noticebar-bg-color: #fcf6ed !default;
-$fta-noticebar-font-size: $font-size-sm !default;
+$fta-noticebar-padding: zoom(18px) zoom(28px) !default;
+$fta-noticebar-text-color: #ff5b00 !default;
+$fta-noticebar-bg-color: #fff3e8 !default;
+$fta-noticebar-font-size: $font-size-md !default;
+$fta-noticebar-line-height: $line-height-md !default;
 $fta-noticebar-icon-size: 30px !default;
 $fta-noticebar-btn-close-size: 32px !default;
 $fta-noticebar-btn-close-color: $color-grey-3 !default;

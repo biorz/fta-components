@@ -1,3 +1,4 @@
+export * from './common'
 export { ActionSheetItem, default as ActionSheet } from './components/action-sheet'
 export { default as AnimateView } from './components/animate-view'
 export { default as Avatar } from './components/avatar'

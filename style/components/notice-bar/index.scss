@@ -61,19 +61,11 @@
     .fta-icon-close--care {
       font-size: care($fta-noticebar-btn-close-size);
     }
-
-    + .fta-noticebar__content {
-      margin-left: 50px;
-    }
   }
 
   &__close--care {
     width: care($fta-noticebar-btn-close-size);
     height: care($fta-noticebar-btn-close-size);
-
-    + .fta-noticebar__content {
-      margin-left: care(50px);
-    }
   }
 
   &__closable {

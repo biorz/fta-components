@@ -1,3 +1,4 @@
+export * from '../common'
 export { ActionSheetItem, default as ActionSheet } from './action-sheet'
 export { default as AnimateView } from './animate-view'
 export { default as Avatar } from './avatar'
