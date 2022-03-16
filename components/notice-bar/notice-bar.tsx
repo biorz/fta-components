@@ -4,7 +4,7 @@ import Taro from '@tarojs/taro'
 import classNames from 'classnames'
 import { InferProps } from 'prop-types'
 import React from 'react'
-import { ConfigConsumer, useClassesWithCare } from '../../common'
+import { ConfigConsumer, inWeb, useClassesWithCare } from '../../common'
 import '../../style/components/icon/index.scss'
 import '../../style/components/notice-bar/index.scss'
 import { NoticeBarProps, NoticeBarState } from '../../types/notice-bar'
@@ -56,7 +56,7 @@ class NoticeBar extends React.Component<NoticeBarProps, NoticeBarState> {
     const { isWEAPP, isALIPAY } = this.state
     this.timeout = setTimeout(() => {
       this.timeout = null
-      if (this.state.isWEB) {
+      if (inWeb) {
         const { speed = 100 } = this.props
         const elem = document.querySelector(`.${this.state.animElemId}`)
         if (!elem) return

@@ -493,8 +493,9 @@ $fta-noticebar-bg-color: #fff3e8 !default;
 $fta-noticebar-font-size: $font-size-md !default;
 $fta-noticebar-line-height: $line-height-md !default;
 $fta-noticebar-icon-size: 30px !default;
-$fta-noticebar-btn-close-size: 32px !default;
-$fta-noticebar-btn-close-color: $color-grey-3 !default;
+$fta-noticebar-btn-close-size: zoom(32px) !default;
+$fta-noticebar-btn-close-margin-left: zoom(55px) !default;
+$fta-noticebar-btn-close-color: #ff5b00 !default;
 
 /* Pagination */
 $fta-pagination-margin: 40px !default;
