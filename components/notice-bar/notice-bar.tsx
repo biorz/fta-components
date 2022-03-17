@@ -3,14 +3,23 @@ import { CommonEvent } from '@tarojs/components/types/common'
 import Taro from '@tarojs/taro'
 import classNames from 'classnames'
 import { InferProps } from 'prop-types'
-import React from 'react'
-import { ConfigConsumer, inWeb, useClassesWithCare } from '../../common'
-import '../../style/components/icon/index.scss'
+import React, { Component, CSSProperties } from 'react'
+import {
+  ConfigConsumer,
+  inAlipay,
+  inRN,
+  inWeapp,
+  inWeb,
+  isBoolean,
+  isString,
+  useClassesWithCare,
+} from '../../common'
 import '../../style/components/notice-bar/index.scss'
 import { NoticeBarProps, NoticeBarState } from '../../types/notice-bar'
+import Icon from '../icon'
 import { defaultProps, propTypes } from './common'
 
-class NoticeBar extends React.Component<NoticeBarProps, NoticeBarState> {
+class NoticeBar extends Component<NoticeBarProps, NoticeBarState> {
   public static defaultProps: NoticeBarProps
   public static propTypes: InferProps<NoticeBarProps>
 
@@ -27,9 +36,6 @@ class NoticeBar extends React.Component<NoticeBarProps, NoticeBarState> {
         actions: [{}],
       },
       dura: 15,
-      isWEAPP: Taro.getEnv() === Taro.ENV_TYPE.WEAPP,
-      isALIPAY: Taro.getEnv() === Taro.ENV_TYPE.ALIPAY,
-      isWEB: Taro.getEnv() === Taro.ENV_TYPE.WEB,
     }
   }
 
@@ -39,7 +45,7 @@ class NoticeBar extends React.Component<NoticeBarProps, NoticeBarState> {
     })
     this.props.onClose && this.props.onClose(event)
   }
-
+  // TODO: 优化
   public UNSAFE_componentWillReceiveProps(): void {
     if (!this.timeout) {
       this.interval && clearInterval(this.interval)
@@ -53,7 +59,8 @@ class NoticeBar extends React.Component<NoticeBarProps, NoticeBarState> {
   }
 
   private initAnimation(): void {
-    const { isWEAPP, isALIPAY } = this.state
+    // RN端动画单独做兼容
+    if (inRN) return
     this.timeout = setTimeout(() => {
       this.timeout = null
       if (inWeb) {
@@ -63,7 +70,7 @@ class NoticeBar extends React.Component<NoticeBarProps, NoticeBarState> {
         const width = elem.getBoundingClientRect().width
         const dura = width / +speed
         this.setState({ dura })
-      } else if (isWEAPP || isALIPAY) {
+      } else if (inWeapp || inAlipay) {
         const query = Taro.createSelectorQuery()
         const queryCb = (res) => {
           const queryRes = res[0]
@@ -110,75 +117,102 @@ class NoticeBar extends React.Component<NoticeBarProps, NoticeBarState> {
     }, 1000)
   }
 
-  public render(): JSX.Element | boolean {
-    const { single, icon, marquee, customStyle, className } = this.props
-    let { close } = this.props
-    const { dura, show, animElemId, animationData, isWEAPP, isALIPAY } = this.state
-    const rootClassName = ['fta-noticebar']
+  public render(): JSX.Element | null {
+    const { single, icon, marquee, customStyle, className, textClassName, textStyle, children } =
+      this.props
+    let close = this.props.close
+    const { dura, show, animElemId, animationData } = this.state
+    const rootClassName = 'fta-noticebar'
 
-    const style = {}
-    const innerClassName = ['fta-noticebar__content-inner']
+    const style: CSSProperties = {}
+    const innerClassName = [
+      'fta-noticebar__content-inner',
+      marquee && 'fta-noticebar__content-inner--marquee',
+    ]
     if (marquee) {
       close = false
       style['animation-duration'] = `${dura}s`
-      innerClassName.push(animElemId)
+      innerClassName.push(animElemId as string)
     }
 
     const classObject = {
       'fta-noticebar--marquee': marquee,
-      'fta-noticebar--weapp': marquee && (isWEAPP || isALIPAY),
-      'fta-noticebar--single': !marquee && single,
+      'fta-noticebar--weapp': marquee && (inAlipay || inWeapp),
     }
 
-    const iconClass = ['fta-icon']
-    if (icon) iconClass.push(`fta-icon-${icon}`)
+    // const iconClass = ['fta-icon']
+    // if (icon) iconClass.push(`fta-icon-${icon}`)
 
-    return (
-      show && (
-        <ConfigConsumer>
-          {({ careMode }) => {
-            const [closeViewClz, closeClz, iconClz, textClz, closeableClz] =
-              useClassesWithCare.single(
-                careMode,
-                'fta-noticebar__close',
-                'fta-icon-close',
-                iconClass[0],
-                'fta-noticebar__content-text',
-                close && 'fta-noticebar__closable'
-              )
+    return show ? (
+      <ConfigConsumer>
+        {({ careMode }) => {
+          const [closeViewClz, closeClz, textClz] = useClassesWithCare.single(
+            careMode,
+            'fta-noticebar__close',
+            'fta-icon-close',
+            // iconClass[0],
+            'fta-noticebar__content-text'
+            // close && 'fta-noticebar__closable'
+          )
 
-            return (
-              <View
-                className={classNames(rootClassName, classObject, className)}
-                style={customStyle}>
-                <View className={classNames('fta-noticebar__content', closeableClz)}>
-                  {icon && (
-                    <View className='fta-noticebar__content-icon'>
-                      {/* start hack 百度小程序 */}
-                      <Text className={classNames(iconClass, iconClz)}></Text>
-                    </View>
-                  )}
-                  <View className={textClz}>
-                    <View
-                      id={animElemId}
-                      animation={animationData}
-                      className={classNames(innerClassName)}
-                      style={style}>
-                      {this.props.children}
-                    </View>
-                  </View>
+          return (
+            <View className={classNames(rootClassName, classObject, className)} style={customStyle}>
+              {icon ? (
+                <View className='fta-noticebar-icon'>
+                  {/* start hack 百度小程序 */}
+                  {/* <Text className={classNames(iconClass, iconClz)}></Text> */}
+                  {icon}
                 </View>
-                {close && (
-                  <View className={closeViewClz} onClick={this.onClose.bind(this)}>
-                    <Text className={`fta-icon ${closeClz}`}></Text>
-                  </View>
-                )}
+              ) : null}
+              <View
+                className={classNames(
+                  'fta-noticebar__content',
+                  marquee && 'fta-noticebar__content--marquee'
+                )}>
+                <View
+                  id={animElemId}
+                  animation={animationData}
+                  className={classNames(
+                    innerClassName,
+                    !marquee && single && 'fta-noticebar--single'
+                  )}
+                  style={style}>
+                  {isString(children) ? (
+                    <Text
+                      className={classNames(
+                        textClz,
+                        { 'fta-noticebar__text--single': single },
+                        { 'fta-noticebar__text--marquee': marquee },
+                        textClassName
+                      )}
+                      // @ts-ignore
+                      numberOfLines={single ? 1 : void 0}>
+                      {children}
+                    </Text>
+                  ) : (
+                    children
+                  )}
+                </View>
               </View>
-            )
-          }}
-        </ConfigConsumer>
-      )
-    )
+              {/* 右侧图标，默认为关闭图标 */}
+              {close === false ? null : (
+                <View className={closeViewClz} onClick={this.onClose.bind(this)}>
+                  {isBoolean(close) ? (
+                    <Icon
+                      className={closeClz}
+                      value='close'
+                      src='https://image.ymm56.com/ymmfile/operation-biz/a5e1c2a8-e59e-4bb8-9a59-c8092d058258.png'
+                    />
+                  ) : (
+                    close
+                  )}
+                </View>
+              )}
+            </View>
+          )
+        }}
+      </ConfigConsumer>
+    ) : null
   }
 }
 

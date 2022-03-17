@@ -5,18 +5,17 @@ export const defaultProps: NoticeBarProps = {
   close: false,
   single: false,
   marquee: false,
+  icon: false,
   speed: 100,
-  icon: '',
-  customStyle: {},
 }
 
 export const propTypes: InferProps<NoticeBarProps> = {
-  close: PropTypes.bool,
+  close: PropTypes.oneOfType([PropTypes.element, PropTypes.bool]),
   single: PropTypes.bool,
   marquee: PropTypes.bool,
   speed: PropTypes.number,
   moreText: PropTypes.string,
-  icon: PropTypes.string,
+  icon: PropTypes.oneOfType([PropTypes.element, PropTypes.bool]),
   customStyle: PropTypes.object,
   onClose: PropTypes.func,
 }

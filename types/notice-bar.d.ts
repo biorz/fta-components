@@ -1,18 +1,23 @@
 import { CommonEvent } from '@tarojs/components/types/common'
-import { ComponentClass } from 'react'
-import BaseComponent from './base'
+import { ComponentClass, ReactNode } from 'react'
+import BaseComponent, { BaseTextComponent } from './base'
 
-export interface NoticeBarProps extends BaseComponent {
+export interface NoticeBarProps extends BaseComponent, BaseTextComponent {
   /**
-   * 是否需要关闭按钮
+   * 是否需要关闭按钮, 可传入自定义节点覆盖
    * @default false
    */
-  close?: boolean
+  close?: boolean | ReactNode
   /**
    * 内容是否单行
    * @default false
    */
   single?: boolean
+  /**
+   * 左右图标位置是否对调
+   * @default false
+   */
+  reverse?: boolean
   /**
    * 内容是否滚动（内容只能单行）
    * @default false
@@ -36,7 +41,7 @@ export interface NoticeBarProps extends BaseComponent {
   /**
    * 内容前的 Icon 图标(react native不支持)
    */
-  icon?: string
+  icon?: ReactNode
   /**
    * 关闭时触发
    */
@@ -50,9 +55,6 @@ export interface NoticeBarState {
     actions: object[]
   }
   dura?: number
-  isWEAPP?: boolean
-  isALIPAY?: boolean
-  isWEB?: boolean
 }
 
 declare const NoticeBar: ComponentClass<NoticeBarProps>
