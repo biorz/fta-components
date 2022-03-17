@@ -17,6 +17,7 @@ import {
 import '../../style/components/notice-bar/index.scss'
 import { NoticeBarProps, NoticeBarState } from '../../types/notice-bar'
 import Icon from '../icon'
+import { AnimatedView } from './animation'
 import { defaultProps, propTypes } from './common'
 
 class NoticeBar extends Component<NoticeBarProps, NoticeBarState> {
@@ -140,6 +141,12 @@ class NoticeBar extends Component<NoticeBarProps, NoticeBarState> {
       'fta-noticebar--weapp': marquee && (inAlipay || inWeapp),
     }
 
+    const composeTextStyle = {
+      ...textStyle,
+    }
+
+    const AnimatedAdaptor = inRN && marquee ? AnimatedView : View
+
     // const iconClass = ['fta-icon']
     // if (icon) iconClass.push(`fta-icon-${icon}`)
 
@@ -169,7 +176,7 @@ class NoticeBar extends Component<NoticeBarProps, NoticeBarState> {
                   'fta-noticebar__content',
                   marquee && 'fta-noticebar__content--marquee'
                 )}>
-                <View
+                <AnimatedAdaptor
                   id={animElemId}
                   animation={animationData}
                   className={classNames(
@@ -179,6 +186,7 @@ class NoticeBar extends Component<NoticeBarProps, NoticeBarState> {
                   style={style}>
                   {isString(children) ? (
                     <Text
+                      style={composeTextStyle}
                       className={classNames(
                         textClz,
                         { 'fta-noticebar__text--single': single },
@@ -186,13 +194,13 @@ class NoticeBar extends Component<NoticeBarProps, NoticeBarState> {
                         textClassName
                       )}
                       // @ts-ignore
-                      numberOfLines={single ? 1 : void 0}>
+                      numberOfLines={single || marquee ? 1 : 0}>
                       {children}
                     </Text>
                   ) : (
                     children
                   )}
-                </View>
+                </AnimatedAdaptor>
               </View>
               {/* 右侧图标，默认为关闭图标 */}
               {close === false ? null : (

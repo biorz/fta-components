@@ -3,7 +3,7 @@
 .fta-noticebar {
   display: flex;
   @include relative();
-  padding: $spacing-v-sm $spacing-h-lg;
+  padding: $fta-noticebar-padding;
 
   background-color: $fta-noticebar-bg-color;
   flex-direction: row;
@@ -58,7 +58,7 @@
 
     &-text {
       font-size: $fta-noticebar-font-size;
-      line-height: 0;
+      // line-height: 0;
 
       &--care {
         font-size: care($fta-noticebar-font-size);
