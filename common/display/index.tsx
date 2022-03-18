@@ -353,6 +353,7 @@ export const Layout = withCare(
     title: string
     qrcode?: string
     className?: string
+    style?: CSSProperties
     showLeft?: boolean
     safeArea?: boolean
   }): JSX.Element {
@@ -397,7 +398,7 @@ export const Layout = withCare(
 
     return (
       <>
-        <View className={classNames('fta-demo', props.className)}>
+        <View className={classNames('fta-demo', props.className)} style={props.style}>
           {inAlipay ? null : (
             <NavBar
               safeAreaStyle={{ backgroundColor: '#fff' }}

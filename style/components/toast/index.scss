@@ -1,24 +1,16 @@
 @import '../../variables/default.scss';
 @import '../../mixins/index.scss';
 
-$fta-toast-bg: rgba(
-  $color: #000000,
-  $alpha: 0.75,
-) !default;
-$fta-toast-padding: 19px 30px !default;
-$fta-toast-radius: 20px !default;
-$fta-toast-z-index: 99 !default;
-$fta-toast-max-width: 690px !default;
-$fta-toast-min-width: 200px !default;
-$fta-toast-offset: 200px !default;
-
 $toast-prefix: 'fta-toast';
 
 %absolute-fill {
   top: 0;
-  bottom: 0;
   left: 0;
+  bottom: 0;
   right: 0;
+  /* #ifndef rn */
+
+  /* #endif */
 }
 
 .#{$toast-prefix} {
@@ -29,26 +21,81 @@ $toast-prefix: 'fta-toast';
   position: fixed;
   /* #endif */
   @extend %absolute-fill;
-  flex: 1;
-  z-index: $fta-toast-z-index;
+  // flex: 1;
+  z-index: $zindex-toast;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  &__text {
+  &--custom {
+    height: 100vh;
+  }
+
+  &-view {
+    display: flex;
+    align-self: center;
     /* #ifndef rn */
-    display: block;
+    width: fit-content;
     pointer-events: auto;
     animation: fta-toast-text 0.2s ease;
     /* #endif */
-    background-color: $fta-toast-bg;
+    background-color: $fta-toast-bg-color;
     padding: $fta-toast-padding;
     border-radius: $fta-toast-radius;
-    color: $color-white;
     max-width: $fta-toast-max-width;
     min-width: $fta-toast-min-width;
+
+    &--loading {
+      flex-direction: column;
+      align-items: center;
+      border-radius: $fta-toast-loading-radius;
+      justify-content: center;
+    }
+
+    &--icon {
+      flex-direction: row;
+    }
+  }
+
+  &-loading {
+    @include square($fta-toast-loading-size);
+
+    margin-bottom: $fta-toast-loading-margin-bottom;
+  }
+
+  &__text {
+    @include nrn {
+      color: $fta-toast-color !important;
+    }
+    @include rn {
+      color: $fta-toast-color;
+    }
     text-align: center;
+  }
+
+  &--overlay {
+    @include overlay;
+  }
+
+  &--transparent {
+    /* #ifndef rn */
+    pointer-events: none;
+    /* #endif */
+  }
+
+  &--center {
+    align-items: center;
+  }
+
+  &--top {
+    align-items: flex-start;
+    padding-top: $fta-toast-offset;
+  }
+
+  &--bottom {
+    align-items: flex-end;
+    padding-bottom: $fta-toast-offset;
   }
 }
 
@@ -59,28 +106,4 @@ $toast-prefix: 'fta-toast';
   to {
     opacity: 1;
   }
-}
-
-.#{$toast-prefix}--overlay {
-  @include overlay;
-}
-
-/* #ifndef rn */
-.#{$toast-prefix}--transparent {
-  pointer-events: none;
-}
-/* #endif */
-
-.#{$toast-prefix}--center {
-  align-items: center;
-}
-
-.#{$toast-prefix}--top {
-  align-items: flex-start;
-  padding-top: $fta-toast-offset;
-}
-
-.#{$toast-prefix}--bottom {
-  align-items: flex-end;
-  padding-bottom: $fta-toast-offset;
 }

@@ -1,8 +1,9 @@
 import React, { CSSProperties, ReactNode } from 'react'
+import BaseComponent, { BaseTextComponent } from './base'
 
 export type ToastPostion = 'top' | 'center' | 'bottom'
 
-export interface ToastProps {
+export interface ToastProps extends BaseComponent, BaseTextComponent {
   /**
    * 提示文本
    */
@@ -19,6 +20,15 @@ export interface ToastProps {
    */
   mask?: boolean
   /**
+   * 是否展示loading图标，可自定义
+   * @default false
+   */
+  loading?: ReactNode
+  /**
+   * 文字前展示图标
+   */
+  icon?: ReactNode
+  /**
    * 遮罩层是否透明
    * @default true
    */
@@ -29,22 +39,6 @@ export interface ToastProps {
    */
   position?: ToastPostion
   /**
-   * 类名
-   */
-  className?: string
-  /**
-   * 内联样式
-   */
-  style?: CSSProperties
-  /**
-   * 文本类名
-   */
-  textClassName?: string
-  /**
-   * 文本内联样式
-   */
-  textStyle?: CSSProperties
-  /**
    * 文本等级 1-6
    * @default 4
    */
@@ -54,6 +48,24 @@ export interface ToastProps {
    * @default true
    */
   clickMaskOnClose?: boolean
+  /**
+   * 窗体类名
+   */
+  containerClassName?: boolean
+  /**
+   * 容器内联样式
+   */
+  customContainerStyle?: CSSProperties
+  /**
+   * 点击遮罩层的回调
+   */
+  onMaskClick?: () => void
+  /**
+   * 是否使用显示遮罩层
+   * @default true
+   * @supported rn
+   */
+  useNative?: boolean
 }
 
 export interface ToastRefMethods {

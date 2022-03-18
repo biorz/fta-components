@@ -1,6 +1,6 @@
 import { View } from '@tarojs/components'
 import classNames from 'classnames'
-import React, { useEffect, useRef } from 'react'
+import React, { CSSProperties, useEffect, useRef } from 'react'
 import { Animated, Easing } from 'react-native'
 import { inAndroid } from '../../common'
 import '../../style/components/loading/index.scss'
@@ -15,7 +15,7 @@ const EASING: Record<BaseEasing, any> = {
   'ease-in-out': Easing.inOut(Easing.ease),
 }
 
-function Loading(props: LoadingProps): JSX.Element {
+function Loading(props: LoadingProps & { style?: CSSProperties }): JSX.Element {
   const angleAnim = useRef<number>(new Animated.Value(0)).current
   const animateRef = useRef({
     stop: () => {},
@@ -26,6 +26,7 @@ function Loading(props: LoadingProps): JSX.Element {
     src,
     customStyle,
     className,
+    style,
     stop,
     duration,
     easing,
@@ -53,6 +54,8 @@ function Loading(props: LoadingProps): JSX.Element {
     outputRange: ['0deg', '360deg'],
   })
 
+  console.log(style, 'style......')
+
   useEffect(() => {
     stop ? animateRef.current.stop?.() : run()
     return animateRef.current.stop
@@ -68,7 +71,7 @@ function Loading(props: LoadingProps): JSX.Element {
       }
     : {}
   return (
-    <View className={rootClz} style={{ ...customStyle, borderRadius: circle ? 1000 : 0 }}>
+    <View className={rootClz} style={{ ...customStyle, ...style, borderRadius: circle ? 1000 : 0 }}>
       {useImage ? (
         <Animated.Image
           source={{ uri: src }}

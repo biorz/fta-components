@@ -640,3 +640,18 @@ $fta-timeline-dot-size: 24px !default;
 $fta-timeline-dot-color: $color-bg !default;
 $fta-timeline-dot-border-color: $color-brand-light !default;
 $fta-timeline-line-color: $color-border-lighter !default;
+
+/* Toast */
+$fta-toast-color: $color-white;
+$fta-toast-bg-color: rgba(
+  $color: #000000,
+  $alpha: 0.8,
+) !default;
+$fta-toast-padding: zoom(30px) zoom(28px) !default;
+$fta-toast-min-width: zoom(164px) !default;
+$fta-toast-max-width: zoom(448px) !default;
+$fta-toast-offset: zoom(200px) !default;
+$fta-toast-radius: zoom(16px) !default;
+$fta-toast-loading-radius: zoom(12px) !default;
+$fta-toast-loading-size: zoom(56px) !default;
+$fta-toast-loading-margin-bottom: zoom(15px) !default;
