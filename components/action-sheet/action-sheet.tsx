@@ -98,7 +98,7 @@ class ActionSheet extends React.Component<ActionSheetProps, ActionSheetState> {
     return (
       <Modal transparent visible={inRN ? _isOpened : true} useNative={useNativeModal}>
         <View className={rootClass} style={customStyle} onTouchMove={this.handleTouchMove}>
-          <View onClick={this.close} className='fta-action-sheet__overlay' />
+          <View onClick={this.close} className='fta-action-sheet__overlay' catchMove />
           <Motion _isOpened={_isOpened}>
             {(value) => (
               <View className={containerClz} style={{ ...containerStyle, bottom: px(value.x) }}>
