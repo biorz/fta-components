@@ -1,12 +1,8 @@
 /**
  * Default variables
  */
-
-@import '../mixins/libs/tint';
 @import '../functions/index.scss';
 @import './custom.scss';
-
-$hd: 2 !default; // 基本单位
 
 /* The Color of FTA Brand */
 $color-brand: #fa871e !default;
@@ -62,27 +58,27 @@ $color-link-disabled: #bfbfbf !default;
 $color-bg: #fff !default;
 $color-bg-base: #fafbfc !default;
 $color-bg-light: #ecf5fd !default;
-$color-bg-lighter: tint($color-bg-light, 50%) !default;
+$color-bg-lighter: #ecf5fd !default;
 $color-bg-grey: #f7f7f7 !default;
 
 /* 边框颜色 */
 $color-border-base: #c5d9e8 !default;
-$color-border-split: tint($color-border-base, 20%) !default; // 分割线
-$color-border-light: tint($color-border-base, 30%) !default;
-$color-border-lighter: tint($color-border-base, 50%) !default;
-$color-border-lightest: tint($color-border-base, 80%) !default;
+$color-border-split: #c5d9e8 !default; // 分割线
+$color-border-light: #c5d9e8 !default;
+$color-border-lighter: #c5d9e8 !default;
+$color-border-lightest: #c5d9e8 !default;
 $color-border-grey: #ccc !default;
 
 /* 图标颜色 */
 $color-icon-base: #ccc !default;
 
 /* Border Radius */
-$border-radius-xs: zoom(2px * $hd) !default;
-$border-radius-sm: zoom(4px * $hd) !default;
-$border-radius-md: zoom(6px * $hd) !default;
-$border-radius-lg: zoom(8px * $hd) !default;
-$border-radius-xl: zoom(10px * $hd) !default;
-$border-radius-xxl: zoom(12px * $hd) !default;
+$border-radius-xs: zoom(4px) !default;
+$border-radius-sm: zoom(8px) !default;
+$border-radius-md: zoom(12px) !default;
+$border-radius-lg: zoom(16px) !default;
+$border-radius-xl: zoom(20px) !default;
+$border-radius-xxl: zoom(24px) !default;
 /* #ifdef rn */
 $border-radius-circle: 50% !default;
 /* #endif */
@@ -92,13 +88,13 @@ $opacity-active: 0.6 !default; // Button 等组件点击态额透明度
 $opacity-disabled: 0.3 !default; // Button 等组件禁用态的透明度
 
 /* Font Size*/
-$font-size-xs: zoom(12px * $hd) !default; // 非常用字号，用于标签
-$font-size-sm: zoom(14px * $hd) !default; // 用于辅助信息
-$font-size-base: zoom(16px * $hd) !default; // 常用字号
+$font-size-xs: zoom(24px) !default; // 非常用字号，用于标签
+$font-size-sm: zoom(28px) !default; // 用于辅助信息
+$font-size-base: zoom(32px) !default; // 常用字号
 $font-size-md: $font-size-base !default; // 常用字号
-$font-size-lg: zoom(18px * $hd) !default; // 常规标题
-$font-size-xl: zoom(20px * $hd) !default; // 大标题
-$font-size-xxl: zoom(22px * $hd) !default; // 用于大号的数字
+$font-size-lg: zoom(36px) !default; // 常规标题
+$font-size-xl: zoom(40px) !default; // 大标题
+$font-size-xxl: zoom(44px) !default; // 用于大号的数字
 
 /* Line Height */
 $line-height-base: 1.3 !default; // 常用字号
@@ -129,29 +125,29 @@ $font-weight-bolder: 600 !default;
 $font-weight-boldest: 700 !default;
 
 /* 水平间距 */
-$spacing-h-sm: zoom(4px * $hd) !default;
-$spacing-h-md: zoom(8px * $hd) !default;
-$spacing-h-lg: zoom(12px * $hd) !default;
-$spacing-h-xl: zoom(16px * $hd) !default;
-$spacing-h-max: zoom(30px * $hd) !default;
+$spacing-h-sm: zoom(8px) !default;
+$spacing-h-md: zoom(16px) !default;
+$spacing-h-lg: zoom(24px) !default;
+$spacing-h-xl: zoom(32px) !default;
+$spacing-h-max: zoom(60px) !default;
 
 /* 垂直间距 */
-$spacing-v-xs: zoom(4px * $hd) !default;
-$spacing-v-sm: zoom(6px * $hd) !default;
-$spacing-v-md: zoom(8px * $hd) !default;
-$spacing-v-lg: zoom(10px * $hd) !default;
-$spacing-v-xl: zoom(12px * $hd) !default;
-// $spacing-v-xxl: zoom(14px * $hd) !default;
-$spacing-v-max: zoom(30px * $hd) !default;
+$spacing-v-xs: zoom(8px) !default;
+$spacing-v-sm: zoom(12px) !default;
+$spacing-v-md: zoom(16px) !default;
+$spacing-v-lg: zoom(20px) !default;
+$spacing-v-xl: zoom(24px) !default;
+// $spacing-v-xxl: zoom(14px ) !default;
+$spacing-v-max: zoom(60px) !default;
 
 /* 图标尺寸 */
-$icon-size-md: zoom(24px * $hd) !default;
-$icon-size-lg: zoom(48px * $hd) !default;
-$icon-size-md-badge-offset: zoom(12px * $hd) !default;
-$icon-size-lg-badge-offset: zoom(8px * $hd) !default;
-$icon-size-md-dot-offset: zoom(6px * $hd) !default;
-$icon-size-lg-dot-offset: zoom(6px * $hd) !default;
-$icon-radius: zoom(3px * $hd) !default;
+$icon-size-md: zoom(48px) !default;
+$icon-size-lg: zoom(96px) !default;
+$icon-size-md-badge-offset: zoom(24px) !default;
+$icon-size-lg-badge-offset: zoom(16px) !default;
+$icon-size-md-dot-offset: zoom(12px) !default;
+$icon-size-lg-dot-offset: zoom(12px) !default;
+$icon-radius: zoom(6px) !default;
 
 /* z-index */
 $zindex-divider: 100 !default;
@@ -220,20 +216,20 @@ $fta-avatar-color: $color-white !default; // 字体颜色
 $fta-avatar-bg-color: $color-grey-3 !default; // 背景色
 $fta-avatar-weight: $font-weight-bolder !default; //字重
 // 图片尺寸
-$fta-avatar-size-xs: zoom(48px * $hd) !default;
-$fta-avatar-size-sm: zoom(56px * $hd) !default;
-$fta-avatar-size-md: zoom(72px * $hd) !default;
-$fta-avatar-size-lg: zoom(96px * $hd) !default;
+$fta-avatar-size-xs: zoom(96px) !default;
+$fta-avatar-size-sm: zoom(112px) !default;
+$fta-avatar-size-md: zoom(144px) !default;
+$fta-avatar-size-lg: zoom(192px) !default;
 // 圆角大小
-$fta-avatar-radius-xs: zoom(4px * $hd) !default;
-$fta-avatar-radius-sm: zoom(5px * $hd) !default;
-$fta-avatar-radius-md: zoom(6px * $hd) !default;
-$fta-avatar-radius-lg: zoom(8px * $hd) !default;
+$fta-avatar-radius-xs: zoom(8px) !default;
+$fta-avatar-radius-sm: zoom(10px) !default;
+$fta-avatar-radius-md: zoom(12px) !default;
+$fta-avatar-radius-lg: zoom(16px) !default;
 // 文字大小
-$fta-avatar-text-xs: zoom(20px * $hd) !default;
-$fta-avatar-text-sm: zoom(24px * $hd) !default;
-$fta-avatar-text-md: zoom(32px * $hd) !default;
-$fta-avatar-text-lg: zoom(36px * $hd) !default;
+$fta-avatar-text-xs: zoom(40px) !default;
+$fta-avatar-text-sm: zoom(48px) !default;
+$fta-avatar-text-md: zoom(64px) !default;
+$fta-avatar-text-lg: zoom(72px) !default;
 
 /* Badge */
 $fta-badge-color: $color-white !default;
@@ -336,9 +332,9 @@ $fta-button-border-color-tertiary: $color-brand !default;
 $fta-button-bg: $fta-button-color !default;
 
 /* Float Button */
-$fta-fab-size: 56px * $hd !default;
-$fta-fab-size-sm: 40px * $hd !default;
-$fta-fab-icon-size: 24px * $hd !default;
+$fta-fab-size: 112px !default;
+$fta-fab-size-sm: 80px !default;
+$fta-fab-icon-size: 48px !default;
 $fta-fab-bg-color: $color-brand;
 $fta-fab-bg-color-active: $color-brand-dark;
 $fta-fab-box-shadow: 0 6px 10px -2px rgba(0, 0, 0, 0.2), 0 12px 20px 0 rgba(0, 0, 0, 0.14),
@@ -592,7 +588,6 @@ $fta-tag-height: zoom(40px) !default;
 $fta-tag-radius: $border-radius-sm !default;
 $fta-tag-horizon-padding: zoom(12px) !default;
 $fta-tag-font-size: zoom(24px) !default;
-$fta-tag-font-size--care: care($fta-tag-font-size) !default;
 $fta-tag-font-weight: $font-weight-normal !default;
 
 $fta-tag-color-primary: $color-brand !default;
