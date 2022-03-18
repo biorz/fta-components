@@ -4,8 +4,8 @@ const { resolve } = require('path')
 const FILE_ENTRY = './index.ts'
 const FILE_OUTPUT = './component-map.json'
 
-const defaultAsReg = /default\s+as\s+([a-zA-Z]+)/
-const replaceDefaultReg = /\s*default\s+as\s+([a-zA-Z]+)\s*,?/
+const defaultAsReg = /default\s+as\s+([a-zA-Z]+)/g
+const replaceDefaultReg = /\s*default\s+as\s+([a-zA-Z]+)\s*,?/g
 const extractReg = /export\s+{(.*)}\s+from.*\.\/components\/(.*)['"]/gm
 
 function readFileAsString(entry) {
@@ -26,20 +26,22 @@ function extractComponentMap() {
   const componentMap = {}
   let data = readFileAsString(FILE_ENTRY)
     .replace(/\n/g, ' ')
+    .replace(/\s+/g, ' ')
     .replace(/export/g, '\n' + 'export')
   // data = data.replace(defaultAsReg, '')
   let temp
   while ((temp = extractReg.exec(data))) {
     let [str, elm, dir] = temp
-    let r
-    if ((r = elm.match(defaultAsReg))) {
+    var r
+
+    while ((r = defaultAsReg.exec(elm))) {
       const el = r[1]
       componentMap[el] = {
         replace: `components/${dir}`,
         default: true,
       }
-      elm = elm.replace(replaceDefaultReg, '')
     }
+    elm = elm.replace(replaceDefaultReg, '')
     //  console.log(elm, dir);
     const list = elm
       .replace(/\s+/g, '')

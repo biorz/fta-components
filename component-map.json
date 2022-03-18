@@ -1,5 +1,6 @@
 {
   "ActionSheet": { "replace": "components/action-sheet", "default": true },
+  "FloatLayout": { "replace": "components/action-sheet", "default": true },
   "ActionSheetItem": { "replace": "components/action-sheet", "default": false },
   "AnimateView": { "replace": "components/animate-view", "default": true },
   "Avatar": { "replace": "components/avatar", "default": true },

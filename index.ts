@@ -1,5 +1,9 @@
 export * from './common'
-export { ActionSheetItem, default as ActionSheet } from './components/action-sheet'
+export {
+  ActionSheetItem,
+  default as ActionSheet,
+  default as FloatLayout,
+} from './components/action-sheet'
 export { default as AnimateView } from './components/animate-view'
 export { default as Avatar } from './components/avatar'
 export { default as Badge } from './components/badge'

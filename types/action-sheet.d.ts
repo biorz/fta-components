@@ -37,6 +37,11 @@ export interface ActionSheetProps extends BaseComponent {
    * @default true
    */
   useNativeModal?: boolean
+  /**
+   * 是否阻止内容滑动穿透
+   * @default true
+   */
+  catchMove?: boolean
 }
 
 export interface ActionSheetState {

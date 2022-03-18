@@ -1,4 +1,4 @@
-import { View } from '@tarojs/components'
+import { CommonEvent, View } from '@tarojs/components'
 // import { CommonEvent } from '@tarojs/components/types/common'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
@@ -68,7 +68,7 @@ class ActionSheet extends React.Component<ActionSheetProps, ActionSheetState> {
     )
   }
 
-  private handleTouchMove = (e: any): void => {
+  private handleTouchMove = (e: CommonEvent): void => {
     e.stopPropagation?.()
     e.preventDefault?.()
   }
@@ -82,6 +82,7 @@ class ActionSheet extends React.Component<ActionSheetProps, ActionSheetState> {
       containerClassName,
       containerStyle,
       useNativeModal,
+      catchMove,
     } = this.props
     const { _isOpened } = this.state
 
@@ -97,8 +98,12 @@ class ActionSheet extends React.Component<ActionSheetProps, ActionSheetState> {
 
     return (
       <Modal transparent visible={inRN ? _isOpened : true} useNative={useNativeModal}>
-        <View className={rootClass} style={customStyle} onTouchMove={this.handleTouchMove}>
-          <View onClick={this.close} className='fta-action-sheet__overlay' catchMove />
+        <View className={rootClass} style={customStyle} catchMove={catchMove}>
+          <View
+            onClick={this.close}
+            className='fta-action-sheet__overlay'
+            onTouchMove={this.handleTouchMove}
+          />
           <Motion _isOpened={_isOpened}>
             {(value) => (
               <View className={containerClz} style={{ ...containerStyle, bottom: px(value.x) }}>
@@ -122,6 +127,7 @@ ActionSheet.defaultProps = {
   cancelText: '',
   isOpened: false,
   useNativeModal: true,
+  catchMove: true,
 }
 
 ActionSheet.propTypes = {
