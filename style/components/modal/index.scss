@@ -8,7 +8,7 @@
 
 %button {
   color: $fta-modal-btn-default-color;
-  font-size: $font-size-lg;
+  font-size: $fta-modal-button-size;
   font-weight: $font-weight-normal;
   margin-top: 0;
   border: 0;
@@ -17,9 +17,12 @@
 
 %content {
   color: $fta-modal-content-text-color;
-  font-size: $font-size-base;
+  font-size: $fta-modal-content-size;
   font-weight: $font-weight-normal;
-  line-height: $line-height-base * $font-size-base;
+  line-height: $line-height-base * $fta-modal-content-size;
+  @include rn {
+    text-align: center;
+  }
 }
 
 $fta-modal-duration: 200ms;
@@ -72,6 +75,18 @@ $fta-modal-duration: 200ms;
     overflow: hidden;
   }
 
+  @include rn {
+    &__header {
+      &-text {
+        color: $fta-modal-header-text-color;
+        font-size: $font-size-lg;
+        font-weight: $font-weight-bolder;
+        /* #ifdef rn*/
+        text-align: center;
+        /* #endif */
+      }
+    }
+  }
   // &__header {
   //   // @include hairline-bottom-relative($color: $color-grey-4);
   //   // @include line(1);
@@ -88,18 +103,6 @@ $fta-modal-duration: 200ms;
   //     text-align: center;
   //     /* #endif */
   //   }
-  // }
-
-  // &__content {
-  //   /* #ifndef rn */
-  //   @extend %content;
-  //   box-sizing: border-box;
-  //   /* #endif */
-
-  //   padding: $spacing-v-xl $spacing-h-max $spacing-v-max;
-  //   min-height: 180px;
-  //   max-height: 840px;
-  //   text-align: center;
   // }
 
   /* #ifdef rn */
@@ -165,4 +168,53 @@ $fta-modal-duration: 200ms;
   //     }
   //   }
   // }
+}
+
+.fta-modal__action {
+  &__button {
+    @include line(1);
+    @include active;
+
+    /* #ifndef rn */
+    @include flex(auto);
+    @extend %button;
+
+    background-color: transparent;
+    flex: 1;
+    /* #endif */
+
+    /* #ifdef rn */
+    @include flex-center();
+    /* #endif */
+    height: $fta-modal-footer-height;
+
+    &::after {
+      border: 0;
+      border-radius: 0;
+      width: initial;
+      height: initial;
+    }
+
+    &:not(:first-child) {
+      @include hairline-left-relative($color: $color-grey-4);
+    }
+  }
+
+  /* #ifdef rn */
+  .button {
+    @extend %button;
+  }
+
+  .button--border {
+    border-left-width: 0.5px;
+    border-color: $color-grey-4;
+  }
+
+  .button-confirm__text {
+    color: $fta-modal-btn-confirm-color;
+  }
+  /* #endif */
+  &__button--confirm {
+    color: $fta-modal-btn-confirm-color;
+  }
 }

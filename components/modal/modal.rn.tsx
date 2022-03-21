@@ -1,6 +1,5 @@
 import { Text, View } from '@tarojs/components'
 import { CommonEvent } from '@tarojs/components/types/common'
-import Taro from '@tarojs/taro'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React, { Fragment } from 'react'
@@ -21,7 +20,6 @@ export default class FTAModal extends React.Component<ModalProps, ModalState> {
     const { isOpened } = props
     this.state = {
       _isOpened: isOpened,
-      isWEB: Taro.getEnv() === Taro.ENV_TYPE.WEB,
     }
   }
 
@@ -74,7 +72,7 @@ export default class FTAModal extends React.Component<ModalProps, ModalState> {
   }
 
   public render(): JSX.Element {
-    const { _isOpened, isWEB } = this.state
+    const { _isOpened } = this.state
     const {
       title,
       content,
@@ -124,8 +122,9 @@ export default class FTAModal extends React.Component<ModalProps, ModalState> {
                 </FTAModalHeader>
               )}
               {content && (
-                <FTAModalContent>
-                  <View className='content-simple'>
+                <FTAModalContent withTitle={!!title}>
+                  <View
+                    className={classNames('content-simple', !title && 'cotent-simple--notitle')}>
                     {<Text className='content-simple__text'>{content}</Text>}
                   </View>
                 </FTAModalContent>
@@ -134,6 +133,7 @@ export default class FTAModal extends React.Component<ModalProps, ModalState> {
                 <FTAModalAction isSimple>
                   {cancelText && (
                     <Button
+                      hoverStyle={{ opacity: 0.6 }}
                       className='fta-modal__action__button fta-modal__action__button--cancel'
                       onClick={this.handleCancel}>
                       <Text className='button button-cancel__text'>{cancelText}</Text>
@@ -141,6 +141,7 @@ export default class FTAModal extends React.Component<ModalProps, ModalState> {
                   )}
                   {confirmText && (
                     <Button
+                      hoverStyle={{ opacity: 0.6 }}
                       className={`fta-modal__action__button fta-modal__action__button--confirm ${
                         cancelText ? 'button--border' : ''
                       }`}
@@ -177,7 +178,7 @@ export default class FTAModal extends React.Component<ModalProps, ModalState> {
 
 FTAModal.defaultProps = {
   isOpened: false,
-  closeOnClickOverlay: true,
+  closeOnClickOverlay: false,
 }
 
 FTAModal.propTypes = {

@@ -1,5 +1,5 @@
 import { CommonEvent } from '@tarojs/components/types/common'
-import { ComponentClass, CSSProperties } from 'react'
+import { ComponentClass, CSSProperties, ReactNode } from 'react'
 import BaseComponent from './base'
 
 export interface ActionSheetProps extends BaseComponent {
@@ -11,7 +11,7 @@ export interface ActionSheetProps extends BaseComponent {
   /**
    * 元素的标题
    */
-  title?: string
+  title?: ReactNode
   /**
    * 取消按钮的内容
    */
@@ -42,6 +42,11 @@ export interface ActionSheetProps extends BaseComponent {
    * @default true
    */
   catchMove?: boolean
+  /**
+   * 点击遮罩层关闭
+   * @default false
+   */
+  clickOverlayOnClose?: boolean
 }
 
 export interface ActionSheetState {

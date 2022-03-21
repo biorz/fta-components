@@ -61,14 +61,19 @@ export interface ModalProps extends BaseComponent {
 
 export interface ModalState {
   _isOpened: boolean
-  isWEB: boolean
 }
 
 export interface ModalActionProps extends BaseComponent {
   isSimple?: boolean
 }
 
-export interface ModalContentProps extends BaseComponent {}
+export interface ModalContentProps extends BaseComponent {
+  /**
+   * 是否带标题，做padding判断
+   * @default true
+   */
+  withTitle?: boolean
+}
 
 export interface ModalHeaderProps extends BaseComponent {}
 

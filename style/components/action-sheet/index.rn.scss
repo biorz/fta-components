@@ -35,14 +35,14 @@ $fta-action-sheet-duration: 300ms;
     // transition: transform $fta-action-sheet-duration $timing-func;
   }
 
+  .fta-action-sheet__overlay {
+    opacity: 1;
+  }
+
   /* modifiers */
   &--active {
     position: absolute;
     display: flex;
-
-    .fta-action-sheet__overlay {
-      opacity: 1;
-    }
 
     // .fta-action-sheet__container {
     //   transform: translate3d(0, 0, 0);

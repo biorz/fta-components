@@ -4,7 +4,7 @@ import React from 'react'
 import '../../../style/components/modal/header.scss'
 import { ModalHeaderProps } from '../../../types/modal'
 
-export default class AtModalHeader extends React.Component<ModalHeaderProps> {
+export default class ModalHeader extends React.Component<ModalHeaderProps> {
   public render(): JSX.Element {
     const rootClass = classNames('fta-modal__header', this.props.className)
     return (

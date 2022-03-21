@@ -3,7 +3,6 @@ import { CommonEvent, View } from '@tarojs/components'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
-import { inRN } from '../../common'
 import Modal from '../../common/components/modal'
 import '../../style/components/action-sheet/index.scss'
 import { ActionSheetProps, ActionSheetState } from '../../types/action-sheet'
@@ -14,8 +13,6 @@ import ActionSheetFooter from './footer/index'
 import ActionSheetHeader from './header/index'
 // import { Motion, spring } from 'react-motion'
 import Motion from './motion'
-
-const px = inRN ? (num: number) => num : (num: number) => num + 'px'
 
 // const height = getSystemInfoSync().screenHeight
 // console.log('screen height', height, getSystemInfoSync().screenWidth)
@@ -60,12 +57,14 @@ class ActionSheet extends React.Component<ActionSheetProps, ActionSheetState> {
   }
 
   private close = (): void => {
-    this.setState(
-      {
-        _isOpened: false,
-      },
-      this.handleClose
-    )
+    if (this.props.clickOverlayOnClose) {
+      this.setState(
+        {
+          _isOpened: false,
+        },
+        this.handleClose
+      )
+    }
   }
 
   private handleTouchMove = (e: CommonEvent): void => {
@@ -97,24 +96,23 @@ class ActionSheet extends React.Component<ActionSheetProps, ActionSheetState> {
     const containerClz = classNames('fta-action-sheet__container', containerClassName)
 
     return (
-      <Modal transparent visible={inRN ? _isOpened : true} useNative={useNativeModal}>
+      <Modal transparent visible={_isOpened} useNative={useNativeModal}>
         <View className={rootClass} style={customStyle} catchMove={catchMove}>
           <View
             onClick={this.close}
             className='fta-action-sheet__overlay'
             onTouchMove={this.handleTouchMove}
           />
-          <Motion _isOpened={_isOpened}>
-            {(value) => (
-              <View className={containerClz} style={{ ...containerStyle, bottom: px(value.x) }}>
-                {title ? <ActionSheetHeader>{title}</ActionSheetHeader> : null}
-                <ActionSheetBody>{this.props.children}</ActionSheetBody>
-                {cancelText ? (
-                  <ActionSheetFooter onClick={this.handleCancel}>{cancelText}</ActionSheetFooter>
-                ) : null}
-                <SafeArea />
-              </View>
-            )}
+          <Motion
+            _isOpened={_isOpened}
+            className={containerClz}
+            customStyle={{ ...containerStyle }}>
+            {title ? <ActionSheetHeader>{title}</ActionSheetHeader> : null}
+            <ActionSheetBody>{this.props.children}</ActionSheetBody>
+            {cancelText ? (
+              <ActionSheetFooter onClick={this.handleCancel}>{cancelText}</ActionSheetFooter>
+            ) : null}
+            <SafeArea />
           </Motion>
         </View>
       </Modal>
@@ -128,6 +126,7 @@ ActionSheet.defaultProps = {
   isOpened: false,
   useNativeModal: true,
   catchMove: true,
+  clickOverlayOnClose: true,
 }
 
 ActionSheet.propTypes = {

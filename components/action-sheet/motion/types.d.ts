@@ -1,5 +1,8 @@
-import { MotionProps } from 'react-motion'
+import { ReactNode } from 'react'
+import BaseComponent from '../../../types/base'
 
-export interface Props extends Pick<MotionProps, 'children'> {
+export interface Props extends BaseComponent {
   _isOpened: boolean
+
+  children: ReactNode
 }

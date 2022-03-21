@@ -8,7 +8,7 @@ export const safeArea: Taro.General.SafeAreaResult = systemInfo.safeArea || {
   left: 0,
   right: 0,
 }
-// console.log(systemInfo, 'systemInfo')
+console.log(systemInfo, 'systemInfo')
 
 /** 是否是沉浸式屏幕 */
 export const isImmersive = systemInfo.screenHeight === systemInfo.windowHeight
@@ -22,10 +22,14 @@ export const _safeArea = {
     inRN && inAndroid
       ? 0
       : safeArea.top
-      ? safeArea.top
+      ? safeArea.top < 44
+        ? 44
+        : safeArea.top
       : isImmersive && inWeb
       ? // @ts-ignore
         (window._MBWEB_statusbarHeight || 0) / systemInfo.pixelRatio
+      : inNotch
+      ? 44
       : 0,
   bottom: safeArea.bottom
     ? systemInfo.screenHeight - safeArea.bottom
@@ -36,5 +40,7 @@ export const _safeArea = {
   left: safeArea.left,
   right: safeArea.right ? systemInfo.screenWidth - safeArea.right : 0,
 }
+
+// inWeb && alert(JSON.stringify(_safeArea) + inNotch)
 
 // alert(JSON.stringify(_safeArea))

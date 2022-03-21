@@ -1,10 +1,9 @@
 import { Button, Text, View } from '@tarojs/components'
 import { CommonEvent } from '@tarojs/components/types/common'
-import Taro from '@tarojs/taro'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
-import { handleTouchScroll } from '../../common'
+import { handleTouchScroll, inWeb } from '../../common'
 import '../../style/components/modal/index.scss'
 import { ModalProps, ModalState } from '../../types/modal'
 import ModalAction from './action'
@@ -20,7 +19,6 @@ export default class Modal extends React.Component<ModalProps, ModalState> {
     const { isOpened } = props
     this.state = {
       _isOpened: isOpened,
-      isWEB: Taro.getEnv() === Taro.ENV_TYPE.WEB,
     }
   }
 
@@ -73,7 +71,7 @@ export default class Modal extends React.Component<ModalProps, ModalState> {
   }
 
   public render(): JSX.Element {
-    const { _isOpened, isWEB } = this.state
+    const { _isOpened } = this.state
     const {
       title,
       content,
@@ -113,9 +111,9 @@ export default class Modal extends React.Component<ModalProps, ModalState> {
               </ModalHeader>
             )}
             {content && (
-              <ModalContent>
+              <ModalContent withTitle={!!title}>
                 <View className='content-simple'>
-                  {isWEB ? (
+                  {inWeb ? (
                     <Text
                       className='content-simple__text'
                       // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
@@ -165,7 +163,7 @@ export default class Modal extends React.Component<ModalProps, ModalState> {
 
 Modal.defaultProps = {
   isOpened: false,
-  closeOnClickOverlay: true,
+  closeOnClickOverlay: false,
 }
 
 Modal.propTypes = {

@@ -5,7 +5,7 @@ import React from 'react'
 import '../../../style/components/modal/action.scss'
 import { ModalActionProps } from '../../../types/modal'
 
-export default class AtModalAction extends React.Component<ModalActionProps> {
+export default class ModalAction extends React.Component<ModalActionProps> {
   public static defaultProps: ModalActionProps
   public static propTypes: InferProps<ModalActionProps>
 
@@ -26,10 +26,10 @@ export default class AtModalAction extends React.Component<ModalActionProps> {
   }
 }
 
-AtModalAction.defaultProps = {
+ModalAction.defaultProps = {
   isSimple: false,
 }
 
-AtModalAction.propTypes = {
+ModalAction.propTypes = {
   isSimple: PropTypes.bool,
 }

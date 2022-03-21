@@ -24,7 +24,13 @@ export const autoFix = (size: number) => size * deviceRatio
 export const scale = (size: number) => px(autoFix(size))
 /** 当前是否是苹果系统 */
 export const inIOS = systemInfo.platform === 'ios'
-/** 当前是否是刘海屏 */
-export const inNotch = (inIOS && systemInfo.screenHeight >= 812) || systemInfo.screenWidth >= 812
+/** 当前是否处于iPhone环境 native和web */
+export const inIPhone =
+  systemInfo.system === 'iOS' ||
+  systemInfo.brand === 'iPhone' ||
+  systemInfo.model === 'iPhone' ||
+  inIOS
+/** 当前是否是iPhone刘海屏 */
+export const inNotch = inIPhone && (systemInfo.screenHeight >= 812 || systemInfo.screenWidth >= 812)
 /** 当前是否是安卓系统 */
 export const inAndroid = systemInfo.platform === 'android'

@@ -21,8 +21,11 @@
     /* #endif */
 
     padding: $spacing-v-xl $spacing-h-max $spacing-v-max;
-    min-height: 180px;
     max-height: 840px;
     text-align: center;
+
+    &--no-title {
+      padding-top: $spacing-v-max;
+    }
   }
 }

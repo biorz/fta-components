@@ -41,7 +41,7 @@ class SafeAreaView extends Component<SafeAreaViewProps> {
             className,
             `fta-safe-area-container${useMargin ? '__margin' : ''}`
           )
-          const rootStyle = this.getInlineStyle(style)
+          const rootStyle = this.getInlineStyle(style!)
           return (
             <View {...props} className={rootCla} style={rootStyle}>
               {children}

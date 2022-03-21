@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-export type RotateTiming = 'ease' | 'ease-in' | 'ease-out' | 'linea'
+export type RotateTiming = 'ease' | 'ease-in' | 'ease-out' | 'linear'
 
 export interface RotateProps {
   /**
