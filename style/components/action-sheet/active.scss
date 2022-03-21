@@ -1,0 +1,8 @@
+@import '../../mixins/libs/active.scss';
+@import '../../variables/default.scss';
+
+.fta-action-sheet {
+  .item-active {
+    background-color: $color-grey-5;
+  }
+}

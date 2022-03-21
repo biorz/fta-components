@@ -1,31 +1,43 @@
-import { View } from '@tarojs/components'
+import { Text, View } from '@tarojs/components'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
+import { isFunction, isString } from '../../../../common'
+import '../../../../style/components/action-sheet/active.scss'
 import '../../../../style/components/action-sheet/body-item.scss'
 import { ActionSheetItemProps } from '../../../../types/action-sheet'
 
-export default class AtActionSheetItem extends React.Component<ActionSheetItemProps> {
+export default class ActionSheetItem extends React.Component<ActionSheetItemProps> {
   public static defaultProps: ActionSheetItemProps
   public static propTypes: InferProps<ActionSheetItemProps>
 
   private handleClick = (args: any): void => {
-    if (typeof this.props.onClick === 'function') {
-      this.props.onClick(args)
+    const onClick = this.props.onClick
+    if (isFunction(onClick)) {
+      onClick!(args)
     }
   }
 
   public render(): JSX.Element {
-    const rootClass = classNames('fta-action-sheet__item', this.props.className)
+    const { children, className, textClassName, textStyle, noBorder } = this.props
+    const rootClass = classNames('fta-action-sheet__item', noBorder && 'item-no-border', className)
+    const textClass = classNames('fta-action-sheet__item__text', textClassName)
+    const fragment = isString(children) ? (
+      <Text className={textClass} style={textStyle}>
+        {children}
+      </Text>
+    ) : (
+      children
+    )
 
     return (
-      <View className={rootClass} onClick={this.handleClick}>
-        {this.props.children}
+      <View className={rootClass} onClick={this.handleClick} hoverStyle={{ opacity: 0.6 }}>
+        {fragment}
       </View>
     )
   }
 }
 
-AtActionSheetItem.propTypes = {
+ActionSheetItem.propTypes = {
   onClick: PropTypes.func,
 }

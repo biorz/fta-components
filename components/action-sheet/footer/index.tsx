@@ -2,6 +2,7 @@ import { Text, View } from '@tarojs/components'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
+import { isFunction } from '../../../common'
 import '../../../style/components/action-sheet/footer.scss'
 import { ActionSheetFooterProps } from '../../../types/action-sheet'
 
@@ -10,8 +11,9 @@ export default class ActionSheetFooter extends React.Component<ActionSheetFooter
   public static propTypes: InferProps<ActionSheetFooterProps>
 
   private handleClick = (...args: any[]): void => {
-    if (typeof this.props.onClick === 'function') {
-      this.props.onClick(...args)
+    const onClick = this.props.onClick
+    if (isFunction(onClick)) {
+      onClick!(...args)
     }
   }
 
@@ -19,13 +21,6 @@ export default class ActionSheetFooter extends React.Component<ActionSheetFooter
     const rootClass = classNames('fta-action-sheet__footer', this.props.className)
     const children = this.props.children
 
-    if (process.env.TARO_ENV !== 'rn') {
-      return (
-        <View onClick={this.handleClick} className={rootClass}>
-          {children}
-        </View>
-      )
-    }
     const fragment =
       typeof children === 'string' ? (
         <Text className='fta-action-sheet__footer__text'>{children}</Text>
@@ -33,11 +28,15 @@ export default class ActionSheetFooter extends React.Component<ActionSheetFooter
         children
       )
     return (
-      <View onClick={this.handleClick} className={rootClass}>
+      <View onClick={this.handleClick} className={rootClass} hoverStyle={{ opacity: 0.6 }}>
         {fragment}
       </View>
     )
   }
+}
+
+ActionSheetFooter.defaultProps = {
+  // hoverClassName: 'item-active',
 }
 
 ActionSheetFooter.propTypes = {

@@ -22,7 +22,7 @@ export const _safeArea = {
     inRN && inAndroid
       ? 0
       : safeArea.top
-      ? safeArea.top < 44
+      ? safeArea.top < 44 && inNotch
         ? 44
         : safeArea.top
       : isImmersive && inWeb

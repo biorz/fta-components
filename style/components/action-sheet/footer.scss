@@ -1,0 +1,18 @@
+@import '../../variables/default.scss';
+@import '../../mixins/index.scss';
+
+.fta-action-sheet {
+  &__footer {
+    padding: $fta-action-sheet-footer-padding;
+    border-top-width: $fta-action-sheet-footer-border-width;
+    border-top-color: $fta-action-sheet-footer-border-color;
+    // border-top-style: solid;
+    @include active();
+
+    &__text {
+      font-size: $fta-action-sheet-footer-size;
+      color: $fta-action-sheet-footer-color;
+      text-align: center;
+    }
+  }
+}

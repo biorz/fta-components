@@ -1,3 +1,5 @@
+@import './platform.scss';
+
 /**
  * 默认主题下 $color-border-light
  */
@@ -58,13 +60,21 @@
   $style: solid,
   $width: 1PX
 ) {
-  position: relative;
 
-  &::after {
+
+  @include rn{
     @include hairline-base($color, $style);
-
     border-bottom-width: $width;
   }
+
+  @include nrn{
+    position: relative;
+    &::after {
+      @include hairline-base($color, $style);
+      border-bottom-width: $width;
+    }
+  }
+
 }
 
 // prettier-ignore

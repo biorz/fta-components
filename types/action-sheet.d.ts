@@ -1,6 +1,6 @@
 import { CommonEvent } from '@tarojs/components/types/common'
 import { ComponentClass, CSSProperties, ReactNode } from 'react'
-import BaseComponent from './base'
+import BaseComponent, { BaseTextComponent } from './base'
 
 export interface ActionSheetProps extends BaseComponent {
   /**
@@ -61,11 +61,16 @@ export interface ActionSheetFooterProps extends BaseComponent {
 
 export interface ActionSheetBodyProps extends BaseComponent {}
 
-export interface ActionSheetItemProps extends BaseComponent {
+export interface ActionSheetItemProps extends BaseComponent, BaseTextComponent {
   /**
    * 点击 Item 触发的事件
    */
   onClick?: (event?: CommonEvent) => void
+  /**
+   * 是否无边框线
+   * @default false
+   */
+  noBorder?: boolean
 }
 
 declare const ActionSheetItem: ComponentClass<ActionSheetItemProps>

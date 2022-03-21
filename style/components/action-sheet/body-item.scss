@@ -1,0 +1,31 @@
+@import '../../variables/default.scss';
+@import '../../mixins/index.scss';
+
+.fta-action-sheet {
+  &__item {
+    padding: $fta-action-sheet-item-padding;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+
+    @include nrn {
+      @include active();
+      @include line(1);
+      @include hairline-bottom-relative();
+    }
+
+    @include rn {
+      border-bottom-width: 1px;
+      border-bottom-color: $fta-action-sheet-border-color;
+    }
+
+    &__text {
+      font-size: $fta-action-sheet-item-size;
+      color: $fta-action-sheet-item-color;
+    }
+  }
+
+  .item-no-border {
+    border-bottom-width: 0;
+  }
+}
