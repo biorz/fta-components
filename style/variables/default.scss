@@ -663,6 +663,27 @@ $fta-action-sheet-header-color: $color-black-3;
 $fta-action-sheet-header-padding: $spacing-v-xxl 0;
 $fta-action-sheet-header-bg-color: transparent;
 
+$fta-action-sheet-header-title-height: zoom(117px);
+$fta-action-sheet-header-no-title-height: zoom(72px);
+$fta-action-sheet-header-title-color: $color-grey-0;
+$fta-action-sheet-header-title-weight: bold;
+$fta-action-sheet-header-title-size: $font-size-md;
+
+$fta-action-sheet-header-close-size: $font-size-md;
+$fta-action-sheet-border-close-right: zoom(44px);
+
+$fta-action-sheet-header-left-padding: zoom(48px);
+$fta-action-sheet-header-right-padding: zoom(28px);
+
+$fta-action-sheet-button-left-size: $font-size-md;
+$fta-action-sheet-button-left-color: $color-grey-1;
+
+$fta-action-sheet-button-right-color: $color-white;
+$fta-action-sheet-button-right-size: $font-size-md;
+$fta-action-sheet-button-right-padding: $spacing-v-md $spacing-h-lg;
+$fta-action-sheet-button-right-bg-color: $color-brand;
+$fta-action-sheet-button-right-radius: zoom(32px);
+
 $fta-action-sheet-item-size: $font-size-lg;
 $fta-action-sheet-item-color: $color-grey-0;
 $fta-action-sheet-item-padding: $spacing-v-xxl 0;
@@ -671,7 +692,7 @@ $fta-action-sheet-border-color: $color-border-base;
 
 $fta-action-sheet-item-size: $font-size-lg;
 $fta-action-sheet-item-color: $color-grey-0;
-$fta-action-sheet-item-padding: $spacing-v-xxl 0;
+$fta-action-sheet-item-padding: $spacing-v-xxl zoom(40px);
 $fta-action-sheet-item-hint-color: $color-grey-2;
 $fta-action-sheet-item-hint-size: $font-size-sm;
 $fta-action-sheet-item-hint-margin-top: $spacing-v-sm;
@@ -681,5 +702,15 @@ $fta-action-sheet-footer-border-color: $color-grey-6;
 $fta-action-sheet-footer-size: $font-size-lg;
 $fta-action-sheet-footer-color: $color-grey-0;
 $fta-action-sheet-footer-padding: $spacing-v-xxl 0;
+
+$fta-action-sheet-footer-height: zoom(136px);
+// $fta-action-sheet-footer-button-height: zoom(88px);
+// $fta-action-sheet-footer-button-width: zoom(664px);
+// $fta-action-sheet-footer-button-bg-color: $color-brand;
+// $fta-action-sheet-footer-button-size: $font-size-lg;
+// $fta-action-sheet-footer-button-weight: $font-weight-bolder;
+// $fta-action-sheet-footer-button-color: $color-white;
+// $fta-action-sheet-footer-button-radius: $border-radius-lg;
+$fta-action-sheet-footer-button-border-color: $color-border-base;
 
 $fta-action-sheet-example-offset: zoom(40px);

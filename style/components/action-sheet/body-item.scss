@@ -4,9 +4,13 @@
 .fta-action-sheet {
   &__item {
     padding: $fta-action-sheet-item-padding;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    @include nrn {
+      display: flex;
+    }
 
     @include nrn {
       @include active();
@@ -30,14 +34,18 @@
       font-size: $fta-action-sheet-item-hint-size;
       line-height: $fta-action-sheet-item-hint-size;
       margin-top: $fta-action-sheet-item-hint-margin-top;
-      text-align: center;
-      @include nrn {
-        display: block;
-      }
+      // text-align: center;
+      // @include nrn {
+      //   display: block;
+      // }
     }
   }
 
   .item-no-border {
     border-bottom-width: 0;
+  }
+
+  .item-left {
+    align-items: flex-start;
   }
 }

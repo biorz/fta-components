@@ -5,7 +5,7 @@ import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
 import Modal from '../../common/components/modal'
 import '../../style/components/action-sheet/index.scss'
-import { ActionSheetProps, ActionSheetState } from '../../types/action-sheet'
+import { ActionSheetProps, ActionSheetState, CustomTitle } from '../../types/action-sheet'
 import SafeArea from '../safe-area'
 import ActionSheetBody from './body/index'
 import ActionSheetItem from './body/item'
@@ -111,8 +111,14 @@ class ActionSheet extends React.Component<ActionSheetProps, ActionSheetState> {
             customStyle={{ ...containerStyle }}>
             {title ? <ActionSheetHeader>{title}</ActionSheetHeader> : null}
             <ActionSheetBody>{this.props.children}</ActionSheetBody>
-            {cancelText ? (
-              <ActionSheetFooter onClick={this.handleCancel}>{cancelText}</ActionSheetFooter>
+            {cancelText || ((title as CustomTitle)?.icon && (title as CustomTitle)?.confirmText) ? (
+              <ActionSheetFooter
+                onClick={this.handleCancel}
+                icon={(title as CustomTitle)?.icon}
+                confirmText={(title as CustomTitle)?.confirmText}
+                onConfirm={(title as CustomTitle)?.onConfirm}>
+                {cancelText}
+              </ActionSheetFooter>
             ) : null}
             <SafeArea />
           </Motion>
@@ -132,7 +138,7 @@ ActionSheet.defaultProps = {
 }
 
 ActionSheet.propTypes = {
-  title: PropTypes.string,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   onClose: PropTypes.func,
   onCancel: PropTypes.func,
   isOpened: PropTypes.bool.isRequired,

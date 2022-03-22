@@ -5,7 +5,11 @@
   &__footer {
     padding: $fta-action-sheet-footer-padding;
     border-top-width: $fta-action-sheet-footer-border-width;
+    @include nrn {
+      border-top-style: solid;
+    }
     border-top-color: $fta-action-sheet-footer-border-color;
+    text-align: center;
     // border-top-style: solid;
     @include active();
 
@@ -14,5 +18,28 @@
       color: $fta-action-sheet-footer-color;
       text-align: center;
     }
+  }
+
+  &-footer {
+    border-top-width: 1px;
+    @include nrn {
+      border-top-style: solid;
+    }
+    border-top-color: $fta-action-sheet-footer-button-border-color;
+    @include flex-center();
+    height: $fta-action-sheet-footer-height;
+    // &-button {
+    //   @include flex-center();
+    //   height: $fta-action-sheet-footer-button-height;
+    //   width: $fta-action-sheet-footer-button-width;
+    //   background-color: $fta-action-sheet-footer-button-bg-color;
+    //   border-radius: $fta-action-sheet-footer-button-radius;
+
+    //   &__text {
+    //     color: $fta-action-sheet-footer-button-color;
+    //     font-weight: $fta-action-sheet-footer-button-weight;
+    //     font-size: $fta-action-sheet-footer-button-size;
+    //   }
+    // }
   }
 }

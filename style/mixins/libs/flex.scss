@@ -7,9 +7,9 @@
   }
 }
 
-@mixin display-flex {
+@mixin display-flex($direction: row) {
   display: flex;
-  flex-direction: row;
+  flex-direction: $direction;
 }
 
 @mixin flex-wrap($value: nowrap) {
@@ -65,8 +65,8 @@
   align-self: $value;
 }
 
-@mixin flex-center {
-  @include display-flex();
+@mixin flex-center($direction: row) {
+  @include display-flex($direction);
   // align-items: center;
   align-items: center;
   justify-content: center;

@@ -19,8 +19,13 @@ export default class ActionSheetItem extends React.Component<ActionSheetItemProp
   }
 
   public render(): JSX.Element {
-    const { children, className, textClassName, textStyle, noBorder, hint } = this.props
-    const rootClass = classNames('fta-action-sheet__item', noBorder && 'item-no-border', className)
+    const { children, className, textClassName, textStyle, noBorder, hint, left } = this.props
+    const rootClass = classNames(
+      'fta-action-sheet__item',
+      noBorder && 'item-no-border',
+      left && 'item-left',
+      className
+    )
     const textClass = classNames('fta-action-sheet__item__text', textClassName)
     const fragment = isString(children) ? (
       <Text className={textClass} style={textStyle}>
@@ -42,6 +47,10 @@ export default class ActionSheetItem extends React.Component<ActionSheetItemProp
       </View>
     )
   }
+}
+
+ActionSheetItem.defaultProps = {
+  left: false,
 }
 
 ActionSheetItem.propTypes = {

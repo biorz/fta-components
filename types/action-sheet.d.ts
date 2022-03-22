@@ -8,7 +8,8 @@ export interface CustomTitle {
   onCancel?: () => void
   confirmText?: string
   cancelText?: string
-  icon?: boolean
+  icon?: ReactNode
+  border?: boolean
 }
 export interface ActionSheetProps extends BaseComponent {
   /**
@@ -73,9 +74,11 @@ export interface ActionSheetState {
   _isOpened: boolean
 }
 
-export interface ActionSheetHeaderProps extends BaseComponent {}
+export interface ActionSheetHeaderProps extends BaseComponent {
+  children?: ReactNode | CustomTitle
+}
 
-export interface ActionSheetFooterProps extends BaseComponent {
+export interface ActionSheetFooterProps extends BaseComponent, Partial<CustomTitle> {
   onClick?: Function
 }
 
@@ -95,6 +98,11 @@ export interface ActionSheetItemProps extends BaseComponent, BaseTextComponent {
    * 标题下方辅助文案
    */
   hint?: ReactNode
+  /**
+   * 文本是否左对齐
+   * @default false
+   */
+  left?: boolean
 }
 
 declare const ActionSheetItem: ComponentClass<ActionSheetItemProps>

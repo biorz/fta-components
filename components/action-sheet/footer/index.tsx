@@ -5,6 +5,7 @@ import React from 'react'
 import { isFunction } from '../../../common'
 import '../../../style/components/action-sheet/footer.scss'
 import { ActionSheetFooterProps } from '../../../types/action-sheet'
+import Button from '../../button'
 
 export default class ActionSheetFooter extends React.Component<ActionSheetFooterProps> {
   public static defaultProps: ActionSheetFooterProps
@@ -18,8 +19,20 @@ export default class ActionSheetFooter extends React.Component<ActionSheetFooter
   }
 
   public render(): JSX.Element {
-    const rootClass = classNames('fta-action-sheet__footer', this.props.className)
-    const children = this.props.children
+    const { children, className, onConfirm, confirmText, icon } = this.props
+    if (icon && confirmText) {
+      return (
+        <View className='fta-action-sheet-footer'>
+          {/* <TouchableOpacity onClick={onConfirm} className='fta-action-sheet-footer-button'>
+            <Text className='fta-action-sheet-footer-button__text'>{confirmText}</Text>
+          </TouchableOpacity> */}
+          <Button size='large' type='primary' onClick={onConfirm}>
+            {confirmText}
+          </Button>
+        </View>
+      )
+    }
+    const rootClass = classNames('fta-action-sheet__footer', className)
 
     const fragment =
       typeof children === 'string' ? (

@@ -33,7 +33,7 @@ $fta-action-sheet-duration: 300ms;
     position: absolute;
     bottom: 0;
     width: 100%;
-    text-align: center;
+    // text-align: center;
     background-color: $color-white;
 
     @include nrn {
@@ -59,10 +59,6 @@ $fta-action-sheet-duration: 300ms;
   //   border-top: 12px solid rgba($color: $color-border-base, $alpha: 0.3);
   //   @include active();
   // }
-
-  &__body {
-    text-align: center;
-  }
 
   /* modifiers */
   &--active {
