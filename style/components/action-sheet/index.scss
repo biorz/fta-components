@@ -35,9 +35,12 @@ $fta-action-sheet-duration: 300ms;
     width: 100%;
     text-align: center;
     background-color: $color-white;
+
     @include nrn {
+      opacity: 0;
       transform: translate3d(0, 100%, 0);
-      transition: transform $fta-action-sheet-duration $timing-func;
+      transition: opacity $fta-action-sheet-duration $timing-func,
+        transform $fta-action-sheet-duration $timing-func;
     }
   }
 
@@ -78,6 +81,7 @@ $fta-action-sheet-duration: 300ms;
     .fta-action-sheet__container {
       @include nrn {
         transform: translate3d(0, 0, 0);
+        opacity: 1;
       }
     }
   }

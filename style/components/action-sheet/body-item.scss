@@ -21,7 +21,19 @@
 
     &__text {
       font-size: $fta-action-sheet-item-size;
+      line-height: $fta-action-sheet-item-size;
       color: $fta-action-sheet-item-color;
+    }
+
+    &__hint {
+      color: $fta-action-sheet-item-hint-color;
+      font-size: $fta-action-sheet-item-hint-size;
+      line-height: $fta-action-sheet-item-hint-size;
+      margin-top: $fta-action-sheet-item-hint-margin-top;
+      text-align: center;
+      @include nrn {
+        display: block;
+      }
     }
   }
 

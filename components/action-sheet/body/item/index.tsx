@@ -19,7 +19,7 @@ export default class ActionSheetItem extends React.Component<ActionSheetItemProp
   }
 
   public render(): JSX.Element {
-    const { children, className, textClassName, textStyle, noBorder } = this.props
+    const { children, className, textClassName, textStyle, noBorder, hint } = this.props
     const rootClass = classNames('fta-action-sheet__item', noBorder && 'item-no-border', className)
     const textClass = classNames('fta-action-sheet__item__text', textClassName)
     const fragment = isString(children) ? (
@@ -29,10 +29,16 @@ export default class ActionSheetItem extends React.Component<ActionSheetItemProp
     ) : (
       children
     )
+    const hintNode = isString(hint) ? (
+      <Text className='fta-action-sheet__item__hint'>{hint}</Text>
+    ) : (
+      hint
+    )
 
     return (
       <View className={rootClass} onClick={this.handleClick} hoverStyle={{ opacity: 0.6 }}>
         {fragment}
+        {hint ? hintNode : null}
       </View>
     )
   }

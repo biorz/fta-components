@@ -657,9 +657,11 @@ $fta-toast-loading-margin-bottom: zoom(15px) !default;
 /* Action Sheet */
 $fta-action-sheet-radius: $border-radius-lg;
 $fta-action-sheet-border-color: $color-border-base;
+
 $fta-action-sheet-header-size: $font-size-lg;
 $fta-action-sheet-header-color: $color-black-3;
 $fta-action-sheet-header-padding: $spacing-v-xxl 0;
+$fta-action-sheet-header-bg-color: transparent;
 
 $fta-action-sheet-item-size: $font-size-lg;
 $fta-action-sheet-item-color: $color-grey-0;
@@ -670,9 +672,14 @@ $fta-action-sheet-border-color: $color-border-base;
 $fta-action-sheet-item-size: $font-size-lg;
 $fta-action-sheet-item-color: $color-grey-0;
 $fta-action-sheet-item-padding: $spacing-v-xxl 0;
+$fta-action-sheet-item-hint-color: $color-grey-2;
+$fta-action-sheet-item-hint-size: $font-size-sm;
+$fta-action-sheet-item-hint-margin-top: $spacing-v-sm;
 
 $fta-action-sheet-footer-border-width: zoom(12px);
 $fta-action-sheet-footer-border-color: $color-grey-6;
 $fta-action-sheet-footer-size: $font-size-lg;
 $fta-action-sheet-footer-color: $color-grey-0;
 $fta-action-sheet-footer-padding: $spacing-v-xxl 0;
+
+$fta-action-sheet-example-offset: zoom(40px);

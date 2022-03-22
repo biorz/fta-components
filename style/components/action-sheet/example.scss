@@ -1,0 +1,16 @@
+@import '../../mixins/index.scss';
+@import '../../variables/default.scss';
+
+.fta-action-sheet {
+  &-example {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    // bottom: -$fta-action-sheet-example-offset;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 100%;
+    margin-bottom: $fta-action-sheet-example-offset;
+  }
+}

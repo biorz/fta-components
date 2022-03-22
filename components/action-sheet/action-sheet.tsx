@@ -82,6 +82,7 @@ class ActionSheet extends React.Component<ActionSheetProps, ActionSheetState> {
       containerStyle,
       useNativeModal,
       catchMove,
+      example,
     } = this.props
     const { _isOpened } = this.state
 
@@ -105,6 +106,7 @@ class ActionSheet extends React.Component<ActionSheetProps, ActionSheetState> {
           />
           <Motion
             _isOpened={_isOpened}
+            example={example}
             className={containerClz}
             customStyle={{ ...containerStyle }}>
             {title ? <ActionSheetHeader>{title}</ActionSheetHeader> : null}

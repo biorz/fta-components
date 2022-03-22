@@ -4,6 +4,7 @@
 .fta-action-sheet {
   &__header {
     padding: $fta-action-sheet-header-padding;
+    background-color: $fta-action-sheet-header-bg-color;
 
     @include rn {
       border-bottom-width: 1px;

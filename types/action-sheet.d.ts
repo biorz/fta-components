@@ -2,6 +2,14 @@ import { CommonEvent } from '@tarojs/components/types/common'
 import { ComponentClass, CSSProperties, ReactNode } from 'react'
 import BaseComponent, { BaseTextComponent } from './base'
 
+export interface CustomTitle {
+  title: ReactNode
+  onConfirm?: () => void
+  onCancel?: () => void
+  confirmText?: string
+  cancelText?: string
+  icon?: boolean
+}
 export interface ActionSheetProps extends BaseComponent {
   /**
    * 是否展示元素
@@ -11,7 +19,7 @@ export interface ActionSheetProps extends BaseComponent {
   /**
    * 元素的标题
    */
-  title?: ReactNode
+  title?: ReactNode | CustomTitle
   /**
    * 取消按钮的内容
    */
@@ -47,6 +55,18 @@ export interface ActionSheetProps extends BaseComponent {
    * @default false
    */
   clickOverlayOnClose?: boolean
+  /**
+   * 示例区域（安卓示例区域不可点击）
+   */
+  example?: ReactNode
+  /**
+   * 点击确定时的回调
+   */
+  onConfirm?: () => void
+  /**
+   * 点击取消/关闭时的回调
+   */
+  onCancel?: () => void
 }
 
 export interface ActionSheetState {
@@ -71,6 +91,10 @@ export interface ActionSheetItemProps extends BaseComponent, BaseTextComponent {
    * @default false
    */
   noBorder?: boolean
+  /**
+   * 标题下方辅助文案
+   */
+  hint?: ReactNode
 }
 
 declare const ActionSheetItem: ComponentClass<ActionSheetItemProps>

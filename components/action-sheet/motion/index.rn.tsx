@@ -1,5 +1,7 @@
+import { View } from '@tarojs/components'
 import React, { useEffect, useRef } from 'react'
 import { Animated, Easing } from 'react-native'
+import '../../../style/components/action-sheet/example.scss'
 import { Props } from './types'
 
 // export function PolyMotion(props: Props) {
@@ -21,6 +23,7 @@ export default function (props: Props): JSX.Element {
   const {
     _isOpened,
     children,
+    example,
     // @ts-ignore
     style,
     customStyle,
@@ -51,6 +54,7 @@ export default function (props: Props): JSX.Element {
 
   return (
     <Animated.View style={[{ transform: [{ translateY: offset }] }, style, customStyle]}>
+      {example ? <View className='fta-action-sheet-example'>{example}</View> : null}
       {children}
     </Animated.View>
   )
