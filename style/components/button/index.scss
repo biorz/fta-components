@@ -152,6 +152,7 @@
   }
 
   &__text {
+    font-size: $font-size-md;
     /* #ifndef rn*/
     white-space: nowrap;
     /* #endif */

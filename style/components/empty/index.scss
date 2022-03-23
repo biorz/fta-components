@@ -11,20 +11,21 @@
   }
 
   &-title {
+    margin-top: $fta-empty-desc-margin-top;
     &__text {
-      color: #666;
-      font-weight: 500;
+      font-weight: $font-weight-bolder;
+      color: $fta-empty-title-color;
     }
   }
 
   &-desc {
-    margin-top: 14px;
+    margin-top: $fta-empty-desc-margin-top;
     &__text {
-      color: red;
+      color: $fta-empty-desc-color;
     }
   }
 
   &-button {
-    margin-top: 40px;
+    margin-top: $fta-empty-button-margin-top;
   }
 }
