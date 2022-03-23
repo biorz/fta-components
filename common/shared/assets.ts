@@ -19,6 +19,7 @@ const Assets = {
       'https://imagecdn.ymm56.com/ymmfile/common-operation/65dd3d3d-1b53-4d36-b47a-160fce6d40f6.png',
     down: 'https://image.ymm56.com/ymmfile/operation-biz/27653ee0-6dc6-446a-a60c-38c322e280cc.png',
     up: 'https://image.ymm56.com/ymmfile/operation-biz/4193cb2e-863f-471f-b3bf-80f49c22069a.png',
+    left: 'http://image.ymm56.com/boss/2018/1212/1544598761',
   },
   // 信息提示
   tip: {

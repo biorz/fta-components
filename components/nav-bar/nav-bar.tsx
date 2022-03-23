@@ -1,9 +1,16 @@
-import { Image, Text, View } from '@tarojs/components'
+import { Image, View } from '@tarojs/components'
 import { FC } from '@tarojs/taro'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React, { Component, CSSProperties, Fragment, ReactElement } from 'react'
-import { ConfigConsumer, inAndroid, inIOS, useCarelessClass, useClassWithCare } from '../../common'
+import {
+  Assets,
+  ConfigConsumer,
+  inAndroid,
+  inIOS,
+  useCarelessClass,
+  useClassWithCare,
+} from '../../common'
 import '../../style/components/nav-bar/index.scss'
 import {
   BackIconProps,
@@ -13,6 +20,7 @@ import {
   TitleProps,
 } from '../../types/nav-bar'
 import SafeArea from '../safe-area'
+import { Text } from '../typography'
 import { TouchableOpacity } from '../view'
 import NavbarButton from './navbar-button'
 import StatusBar from './status-bar/status-bar'
@@ -51,18 +59,17 @@ function getTitleElement(data, careMode: boolean) {
     ...colorStyle,
   }
 
-  const textClz = useClassWithCare(careMode, ['fta-nav-bar-title-text'])
-
   return (
     <View className='fta-nav-bar-title-container'>
       {/* @ts-ignore */}
       <Text
+        level={3}
         onClick={data.handler}
         // @ts-ignore
         ellipsizeMode={data.ellipsizeMode}
         numberOfLines={data.numberOfLines}
         style={textStyle}
-        className={textClz}>
+        className='fta-nav-bar-title-text'>
         {data.title}
       </Text>
     </View>
@@ -189,16 +196,16 @@ class NavBar extends Component<NavBarProps> {
   }
 }
 
-NavBar.backIcon = 'http://image.ymm56.com/boss/2018/1212/1544598761'
+NavBar.backIcon = Assets.arrow.left
 
 NavBar.BackIcon = useBackIcon
 
 NavBar.defaultProps = {
   style: {},
   tintColor: '',
-  leftButton: null,
-  rightButton: null,
-  title: null,
+  // leftButton: null,
+  // rightButton: null,
+  // title: null,
   statusBar: {
     style: 'default',
     hidden: false,

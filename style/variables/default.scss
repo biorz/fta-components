@@ -482,8 +482,12 @@ $fta-modal-bg-color: $color-white !default;
 $fta-modal-footer-height: zoom(100px) !default;
 
 /* NavBar */
-$fta-nav-bar-title-color: $color-text-base !default;
-$fta-nav-bar-link-color: $color-brand !default;
+$fta-nav-bar-height: zoom(88px);
+$fta-nav-bar-button-left-offset: zoom(28px);
+$fta-nav-bar-button-right-offset: zoom(28px);
+$fta-nav-bar-back-icon-size: zoom(32px);
+$fta-nav-bar-title-color: $color-grey-0 !default;
+$fta-nav-bar-button-color: #0076ff !default;
 
 /* NoticeBar */
 $fta-noticebar-padding: zoom(18px) zoom(28px) !default;

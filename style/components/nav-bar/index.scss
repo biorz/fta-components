@@ -1,17 +1,16 @@
 @import '../../mixins/index.scss';
-
-$nav-bar-height: 88px;
+@import '../../variables/default.scss';
 
 .fta-nav-bar {
-  position: relative;
-  background-color: #fff;
+  @include relative();
+  background-color: $color-white;
 
   &-left-button {
-    margin-left: 16px;
+    margin-left: $fta-nav-bar-button-left-offset;
   }
 
   &-right-button {
-    margin-right: 16px;
+    margin-right: $fta-nav-bar-button-right-offset;
   }
 
   &-title-container {
@@ -26,14 +25,9 @@ $nav-bar-height: 88px;
   }
 
   &-title-text {
-    font-size: 34px;
     letter-spacing: 1px;
-    color: #333;
-    font-weight: 500;
-  }
-
-  &-title-text--care {
-    font-size: care(34px);
+    color: $fta-nav-bar-title-color;
+    font-weight: $font-weight-bolder;
   }
 
   &-custom-title {
@@ -48,15 +42,13 @@ $nav-bar-height: 88px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 32px;
+    margin-left: $fta-nav-bar-button-left-offset;
     &__image {
-      width: 34px;
-      height: 34px;
-    }
+      @include square($fta-nav-bar-back-icon-size);
 
-    &__image--care {
-      width: care(34px);
-      height: care(34px);
+      &--care {
+        @include square(care($fta-nav-bar-back-icon-size));
+      }
     }
   }
 }
@@ -67,11 +59,12 @@ $nav-bar-height: 88px;
   justify-content: space-between;
   align-items: center;
   // stretch
-  height: $nav-bar-height;
+  height: $fta-nav-bar-height;
 }
 
 .fta-status-bar {
-  height: 44px;
+  // prettier-ignore
+  height: 44PX;
 }
 
 .fta-nav-bar-button-container {
