@@ -716,9 +716,19 @@ $fta-action-sheet-footer-button-border-color: $color-border-base;
 $fta-action-sheet-example-offset: zoom(40px);
 
 /* Empty */
-$fta-empty-button-bg-color: $color-brand;
 $fta-empty-button-margin-top: zoom(40px);
 $fta-empty-image-size: zoom(480px);
 $fta-empty-title-color: $color-grey-1;
+$fta-empty-desc-margin-top: zoom(14px);
 $fta-empty-desc-color: $color-grey-2;
 $fta-empty-desc-margin-top: zoom(14px);
+
+/* Result */
+$fta-result-button-margin-top: zoom(40px);
+$fta-result-image-size: zoom(240px);
+$fta-result-image-margin-top: zoom(200px);
+$fta-result-title-margin-top: zoom(14px);
+$fta-result-title-color: $color-grey-1;
+$fta-result-desc-margin-top: zoom(14px);
+$fta-result-desc-color: $color-grey-2;
+$fta-result-desc-margin-top: zoom(14px);
