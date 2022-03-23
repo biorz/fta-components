@@ -1,28 +1,28 @@
 import { Image, Text, View } from '@tarojs/components'
 import PropTypes, { InferProps } from 'prop-types'
 import React, { Component } from 'react'
-import { ConfigConsumer, useClassesWithCare } from '../../common'
+import { Assets, ConfigConsumer, useClassesWithCare } from '../../common'
 import '../../style/components/result/index.scss'
 import { ResultProps, ResultType } from '../../types/result'
 import { TouchableOpacity } from '../view'
 
 const STATUS: Record<ResultType, ResultProps> = {
   success: {
-    src: 'https://image.ymm56.com/ymmfile/operation-biz/c44ea5f6-10ad-42ff-aba6-907b62c8da8c.png',
+    src: Assets.tip.success,
     title: '操作成功',
   },
   error: {
-    src: 'https://image.ymm56.com/ymmfile/operation-biz/cd0be064-2acb-466b-a2a5-244b209b27b1.png',
+    src: Assets.tip.error,
     title: '操作失败',
   },
   waiting: {
-    src: 'https://image.ymm56.com/ymmfile/operation-biz/c0ab55e7-c019-4e2d-a13e-3c76ba67602b.png',
+    src: Assets.tip.waiting,
   },
   warning: {
-    src: 'https://image.ymm56.com/ymmfile/operation-biz/ef9aa9a9-710f-40a6-922b-ac044ae168fb.png',
+    src: Assets.tip.warning,
   },
   info: {
-    src: 'https://image.ymm56.com/ymmfile/operation-biz/62398c75-bcc3-40c0-be5e-db16031c0fc5.png',
+    src: Assets.tip.info,
   },
 }
 
@@ -32,7 +32,7 @@ class Result extends Component<ResultProps> {
 
   public render(): JSX.Element {
     const { type, renderBtn, btnText, onClick } = this.props
-    const { src, title, desc } = { ...STATUS[type], ...this.props }
+    const { src, title, desc } = { ...STATUS[type!], ...this.props }
     return (
       <ConfigConsumer>
         {({ careMode }) => {

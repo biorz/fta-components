@@ -3,14 +3,13 @@ import { CommonEvent } from '@tarojs/components/types/common'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
+import { Assets, inRN } from '../../common'
 import '../../style/components/curtain/index.scss'
 import { CurtainProps } from '../../types/curtain'
 
 export default class Curtain extends React.Component<CurtainProps> {
   public static defaultProps: CurtainProps
   public static propTypes: InferProps<CurtainProps>
-
-  public inRN = process.env.TARO_ENV === 'rn'
 
   private onClose(e: CommonEvent): void {
     e.stopPropagation?.()
@@ -41,11 +40,11 @@ export default class Curtain extends React.Component<CurtainProps> {
         <View className='fta-curtain__container'>
           <View className='fta-curtain__body'>
             {this.props.children}
-            {!this.inRN ? (
+            {!inRN ? (
               <View className={btnCloseClass} onClick={this.onClose.bind(this)} />
             ) : (
               <Image
-                src='https://image.ymm56.com/ymmfile/operation-biz/1e270684-078d-49c8-9e69-23fbe607404a.png'
+                src={Assets.close.circle}
                 className={btnCloseClass}
                 onClick={this.onClose.bind(this)}
               />
@@ -58,7 +57,7 @@ export default class Curtain extends React.Component<CurtainProps> {
 }
 
 Curtain.defaultProps = {
-  customStyle: '',
+  customStyle: {},
   className: '',
   isOpened: false,
   closeBtnPosition: 'bottom',

@@ -1,71 +1,30 @@
 @import '../../mixins/index.scss';
-
-@mixin flex-center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
+@import '../../variables/default.scss';
 
 .fta-empty {
   @include flex-center();
+  flex-direction: column;
 
   &-image {
-    width: 480px;
-    height: 480px;
+    @include square($fta-empty-image-size);
     @include flex-center();
   }
+
   &-title {
     &__text {
-      font-size: 32px;
-      line-height: 40px;
       color: #666;
       font-weight: 500;
-    }
-
-    &__text--care {
-      font-size: care(32px);
-      line-height: care(40px);
     }
   }
 
   &-desc {
+    margin-top: 14px;
     &__text {
-      margin-top: 14px;
-      font-size: 28px;
-      line-height: 32px;
-      color: #a0aec4;
-    }
-
-    &__text--care {
-      margin-top: care(14px);
-      font-size: care(28px);
-      line-height: care(32px);
+      color: red;
     }
   }
 
   &-button {
-    @include flex-center();
     margin-top: 40px;
-    border-radius: 8px;
-    background-color: #fa871e;
-    padding: 18px 48px;
-    &__text {
-      font-size: 28px;
-      line-height: 32px;
-      font-weight: 600;
-      color: #fff;
-    }
-
-    &__text {
-      font-size: care(28px);
-      line-height: care(32px);
-    }
-  }
-
-  &-button--care {
-    margin-top: care(40px);
-    border-radius: care(8px);
-    padding: care(18px) care(48px);
   }
 }

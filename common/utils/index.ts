@@ -18,6 +18,7 @@ export const log = inDev ? console.log : noob
 
 export * from './classnames'
 export * from './create-selector-query'
+export * from './deep-merge'
 export * from './delay'
 export * from './env'
 export * from './handle-touch-scroll'

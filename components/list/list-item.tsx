@@ -1,19 +1,11 @@
 import { Image, Text, View } from '@tarojs/components'
 import { ITouchEvent } from '@tarojs/components/types/common'
-import classNames, { Argument } from 'classnames'
+import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
-import { ConfigConsumer, mergeStyle, useClassesWithCare } from '../../common'
+import { Assets, ConfigConsumer, inRN, mergeStyle, useClassesWithCare } from '../../common'
 import '../../style/components/list/list-item.scss'
 import { ListItemProps } from '../../types/list'
-
-const arrowIcon = {
-  true: 'https://imagecdn.ymm56.com/ymmfile/common-operation/65dd3d3d-1b53-4d36-b47a-160fce6d40f6.png',
-  right:
-    'https://imagecdn.ymm56.com/ymmfile/common-operation/65dd3d3d-1b53-4d36-b47a-160fce6d40f6.png',
-  down: 'https://image.ymm56.com/ymmfile/operation-biz/27653ee0-6dc6-446a-a60c-38c322e280cc.png',
-  up: 'https://image.ymm56.com/ymmfile/operation-biz/4193cb2e-863f-471f-b3bf-80f49c22069a.png',
-}
 
 export default class ListItem extends React.Component<ListItemProps> {
   public static defaultProps: ListItemProps
@@ -57,7 +49,7 @@ export default class ListItem extends React.Component<ListItemProps> {
     return (
       <ConfigConsumer>
         {({ careMode }) => {
-          const iconClz: Argument[] = []
+          const iconClz: string[] = []
           if (iconInfo?.value) {
             iconClz.push(
               `${(iconInfo && iconInfo.prefixClass) || 'fta-icon'}-${iconInfo && iconInfo.value}`
@@ -155,7 +147,7 @@ export default class ListItem extends React.Component<ListItemProps> {
 
                     {arrow ? (
                       <View className='item-extra__icon'>
-                        {!this.inRN ? (
+                        {!inRN ? (
                           <Text
                             className={classNames(
                               `fta-icon fta-icon-chevron-${arrow === true ? 'right' : arrow}`,
@@ -166,7 +158,7 @@ export default class ListItem extends React.Component<ListItemProps> {
                           <Image
                             mode='aspectFit'
                             className={classNames('fta-icon', arrowClz)}
-                            src={arrowIcon[arrow as 'up' | 'right' | 'down']}
+                            src={Assets.arrow[arrow as 'up' | 'right' | 'down']}
                           />
                         )}
                       </View>
@@ -174,7 +166,7 @@ export default class ListItem extends React.Component<ListItemProps> {
                   </View>
                 </View>
               </View>
-              {this.inRN && hasBorder ? <View className='item-border-line' /> : null}
+              {inRN && hasBorder ? <View className='item-border-line' /> : null}
             </View>
           )
         }}
@@ -216,7 +208,7 @@ ListItem.propTypes = {
     value: PropTypes.string,
     color: PropTypes.string,
     prefixClass: PropTypes.string,
-    customStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+    customStyle: PropTypes.oneOfType([PropTypes.object]),
     className: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
   }),
 }

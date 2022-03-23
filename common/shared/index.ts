@@ -1,1 +1,1 @@
-export * from './aseets'
+export * from './assets'

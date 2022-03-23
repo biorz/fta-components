@@ -5,6 +5,7 @@ import classNames from 'classnames'
 import { InferProps } from 'prop-types'
 import React, { Component, CSSProperties } from 'react'
 import {
+  Assets,
   ConfigConsumer,
   inAlipay,
   inRN,
@@ -206,11 +207,7 @@ class NoticeBar extends Component<NoticeBarProps, NoticeBarState> {
               {close === false ? null : (
                 <View className={closeViewClz} onClick={this.onClose.bind(this)}>
                   {isBoolean(close) ? (
-                    <Icon
-                      className={closeClz}
-                      value='close'
-                      src='https://image.ymm56.com/ymmfile/operation-biz/a5e1c2a8-e59e-4bb8-9a59-c8092d058258.png'
-                    />
+                    <Icon className={closeClz} value='close' src={Assets.close.default} />
                   ) : (
                     close
                   )}

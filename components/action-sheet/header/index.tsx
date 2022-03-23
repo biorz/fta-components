@@ -50,7 +50,7 @@ export default class ActionSheetHeader extends Component<ActionSheetHeaderProps>
           {icon === true || isString(icon) ? (
             <Image
               className='fta-action-sheet__header-close'
-              src={isString(icon) ? icon || Assets.close : Assets.close}
+              src={isString(icon) ? icon || Assets.close.default : Assets.close.default}
               onClick={onCancel}
             />
           ) : (

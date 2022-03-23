@@ -1,66 +1,65 @@
-import { Image, Text, View } from '@tarojs/components'
+import { Image, View } from '@tarojs/components'
 import React, { Component } from 'react'
-import { ConfigConsumer, useClassesWithCare } from '../../common'
+import { Assets } from '../../common'
 import '../../style/components/empty/index.scss'
 import { EmptyProps, EmptyType } from '../../types/empty'
-import { TouchableOpacity } from '../view'
+import Button from '../button'
+import { Text } from '../typography'
 
 const defaultDesc: Record<EmptyType, { title: string; desc: string; src: string }> = {
   empty: {
     title: '暂无数据',
     desc: '让数据再飞一会',
-    src: 'https://image.ymm56.com/ymmfile/operation-biz/4469e30e-fe6b-4673-952c-c6a2d92ddc7b.png',
+    src: Assets.empty.default,
   },
   error: {
     title: '呃，出错了…',
     desc: '刷新一下试试吧',
-    src: 'https://image.ymm56.com/ymmfile/operation-biz/49c712cb-69cc-4e80-9ca8-d752605c403e.png',
+    src: Assets.empty.error,
   },
 }
 
 class Empty extends Component<EmptyProps> {
   public static defaultProps: EmptyProps
-  public render(): JSX.Element {
+
+  public render(): JSX.Element | null {
     if (!this.props.show) return null
     // const copiedProps
     const { type, showBtn, btnText, onClick } = this.props
     const { src, title, desc } = {
-      ...defaultDesc[type],
+      ...defaultDesc[type!],
       ...this.props,
     }
 
+    const [titleClz, descClz, btnClz] = [
+      'fta-empty-title__text',
+      'fta-empty-desc__text',
+      'fta-empty-button',
+    ]
+
     return (
-      <ConfigConsumer>
-        {({ careMode }) => {
-          const [titleClz, descClz, btnClz, btnTextClz] = useClassesWithCare.single(
-            careMode,
-            'fta-empty-title__text',
-            'fta-empty-desc__text',
-            'fta-empty-button',
-            'fta-empty-button__text'
-          )
-          return (
-            <View className='fta-empty'>
-              <Image className='fta-empty-image' src={src} mode='aspectFit'></Image>
-              {title ? (
-                <View className='fta-empty-title'>
-                  <Text className={titleClz}>{title}</Text>
-                </View>
-              ) : null}
-              {desc ? (
-                <View className='fta-empty-desc'>
-                  <Text className={descClz}>{desc}</Text>
-                </View>
-              ) : null}
-              {showBtn ? (
-                <TouchableOpacity activeOpacity={0.6} className={btnClz} onClick={onClick}>
-                  <Text className={btnTextClz}>{btnText}</Text>
-                </TouchableOpacity>
-              ) : null}
-            </View>
-          )
-        }}
-      </ConfigConsumer>
+      <View className='fta-empty'>
+        <Image className='fta-empty-image' src={src} mode='aspectFit'></Image>
+        {title ? (
+          <View className='fta-empty-title'>
+            <Text level={3} className={titleClz}>
+              {title}
+            </Text>
+          </View>
+        ) : null}
+        {desc ? (
+          <View className='fta-empty-desc'>
+            <Text level={4} className={descClz}>
+              {desc}
+            </Text>
+          </View>
+        ) : null}
+        {showBtn ? (
+          <Button className={btnClz} onClick={onClick}>
+            {btnText}
+          </Button>
+        ) : null}
+      </View>
     )
   }
 }

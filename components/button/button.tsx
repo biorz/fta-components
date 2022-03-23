@@ -110,6 +110,9 @@ export default class FTAButton extends Component<FTAButtonProps> {
       appParameter,
       textClassName,
       textStyle,
+      className,
+      // @ts-ignore
+      style,
     } = this.props
 
     let rootClassName = classNames(
@@ -121,7 +124,7 @@ export default class FTAButton extends Component<FTAButtonProps> {
         'fta-button--full': full,
       },
       disabled && ['fta-button--disabled', `fta-button--${type}--disabled`],
-      this.props.className
+      className
     )
 
     const textClass = classNames(
@@ -176,7 +179,7 @@ export default class FTAButton extends Component<FTAButtonProps> {
     return (
       <View
         className={rootClassName}
-        style={customStyle}
+        style={{ ...style, ...customStyle }}
         onClick={this.onClick.bind(this)}
         // @ts-ignore
         hoverClassName={this.hoverClass}

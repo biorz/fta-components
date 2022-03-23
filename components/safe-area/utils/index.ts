@@ -8,7 +8,6 @@ export const safeArea: Taro.General.SafeAreaResult = systemInfo.safeArea || {
   left: 0,
   right: 0,
 }
-console.log(systemInfo, 'systemInfo')
 
 /** 是否是沉浸式屏幕 */
 export const isImmersive = systemInfo.screenHeight === systemInfo.windowHeight
