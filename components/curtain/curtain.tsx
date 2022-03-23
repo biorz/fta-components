@@ -3,7 +3,7 @@ import { CommonEvent } from '@tarojs/components/types/common'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
-import { Assets, inRN } from '../../common'
+import { Assets } from '../../common'
 import '../../style/components/curtain/index.scss'
 import { CurtainProps } from '../../types/curtain'
 
@@ -40,7 +40,12 @@ export default class Curtain extends React.Component<CurtainProps> {
         <View className='fta-curtain__container'>
           <View className='fta-curtain__body'>
             {this.props.children}
-            {!inRN ? (
+            <Image
+              src={Assets.close.circle}
+              className={btnCloseClass}
+              onClick={this.onClose.bind(this)}
+            />
+            {/* {!inRN ? (
               <View className={btnCloseClass} onClick={this.onClose.bind(this)} />
             ) : (
               <Image
@@ -48,7 +53,7 @@ export default class Curtain extends React.Component<CurtainProps> {
                 className={btnCloseClass}
                 onClick={this.onClose.bind(this)}
               />
-            )}
+            )} */}
           </View>
         </View>
       </View>

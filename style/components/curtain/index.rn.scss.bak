@@ -1,5 +1,6 @@
 @import '../../variables/default.scss';
 @import '../../mixins/index.scss';
+
 $fta-curtain-btn-size: 56px;
 
 .fta-curtain {
@@ -9,7 +10,7 @@ $fta-curtain-btn-size: 56px;
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba($color: #000, $alpha: 0.3);
+  background-color: $fta-curtain-bg-color;
   z-index: $zindex-curtain;
 
   /* elements */

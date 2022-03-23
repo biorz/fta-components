@@ -374,7 +374,12 @@ $fta-countdown-card-num-color: #ff4949 !default;
 $fta-countdown-card-num-bg-color: $color-white !default;
 
 /* Curtain */
-$fta-curtain-btn-color: $color-white !default;
+// $fta-curtain-btn-color: $color-white !default;
+$fta-curtain-btn-size: 56px;
+$fta-curtain-bg-color: rgba(
+  $color: #000,
+  $alpha: 0.3,
+);
 
 /* Divider */
 $fta-divider-height: 112px !default;
