@@ -7,6 +7,12 @@
   padding: 0 $fta-tag-horizon-padding;
   border-radius: $fta-tag-radius;
 
+  &--care {
+    height: care($fta-tag-height);
+    padding: 0 care($fta-tag-horizon-padding);
+    border-radius: care($fta-tag-radius);
+  }
+
   /* Modifiers */
   &--bordered {
     // prettier-ignore
@@ -37,6 +43,10 @@
   &__text {
     font-size: $fta-tag-font-size;
     font-weight: $fta-tag-font-weight;
+
+    &--care {
+      font-size: care($fta-tag-font-size);
+    }
 
     &--primary {
       color: $fta-tag-border-color-primary;

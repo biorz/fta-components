@@ -1,7 +1,6 @@
 import { Text, View } from '@tarojs/components'
-import classNames from 'classnames'
 import React from 'react'
-import { isString } from '../../common'
+import { isString, useCarelessClass } from '../../common'
 import '../../style/components/tag/index.scss'
 import { TagProps } from '../../types/tag'
 
@@ -20,13 +19,11 @@ function Tag(props: TagProps): JSX.Element {
     onClick,
   } = props
 
-  const rootClz = classNames(
-    'fta-tag',
-    `fta-tag--${type}`,
-    border && 'fta-tag--bordered',
-    className
+  const rootClz = useCarelessClass(
+    ['fta-tag'],
+    [`fta-tag--${type}`, border && 'fta-tag--bordered', className]
   )
-  const textClz = classNames('fta-tag__text', `fta-tag__text--${type}`, textClassName)
+  const textClz = useCarelessClass(['fta-tag__text'], [`fta-tag__text--${type}`, textClassName])
 
   const rootStyle = {
     ...customStyle,
