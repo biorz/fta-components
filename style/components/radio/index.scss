@@ -1,76 +1,118 @@
 @import '../../variables/default.scss';
 @import '../../mixins/index.scss';
 
+$component: '.fta-radio';
+
 .fta-radio {
-  position: relative;
-  background-color: $color-bg;
+  @include relative();
+  background-color: $fta-radio-bg-color;
   @include hairline-top-relative();
   @include hairline-bottom-relative();
 
-  /* elements */
-  &__option-wrap {
-    padding: $spacing-v-lg $spacing-h-xl $spacing-v-lg 0;
-  }
-
-  &__option-container {
-    display: flex;
-  }
-
-  &__title {
-    flex: 6;
-    color: $fta-radio-title-color;
-    font-size: $fta-radio-title-size;
-    text-align: left;
-    line-height: $line-height-zh;
-    word-break: break-all;
-  }
-
-  &__icon {
-    flex: 1;
-    font-size: $fta-radio-title-size;
-    text-align: right;
-    overflow: hidden;
-    visibility: hidden;
-
-    &--checked {
-      visibility: visible;
-    }
-
-    .fta-icon {
-      color: $fta-radio-check-color;
-    }
-  }
-
-  &__desc {
-    display: flex;
-    width: 86%;
-    color: $fta-radio-desc-color;
-    font-size: $fta-radio-desc-size;
-    text-align: left;
-    line-height: $line-height-zh;
-    letter-spacing: 0;
-    word-break: break-all;
+  &--inline {
+    @include display-flex(row);
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 0 $fta-radio-padding;
   }
 
   &__option {
-    padding-left: $spacing-h-xl;
+    @include display-flex();
+    flex-direction: row;
+    align-items: center;
+    padding: $fta-radio-padding;
+    border: 1px solid $fta-radio-border-color;
+    // flex-wrap: wrap;
     @include active;
 
-    &--disabled {
-      .fta-radio__option-container,
-      .fta-radio__desc {
-        opacity: $opacity-disabled;
-      }
+    &--between {
+      flex-direction: row-reverse;
+      justify-content: space-between;
+    }
 
-      &:active {
-        background-color: inherit;
-      }
+    &--inline {
+      border: 0;
+      padding-left: 0;
+      padding-right: 0;
     }
   }
 
   &__option + &__option {
-    .fta-radio__option-wrap {
+    #{$component}__option-wrap {
       @include hairline-top();
     }
+  }
+
+  &-content {
+    @include display-flex(column);
+    flex: 0 1 auto;
+  }
+
+  /* elements */
+  &__title {
+    @include display-flex;
+    color: $fta-radio-title-color;
+    font-size: $fta-radio-title-size;
+    line-height: $fta-radio-title-line-height;
+
+    &--selected {
+      color: $fta-radio-title-color-selected;
+    }
+
+    &--disabled {
+      color: $fta-radio-title-color-disabled;
+    }
+  }
+
+  &__desc {
+    @include nrn {
+      display: block;
+    }
+    margin-top: $fta-radio-title-desc-margin-top;
+    color: $fta-radio-desc-color;
+    font-size: $fta-radio-desc-font-size;
+    line-height: $fta-radio-title-desc-height;
+
+    &--selected {
+      color: $fta-radio-desc-color-selected;
+    }
+
+    &--disabled {
+      color: $fta-radio-desc-color-disabled;
+    }
+  }
+
+  &__icon-cnt {
+    @include flex-center();
+    @include circle();
+    @include nrn {
+      box-sizing: border-box;
+      transition: all 0.2s;
+    }
+    margin-top: 4px;
+    margin-right: $fta-radio-icon-padding-horizon;
+    width: $fta-radio-circle-size;
+    min-width: $fta-radio-circle-size;
+    height: $fta-radio-circle-size;
+    color: transparent;
+    font-size: $fta-radio-icon-size;
+    background-color: $fta-radio-icon-color;
+
+    &--selected {
+      background-color: $fta-radio-icon-color-selected;
+    }
+
+    &--between {
+      margin-right: 0;
+      margin-left: $fta-radio-icon-padding-horizon;
+    }
+
+    &--inline {
+      margin-right: $fta-radio-icon-inline-horizon;
+    }
+  }
+
+  &-icon {
+    @include square($fta-radio-icon-size);
   }
 }

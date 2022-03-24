@@ -8,7 +8,6 @@ export interface SwitchProps extends BaseComponent {
   title?: string
   /**
    * 背景颜色
-   * @default #6190e8
    */
   color?: string
   /**

@@ -534,11 +534,31 @@ $fta-progress-bar-bg-color: $color-brand-light !default;
 $fta-progress-bar-bg-color-active: $color-white !default;
 
 /* Radio */
-$fta-radio-title-color: $color-text-base !default;
+// $fta-radio-title-color: $color-text-base !default;
+// $fta-radio-title-size: $font-size-lg !default;
+// $fta-radio-desc-color: $color-grey-2 !default;
+// $fta-radio-desc-size: $font-size-sm !default;
+// $fta-radio-check-color: $color-brand !default;
+$fta-radio-padding: zoom(32px);
+$fta-radio-bg-color: $color-bg;
+$fta-radio-border-color: $color-border-light;
+$fta-radio-circle-size: 40px !default;
+$fta-radio-icon-size: $font-size-sm !default;
+$fta-radio-icon-padding-horizon: $spacing-h-lg !default;
+$fta-radio-icon-inline-horizon: zoom(12px) !default;
+$fta-radio-icon-color: $color-grey-4 !default;
+$fta-radio-icon-color-selected: $color-brand !default;
+$fta-radio-title-color: $color-grey-1 !default;
+$fta-radio-title-color-selected: $color-text-base !default;
+$fta-radio-title-color-disabled: $color-grey-2 !default;
 $fta-radio-title-size: $font-size-lg !default;
-$fta-radio-desc-color: $color-grey-2 !default;
-$fta-radio-desc-size: $font-size-sm !default;
-$fta-radio-check-color: $color-brand !default;
+$fta-radio-title-line-height: $line-height-lg !default;
+$fta-radio-desc-font-size: $font-size-sm !default;
+$fta-radio-desc-color: $color-grey-3 !default;
+$fta-radio-desc-color-selected: $color-grey-2 !default;
+$fta-radio-desc-color-disabled: $color-grey-3 !default;
+$fta-radio-title-desc-height: $line-height-sm !default;
+$fta-radio-title-desc-margin-top: zoom(6px) !default;
 
 /* Range */
 $fta-range-slider-size: 28px !default;

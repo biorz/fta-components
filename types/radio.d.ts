@@ -1,4 +1,3 @@
-import { CommonEvent } from '@tarojs/components/types/common'
 import { ComponentClass } from 'react'
 import BaseComponent from './base'
 
@@ -10,17 +9,19 @@ export interface RadioOption<T> {
   /**
    * 选项标题
    */
-  label: string
+  label: ReactNode
   /**
    * 选项描述，显示在标题下方的文字
    */
-  desc?: string
+  desc?: ReactNode
   /**
    * 是否禁止点击
    * @default false
    */
   disabled?: boolean
 }
+
+export type RadioType = 'left' | 'inline' | 'between'
 
 export interface RadioProps<T> extends BaseComponent {
   /**
@@ -34,7 +35,29 @@ export interface RadioProps<T> extends BaseComponent {
   /**
    * 点击选项触发事件,开发者需要通过此事件来更新 value，onClick 函数必填
    */
-  onClick: (vaule: T, event: CommonEvent) => void
+  onClick: (vaule: T) => void
+
+  /**
+   * 自定义选中icon
+   */
+  selectedIcon?: ReactNode
+  /**
+   * 自定义未选中icon
+   */
+  icon?: ReactNode
+  /**
+   * 自定义禁用icon
+   */
+  disabledIcon?: ReactNode
+  /**
+   * 自定义禁用 & 选中 icon
+   */
+  selectedDidsabledIcon?: ReactNode
+  /**
+   * 展现类型
+   * @default 'left'
+   */
+  type?: RadioType
 }
 
 declare const Radio: ComponentClass<RadioProps<any>>

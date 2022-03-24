@@ -2,13 +2,26 @@ import { ComponentClass, ReactNode } from 'react'
 import BaseComponent from './base'
 
 export interface CheckboxOption<T> {
+  /**
+   * 选项标识符，必须保证唯一
+   */
   value: T
+  /**
+   * 选项标题
+   */
   label: ReactNode
+  /**
+   * 选项描述，显示在标题下方的文字
+   */
   desc?: ReactNode
+  /**
+   * 是否禁止点击
+   * @default false
+   */
   disabled?: boolean
 }
 
-export type CheckboxType = 'between' | 'left' | 'row' | 'button'
+export type CheckboxType = 'between' | 'left' | 'inline'
 
 export interface CheckboxProps<T> extends BaseComponent {
   options: Array<CheckboxOption<T>>
@@ -32,7 +45,10 @@ export interface CheckboxProps<T> extends BaseComponent {
    * 自定义禁用 & 选中 icon
    */
   selectedDidsabledIcon?: ReactNode
-
+  /**
+   * 展现类型
+   * @default 'left'
+   */
   type?: CheckboxType
 }
 

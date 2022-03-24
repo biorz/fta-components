@@ -1,68 +1,109 @@
-import { Text, View } from '@tarojs/components'
-import { CommonEvent } from '@tarojs/components/types/common'
+import { Image, Text, View } from '@tarojs/components'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
-import React from 'react'
-// TODO: icon
-import '../../style/components/icon/index.scss'
+import React, { ReactNode } from 'react'
+import { Assets, isUndef } from '../../common'
 import '../../style/components/radio/index.scss'
-import { RadioOption, RadioProps } from '../../types/radio'
+import { RadioProps } from '../../types/radio'
 
-export default class Radio extends React.Component<RadioProps<any>> {
-  public static defaultProps: RadioProps<any>
-  public static propTypes: InferProps<RadioProps<any>>
+export default class Radio<T extends any = any> extends React.Component<RadioProps<T>> {
+  public static defaultProps: RadioProps<unknown>
+  public static propTypes: InferProps<RadioProps<unknown>>
 
-  private handleClick(option: RadioOption<any>, event: CommonEvent): void {
-    if (option.disabled) return
-    this.props.onClick(option.value, event)
+  constructor(props) {
+    super(props)
+    this.handleClick = this.handleClick.bind(this)
+  }
+
+  private handleClick(idx: number): void {
+    const option = this.props.options[idx]
+    const { disabled, value } = option
+    if (disabled) return
+
+    this.props.onClick(value)
   }
 
   public render(): JSX.Element {
-    const { customStyle, className, options, value } = this.props
+    const {
+      customStyle,
+      // @ts-ignore
+      style,
+      className,
+      options,
+      icon,
+      disabledIcon,
+      selectedIcon,
+      selectedDidsabledIcon,
+      type,
+      value,
+    } = this.props
+
+    const rootCls = classNames('fta-radio', `fta-radio--${type}`, className)
 
     return (
-      <View className={classNames('fta-radio', className)} style={customStyle}>
-        {options.map((option) => (
-          <View
-            key={option.value}
-            onClick={this.handleClick.bind(this, option)}
-            className={classNames({
-              'fta-radio__option': true,
-              'fta-radio__option--disabled': option.disabled,
-            })}>
-            <View className='fta-radio__option-wrap'>
-              <View className='fta-radio__option-container'>
-                <View className='fta-radio__title'>{option.label}</View>
-                <View
-                  className={classNames({
-                    'fta-radio__icon': true,
-                    'fta-radio__icon--checked': value === option.value,
-                  })}>
-                  <Text className='fta-icon fta-icon-check'></Text>
+      <View className={rootCls} style={{ ...style, ...customStyle }}>
+        {options.map((option, idx) => {
+          let presentIcon: ReactNode
+          const { disabled, label, desc } = option
+          const selected = value === option.value
+          if (selected) {
+            presentIcon = disabled ? selectedDidsabledIcon : selectedIcon
+          } else {
+            presentIcon = disabled ? disabledIcon : icon
+          }
+          const optionCls = classNames('fta-radio__option', `fta-radio__option--${type}`, {
+            'fta-radio__option--disabled': disabled,
+            'fta-radio__option--selected': selected,
+          })
+          const iconCntCls = classNames('fta-radio__icon-cnt', `fta-radio__icon-cnt--${type}`, {
+            'fta-radio__icon-cnt--selected': selected,
+            'fta-radio__icon-cnt--disabled': disabled,
+          })
+          const titleClz = classNames(
+            'fta-radio__title',
+            selected && 'fta-radio__title--selected',
+            disabled && 'fta-radio__title--disabled'
+          )
+          const descClz = classNames(
+            'fta-radio__desc',
+            selected && 'fta-radio__desc--selected',
+            disabled && 'fta-radio__desc--disabled'
+          )
+          return (
+            <View className={optionCls} key={idx} onClick={() => this.handleClick(idx)}>
+              {isUndef(presentIcon) ? (
+                <View className={iconCntCls}>
+                  <Image className='fta-radio-icon' src={Assets.check.default} />
                 </View>
+              ) : (
+                presentIcon
+              )}
+
+              <View className='fta-radio-content'>
+                <Text className={titleClz}>{label}</Text>
+                {desc && <Text className={descClz}>{desc}</Text>}
               </View>
-              {option.desc && <View className='fta-radio__desc'>{option.desc}</View>}
             </View>
-          </View>
-        ))}
+          )
+        })}
       </View>
     )
   }
 }
 
 Radio.defaultProps = {
-  customStyle: '',
+  customStyle: {},
   className: '',
-  value: '',
   options: [],
+  value: null,
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   onClick: (): void => {},
+  type: 'left',
 }
 
 Radio.propTypes = {
   customStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   className: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
-  value: PropTypes.string,
   options: PropTypes.array,
   onClick: PropTypes.func,
 }
