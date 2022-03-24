@@ -11,7 +11,7 @@
 
   /* 修复底线隐藏问题 */
   margin-bottom: 1px;
-  @include hairline-bottom();
+  // @include hairline-bottom();
 
   &__overlay {
     position: absolute;
