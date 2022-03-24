@@ -1,13 +1,19 @@
-import { Text, View } from '@tarojs/components'
+import { Image, Text, View } from '@tarojs/components'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
-import React from 'react'
+import React, { ReactNode } from 'react'
+import { Assets, isUndef } from '../../common'
 import '../../style/components/checkbox/index.scss'
 import { CheckboxProps } from '../../types/checkbox'
 
-export default class Checkbox extends React.Component<CheckboxProps<any>> {
-  public static defaultProps: CheckboxProps<any>
-  public static propTypes: InferProps<CheckboxProps<any>>
+export default class Checkbox<T extends any = any> extends React.Component<CheckboxProps<T>> {
+  public static defaultProps: CheckboxProps<unknown>
+  public static propTypes: InferProps<CheckboxProps<unknown>>
+
+  constructor(props) {
+    super(props)
+    this.handleClick = this.handleClick.bind(this)
+  }
 
   private handleClick(idx: number): void {
     const { selectedList, options } = this.props
@@ -25,33 +31,68 @@ export default class Checkbox extends React.Component<CheckboxProps<any>> {
   }
 
   public render(): JSX.Element {
-    const { customStyle, className, options, selectedList } = this.props
+    const {
+      customStyle,
+      // @ts-ignore
+      style,
+      className,
+      options,
+      selectedList,
+      icon,
+      disabledIcon,
+      selectedIcon,
+      selectedDidsabledIcon,
+      type,
+    } = this.props
 
-    const rootCls = classNames('fta-checkbox', className)
+    const rootCls = classNames('fta-checkbox', `fta-checkbox--${type}`, className)
 
     return (
-      <View className={rootCls} style={customStyle}>
+      <View className={rootCls} style={{ ...style, ...customStyle }}>
         {options.map((option, idx) => {
+          let presentIcon: ReactNode
           const { value, disabled, label, desc } = option
           const selected = selectedList.includes(value)
-          const optionCls = classNames('fta-checkbox__option', {
+          if (selected) {
+            presentIcon = disabled ? selectedDidsabledIcon : selectedIcon
+          } else {
+            presentIcon = disabled ? disabledIcon : icon
+          }
+          const optionCls = classNames('fta-checkbox__option', `fta-checkbox__option--${type}`, {
             'fta-checkbox__option--disabled': disabled,
             'fta-checkbox__option--selected': selected,
           })
-          console.log('disabled', disabled, optionCls, rootCls)
-          const iconCntCls = classNames('fta-checkbox__icon-cnt', {
-            'fta-checkbox__icon-cnt--selected': selected,
-          })
+          const iconCntCls = classNames(
+            'fta-checkbox__icon-cnt',
+            `fta-checkbox__icon-cnt--${type}`,
+            {
+              'fta-checkbox__icon-cnt--selected': selected,
+              'fta-checkbox__icon-cnt--disabled': disabled,
+            }
+          )
+          const titleClz = classNames(
+            'fta-checkbox__title',
+            selected && 'fta-checkbox__title--selected',
+            disabled && 'fta-checkbox__title--disabled'
+          )
+          const descClz = classNames(
+            'fta-checkbox__desc',
+            selected && 'fta-checkbox__desc--selected',
+            disabled && 'fta-checkbox__desc--disabled'
+          )
           return (
-            <View className={optionCls} key={value} onClick={this.handleClick.bind(this, idx)}>
-              <View className='fta-checkbox__option-wrap'>
-                <View className='fta-checkbox__option-cnt'>
-                  <View className={iconCntCls}>
-                    <Text className='fta-icon fta-icon-check'></Text>
-                  </View>
-                  <View className='fta-checkbox__title'>{label}</View>
+            <View className={optionCls} key={value as string} onClick={() => this.handleClick(idx)}>
+              {isUndef(presentIcon) ? (
+                <View className={iconCntCls}>
+                  <Image className='fta-checkbox-icon' src={Assets.check.default} />
                 </View>
-                {desc && <View className='fta-checkbox__desc'>{desc}</View>}
+              ) : (
+                presentIcon
+              )}
+
+              <View className='fta-checkbox-content'>
+                <Text className={titleClz}>{label}</Text>
+                {desc && <Text className={descClz}>{desc}</Text>}
               </View>
             </View>
           )
@@ -68,6 +109,7 @@ Checkbox.defaultProps = {
   selectedList: [],
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   onChange: (): void => {},
+  type: 'left',
 }
 
 Checkbox.propTypes = {

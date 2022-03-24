@@ -41,6 +41,13 @@ export default class Switch extends React.Component<SwitchProps, SwitchState> {
         }
       : {}
 
+    const extraProps = inRN
+      ? {
+          width: 52,
+          height: 32,
+        }
+      : {}
+
     const switchClz = classNames('fta-switch__switch', disabled && 'switch--disabled')
     const switchElm = (
       <View className={containerCls}>
@@ -52,6 +59,7 @@ export default class Switch extends React.Component<SwitchProps, SwitchState> {
           checked={this.state.checked}
           color={inRN ? Themes.color.white : color}
           onChange={this.handleChange}
+          {...extraProps}
         />
       </View>
     )

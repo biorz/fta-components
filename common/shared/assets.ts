@@ -36,6 +36,11 @@ const Assets = {
       'https://image.ymm56.com/ymmfile/operation-biz/4469e30e-fe6b-4673-952c-c6a2d92ddc7b.png',
     error: 'https://image.ymm56.com/ymmfile/operation-biz/49c712cb-69cc-4e80-9ca8-d752605c403e.png',
   },
+  // 对号
+  check: {
+    default:
+      'https://imagecdn.ymm56.com/ymmfile/static/resource/f1b19e18-3105-4951-8e95-f0de00b221d2.png',
+  },
 }
 
 const mergeAssets = (newAssets: DeepPartial<typeof Assets>) => {
