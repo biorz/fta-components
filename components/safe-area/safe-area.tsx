@@ -78,7 +78,7 @@ class SafeArea extends Component<SafeAreaProps> {
 
   public renderSafeArea(position: keyof SafeAreaProps, props: Partial<SafeAreaProps>): JSX.Element {
     const { style, className, children, useMargin, ...extraProps } = props
-    const rootStyle = this.getInlineStyle(position, props.style)
+    const rootStyle = this.getInlineStyle(position, props.style!)
     const rootCla = classNames(
       props.className,
       `fta-safe-area-${position}${useMargin ? '__margin' : ''}`
@@ -90,7 +90,7 @@ class SafeArea extends Component<SafeAreaProps> {
     )
   }
 
-  public render(): JSX.Element {
+  public render(): JSX.Element | null {
     if (inAlipay) return null
     return (
       <Context.Consumer>

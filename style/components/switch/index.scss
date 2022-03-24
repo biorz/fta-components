@@ -4,18 +4,17 @@
 $component: '.fta-switch';
 
 #{$component} {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flex-center();
+  flex-direction: row;
   background-color: $color-bg;
   // margin-left: $spacing-h-xl;
-  padding: $spacing-v-lg $spacing-h-xl $spacing-v-lg 0;
+  padding: $fta-switch-padding;
   margin-bottom: 1px;
-  @include hairline-bottom();
+  // @include hairline-bottom();
 
   /* elements */
   &__title {
-    margin-left: $spacing-h-xl;
+    margin-left: $fta-switch-title-margin-left;
     flex: 6;
     color: $fta-switch-title-color;
     font-size: $fta-switch-title-size;
@@ -31,7 +30,13 @@ $component: '.fta-switch';
   }
 
   &__switch {
-    display: inline-block;
+    @include nrn {
+      display: inline-block;
+    }
+    @include rn {
+      // prettier-ignore
+      border: 1PX solid #dfdfdf
+    }
   }
 
   &__mask {
@@ -46,11 +51,10 @@ $component: '.fta-switch';
 
   /* modifiers */
   &--disabled {
-    #{$component}__switch {
-      opacity: $opacity-disabled;
-    }
+  }
 
-    #{$component}__mask {
+  &__mask {
+    @include nrn {
       display: block;
     }
   }
@@ -60,4 +64,8 @@ $component: '.fta-switch';
       border: none;
     }
   }
+}
+
+.switch--disabled {
+  opacity: $opacity-disabled;
 }

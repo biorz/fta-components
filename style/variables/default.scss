@@ -575,8 +575,10 @@ $fta-swipe-action-bg-color: $color-white !default;
 $fta-swipe-action-option-bg-color: $color-grey-2 !default;
 
 /* Switch */
-$fta-switch-title-color: $color-text-base !default;
-$fta-switch-title-size: $font-size-base !default;
+$fta-switch-padding: $spacing-v-lg $spacing-h-xl $spacing-v-lg 0 !default;
+$fta-switch-title-margin-left: $spacing-h-xl;
+$fta-switch-title-color: $color-grey-0 !default;
+$fta-switch-title-size: $font-size-md !default;
 
 /* TabBar */
 $fta-tab-bar-bg-color: $color-white !default;

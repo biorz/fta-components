@@ -32,6 +32,10 @@ export interface SwitchProps extends BaseComponent {
   onChange?: (value: boolean) => void
 }
 
+export interface SwitchState {
+  checked: boolean
+}
+
 declare const Switch: ComponentClass<SwitchProps>
 
 export default Switch

@@ -1,8 +1,5 @@
 import { deepMerge } from '../utils/deep-merge'
-
-type DeepPartial<T extends object> = {
-  [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P]
-}
+import { DeepPartial } from './types'
 
 const Assets = {
   // 关闭
