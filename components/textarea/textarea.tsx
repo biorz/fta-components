@@ -54,7 +54,7 @@ export default class Textarea extends React.Component<TextareaProps> {
       value,
       cursorSpacing,
       placeholder,
-      placeholderStyle,
+      placeholderStyle = { color: 'red' },
       placeholderClass,
       maxLength = 200,
       count,
@@ -110,11 +110,11 @@ export default class Textarea extends React.Component<TextareaProps> {
             <Text
               className={classNames(
                 'fta-textarea__counter-current',
-                value.length == _maxLength && `fta-textarea__counter--full`
+                value.length == _maxLength && `fta-textarea__counter-full`
               )}>
               {value.length}
             </Text>
-            <Text className='fta-textarea__counter-max'>/{_maxLength}</Text>
+            <Text className='fta-textarea__counter-limit'>/{_maxLength}</Text>
           </View>
         )}
       </View>

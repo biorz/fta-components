@@ -45,17 +45,21 @@ $fta-textarea-bg-color: $color-bg;
     }
     padding-top: $spacing-v-sm;
     width: 100%;
-    color: $fta-textarea-tips-color;
-    font-size: $fta-textarea-tips-size;
+
     text-align: right;
-    line-height: $line-height-base * $fta-textarea-tips-size;
+
     &-current {
+      line-height: $line-height-base * $fta-textarea-tips-size;
+      color: $fta-textarea-tips-color;
     }
 
     &-full {
+      color: $fta-textarea-tips-limit-color;
     }
 
-    &-max {
+    &-limit {
+      line-height: $line-height-base * $fta-textarea-tips-size;
+      color: $fta-textarea-tips-color;
     }
   }
 
