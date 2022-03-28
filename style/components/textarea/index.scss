@@ -9,19 +9,22 @@ $fta-textarea-bg-color: $color-bg;
   padding: $spacing-v-md;
   width: 100%;
   font-size: $fta-textarea-font-size;
-  line-height: $line-height-zh;
+  line-height: $line-height-zh * $fta-textarea-font-size;
   border-radius: $border-radius-md;
   background-color: $fta-textarea-bg-color;
-  box-sizing: border-box;
-  @include border-thin($width: 1px);
+  @include border-box();
+  // @include border-thin($width: 1px);
 
   &__textarea {
     width: 100%;
     height: $fta-textarea-input-height;
     font-size: $fta-textarea-font-size;
-    outline: none;
-    resize: none;
-    -webkit-appearance: none;
+    @include nrn {
+      outline: none;
+      resize: none;
+      -webkit-appearance: none;
+    }
+
     border-radius: 0;
     padding: 0;
     margin: 0;
@@ -30,23 +33,36 @@ $fta-textarea-bg-color: $color-bg;
 
     // todo: fix 与新版存在差异
     textarea {
-      resize: none;
+      @include nrn {
+        resize: none;
+      }
     }
   }
 
   &__counter {
+    @include nrn {
+      display: block;
+    }
     padding-top: $spacing-v-sm;
     width: 100%;
     color: $fta-textarea-tips-color;
     font-size: $fta-textarea-tips-size;
     text-align: right;
-    line-height: $line-height-base;
+    line-height: $line-height-base * $fta-textarea-tips-size;
+    &-current {
+    }
+
+    &-full {
+    }
+
+    &-max {
+    }
   }
 
   &--WEB,
   &--WEAPP {
     #{$component}__textarea {
-      line-height: $line-height-base;
+      // line-height: $line-height-base ;
     }
   }
 

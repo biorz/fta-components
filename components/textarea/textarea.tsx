@@ -1,4 +1,4 @@
-import { Textarea as TaroTextArea, View } from '@tarojs/components'
+import { Text, Textarea as TaroTextArea, View } from '@tarojs/components'
 import { CommonEvent } from '@tarojs/components/types/common'
 import Taro from '@tarojs/taro'
 import classNames from 'classnames'
@@ -107,7 +107,14 @@ export default class Textarea extends React.Component<TextareaProps> {
         />
         {count && (
           <View className='fta-textarea__counter'>
-            {value.length}/{_maxLength}
+            <Text
+              className={classNames(
+                'fta-textarea__counter-current',
+                value.length == _maxLength && `fta-textarea__counter--full`
+              )}>
+              {value.length}
+            </Text>
+            <Text className='fta-textarea__counter-max'>/{_maxLength}</Text>
           </View>
         )}
       </View>
@@ -116,7 +123,7 @@ export default class Textarea extends React.Component<TextareaProps> {
 }
 
 Textarea.defaultProps = {
-  customStyle: '',
+  customStyle: {},
   className: '',
   value: '',
   cursorSpacing: 100,
