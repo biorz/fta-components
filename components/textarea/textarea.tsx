@@ -72,14 +72,7 @@ export default class Textarea extends React.Component<TextareaProps> {
     const _maxLength = parseInt(maxLength.toString())
     const actualMaxLength = getMaxLength(_maxLength, textOverflowForbidden)
     const textareaStyle = height ? `height:${pxTransform(Number(height))}` : ''
-    const rootCls = classNames(
-      'fta-textarea',
-      `fta-textarea--${ENV}`,
-      {
-        'fta-textarea--error': _maxLength < value.length,
-      },
-      className
-    )
+    const rootCls = classNames('fta-textarea', `fta-textarea--${ENV}`, className)
     const placeholderCls = classNames('placeholder', placeholderClass)
     return (
       <View className={rootCls} style={customStyle}>

@@ -2,18 +2,27 @@
 @import '../../mixins/index.scss';
 
 $component: '.fta-textarea';
-$fta-textarea-input-height: $fta-textarea-font-size * 4;
-$fta-textarea-bg-color: $color-bg;
 
 #{$component} {
-  padding: $spacing-v-md;
+  padding: $fta-textarea-padding;
   width: 100%;
   font-size: $fta-textarea-font-size;
   line-height: $line-height-zh * $fta-textarea-font-size;
-  border-radius: $border-radius-md;
+  border-radius: $fta-textarea-radius;
   background-color: $fta-textarea-bg-color;
   @include border-box();
   // @include border-thin($width: 1px);
+
+  /* #ifndef rn */
+  &--WEB,
+  &--WEAPP {
+    #{$component}__textarea {
+      @include nrn {
+        line-height: $line-height-base;
+      }
+    }
+  }
+  /* #endif */
 
   &__textarea {
     width: 100%;
@@ -42,11 +51,14 @@ $fta-textarea-bg-color: $color-bg;
   &__counter {
     @include nrn {
       display: block;
+      text-align: right;
     }
     padding-top: $spacing-v-sm;
     width: 100%;
-
-    text-align: right;
+    @include rn {
+      flex-direction: row;
+      justify-content: flex-end;
+    }
 
     &-current {
       line-height: $line-height-base * $fta-textarea-tips-size;
@@ -60,19 +72,6 @@ $fta-textarea-bg-color: $color-bg;
     &-limit {
       line-height: $line-height-base * $fta-textarea-tips-size;
       color: $fta-textarea-tips-color;
-    }
-  }
-
-  &--WEB,
-  &--WEAPP {
-    #{$component}__textarea {
-      // line-height: $line-height-base ;
-    }
-  }
-
-  &--error {
-    #{$component}__counter {
-      color: $color-error;
     }
   }
 }

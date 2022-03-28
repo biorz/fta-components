@@ -667,7 +667,11 @@ $fta-tag-bg-color: $color-white !default;
 // $fta-tag-border-color-active: $fta-tag-color-active !default;
 
 /* Textarea */
+$fta-textarea-padding: $spacing-v-md !default;
 $fta-textarea-font-size: $font-size-lg !default;
+$fta-textarea-input-height: $fta-textarea-font-size * 4;
+$fta-textarea-radius: $border-radius-md !default;
+$fta-textarea-bg-color: $color-bg !default;
 $fta-textarea-tips-color: $color-text-placeholder !default;
 $fta-textarea-tips-limit-color: $color-error !default;
 $fta-textarea-tips-size: $font-size-base !default;
