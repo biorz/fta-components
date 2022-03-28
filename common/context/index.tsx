@@ -38,6 +38,11 @@ interface GlobalContext {
    * 更新配置信息
    */
   toggle?: (key: keyof GetRequired<GlobalContext>, value: GlobalContext[typeof key]) => void
+  /**
+   * 开启debug面板（仅可在dev开发环境开启）
+   * @default true
+   */
+  debugger?: boolean
 }
 
 type ConfigProviderProps = Partial<GlobalContext> & { children: ReactNode }
@@ -45,6 +50,7 @@ type ConfigProviderProps = Partial<GlobalContext> & { children: ReactNode }
 const defaultContext: GlobalContext = {
   careMode: false,
   platform: 'ymm',
+  debugger: true,
 }
 
 const Context = createContext<GlobalContext>(defaultContext)

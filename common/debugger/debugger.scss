@@ -1,0 +1,19 @@
+.fta-debugger {
+  position: absolute;
+  /* #ifndef rn */
+  position: fixed;
+  display: flex;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  /* #endif */
+  bottom: 100px;
+  right: 40px;
+  width: 100px;
+  height: 100px;
+  background-color: #fff;
+  border-radius: 300px;
+  // prettier-ignore
+  border: 1PX solid #efefef;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}

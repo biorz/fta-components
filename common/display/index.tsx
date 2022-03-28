@@ -21,6 +21,7 @@ import React, {
   useEffect,
   useState,
 } from 'react'
+import { Debugger } from '../debugger'
 import './index.scss'
 import MBBridge from './polyfill/bridge'
 import copyToClipboard from './polyfill/clipboard'
@@ -428,7 +429,9 @@ export const Layout = withCare(
               }}
             />
           )}
+          <Debugger />
           <ScrollView scrollY className='fta-demo-container'>
+            {/* <Debugger /> */}
             {props.children}
           </ScrollView>
           {inAlipay || props.safeArea === false ? null : <SafeArea bottom />}
