@@ -1,16 +1,72 @@
-import { View } from '@tarojs/components'
-import React, { FC } from 'react'
+import { ITouchEvent, View } from '@tarojs/components'
+import React, { FC, useRef, useState } from 'react'
 import { Text } from '../../components/typography'
 import { useConfig } from '../context'
 import './debugger.scss'
+
+type Coordinate = [number, number]
+
+const outOfRN = process.env.TARO_ENV !== 'rn'
+
+const getTransformStyle = outOfRN
+  ? (offset: Coordinate) => ({
+      transform: `translate(${offset[0]}px, ${offset[1]}px)`,
+    })
+  : (offset: Coordinate) => ({
+      transform: [
+        {
+          translateX: offset[0],
+        },
+        {
+          translateY: offset[1],
+        },
+      ],
+    })
+
 /**
  * Debug面板，生产环境不显示
  */
 export const Debugger: FC = () => {
   if (!['dev', 'development'].includes(process.env.NODE_ENV)) return null
+  const [offset, setOffset] = useState<Coordinate>([0, 0])
+  const start = useRef<Coordinate>([0, 0]).current
+  const prev = useRef<Coordinate>([0, 0]).current
+
   const { toggle, careMode } = useConfig()
+  const onTouchStart = (evt: ITouchEvent) => {
+    const { touches } = evt
+    start[0] = touches[0].clientX
+    start[1] = touches[0].clientY
+  }
+
+  const onTouchMove = (evt: ITouchEvent) => {
+    const { touches } = evt
+    const { clientX, clientY } = touches[0]
+    const [x1, y1] = start
+    const [x, y] = prev
+    // console.log(getTransformStyle())
+    setOffset([clientX - x1 + x, clientY - y1 + y])
+  }
+
+  const onTouchEnd = (evt: ITouchEvent) => {
+    // start[0] = 0
+    // start[1] = 0
+    prev[0] = offset[0]
+    prev[1] = offset[1]
+    // const {touches} = evt
+    // setOffset([touches[0].clientX, touches[0].clientY])
+  }
+
   return (
-    <View className='fta-debugger' onClick={() => toggle('careMode', !careMode)}>
+    <View
+      catchMove
+      // @ts-ignore
+      style={getTransformStyle(offset)}
+      className='fta-debugger'
+      onClick={() => toggle('careMode', !careMode)}
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}>
       <Text style={{ color: '#999' }}>{careMode ? '关怀' : '标准'}</Text>
     </View>
   )
