@@ -29,12 +29,12 @@ class Gap extends Component<GapProps> {
     const rootStyle = { ...customStyle }
     mergeNonNullable(rootStyle, [
       ['backgroundColor', bgColor],
-      ['marginBottom', px(bottom)],
-      ['marginTop', px(top)],
-      ['marginLeft', px(left)],
-      ['marginRight', px(right)],
-      ['height', px(height)],
-      ['width', px(width)],
+      ['marginBottom', px(bottom!)],
+      ['marginTop', px(top!)],
+      ['marginLeft', px(left!)],
+      ['marginRight', px(right!)],
+      ['height', px(height!)],
+      ['width', px(width!)],
     ])
 
     return (

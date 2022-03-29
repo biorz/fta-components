@@ -1,7 +1,8 @@
+@import '../../variables/default.scss';
+
 .fta-gap {
-  // background-color: rgb(243, 244, 246);
-  background-color: transparent;
-  height: 40px;
+  background-color: $fta-gap-bg-color;
+  height: $fta-gap-height;
   margin-top: 0;
   margin-bottom: 0;
 }
