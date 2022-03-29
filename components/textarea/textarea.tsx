@@ -67,6 +67,7 @@ export default class Textarea extends React.Component<TextareaProps> {
       fixed,
       textOverflowForbidden = true,
       height,
+      title,
     } = this.props
 
     const _maxLength = parseInt(maxLength.toString())
@@ -76,6 +77,7 @@ export default class Textarea extends React.Component<TextareaProps> {
     const placeholderCls = classNames('placeholder', placeholderClass)
     return (
       <View className={rootCls} style={customStyle}>
+        {title ? <Text>{title}</Text> : null}
         <TaroTextArea
           className='fta-textarea__textarea'
           style={textareaStyle}
