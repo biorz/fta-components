@@ -22,7 +22,7 @@ $fta-input-number-btn-padding-lg: 20px;
     justify-content: center;
     padding: $fta-input-number-btn-padding;
     color: $fta-input-number-btn-color;
-    font-size: 0;
+    font-size: 44px;
     text-align: center;
     line-height: $line-height-base;
     overflow: hidden;
@@ -46,6 +46,10 @@ $fta-input-number-btn-padding-lg: 20px;
     text-align: center;
     line-height: $line-height-zh;
     @include border-thin($width: 1px, $directions: left right);
+  }
+
+  &__input {
+    @include flex-center();
   }
 
   /* modifiers */

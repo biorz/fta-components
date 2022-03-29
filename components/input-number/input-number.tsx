@@ -44,7 +44,7 @@ type ExtendEvent = {
   }
 }
 
-export default class AtInputNumber extends React.Component<InputNumberProps> {
+export default class InputNumber extends React.Component<InputNumberProps> {
   public static defaultProps: InputNumberProps
   public static propTypes: InferProps<InputNumberProps>
 
@@ -143,26 +143,26 @@ export default class AtInputNumber extends React.Component<InputNumberProps> {
     }
     const inputValue = Number(this.handleValue(value))
     const rootCls = classNames(
-      'at-input-number',
+      'fta-input-number',
       {
-        'at-input-number--lg': size === 'large',
+        'fta-input-number--lg': size === 'large',
       },
       className
     )
-    const minusBtnCls = classNames('at-input-number__btn', {
-      'at-input-number--disabled': inputValue <= min || disabled,
+    const minusBtnCls = classNames('fta-input-number__btn', {
+      'fta-input-number--disabled': inputValue <= min || disabled,
     })
-    const plusBtnCls = classNames('at-input-number__btn', {
-      'at-input-number--disabled': inputValue >= max || disabled,
+    const plusBtnCls = classNames('fta-input-number__btn', {
+      'fta-input-number--disabled': inputValue >= max || disabled,
     })
 
     return (
       <View className={rootCls} style={customStyle}>
-        <View className={minusBtnCls} onClick={this.handleClick.bind(this, 'minus')}>
-          <Text className='fta-icon fta-icon-subtract at-input-number__btn-subtract'></Text>
-        </View>
+        <Text className={minusBtnCls} onClick={this.handleClick.bind(this, 'minus')}>
+          -
+        </Text>
         <Input
-          className='at-input-number__input'
+          className='fta-input-number__input'
           style={inputStyle}
           type={type}
           value={String(inputValue)}
@@ -170,16 +170,16 @@ export default class AtInputNumber extends React.Component<InputNumberProps> {
           onInput={this.handleInput}
           onBlur={this.handleBlur}
         />
-        <View className={plusBtnCls} onClick={this.handleClick.bind(this, 'plus')}>
-          <Text className='fta-icon fta-icon-add at-input-number__btn-add'></Text>
-        </View>
+        <Text className={plusBtnCls} onClick={this.handleClick.bind(this, 'plus')}>
+          +
+        </Text>
       </View>
     )
   }
 }
 
-AtInputNumber.defaultProps = {
-  customStyle: '',
+InputNumber.defaultProps = {
+  customStyle: {},
   className: '',
   disabled: false,
   disabledInput: false,
@@ -194,8 +194,8 @@ AtInputNumber.defaultProps = {
   onChange: (): void => {},
 }
 
-AtInputNumber.propTypes = {
-  customStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+InputNumber.propTypes = {
+  customStyle: PropTypes.object,
   className: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
   value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   type: PropTypes.oneOf(['number', 'digit']),
