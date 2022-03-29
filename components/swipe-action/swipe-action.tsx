@@ -48,7 +48,7 @@ function SwipeAction(props: SwipeActionProps): JSX.Element {
     setOffset,
     startX: 0,
     offset: 0,
-    timer: null,
+    timer: null as unknown as NodeJS.Timer,
     show: false,
     transitionClass: '',
   })
@@ -202,7 +202,6 @@ function SwipeAction(props: SwipeActionProps): JSX.Element {
 
 const defaultProps: SwipeActionProps = {
   left: false,
-  distance: null,
   show: false,
   breakpoint: 0.3,
   swipeStyle: {},
