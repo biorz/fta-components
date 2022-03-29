@@ -6,7 +6,9 @@ $fta-input-number-btn-padding: 12px;
 $fta-input-number-btn-padding-lg: 20px;
 
 #{$component} {
-  display: inline-flex;
+  @include nrn {
+    display: inline-flex;
+  }
   @include border-thin($width: 1px);
 
   font-size: $fta-input-number-font-size;
@@ -16,35 +18,41 @@ $fta-input-number-btn-padding-lg: 20px;
 
   /* elements */
   &__btn {
-    position: relative;
-    display: inline-flex;
+    @include relative();
+    @include nrn {
+      display: inline-flex;
+    }
+
     align-items: center;
     justify-content: center;
     padding: $fta-input-number-btn-padding;
     color: $fta-input-number-btn-color;
-    font-size: 44px;
+    font-size: $fta-input-number-btn-size;
     text-align: center;
-    line-height: $line-height-base;
+    line-height: $line-height-base * $fta-input-number-btn-size;
     overflow: hidden;
     @include active;
 
-    &-subtract,
-    &-add {
-      font-size: $fta-input-number-btn-size;
-      line-height: $fta-input-number-btn-size;
-    }
+    // &-subtract,
+    // &-add {
+    //   font-size: $fta-input-number-btn-size;
+    //   line-height: $fta-input-number-btn-size;
+    // }
   }
 
   &__input,
   input {
-    display: inline-block;
+    @include nrn {
+      display: inline-block;
+    }
+
     width: $fta-input-number-width-min;
     height: auto;
     border-radius: 0;
     color: $fta-input-number-text-color;
     font-size: $fta-input-number-font-size;
     text-align: center;
-    line-height: $line-height-zh;
+    line-height: $line-height-zh * $fta-input-number-font-size;
     @include border-thin($width: 1px, $directions: left right);
   }
 

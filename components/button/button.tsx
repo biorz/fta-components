@@ -132,6 +132,7 @@ export default class FTAButton extends Component<FTAButtonProps> {
       `fta-button__text--${SIZE_CLASS[size!] || 'default'}`,
       `fta-button__text--${TYPE_CLASS[type!] || 'default'}`,
       disabled && `fta-button__text--${type}--disabled`,
+      loading && 'fta-button__text--loading',
       textClassName
     )
 

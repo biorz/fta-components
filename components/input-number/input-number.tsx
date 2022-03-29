@@ -138,9 +138,11 @@ export default class InputNumber extends React.Component<InputNumberProps> {
       disabledInput,
     } = this.props
 
-    const inputStyle = {
-      width: width ? `${pxTransform(width)}` : '',
-    }
+    const inputStyle = width
+      ? {
+          width: pxTransform(width),
+        }
+      : {}
     const inputValue = Number(this.handleValue(value))
     const rootCls = classNames(
       'fta-input-number',

@@ -9,38 +9,28 @@
   $width: 1px
 ) {
   @each $value in $directions {
+    /* #ifdef rn */
+    border-#{$value}-width: $width;
+    border-#{$value}-color: $color;
+    /* #endif */
+    /* #ifndef rn */
     border-#{$value}: $width $color $style;
+    /* #endif */
   }
 }
 
-@mixin border-thin-top(
-  $color: $color-border-light,
-  $style: solid,
-  $width: 1px
-) {
+@mixin border-thin-top($color: $color-border-light, $style: solid, $width: 1px) {
   @include border-thin($color, $style, top, $width);
 }
 
-@mixin border-thin-left(
-  $color: $color-border-light,
-  $style: solid,
-  $width: 1px
-) {
+@mixin border-thin-left($color: $color-border-light, $style: solid, $width: 1px) {
   @include border-thin($color, $style, left, $width);
 }
 
-@mixin border-thin-right(
-  $color: $color-border-light,
-  $style: solid,
-  $width: 1px
-) {
+@mixin border-thin-right($color: $color-border-light, $style: solid, $width: 1px) {
   @include border-thin($color, $style, right, $width);
 }
 
-@mixin border-thin-bottom(
-  $color: $color-border-light,
-  $style: solid,
-  $width: 1px
-) {
+@mixin border-thin-bottom($color: $color-border-light, $style: solid, $width: 1px) {
   @include border-thin($color, $style, bottom, $width);
 }

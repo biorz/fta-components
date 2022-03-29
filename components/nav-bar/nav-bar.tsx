@@ -242,7 +242,7 @@ const StatusBarShape: InferProps<StatusBarProps> = {
 }
 
 NavBar.propTypes = {
-  style: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.oneOf(null)]),
+  style: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.oneOf([null])]),
   tintColor: PropTypes.string,
   statusBar: PropTypes.shape(StatusBarShape),
   leftButton: PropTypes.oneOfType([

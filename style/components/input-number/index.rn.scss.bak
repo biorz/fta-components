@@ -17,27 +17,20 @@ $fta-input-number-btn-padding-lg: 20px;
 
   /* elements */
   &__btn {
-    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: $fta-input-number-btn-padding;
     color: $fta-input-number-btn-color;
-    font-size: 0;
+    // font-size: 0;
+    background-color: red;
     text-align: center;
     // line-height: $line-height-base;
     overflow: hidden;
-    @include active;
-
-    &-subtract,
-    &-add {
-      font-size: $fta-input-number-btn-size;
-      // line-height: $fta-input-number-btn-size;
-    }
+    font-size: $fta-input-number-btn-size;
   }
 
-  &__input,
-  input {
+  &__input {
     display: flex;
     width: $fta-input-number-width-min;
     height: auto;
@@ -59,21 +52,20 @@ $fta-input-number-btn-padding-lg: 20px;
   }
 
   &--lg {
-    #{$component}__btn {
-      padding: $fta-input-number-btn-padding-lg;
-      font-size: $fta-input-number-font-size-lg;
+    // #{$component}__btn {
+    //   padding: $fta-input-number-btn-padding-lg;
+    //   font-size: $fta-input-number-font-size-lg;
 
-      &-subtract,
-      &-add {
-        font-size: $fta-input-number-btn-size-lg;
-      }
-    }
+    //   &-subtract,
+    //   &-add {
+    //     font-size: $fta-input-number-btn-size-lg;
+    //   }
+    // }
 
-    input,
-    #{$component}__input {
-      padding: $spacing-v-sm;
-      font-size: $fta-input-number-font-size-lg;
-      width: $fta-input-number-width-min-lg;
-    }
+    // #{$component}__input {
+    //   padding: $spacing-v-sm;
+    //   font-size: $fta-input-number-font-size-lg;
+    //   width: $fta-input-number-width-min-lg;
+    // }
   }
 }
