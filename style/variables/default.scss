@@ -395,14 +395,18 @@ $fta-curtain-bg-color: rgba(
 );
 
 /* Divider */
-$fta-divider-height: 112px !default;
+$fta-divider-dot-size: zoom(16px) !default;
+$fta-divider-dot-color: $color-grey-2 !default;
 $fta-divider-content-color: $color-brand !default;
-$fta-divider-font-size: $font-size-lg !default;
+$fta-divider-text-color: $color-grey-1 !default;
+$fta-divider-text-size: $font-size-md !default;
+$fta-divider-line-offset: zoom(120px) !default;
+$fta-divider-text-margin: $spacing-v-xxl !default;
 $fta-divider-line-color: $color-grey-3 !default;
 
 /* Image */
-$fta-image-width: 240px !default;
-$fta-image-height: 240px !default;
+$fta-image-width: zoom(240px) !default;
+$fta-image-height: zoom(240px) !default;
 $fta-image-text-color: $color-grey-1;
 $fta-image-bg-color: $color-bg-base;
 
@@ -410,12 +414,12 @@ $fta-image-bg-color: $color-bg-base;
 $fta-drawer-content-width: 460px !default;
 
 /* FloatLayout */
-$float-layout-height-min: 600px !default;
-$float-layout-height-max: 950px !default;
-$float-layout-header-bg-color: $color-bg-grey !default;
-$float-layout-title-color: $color-text-base !default;
-$float-layout-title-font-size: $font-size-lg !default;
-$float-layout-btn-color: $color-grey-3 !default;
+// $float-layout-height-min: 600px !default;
+// $float-layout-height-max: 950px !default;
+// $float-layout-header-bg-color: $color-bg-grey !default;
+// $float-layout-title-color: $color-text-base !default;
+// $float-layout-title-font-size: $font-size-lg !default;
+// $float-layout-btn-color: $color-grey-3 !default;
 
 /* Grid */
 $fta-grid-text-color: $color-text-base !default;

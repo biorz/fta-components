@@ -1,4 +1,5 @@
 @import '../../mixins/index.scss';
+@import '../../variables/default.scss';
 
 @mixin flex-center {
   display: flex;
@@ -16,13 +17,13 @@
     // prettier-ignore
     border-bottom-width: 0.5PX;
     border-style: solid;
-    border-bottom-color: #dcdfe6;
+    border-bottom-color: $fta-divider-line-color;
     /* #endif */
 
     /* #ifndef rn */
     width: 100%;
     // prettier-ignore
-    border-bottom: 1PX solid #dcdfe6;
+    border-bottom: 1PX solid $fta-divider-line-color;
     transform: scaleY(0.5);
     vertical-align: middle;
     /* #endif */
@@ -39,7 +40,7 @@
   }
 
   &-line--offset {
-    width: 120px;
+    width: $fta-divider-line-offset;
     flex: 0 0 auto;
   }
 
@@ -60,15 +61,13 @@
   }
 
   &-dot {
-    width: 16px;
-    height: 16px;
+    @include square($fta-divider-dot-size);
     @include circle();
-    background-color: #909399;
+    background-color: $fta-divider-dot-color;
   }
 
   &-dot--care {
-    width: care(16px);
-    height: care(16px);
+    @include square(care($fta-divider-dot-size));
   }
 
   &-line--dashed {
@@ -86,16 +85,16 @@
   }
 
   &-text {
-    margin: 0 30px;
+    margin: 0 $fta-divider-text-margin;
     &__label {
-      font-size: 28px;
-      line-height: 32px;
-      color: #909399;
+      font-size: $fta-divider-text-size;
+      // line-height: 32px;
+      color: $fta-divider-text-color;
     }
 
     &__label--care {
-      font-size: care(28px);
-      line-height: care(32px);
+      font-size: care($fta-divider-text-size);
+      // line-height: care(32px);
     }
   }
 }
