@@ -589,8 +589,12 @@ $fta-search-bar-btn-bg-color: $color-brand !default;
 /* SegmentedControl */
 $fta-segmented-control-color: $color-brand !default;
 $fta-segmented-control-color-active: $color-white !default;
-$fta-segmented-control-bg-color: transparent !default;
-$fta-segmented-control-font-size: $font-size-base !default;
+// $fta-segmented-control-bg-color: $color-brand !default;
+$fta-segmented-control-font-size: $font-size-md !default;
+$fta-segmented-control-radius: $border-radius-md !default;
+$fta-segmented-control-padding: $spacing-v-xs $spacing-h-sm !default;
+$fta-segmented-control-disabled-opacity: $opacity-disabled;
+$fta-segmented-control-min-width: zoom(120px);
 
 /* Slider */
 $fta-slider-text-color: $color-grey-2 !default;

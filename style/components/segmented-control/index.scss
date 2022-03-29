@@ -1,36 +1,50 @@
 @import '../../variables/default.scss';
 @import '../../mixins/index.scss';
 
-$fta-segmented-control-min-width: 120px;
-
 .fta-segmented-control {
-  display: inline-flex;
-  position: relative;
-  width: 100%;
-  text-align: center;
-  border-radius: $border-radius-md;
-  box-sizing: border-box;
-  white-space: nowrap;
-  overflow: hidden;
+  @include relative();
+  @include border-box();
   @include border-thin($color: $fta-segmented-control-color, $width: 1px);
+  @include nrn {
+    display: inline-flex;
+    white-space: nowrap;
+  }
+  width: 100%;
+  border-radius: $fta-segmented-control-radius;
+  overflow: hidden;
+  flex-direction: row;
 
   /* elements */
   &__item {
+    @include border-box;
+    @include nrn {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      transition: all 0.2s;
+    }
     flex: 1;
-    box-sizing: border-box;
-    padding: $spacing-v-xs $spacing-h-sm;
+    text-align: center;
+    padding: $fta-segmented-control-padding;
     min-width: $fta-segmented-control-min-width;
-    color: $fta-segmented-control-color;
-    font-size: $fta-segmented-control-font-size;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    background-color: $fta-segmented-control-bg-color;
+    background-color: $fta-segmented-control-color-active;
     overflow: hidden;
-    transition: all 0.2s;
+
+    &--bordered {
+      @include border-thin-left($color: $fta-segmented-control-color, $width: 1px);
+    }
+
+    &__text {
+      text-align: center;
+      color: $fta-segmented-control-color;
+      font-size: $fta-segmented-control-font-size;
+    }
 
     &--active {
-      color: $fta-segmented-control-color-active;
       background-color: $fta-segmented-control-color;
+      &__text {
+        color: $fta-segmented-control-color-active;
+        // background-color: red;
+      }
     }
   }
 
@@ -40,6 +54,6 @@ $fta-segmented-control-min-width: 120px;
 
   /* modifiers */
   &--disabled {
-    opacity: $opacity-disabled;
+    opacity: $fta-segmented-control-disabled-opacity;
   }
 }

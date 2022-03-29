@@ -2,8 +2,7 @@ import { Text, View } from '@tarojs/components'
 import { CommonEvent } from '@tarojs/components/types/common'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
-import React from 'react'
-import { mergeStyle, pxTransform } from '../../common'
+import React, { CSSProperties } from 'react'
 import '../../style/components/segmented-control/index.scss'
 import { SegmentedControlProps } from '../../types/segmented-control'
 export default class SegmentedControl extends React.Component<SegmentedControlProps> {
@@ -16,31 +15,23 @@ export default class SegmentedControl extends React.Component<SegmentedControlPr
   }
 
   public render(): JSX.Element {
-    const {
-      customStyle = '',
-      className,
-      disabled,
-      values,
-      selectedColor,
-      current,
-      color,
-      fontSize = 28,
-    } = this.props
-    console.log(22, current)
-    const rootStyle = {
-      borderColor: selectedColor,
+    const { customStyle, className, disabled, values, selectedColor, current, color } = this.props
+    const itemStyle: CSSProperties = {}
+    const selectedItemStyle: CSSProperties = {}
+    const itemTextStyle: CSSProperties = {}
+    const selectedTextStyle: CSSProperties = {}
+    const borderStyle: CSSProperties = {}
+    if (color) {
+      selectedTextStyle.color = color
+      itemStyle.backgroundColor = color
     }
-    const itemStyle = {
-      color: selectedColor,
-      fontSize: pxTransform(fontSize),
-      borderColor: selectedColor,
-      backgroundColor: color,
-    }
-    const selectedItemStyle = {
-      color,
-      fontSize: pxTransform(fontSize),
-      borderColor: selectedColor,
-      backgroundColor: selectedColor,
+    if (selectedColor) {
+      selectedItemStyle.backgroundColor = selectedColor
+      itemTextStyle.color = selectedColor
+      borderStyle.borderLeftColor = selectedColor
+      borderStyle.borderRightColor = selectedColor
+      borderStyle.borderTopColor = selectedColor
+      borderStyle.borderBottomColor = selectedColor
     }
     const rootCls = classNames(
       'fta-segmented-control',
@@ -50,23 +41,19 @@ export default class SegmentedControl extends React.Component<SegmentedControlPr
       className
     )
 
-    console.log(99, mergeStyle(rootStyle, customStyle))
     return (
-      <View className={rootCls} style={{ borderColor: selectedColor, ...customStyle }}>
+      <View className={rootCls} style={{ ...borderStyle, ...customStyle }}>
         {values.map((value, i) => (
           <View
             className={classNames('fta-segmented-control__item', {
               'fta-segmented-control__item--active': current === i,
+              'fta-segmented-control__item--bordered': !!i,
             })}
-            style={current === i ? { ...selectedItemStyle } : { ...itemStyle }}
+            style={{ ...(current === i ? selectedItemStyle : itemStyle), ...borderStyle }}
             key={value}
             onClick={this.handleClick.bind(this, i)}>
             <Text
-              style={
-                current === i
-                  ? { color, fontSize: pxTransform(fontSize) }
-                  : { color: selectedColor, fontSize: pxTransform(fontSize) }
-              }
+              style={current === i ? selectedTextStyle : itemTextStyle}
               className={classNames('fta-segmented-control__item__text', {
                 'fta-segmented-control__item--active__text': current === i,
               })}>
@@ -83,10 +70,7 @@ SegmentedControl.defaultProps = {
   customStyle: {},
   className: '',
   current: 0,
-  color: '#fff',
-  fontSize: 16,
   disabled: false,
-  selectedColor: '#6190E8',
   values: [],
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   onClick: (): void => {},
@@ -97,7 +81,6 @@ SegmentedControl.propTypes = {
   className: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
   current: PropTypes.number,
   color: PropTypes.string,
-  fontSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   disabled: PropTypes.bool,
   values: PropTypes.array,
   onClick: PropTypes.func,
