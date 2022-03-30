@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import _toString from 'lodash.tostring'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
-import { pxTransform } from '../../common'
+import { px as pxTransform } from '../../common'
 import '../../style/components/input-number/index.scss'
 import { InputError, InputNumberProps } from '../../types/input-number'
 // TODO: Check all types

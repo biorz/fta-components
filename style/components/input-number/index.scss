@@ -10,7 +10,7 @@ $fta-input-number-btn-padding-lg: 20px;
     display: inline-flex;
   }
   @include border-thin($width: 1px);
-
+  flex-direction: row;
   font-size: $fta-input-number-font-size;
   border-radius: $border-radius-md;
   background-color: $color-bg;
@@ -22,7 +22,6 @@ $fta-input-number-btn-padding-lg: 20px;
     @include nrn {
       display: inline-flex;
     }
-
     align-items: center;
     justify-content: center;
     padding: $fta-input-number-btn-padding;
@@ -31,6 +30,7 @@ $fta-input-number-btn-padding-lg: 20px;
     text-align: center;
     line-height: $line-height-base * $fta-input-number-btn-size;
     overflow: hidden;
+    background-color: $fta-input-number-btn-bg-color;
     @include active;
 
     // &-subtract,
@@ -42,17 +42,14 @@ $fta-input-number-btn-padding-lg: 20px;
 
   &__input,
   input {
-    @include nrn {
-      display: inline-block;
-    }
-
     width: $fta-input-number-width-min;
     height: auto;
     border-radius: 0;
     color: $fta-input-number-text-color;
     font-size: $fta-input-number-font-size;
     text-align: center;
-    line-height: $line-height-zh * $fta-input-number-font-size;
+    background-color: $fta-input-number-bg-color;
+    // line-height: 50px;
     @include border-thin($width: 1px, $directions: left right);
   }
 
