@@ -15,14 +15,15 @@ function writeFile(path, data) {
 
 // 注入变量
 function injectTheme() {
+  const inFTAViewDevMode = process.argv[3] === '--env=fta-view'
   const pkg = require(resolve(cwd, './package.json'))
 
   if (pkg.theme) {
     const customPath = resolve(cwd, './node_modules/@fta/components/style/variables/custom.scss')
     const themePath = resolve(cwd, pkg.theme)
     const relativePath = relative(customPath, themePath)
-
-    writeFile(customPath, `@import '${relativePath.replace('../../', '')}';`)
+    const importPath = inFTAViewDevMode ? relativePath.replace('../../', '') : relativePath
+    writeFile(customPath, `@import '${importPath}';`)
 
     console.log('自定义变量注入成功')
   } else {
@@ -47,7 +48,7 @@ function ejectTheme() {
     outputPath,
     `/* $designWidth为设计稿尺寸，$curWidth是Taro的默认设计单位 */
   @function scale($size, $designWidth: 720, $curWidth: 750) {
-    @return scale($size * $designWidth / $curWidth);
+    @return round($size * $designWidth / $curWidth);
   }
   ${filter}`
   )
