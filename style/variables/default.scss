@@ -649,12 +649,16 @@ $fta-tab-bar-icon-font-size: 48px !default;
 $fta-tab-bar-icon-image-size: 50px !default;
 
 /* Tabs */
+$fta-tabs-height: zoom(80px);
 $fta-tabs-color: $color-text-base !default;
 $fta-tabs-color-active: $color-brand !default;
-$fta-tabs-font-size: $font-size-base !default;
-$fta-tabs-line-height: 1px !default;
+$fta-tabs-font-size: $font-size-lg !default;
+// prettier-ignore
+$fta-tabs-line-height: 1PX !default;
 $fta-tabs-underline-color: $color-grey-5 !default;
-$fta-tabs-bg-color: $color-bg !default;
+$fta-tabs-bg-color: $color-white !default;
+$fta-tabs-item-margin: 0 $spacing-h-lg !default;
+$fta-tabs-vertical-padding: 0 $spacing-v-lg !default;
 
 /* Tag */
 $fta-tag-height: zoom(40px) !default;

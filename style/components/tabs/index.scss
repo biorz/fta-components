@@ -1,14 +1,9 @@
 @import '../../mixins/index.scss';
+@import '../../variables/default.scss';
 
 @mixin flex {
   display: flex;
   flex-direction: row;
-}
-
-@mixin border-box {
-  /* #ifndef rn */
-  box-sizing: border-box;
-  /* #endif */
 }
 
 @mixin fit-content {
@@ -30,11 +25,12 @@
 }
 
 .fta-tabs {
+  background-color: $fta-tabs-bg-color;
   /* #ifndef alipay */
   @include flex();
   /* #endif */
   // prettier-ignore
-  @include border-bottom(1PX, #efefef);
+  @include border-bottom($fta-tabs-line-height, $fta-tabs-underline-color);
   /* #ifndef h5 rn*/
   width: 100%;
   white-space: nowrap;
@@ -53,10 +49,10 @@
   @include fit-content();
   @include border-bottom();
   // flex: auto;
-  margin: 0 20px;
+  margin: $fta-tabs-item-margin;
   justify-content: center;
   align-items: center;
-  height: 82px;
+  height: $fta-tabs-height;
   /* #ifndef rn */
   transition: 0.2s ease;
   /* #endif */
@@ -66,12 +62,12 @@
   /* #endif */
 
   &__text {
-    font-size: 36px;
-    color: #333;
+    font-size: $fta-tabs-font-size;
+    color: $fta-tabs-color;
   }
 
   &__text--care {
-    font-size: care(36px);
+    font-size: care($fta-tabs-font-size);
   }
 
   taro-text-core {
@@ -83,17 +79,17 @@
 
 .fta-tab--vertical {
   margin: 0;
-  padding: 0 20px;
+  padding: $fta-tabs-vertical-padding;
 }
 
 .fta-tab--active {
-  border-bottom-color: #409eff;
+  border-bottom-color: $fta-tabs-color-active;
 
   &__text {
-    color: #409eff;
+    color: $fta-tabs-color-active;
   }
 }
 
 .fta-tab--active--care {
-  border-bottom-width: 5px;
+  border-bottom-width: 4px;
 }
