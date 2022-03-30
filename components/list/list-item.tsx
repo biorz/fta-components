@@ -2,8 +2,8 @@ import { Image, Text, View } from '@tarojs/components'
 import { ITouchEvent } from '@tarojs/components/types/common'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
-import React from 'react'
-import { Assets, ConfigConsumer, inRN, mergeStyle, useClassesWithCare } from '../../common'
+import React, { CSSProperties } from 'react'
+import { Assets, ConfigConsumer, inRN, px, useClassesWithCare } from '../../common'
 import '../../style/components/list/list-item.scss'
 import { ListItemProps } from '../../types/list'
 
@@ -45,6 +45,13 @@ export default class ListItem extends React.Component<ListItemProps> {
 
     extraText = String(extraText)
     title = String(title)
+    const iconStyle: CSSProperties = {}
+    if (iconInfo?.color) {
+      iconStyle.color = iconInfo.color
+    }
+    if (iconInfo?.size) {
+      iconStyle.fontSize = px(iconInfo.size)
+    }
 
     return (
       <ConfigConsumer>
@@ -104,13 +111,7 @@ export default class ListItem extends React.Component<ListItemProps> {
                           (iconInfo && iconInfo.prefixClass) || 'fta-icon',
                           iconInfo && iconInfo.className
                         )}
-                        style={mergeStyle(
-                          {
-                            color: iconInfo.color || '',
-                            fontSize: `${iconInfo.size || 24}px`,
-                          },
-                          iconInfo.customStyle || ''
-                        )}></Text>
+                        style={iconStyle}></Text>
                     </View>
                   ) : null}
                   <View className='fta-list__item-content item-content'>

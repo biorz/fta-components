@@ -25,7 +25,7 @@ interface BaseIconProps extends BaseComponent {
 
   prefixClass?: string
 
-  size?: number | string
+  size?: number
 }
 
 interface PropsWithChildren {

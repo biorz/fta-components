@@ -2,7 +2,7 @@
 @import '../../mixins/index.scss';
 
 .fta-list {
-  background-color: $color-bg;
+  background-color: $fta-list-bg-color;
   @include hairline-top-bottom();
 
   /* modifiers */

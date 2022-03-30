@@ -1,55 +1,47 @@
 @import '../../variables/default.scss';
 @import '../../mixins/index.scss';
-$fta-list-item-horizontal-padding: 24px;
-
-@mixin squareImg($size: 56px) {
-  width: $size;
-  height: $size;
-
-  &__info {
-    width: 100%;
-    height: 100%;
-  }
-}
 
 .fta-list {
-  background-color: $color-bg;
+  background-color: $fta-list-bg-color;
   @include hairline-top-bottom();
 
   /* elements */
   &__item-container {
-    @include display-flex;
-    @include align-items(center);
+    @include flex-center();
 
     .item-icon {
-      margin-right: $fta-list-item-horizontal-padding;
+      margin-right: $fta-list-thumb-margin-right;
+      .fta-icon {
+        font-size: $fta-list-thumb-size;
+      }
     }
   }
 
   &__item {
-    padding: $spacing-v-lg $spacing-h-lg;
+    padding: $fta-list-vertical-padding $fta-list-horizon-padding;
     position: relative;
     box-sizing: border-box;
     color: $fta-list-text-color;
-    font-size: $font-size-lg;
-    line-height: $line-height-zh;
     @include active;
-    @include hairline-bottom-relative($left: $spacing-h-lg);
+    @include hairline-bottom-relative($left: $fta-list-horizon-padding);
 
     &--thumb {
       .item-thumb {
-        margin-right: $fta-list-item-horizontal-padding;
-        @include squareImg($fta-list-thumb-size);
+        margin-right: $fta-list-thumb-margin-right;
+        @include square($fta-list-thumb-size);
+        &__info {
+          @include square(100%);
+        }
       }
 
       .item-thumb--care {
-        @include squareImg(care($fta-list-thumb-size));
+        @include square(care($fta-list-thumb-size));
       }
     }
 
     &--disabled {
       .fta-list__item-container {
-        opacity: $opacity-disabled;
+        opacity: $fta-list-item-disabled-opacity;
       }
 
       &:active {
@@ -68,18 +60,18 @@ $fta-list-item-horizontal-padding: 24px;
           @include line(1);
           text-overflow: ellipsis;
           color: inherit;
-          font-size: $font-size-lg;
-          line-height: $line-height-zh;
+          font-size: $fta-list-item-font-size;
+          line-height: $fta-list-line-height;
         }
 
         &-title--care {
-          font-size: care($font-size-lg);
+          font-size: care($fta-list-item-font-size);
         }
 
         &-note {
           color: $fta-list-content-color;
-          font-size: $font-size-base;
-          line-height: $line-height-zh;
+          font-size: $fta-list-content-font-size;
+          line-height: $fta-list-line-height;
         }
 
         &-note--care {
@@ -100,59 +92,50 @@ $fta-list-item-horizontal-padding: 24px;
 
       &__info {
         @include line(1);
-
         max-width: 100%;
         color: $fta-list-extra-color;
-        padding-right: 30px;
-        font-size: $font-size-lg;
+        padding-right: $fta-list-arrow-size;
+        font-size: $fta-list-extra-font-size;
+        line-height: $fta-list-line-height;
         vertical-align: middle;
         box-sizing: border-box;
       }
 
       &__info--care {
-        font-size: care($font-size-lg);
+        font-size: care($fta-list-extra-font-size);
       }
 
-      // &__icon {
-      //   margin-right: -12px;
-
-      //   &-arrow {
-      //     color: $fta-list-arrow-color;
-      //     font-size: 48px;
-      //   }
-      // }
-
       &__icon {
-        right: -12px;
+        right: -$spacing-h-sm;
         top: 50%;
         transform: translateY(-50%);
         position: absolute;
 
         &-arrow {
           color: $fta-list-arrow-color;
-          font-size: 48px;
+          font-size: $fta-list-arrow-size;
         }
 
         &-arrow--care {
-          font-size: care(48px);
+          font-size: care($fta-list-arrow-size);
         }
-        // margin-left: $spacing-h-sm;
-        // margin-right: -$spacing-h-sm;
       }
 
-      &__switch {
-        vertical-align: middle;
-      }
+      // &__switch {
+      //   vertical-align: middle;
+      // }
 
       &__image {
-        @include squareImg($fta-list-thumb-size);
-
+        @include square($fta-list-thumb-size);
+        margin-right: $fta-list-arrow-size;
         vertical-align: middle;
-        margin-right: 30px;
 
         &-info {
-          width: 100%;
-          height: 100%;
+          @include square(100%);
+        }
+
+        &--care {
+          @include square(care($fta-list-thumb-size));
         }
       }
     }
@@ -160,9 +143,8 @@ $fta-list-item-horizontal-padding: 24px;
 
   &__item-content {
     @include flex(1);
-
     overflow: hidden;
-    margin-right: 40px;
+    margin-right: $fta-list-arrow-size;
   }
 
   &__item-extra {
