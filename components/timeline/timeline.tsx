@@ -40,7 +40,7 @@ class Timeline extends Component<TimelineProps> {
   public static Item: typeof TimelineItem
   public render(): JSX.Element {
     const { reverse, children } = this.props
-    const _children = reverse && Array.isArray(children) ? [...children].reverse() : children
+    const _children = reverse && Array.isArray(children) ? children.slice().reverse() : children
     return <View className='fta-timeline'>{_children}</View>
   }
 }

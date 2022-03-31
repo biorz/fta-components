@@ -25,7 +25,7 @@ const useCareClass = (careClazz: Argument[], suffix: string = '--care') => {
 useCareClass.single = (...careClazz: Argument[]) => {
   const careMode = useConfig('careMode')
   return classNames(
-    careMode ? careClazz.map((v) => (isString(v) ? `${v} ${v}$--care` : '')) : careClazz
+    careMode ? careClazz.map((v) => (isString(v) ? `${v} ${v}--care` : '')) : careClazz
   )
 }
 

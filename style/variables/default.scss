@@ -204,13 +204,6 @@ $ease-in-out-back: cubic-bezier(0.68, -0.55, 0.265, 1.55) !default;
  * 组件变量
  */
 
-/* Accordion */
-$fta-accordion-color-arrow: $color-grey-3 !default;
-
-/* Activity Indicator */
-$fta-activity-indicator-font-size: 28px !default;
-$fta-activity-indicator-font-color: $color-grey-2 !default;
-
 /* Avatar */
 $fta-avatar-color: $color-white !default; // 字体颜色
 $fta-avatar-bg-color: $color-grey-3 !default; // 背景色
@@ -332,32 +325,6 @@ $fta-button-border-color-tertiary: $color-brand !default;
 $fta-button-bg: $fta-button-color !default;
 $fta-button-text-loading-offset: $spacing-h-md !default;
 
-/* Float Button */
-$fta-fab-size: 112px !default;
-$fta-fab-size-sm: 80px !default;
-$fta-fab-icon-size: 48px !default;
-$fta-fab-bg-color: $color-brand;
-$fta-fab-bg-color-active: $color-brand-dark;
-$fta-fab-box-shadow: 0 6px 10px -2px rgba(0, 0, 0, 0.2), 0 12px 20px 0 rgba(0, 0, 0, 0.14),
-  0 2px 36px 0 rgba(0, 0, 0, 0.12) !default;
-$fta-fab-box-shadow-active: 0 14px 16px -8px rgba(0, 0, 0, 0.2), 0 24px 34px 4px rgba(0, 0, 0, 0.14),
-  0 10px 44px 8px rgba(0, 0, 0, 0.12) !default;
-
-/* Calendar */
-$fta-calendar-day-size: 72px !default;
-$fta-calendar-mark-size: 8px !default;
-$fta-calendar-header-color: #b8bfc6 !default;
-$fta-calendar-main-color: $color-brand !default;
-$fta-calendar-day-color: #7c86a2 !default;
-
-/* Card */
-$fta-card-thumb-size: 32px !default;
-$fta-card-icon-size: 32px !default;
-$fta-card-title-color: $color-text-title !default;
-$fta-card-extra-color: $color-text-title !default;
-$fta-card-info-color: $color-text-base !default;
-$fta-card-note-color: $color-grey-2 !default;
-
 /* Checkbox */
 $fta-checkbox-padding: zoom(32px);
 $fta-checkbox-bg-color: $color-bg;
@@ -380,14 +347,7 @@ $fta-checkbox-desc-color-disabled: $color-grey-3 !default;
 $fta-checkbox-title-desc-height: $line-height-sm !default;
 $fta-checkbox-title-desc-margin-top: zoom(6px) !default;
 
-/* Countdown */
-$fta-countdown-font-size: $font-size-lg !default;
-$fta-countdown-num-color: $color-text-base !default;
-$fta-countdown-card-num-color: #ff4949 !default;
-$fta-countdown-card-num-bg-color: $color-white !default;
-
 /* Curtain */
-// $fta-curtain-btn-color: $color-white !default;
 $fta-curtain-btn-size: 56px;
 $fta-curtain-bg-color: rgba(
   $color: #000,
@@ -417,31 +377,44 @@ $fta-image-bg-color: $color-bg-base;
 /* Drawer */
 $fta-drawer-content-width: 460px !default;
 
-/* FloatLayout */
-// $float-layout-height-min: 600px !default;
-// $float-layout-height-max: 950px !default;
-// $float-layout-header-bg-color: $color-bg-grey !default;
-// $float-layout-title-color: $color-text-base !default;
-// $float-layout-title-font-size: $font-size-lg !default;
-// $float-layout-btn-color: $color-grey-3 !default;
-
-/* Grid */
-$fta-grid-text-color: $color-text-base !default;
-$fta-grid-font-size: $font-size-lg !default;
-$fta-grid-img-size: 80px !default;
-$fta-gird-img-size-sm: 50px !default;
-
+// TODO:
 /* ImagePicker */
-$fta-image-picker-btn-add-color: $color-grey-3 !default;
-$fta-image-picker-btn-remove-color: $color-white !default;
-$fta-image-picker-btn-remove-bg-color: $color-grey-2 !default;
+// $fta-image-picker-btn-add-color: $color-grey-3 !default;
+// $fta-image-picker-btn-remove-color: $color-white !default;
+// $fta-image-picker-btn-remove-bg-color: $color-grey-2 !default;
 
 /* Indexes */
-$fta-indexes-nav-color: $color-link !default;
-$fta-indexes-nav-font-size: $font-size-sm !default;
-$fta-indexes-title-color: $color-black-2 !default;
-$fta-indexes-title-font-size: $font-size-sm !default;
-$fta-indexes-title-bg-color: $color-grey-6 !default;
+// $fta-indexes-nav-color: $color-link !default;
+// $fta-indexes-nav-font-size: $font-size-sm !default;
+// $fta-indexes-title-color: $color-black-2 !default;
+// $fta-indexes-title-font-size: $font-size-sm !default;
+// $fta-indexes-title-bg-color: $color-grey-6 !default;
+
+/* TabBar */
+// $fta-tab-bar-bg-color: $color-white !default;
+// $fta-tab-bar-color: $color-text-base !default;
+// $fta-tab-bar-color-active: $color-brand !default;
+// $fta-tab-bar-font-size: $font-size-base !default;
+// $fta-tab-bar-icon-color: $color-grey-0 !default;
+// $fta-tab-bar-icon-font-size: 48px !default;
+// $fta-tab-bar-icon-image-size: 50px !default;
+
+/* Range */
+// $fta-range-slider-size: 28px !default;
+// $fta-range-rail-height: 2px !default;
+// $fta-range-rail-bg-color: #e9e9e9 !default;
+// $fta-range-track-bg-color: $color-brand !default;
+// $fta-range-slider-color: $color-white !default;
+// $fta-range-slider-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2) !default;
+
+/* Rate */
+// $fta-rate-icon-size: 20px !default;
+// $fta-rate-star-color: #ececec !default;
+// $fta-rate-star-color-on: #ffca3e !default;
+
+/* SearchBar */
+// $fta-search-bar-btn-color: $color-white !default;
+// $fta-search-bar-btn-bg-color: $color-brand !default;
 
 /* InputNumber */
 $fta-input-number-text-color: $color-text-base !default;
@@ -480,11 +453,6 @@ $fta-list-extra-font-size: $font-size-sm !default;
 $fta-list-extra-color: $color-grey-2 !default;
 $fta-list-extra-width: zoom(235px) !default;
 
-/* LoadMore */
-// $fta-load-more-height: 80px !default;
-// $fta-load-more-tips-color: $color-grey-1 !default;
-// $fta-load-more-tips-size: $font-size-lg !default;
-
 /* Loading */
 $fta-loading-size-sm: zoom(32px) !default;
 $fta-loading-size-md: zoom(40px) !default;
@@ -497,11 +465,6 @@ $fta-loading-width-md: 2PX !default;
 // prettier-ignore
 $fta-loading-width-lg: 3PX !default;
 $fta-loading-color: $color-brand !default;
-
-/* Message */
-$fta-message-color: $color-white !default;
-$fta-message-font-size: $font-size-base !default;
-$fta-message-bg-color: $color-info !default;
 
 /* Modal */
 $fta-modal-width: zoom(590px) !default;
@@ -539,14 +502,6 @@ $fta-noticebar-btn-close-size: zoom(32px) !default;
 $fta-noticebar-btn-close-margin-left: zoom(55px) !default;
 $fta-noticebar-btn-close-color: #ff5b00 !default;
 
-/* Pagination */
-$fta-pagination-margin: 40px !default;
-$fta-pagination-num-color: $color-text-base !default;
-$fta-pagination-num-font-size: $font-size-base !default;
-$fta-pagination-current-num-color: $color-brand !default;
-$fta-pagination-icon-color: $color-text-base !default;
-$fta-pagination-icon-font-size: 32px !default;
-
 /* Progress */
 $fta-progress-height: 16px !default;
 $fta-progress-text-size: $font-size-sm !default;
@@ -556,11 +511,6 @@ $fta-progress-bar-bg-color: $color-brand-light !default;
 $fta-progress-bar-bg-color-active: $color-white !default;
 
 /* Radio */
-// $fta-radio-title-color: $color-text-base !default;
-// $fta-radio-title-size: $font-size-lg !default;
-// $fta-radio-desc-color: $color-grey-2 !default;
-// $fta-radio-desc-size: $font-size-sm !default;
-// $fta-radio-check-color: $color-brand !default;
 $fta-radio-padding: zoom(32px);
 $fta-radio-bg-color: $color-bg;
 $fta-radio-border-color: $color-border-light;
@@ -582,27 +532,9 @@ $fta-radio-desc-color-disabled: $color-grey-3 !default;
 $fta-radio-title-desc-height: $line-height-sm !default;
 $fta-radio-title-desc-margin-top: zoom(6px) !default;
 
-/* Range */
-$fta-range-slider-size: 28px !default;
-$fta-range-rail-height: 2px !default;
-$fta-range-rail-bg-color: #e9e9e9 !default;
-$fta-range-track-bg-color: $color-brand !default;
-$fta-range-slider-color: $color-white !default;
-$fta-range-slider-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2) !default;
-
-/* Rate */
-$fta-rate-icon-size: 20px !default;
-$fta-rate-star-color: #ececec !default;
-$fta-rate-star-color-on: #ffca3e !default;
-
-/* SearchBar */
-$fta-search-bar-btn-color: $color-white !default;
-$fta-search-bar-btn-bg-color: $color-brand !default;
-
 /* SegmentedControl */
 $fta-segmented-control-color: $color-brand !default;
 $fta-segmented-control-color-active: $color-white !default;
-// $fta-segmented-control-bg-color: $color-brand !default;
 $fta-segmented-control-font-size: $font-size-md !default;
 $fta-segmented-control-radius: $border-radius-md !default;
 $fta-segmented-control-padding: $spacing-v-xs $spacing-h-sm !default;
@@ -639,15 +571,6 @@ $fta-switch-title-margin-left: $spacing-h-xl;
 $fta-switch-title-color: $color-grey-0 !default;
 $fta-switch-title-size: $font-size-md !default;
 
-/* TabBar */
-$fta-tab-bar-bg-color: $color-white !default;
-$fta-tab-bar-color: $color-text-base !default;
-$fta-tab-bar-color-active: $color-brand !default;
-$fta-tab-bar-font-size: $font-size-base !default;
-$fta-tab-bar-icon-color: $color-grey-0 !default;
-$fta-tab-bar-icon-font-size: 48px !default;
-$fta-tab-bar-icon-image-size: 50px !default;
-
 /* Tabs */
 $fta-tabs-height: zoom(80px);
 $fta-tabs-color: $color-text-base !default;
@@ -662,6 +585,7 @@ $fta-tabs-vertical-padding: 0 $spacing-v-lg !default;
 
 /* Tag */
 $fta-tag-height: zoom(40px) !default;
+$fta-tag-bg-color: $color-white !default;
 $fta-tag-radius: $border-radius-sm !default;
 $fta-tag-horizon-padding: zoom(12px) !default;
 $fta-tag-font-size: zoom(24px) !default;
@@ -678,24 +602,6 @@ $fta-tag-border-color-success: $color-success !default;
 $fta-tag-border-color-warning: $color-warning !default;
 $fta-tag-border-color-info: $color-info !default;
 $fta-tag-border-color-error: $color-error !default;
-
-$fta-tag-bg-color: $color-white !default;
-
-// deprecated
-// $fta-tag-height-sm: 40px !default;
-// $fta-tag-color: $color-grey-1 !default;
-// $fta-tag-color-primary: $color-grey-1 !default;
-// $fta-tag-color-active: $color-brand-light !default;
-// $fta-tag-color-primary-active: $color-text-base-inverse !default;
-// $fta-tag-font-size: $font-size-base !default;
-// $fta-tag-font-size-sm: $font-size-xs !default;
-// $fta-tag-bg-color: $color-bg-grey !default;
-// $fta-tag-bg-color-primary: $color-bg-grey !default;
-// $fta-tag-bg-color-active: $color-white !default;
-// $fta-tag-bg-color-primary-active: $fta-tag-color-active !default;
-// $fta-tag-border-color: $fta-tag-bg-color !default;
-// $fta-tag-border-color-primary: $fta-tag-bg-color !default;
-// $fta-tag-border-color-active: $fta-tag-color-active !default;
 
 /* Textarea */
 $fta-textarea-padding: $spacing-v-md !default;
@@ -733,7 +639,7 @@ $fta-toast-loading-radius: zoom(12px) !default;
 $fta-toast-loading-size: zoom(56px) !default;
 $fta-toast-loading-margin-bottom: zoom(15px) !default;
 
-/* Action Sheet */
+/* ActionSheet */
 $fta-action-sheet-radius: $border-radius-lg;
 $fta-action-sheet-border-color: $color-border-base;
 
@@ -783,15 +689,7 @@ $fta-action-sheet-footer-color: $color-grey-0;
 $fta-action-sheet-footer-padding: $spacing-v-xxl 0;
 
 $fta-action-sheet-footer-height: zoom(136px);
-// $fta-action-sheet-footer-button-height: zoom(88px);
-// $fta-action-sheet-footer-button-width: zoom(664px);
-// $fta-action-sheet-footer-button-bg-color: $color-brand;
-// $fta-action-sheet-footer-button-size: $font-size-lg;
-// $fta-action-sheet-footer-button-weight: $font-weight-bolder;
-// $fta-action-sheet-footer-button-color: $color-white;
-// $fta-action-sheet-footer-button-radius: $border-radius-lg;
 $fta-action-sheet-footer-button-border-color: $color-border-base;
-
 $fta-action-sheet-example-offset: zoom(40px);
 
 /* Empty */
