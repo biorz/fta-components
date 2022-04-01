@@ -546,17 +546,31 @@ $fta-slider-text-color: $color-grey-2 !default;
 $fta-slider-text-size: $font-size-base !default;
 
 /* Steps */
+$fta-steps-line-height: 1.5 !default;
+$fta-steps-dot-size: zoom(18px) !default;
+$fta-steps-dot-text-gap: zoom(20px) !default;
+$fta-steps-order-size: zoom(48px) !default;
+$fta-steps-order-gap: zoom(12px) !default;
+$fta-steps-order-text-gap: zoom(24px) !default;
+$fta-steps-custom-text-gap: zoom(12px) !default;
 $fta-steps-circle-size: 56px !default;
+$fta-steps-line-size: zoom(4px) !default;
+// $fta-steps-line-radius: zoom(2px) !default;
+$fta-steps-index-color: $color-white !default;
+$fta-steps-index-color-active: $color-grey-2 !default;
+$fta-steps-index-size: $font-size-sm !default;
+// $fta-steps-line-width: zoom(50px) !default;
 $fta-steps-icon-size: $font-size-sm !default;
-$fta-steps-color: $color-white !default;
-$fta-steps-color-active: $color-grey-2 !default;
-$fta-steps-bg-color: $color-grey-4 !default;
+$fta-steps-bg-color: $color-grey-3 !default;
 $fta-steps-bg-color-active: $color-brand !default;
 $fta-steps-line-color: $color-grey-3 !default;
-$fta-steps-title-color: $color-black-0 !default;
-$fta-steps-title-size: $font-size-lg !default;
-$fta-steps-desc-color: $color-grey-3 !default;
-$fta-steps-desc-size: $font-size-sm !default;
+$fta-steps-line-color-active: $color-brand !default;
+$fta-steps-title-color: $color-grey-3 !default;
+$fta-steps-title-color-active: $color-black-0 !default;
+$fta-steps-title-size: $font-size-sm !default;
+$fta-steps-desc-color: $color-grey-4 !default;
+$fta-steps-desc-color-active: $color-grey-3 !default;
+$fta-steps-desc-size: $font-size-xs !default;
 
 /* SwipeAction */
 $fta-swipe-action-color: $color-white !default;

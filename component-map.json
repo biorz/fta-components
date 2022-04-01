@@ -32,6 +32,8 @@
   "SafeArea": { "replace": "components/safe-area", "default": true },
   "SafeAreaView": { "replace": "components/safe-area", "default": false },
   "SegmentedControl": { "replace": "components/segmented-control", "default": true },
+  "Steps": { "replace": "components/steps", "default": true },
+  "StepsItem": { "replace": "components/steps", "default": false },
   "SwipeAction": { "replace": "components/swipe-action", "default": true },
   "Switch": { "replace": "components/switch", "default": true },
   "TabBar": { "replace": "components/tab-bar", "default": true },

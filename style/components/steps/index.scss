@@ -1,0 +1,117 @@
+@import '../../variables/default.scss';
+@import '../../mixins/index.scss';
+
+@mixin transition {
+  @include nrn {
+    transition: color 0.2s, background-color 0.2s;
+  }
+}
+
+.fta-steps {
+  @include display-flex;
+  width: 100%;
+}
+
+.fta-step {
+  flex: 1;
+  @include display-flex(column);
+  justify-content: center;
+  // align-items: center;
+  &-wrap {
+    @include display-flex;
+    align-items: center;
+
+    &--dot {
+      margin-bottom: $fta-steps-dot-text-gap;
+    }
+
+    &--ordered {
+      margin-bottom: $fta-steps-order-text-gap;
+    }
+
+    &--custom {
+      margin-bottom: $fta-steps-custom-text-gap;
+    }
+  }
+
+  &-ball {
+    @include circle();
+    @include flex-center();
+    @include transition();
+    background-color: $fta-steps-bg-color;
+
+    &--dot {
+      @include square($fta-steps-dot-size);
+    }
+
+    &--ordered {
+      @include square($fta-steps-order-size);
+      margin: 0 $fta-steps-order-gap;
+    }
+
+    &--active {
+      background-color: $fta-steps-bg-color-active;
+    }
+  }
+
+  &-line {
+    flex: 1;
+    // width: $fta-steps-line-width;
+    height: $fta-steps-line-size;
+    background-color: $fta-steps-line-color;
+    // border-radius: $fta-steps-line-radius;
+    @include transition();
+
+    &--active {
+      background-color: $fta-steps-line-color-active;
+    }
+
+    &--inactive {
+      background-color: $fta-steps-line-color;
+    }
+  }
+
+  &-lineless {
+    flex: 1;
+  }
+
+  &-title {
+    @include flex-center;
+
+    &__text {
+      @include transition();
+      color: $fta-steps-title-color;
+      font-size: $fta-steps-title-size;
+      line-height: $fta-steps-line-height * $fta-steps-title-size;
+
+      &--active {
+        color: $fta-steps-title-color-active;
+      }
+    }
+  }
+
+  &-desc {
+    @include flex-center;
+
+    &__text {
+      @include transition();
+      color: $fta-steps-desc-color;
+      font-size: $fta-steps-desc-size;
+      line-height: $fta-steps-desc-size * $fta-steps-line-height;
+
+      &--active {
+        color: $fta-steps-desc-color-active;
+      }
+    }
+  }
+
+  &-index {
+    @include transition();
+    color: $fta-steps-index-color;
+    font-size: $fta-steps-index-size;
+
+    &--active {
+      color: $fta-steps-index-color-active;
+    }
+  }
+}
