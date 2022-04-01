@@ -2,6 +2,7 @@ import { ITouchEvent, View } from '@tarojs/components'
 import React, { FC, useRef, useState } from 'react'
 import { Text } from '../../components/typography'
 import { useConfig } from '../context'
+import { useCareClass } from '../utils/classnames'
 import './debugger.scss'
 
 type Coordinate = [number, number]
@@ -33,6 +34,7 @@ export const Debugger: FC = () => {
   const [offset, setOffset] = useState<Coordinate>([0, 0])
   const start = useRef<Coordinate>([0, 0]).current
   const prev = useRef<Coordinate>([0, 0]).current
+  const rootClass = useCareClass.single('fta-debugger')
 
   const { toggle, careMode } = useConfig()
   const onTouchStart = (evt: ITouchEvent) => {
@@ -68,7 +70,7 @@ export const Debugger: FC = () => {
     <View
       // @ts-ignore
       style={getTransformStyle(offset)}
-      className='fta-debugger'
+      className={rootClass}
       onClick={() => toggle('careMode', !careMode)}
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}>
