@@ -2,14 +2,14 @@
 @import '../../mixins/index.scss';
 
 @mixin avatar-props($size, $radius) {
-  /* #ifdef rn */
-  width: $size;
-  height: $size;
-  /* #endif */
   /* #ifndef rn */
   width: $size !important;
   height: $size !important;
   line-height: $size;
+  /* #endif */
+  /* #ifdef rn */
+  width: $size;
+  height: $size;
   /* #endif */
   border-radius: $radius;
 }
