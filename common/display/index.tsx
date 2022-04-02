@@ -1,4 +1,4 @@
-import { Gap, NavBar, SafeArea, Tabs, TouchableOpacity } from '@fta/components'
+import { Gap, inAlipay, inRN, NavBar, SafeArea, Tabs, TouchableOpacity } from '@fta/components'
 import {
   inWeapp,
   useCareClass,
@@ -7,11 +7,12 @@ import {
   useConfig,
   withCare as nativeWithCare,
 } from '@fta/components/common'
-import { ScrollView, Text, View } from '@tarojs/components'
+import { Input, ScrollView, Text, View } from '@tarojs/components'
 import { ViewProps } from '@tarojs/components/types/View'
 import Taro from '@tarojs/taro'
 import classNames from 'classnames'
 import React, {
+  ChangeEvent,
   Component,
   ComponentProps,
   ComponentType,
@@ -31,8 +32,18 @@ export { Tabs, Gap }
 
 const EmptyComponent = () => null
 
-const inRN = process.env.TARO_ENV === 'rn'
-const inAlipay = process.env.TARO_ENV === 'alipay'
+const THEME_KEY = '--fta-brand-color'
+const DEFAULT_COLOR = '#fa871e'
+
+const setThemeColor = (color: string) => {
+  if (inFTAView) {
+    const root = document.documentElement
+    root.style.setProperty(THEME_KEY, color)
+    localStorage[THEME_KEY] = color
+  }
+}
+
+const getThemeColor = () => inFTAView && (localStorage.getItem(THEME_KEY) || DEFAULT_COLOR)
 
 interface DemoAreaProps<P = object> {
   /**
@@ -366,7 +377,15 @@ export const Layout = withCare(
           title: props.title,
         })
       }
+      if (inFTAView) {
+        const themeColor = getThemeColor()
+        setThemeColor(themeColor as string)
+      }
     }, [])
+
+    const changeThemeColor = (e: ChangeEvent<HTMLInputElement>) => {
+      setThemeColor(e.target.value)
+    }
 
     const handler = () => {
       if (inRN) {
@@ -415,11 +434,22 @@ export const Layout = withCare(
                 )
               }
               rightButton={{
-                title: `${!careMode ? '关怀' : '标准'}${
-                  inWeapp ? (careMode ? '           ' : '              ') : '模式'
-                }`,
+                title: inFTAView
+                  ? '更改主题色'
+                  : `${!careMode ? '关怀' : '标准'}${
+                      inWeapp ? (careMode ? '           ' : '              ') : '模式'
+                    }`,
                 style: inWeapp ? { whiteSpace: 'pre' } : undefined,
                 handler() {
+                  if (inFTAView) {
+                    const color = document.getElementById('color-input')!
+                      .firstChild as HTMLInputElement
+                    color.focus()
+                    color.value = getThemeColor() as string
+                    Promise.resolve().then(() => color.click())
+
+                    return
+                  }
                   toggle('careMode', !careMode)
                   Taro.showToast({ title: `切换到${careMode ? '标准' : '关怀'}模式`, mask: true })
                   if (inFTAView) {
@@ -430,6 +460,19 @@ export const Layout = withCare(
             />
           )}
           <Debugger />
+
+          {inFTAView ? (
+            <Input
+              style={{ display: 'none' }}
+              id='color-input'
+              /* @ts-ignore */
+              type='color'
+              /* @ts-ignore */
+              onChange={changeThemeColor}
+              /* @ts-ignore */
+              onInput={changeThemeColor}
+            />
+          ) : null}
           <ScrollView scrollY className='fta-demo-container'>
             {/* <Debugger /> */}
             {props.children}
