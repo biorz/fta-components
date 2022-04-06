@@ -4,10 +4,9 @@
   "description": "FTA View - Taro-based cross-platform development framework",
   "types": "./types/index.d.ts",
   "scripts": {
-    "build": "node ./extract-component-map.js",
-    "postbuild": "npm run notice",
+    "build:map": "node ./extract-component-map.js",
     "broadcast": "node ./bin/broadcast.js",
-    "prepublishOnly": "npm run build && npm run broadcast",
+    "prepublishOnly": "npm run build:map && npm run broadcast",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "source": "./index.ts",
