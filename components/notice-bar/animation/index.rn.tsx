@@ -2,10 +2,15 @@ import React, { FC, useEffect, useRef } from 'react'
 import { Animated, Easing } from 'react-native'
 import { AnimatedProps } from './type'
 
-export const AnimatedView: FC<AnimatedProps> = ({ children, className, style, duration = 6 }) => {
+export const AnimatedView: FC<AnimatedProps> = ({
+  children,
+  className,
+  style = {},
+  duration = 6,
+}) => {
   const animatedRef = useRef(new Animated.Value(0)).current
   const ref = useRef<any>()
-
+  console.log('start', style)
   const run = () => {
     ref.current = Animated.loop(
       Animated.timing(animatedRef, {
@@ -26,7 +31,7 @@ export const AnimatedView: FC<AnimatedProps> = ({ children, className, style, du
   const composeStyle = [
     { transform: [{ translateX: trans }] },
     // @ts-ignore
-    ...style,
+    style,
     {
       paddingLeft: 0,
     },
