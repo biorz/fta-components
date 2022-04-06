@@ -20,14 +20,14 @@ function broadcast(version, changelog, isAtAll = false) {
 }
 
 function readChangelog() {
-  const buffer = fs.readFileSync(resolve('../CHANGELOG.md'))
+  const buffer = fs.readFileSync(resolve('./CHANGELOG.md'))
   var lines = buffer.toString()
   const start = lines.indexOf('###')
   const end = lines.lastIndexOf('###')
   if (end > start) {
     var lines = lines.slice(0, end)
   }
-  return lines.split('\n').slice(5)
+  return lines.split('\n').slice(5).join('\n')
 }
 
-broadcast(version, readChangelog(), false)
+broadcast(version, readChangelog(), true)
