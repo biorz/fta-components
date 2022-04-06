@@ -6,9 +6,8 @@
   "scripts": {
     "build": "node ./extract-component-map.js",
     "postbuild": "npm run notice",
-    "notice": "node ./bin/notice.js",
-    "prepublishOnly": "npm run build",
-    "release": "standard-version",
+    "broadcast": "node ./bin/broadcast.js",
+    "prepublishOnly": "npm run build && npm run broadcast",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "source": "./index.ts",
