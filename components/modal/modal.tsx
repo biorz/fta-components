@@ -105,11 +105,7 @@ export default class Modal extends React.Component<ModalProps, ModalState> {
         <View className={rootClass}>
           {overlay}
           <View className={containerClz} style={containerStyle}>
-            {title && (
-              <ModalHeader>
-                <Text className='fta-modal__header-text'>{title}</Text>
-              </ModalHeader>
-            )}
+            {title && <ModalHeader>{title}</ModalHeader>}
             {content && (
               <ModalContent withTitle={!!title}>
                 <View className='content-simple'>

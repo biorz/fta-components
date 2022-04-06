@@ -116,11 +116,7 @@ export default class FTAModal extends React.Component<ModalProps, ModalState> {
           <View className={rootClass}>
             {overlay}
             <View className={containerClz} style={containerStyle}>
-              {title && (
-                <FTAModalHeader>
-                  <Text className='fta-modal__header-text'>{title}</Text>
-                </FTAModalHeader>
-              )}
+              {title && <FTAModalHeader>{title}</FTAModalHeader>}
               {content && (
                 <FTAModalContent withTitle={!!title}>
                   <View

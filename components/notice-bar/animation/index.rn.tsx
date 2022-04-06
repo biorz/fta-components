@@ -10,7 +10,7 @@ export const AnimatedView: FC<AnimatedProps> = ({
 }) => {
   const animatedRef = useRef(new Animated.Value(0)).current
   const ref = useRef<any>()
-  console.log('start', style)
+
   const run = () => {
     ref.current = Animated.loop(
       Animated.timing(animatedRef, {
