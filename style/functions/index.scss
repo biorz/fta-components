@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 @function is-number($val) {
   @return type-of($val) == 'number';
 }
@@ -12,13 +14,13 @@
 
 /* 关怀模式 */
 @function care($size, $times: 1.3) {
-  @return round($size * $times);
+  @return math.round($size * $times);
 }
 
 @function zoom($size, $designWidth: 720, $curWidth: 750) {
-  @return round($size * $designWidth / $curWidth);
+  @return math.round(math.div($size * $designWidth, $curWidth));
 }
 
 @function cares($size, $times: 1.3, $designWidth: 720, $curWidth: 750) {
-  @return round($size * $times * $curWidth / $designWidth);
+  @return math.round(math.div($size * $times * $curWidth, $designWidth));
 }

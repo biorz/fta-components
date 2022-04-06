@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 // variable
 $fta-border-color: #efefef !default;
 $fta-border-width: 1px !default;
@@ -58,7 +60,7 @@ $fta-full-z-index: 1 !default;
 @mixin square($size, $circle: false) {
   @include box($size);
   @if $circle {
-    border-radius: $size / 2;
+    border-radius: math.div($size, 2);
   }
 }
 

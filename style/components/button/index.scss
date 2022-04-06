@@ -1,3 +1,4 @@
+@use 'sass:math';
 @import '../../variables/default.scss';
 @import '../../mixins/index.scss';
 
@@ -203,7 +204,7 @@
   }
 
   &--circle {
-    border-radius: $fta-button-height / 2;
+    border-radius: math.div($fta-button-height, 2);
     /* #ifndef rn */
     background-clip: border-box;
     /* #endif */
@@ -220,7 +221,7 @@
   //   line-height: $fta-button-height-sm - 2;
 
   //   &.fta-button--circle {
-  //     border-radius: $fta-button-height-sm / 2;
+  //     border-radius: math.div($fta-button-height-sm, 2);
   //   }
   // }
 

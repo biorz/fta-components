@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 @mixin flex($direction: column) {
   display: flex;
   flex-direction: $direction;
@@ -31,7 +33,7 @@
 @mixin square($size, $circle: false) {
   @include box($size);
   @if $circle {
-    border-radius: $size / 2;
+    border-radius: math.div($size, 2);
   }
 }
 

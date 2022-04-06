@@ -54,8 +54,6 @@ function Loading(props: LoadingProps & { style?: CSSProperties }): JSX.Element {
     outputRange: ['0deg', '360deg'],
   })
 
-  console.log(style, 'style......')
-
   useEffect(() => {
     stop ? animateRef.current.stop?.() : run()
     return animateRef.current.stop

@@ -1,3 +1,4 @@
+@use 'sass:math';
 @import '../../mixins/index.scss';
 @import '../../variables/default.scss';
 
@@ -108,28 +109,28 @@
   &-coupon {
     @include square-circle($fta-badge-coupon-size);
     position: absolute;
-    top: zoom(($fta-badge-height - $fta-badge-coupon-size) / 2);
+    top: zoom(math.div($fta-badge-height - $fta-badge-coupon-size, 2));
     background-color: $fta-badge-coupon-color;
 
     &--care {
       @include square-circle(care($fta-badge-coupon-size));
-      top: care(zoom(($fta-badge-height - $fta-badge-coupon-size) / 2));
+      top: care(zoom(math.div($fta-badge-height - $fta-badge-coupon-size, 2)));
     }
   }
 
   .coupon-left {
-    left: -$fta-badge-coupon-size / 2;
+    left: math.div(-$fta-badge-coupon-size, 2);
 
     &--care {
-      left: care(-$fta-badge-coupon-size / 2);
+      left: care(math.div(-$fta-badge-coupon-size, 2));
     }
   }
 
   .coupon-right {
-    right: care(-$fta-badge-coupon-size / 2);
+    right: care(math.div(-$fta-badge-coupon-size, 2));
 
     &--care {
-      right: care(-$fta-badge-coupon-size / 2);
+      right: care(math.div(-$fta-badge-coupon-size, 2));
     }
   }
 

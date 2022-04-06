@@ -1,8 +1,8 @@
+@use 'sass:math';
 @import '../../variables/default.scss';
 @import '../../mixins/index.scss';
-@import '../../mixins/index.scss';
 
-$fta-list-arrow-size: $fta-list-arrow-size / 1.5;
+$fta-list-arrow-size: math.div($fta-list-arrow-size, 1.5);
 .fta-list {
   /* elements */
   &__item-container {
