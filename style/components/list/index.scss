@@ -3,7 +3,7 @@
 
 .fta-list {
   background-color: $fta-list-bg-color;
-  @include hairline-top-bottom();
+  // @include hairline-top-bottom();
 
   /* elements */
   &__item-container {
