@@ -46,9 +46,10 @@ function ejectTheme() {
 
   writeFile(
     outputPath,
-    `/* $designWidth为设计稿尺寸，$curWidth是Taro的默认设计单位 */
+    `@use 'sass:math';
+    /* $designWidth为设计稿尺寸，$curWidth是Taro的默认设计单位 */
   @function scale($size, $designWidth: 720, $curWidth: 750) {
-    @return round($size * $designWidth / $curWidth);
+    @return math.round(math.div($size * $designWidth, $curWidth));
   }
   ${filter}`
   )
