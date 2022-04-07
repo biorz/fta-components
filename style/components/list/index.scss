@@ -3,6 +3,9 @@
 
 .fta-list {
   background-color: $fta-list-bg-color;
+  border-radius: $fta-list-border-radius;
+  overflow: hidden;
+
   // @include hairline-top-bottom();
 
   /* elements */
