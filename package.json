@@ -9,7 +9,10 @@
   "scripts": {
     "build:map": "node ./extract-component-map.js",
     "broadcast": "node ./bin/broadcast.js",
-    "prepublishOnly": "npm run build:map && npm run broadcast",
+    "theme:clear": "node ./bin/theme-hook.js clear",
+    "theme:recover": "node ./bin/theme-hook.js recover",
+    "prepublishOnly": "npm run build:map && npm run theme:clear && npm run broadcast",
+    "postpublish": "npm run theme:recover",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "source": "./index.ts",
