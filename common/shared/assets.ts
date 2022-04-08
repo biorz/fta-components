@@ -43,6 +43,11 @@ const Assets = {
     default:
       'https://imagecdn.ymm56.com/ymmfile/static/resource/f1b19e18-3105-4951-8e95-f0de00b221d2.png',
   },
+  loading: {
+    default:
+      'https://imagecdn.ymm56.com/ymmfile/static/image/short_distance/rn_sd_loding_wihite_x2_2201280.png',
+    blue: 'https://imagecdn.ymm56.com/ymmfile/static/image/short_distance/rn_loading_view_2201230.png',
+  },
 }
 
 const mergeAssets = (newAssets: DeepPartial<typeof Assets>) => {

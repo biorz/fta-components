@@ -74,7 +74,7 @@ export const Debugger: FC = () => {
       onClick={() => toggle('careMode', !careMode)}
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}>
-      <Text style={{ color: '#999' }}>{careMode ? '关怀' : '标准'}</Text>
+      <Text className='fta-debugger__text'>{careMode ? '关怀' : '标准'}</Text>
     </View>
   )
 }

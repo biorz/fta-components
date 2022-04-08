@@ -1,3 +1,5 @@
+@import '../../style/variables/default.scss';
+
 .fta-debugger {
   position: absolute;
   /* #ifndef rn */
@@ -12,10 +14,14 @@
   background-color: #fff;
   border-radius: 300px;
   // prettier-ignore
-  border: 1PX solid #efefef;
+  border: 2PX solid $color-brand;
   align-items: center;
   justify-content: center;
   z-index: 100;
+
+  &__text {
+    color: $color-brand;
+  }
 
   &--care {
     width: 100px;

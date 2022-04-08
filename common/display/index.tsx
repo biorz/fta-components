@@ -33,17 +33,17 @@ export { Tabs, Gap }
 const EmptyComponent = () => null
 
 const THEME_KEY = '--fta-brand-color'
-const DEFAULT_COLOR = '#fa871e'
+const DEFAULT_COLOR = '#1F5DE9'
 
 const setThemeColor = (color: string) => {
   if (inFTAView) {
     const root = document.documentElement
     root.style.setProperty(THEME_KEY, color)
-    localStorage[THEME_KEY] = color
+    sessionStorage[THEME_KEY] = color
   }
 }
 
-const getThemeColor = () => inFTAView && (localStorage.getItem(THEME_KEY) || DEFAULT_COLOR)
+const getThemeColor = () => inFTAView && (sessionStorage.getItem(THEME_KEY) || DEFAULT_COLOR)
 
 interface DemoAreaProps<P = object> {
   /**

@@ -1,4 +1,4 @@
-import { Text } from '@tarojs/components'
+import { Text as TaroText } from '@tarojs/components'
 import React from 'react'
 import { px, scale as scaleSize, useCarelessClass, useCareMode } from '../../common'
 import '../../style/components/typography/index.scss'
@@ -33,7 +33,7 @@ import { TextProps } from '../../types/typography'
 /**
  * 正文
  */
-function MainText(props: TextProps): JSX.Element {
+function Text(props: TextProps): JSX.Element {
   const { className, style, level, children, size, color, scale, weight, ...extraProps } = props
   const textClz = useCarelessClass(['fta-text', size ? '' : `fta-text--${level}`], [className])
   const careMode = useCareMode()
@@ -49,9 +49,9 @@ function MainText(props: TextProps): JSX.Element {
     textStyle.fontSize = scale ? scaleSize(fontSize) : px(fontSize)
   }
   return (
-    <Text className={textClz} style={textStyle} {...extraProps}>
+    <TaroText className={textClz} style={textStyle} {...extraProps}>
       {children}
-    </Text>
+    </TaroText>
   )
 }
 
@@ -60,6 +60,6 @@ const textDefaultProps: TextProps = {
   scale: true,
 }
 
-MainText.defaultProps = textDefaultProps
+Text.defaultProps = textDefaultProps
 
-export { MainText as Text }
+export { Text }
