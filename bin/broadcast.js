@@ -10,6 +10,8 @@ const { resolve } = require('path')
  * @param {string} isAtAll 是否@全体成员
  */
 function broadcast(version, changelog, isAtAll = false) {
+  // 测试版不发送通知
+  if (/alpha|beta/.test(version)) return
   try {
     process.execSync(`curl 'https://oapi.dingtalk.com/robot/send?access_token=f06d058044555551c9756e7896cacf3bdb6ac3b7e1434efe0274e045e99a6a15' \
     -H 'Content-Type: application/json' \
@@ -21,11 +23,11 @@ function broadcast(version, changelog, isAtAll = false) {
 
 function readChangelog() {
   const buffer = fs.readFileSync(resolve('./CHANGELOG.md'))
-  var lines = buffer.toString()
+  let lines = buffer.toString()
   const start = lines.indexOf('###')
   const end = lines.lastIndexOf('###')
   if (end > start) {
-    var lines = lines.slice(0, end)
+    lines = lines.slice(0, end)
   }
   return lines.split('\n').slice(5).join('\n')
 }
