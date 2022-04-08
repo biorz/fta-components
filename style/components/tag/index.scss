@@ -41,6 +41,9 @@
   }
 
   &__text {
+    @include nrn {
+      white-space: nowrap;
+    }
     font-size: $fta-tag-font-size;
     font-weight: $fta-tag-font-weight;
 

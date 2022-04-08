@@ -100,16 +100,49 @@ export interface StatusBarProps {
 }
 
 export interface NavBarProps {
+  /**
+   * 容器类名
+   */
   containerClassName?: string
+  /**
+   * 容器内联样式
+   */
   containerStyle?: CSSProperties
+  /**
+   * 安全区类名
+   */
   safeAreaClassName?: string
+  /**
+   * 安全区内联样式
+   */
   safeAreaStyle?: CSSProperties
+  /**
+   * 标题颜色
+   */
   tintColor?: string
+  /**
+   * 标题信息
+   */
   title?: ReactElement | TitleProps
+  /**
+   * 左侧按钮
+   */
   leftButton?: ReactElement | ButtonProps
+  /**
+   * 右侧按钮
+   */
   rightButton?: ReactElement | ButtonProps
+  /**
+   * 内部View内联样式
+   */
   style?: CSSProperties
+  /**
+   * 状态栏相关信息
+   */
   statusBar?: StatusBarProps
+  /**
+   * 内部View 类名
+   */
   className?: string
 }
 
@@ -134,6 +167,6 @@ declare const NavBar: ComponentClass<NavBarProps> & {
 
 declare const NavBarButton: FC<NavBarButtonProps>
 
-export { NavBarButton }
-
 export default NavBar
+
+export { NavBarButton }
