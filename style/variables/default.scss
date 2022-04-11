@@ -485,10 +485,10 @@ $fta-modal-bg-color: $color-white !default;
 $fta-modal-footer-height: zoom(100px) !default;
 
 /* NavBar */
-$fta-nav-bar-height: zoom(88px);
-$fta-nav-bar-button-left-offset: zoom(28px);
-$fta-nav-bar-button-right-offset: zoom(28px);
-$fta-nav-bar-back-icon-size: zoom(32px);
+$fta-nav-bar-height: zoom(88px) !default;
+$fta-nav-bar-button-left-offset: zoom(28px) !default;
+$fta-nav-bar-button-right-offset: zoom(28px) !default;
+$fta-nav-bar-back-icon-size: zoom(32px) !default;
 $fta-nav-bar-title-color: $color-grey-0 !default;
 $fta-nav-bar-button-color: #0076ff !default;
 
@@ -539,8 +539,8 @@ $fta-segmented-control-color-active: $color-white !default;
 $fta-segmented-control-font-size: $font-size-md !default;
 $fta-segmented-control-radius: $border-radius-md !default;
 $fta-segmented-control-padding: $spacing-v-xs $spacing-h-sm !default;
-$fta-segmented-control-disabled-opacity: $opacity-disabled;
-$fta-segmented-control-min-width: zoom(120px);
+$fta-segmented-control-disabled-opacity: $opacity-disabled !default;
+$fta-segmented-control-min-width: zoom(120px) !default;
 
 /* Slider */
 $fta-slider-text-color: $color-grey-2 !default;
@@ -580,7 +580,7 @@ $fta-swipe-action-option-padding: 0 zoom(40px) !default;
 
 /* Switch */
 $fta-switch-padding: $spacing-v-lg $spacing-h-xl $spacing-v-lg 0 !default;
-$fta-switch-title-margin-left: $spacing-h-xl;
+$fta-switch-title-margin-left: $spacing-h-xl !default;
 $fta-switch-title-color: $color-grey-0 !default;
 $fta-switch-title-size: $font-size-md !default;
 
@@ -619,7 +619,7 @@ $fta-tag-border-color-error: $color-error !default;
 /* Textarea */
 $fta-textarea-padding: $spacing-v-md !default;
 $fta-textarea-font-size: $font-size-lg !default;
-$fta-textarea-input-height: $fta-textarea-font-size * 4;
+$fta-textarea-input-height: $fta-textarea-font-size * 4 !default;
 $fta-textarea-radius: $border-radius-md !default;
 $fta-textarea-bg-color: $color-bg !default;
 $fta-textarea-tips-color: $color-text-placeholder !default;
@@ -638,7 +638,7 @@ $fta-timeline-dot-border-color: $color-brand-light !default;
 $fta-timeline-line-color: $color-border-lighter !default;
 
 /* Toast */
-$fta-toast-color: $color-white;
+$fta-toast-color: $color-white !default;
 $fta-toast-bg-color: rgba(
   $color: #000000,
   $alpha: 0.8,
@@ -653,72 +653,72 @@ $fta-toast-loading-size: zoom(56px) !default;
 $fta-toast-loading-margin-bottom: zoom(15px) !default;
 
 /* ActionSheet */
-$fta-action-sheet-radius: $border-radius-lg;
-$fta-action-sheet-border-color: $color-border-base;
+$fta-action-sheet-radius: $border-radius-lg !default;
+$fta-action-sheet-border-color: $color-border-base !default;
 
-$fta-action-sheet-header-size: $font-size-lg;
-$fta-action-sheet-header-color: $color-black-3;
-$fta-action-sheet-header-padding: $spacing-v-xxl 0;
-$fta-action-sheet-header-bg-color: transparent;
+$fta-action-sheet-header-size: $font-size-lg !default;
+$fta-action-sheet-header-color: $color-black-3 !default;
+$fta-action-sheet-header-padding: $spacing-v-xxl 0 !default;
+$fta-action-sheet-header-bg-color: transparent !default;
 
-$fta-action-sheet-header-title-height: zoom(117px);
-$fta-action-sheet-header-no-title-height: zoom(72px);
-$fta-action-sheet-header-title-color: $color-grey-0;
-$fta-action-sheet-header-title-weight: bold;
-$fta-action-sheet-header-title-size: $font-size-md;
+$fta-action-sheet-header-title-height: zoom(117px) !default;
+$fta-action-sheet-header-no-title-height: zoom(72px) !default;
+$fta-action-sheet-header-title-color: $color-grey-0 !default;
+$fta-action-sheet-header-title-weight: bold !default;
+$fta-action-sheet-header-title-size: $font-size-md !default;
 
-$fta-action-sheet-header-close-size: $font-size-md;
-$fta-action-sheet-border-close-right: zoom(44px);
+$fta-action-sheet-header-close-size: $font-size-md !default;
+$fta-action-sheet-border-close-right: zoom(44px) !default;
 
-$fta-action-sheet-header-left-padding: zoom(48px);
-$fta-action-sheet-header-right-padding: zoom(28px);
+$fta-action-sheet-header-left-padding: zoom(48px) !default;
+$fta-action-sheet-header-right-padding: zoom(28px) !default;
 
-$fta-action-sheet-button-left-size: $font-size-md;
-$fta-action-sheet-button-left-color: $color-grey-1;
+$fta-action-sheet-button-left-size: $font-size-md !default;
+$fta-action-sheet-button-left-color: $color-grey-1 !default;
 
-$fta-action-sheet-button-right-color: $color-white;
-$fta-action-sheet-button-right-size: $font-size-md;
-$fta-action-sheet-button-right-padding: $spacing-v-md $spacing-h-lg;
-$fta-action-sheet-button-right-bg-color: $color-brand;
-$fta-action-sheet-button-right-radius: zoom(32px);
+$fta-action-sheet-button-right-color: $color-white !default;
+$fta-action-sheet-button-right-size: $font-size-md !default;
+$fta-action-sheet-button-right-padding: $spacing-v-md $spacing-h-lg !default;
+$fta-action-sheet-button-right-bg-color: $color-brand !default;
+$fta-action-sheet-button-right-radius: zoom(32px) !default;
 
-$fta-action-sheet-item-size: $font-size-lg;
-$fta-action-sheet-item-color: $color-grey-0;
-$fta-action-sheet-item-padding: $spacing-v-xxl 0;
+$fta-action-sheet-item-size: $font-size-lg !default;
+$fta-action-sheet-item-color: $color-grey-0 !default;
+$fta-action-sheet-item-padding: $spacing-v-xxl 0 !default;
 
-$fta-action-sheet-border-color: $color-border-base;
+$fta-action-sheet-border-color: $color-border-base !default;
 
-$fta-action-sheet-item-size: $font-size-lg;
-$fta-action-sheet-item-color: $color-grey-0;
-$fta-action-sheet-item-padding: $spacing-v-xxl zoom(40px);
-$fta-action-sheet-item-hint-color: $color-grey-2;
-$fta-action-sheet-item-hint-size: $font-size-sm;
-$fta-action-sheet-item-hint-margin-top: $spacing-v-sm;
+$fta-action-sheet-item-size: $font-size-lg !default;
+$fta-action-sheet-item-color: $color-grey-0 !default;
+$fta-action-sheet-item-padding: $spacing-v-xxl zoom(40px) !default;
+$fta-action-sheet-item-hint-color: $color-grey-2 !default;
+$fta-action-sheet-item-hint-size: $font-size-sm !default;
+$fta-action-sheet-item-hint-margin-top: $spacing-v-sm !default;
 
-$fta-action-sheet-footer-border-width: zoom(12px);
-$fta-action-sheet-footer-border-color: $color-grey-6;
-$fta-action-sheet-footer-size: $font-size-lg;
-$fta-action-sheet-footer-color: $color-grey-0;
-$fta-action-sheet-footer-padding: $spacing-v-xxl 0;
+$fta-action-sheet-footer-border-width: zoom(12px) !default;
+$fta-action-sheet-footer-border-color: $color-grey-6 !default;
+$fta-action-sheet-footer-size: $font-size-lg !default;
+$fta-action-sheet-footer-color: $color-grey-0 !default;
+$fta-action-sheet-footer-padding: $spacing-v-xxl 0 !default;
 
-$fta-action-sheet-footer-height: zoom(136px);
-$fta-action-sheet-footer-button-border-color: $color-border-base;
-$fta-action-sheet-example-offset: zoom(40px);
+$fta-action-sheet-footer-height: zoom(136px) !default;
+$fta-action-sheet-footer-button-border-color: $color-border-base !default;
+$fta-action-sheet-example-offset: zoom(40px) !default;
 
 /* Empty */
-$fta-empty-button-margin-top: zoom(40px);
-$fta-empty-image-size: zoom(480px);
-$fta-empty-title-color: $color-grey-1;
-$fta-empty-desc-margin-top: zoom(14px);
-$fta-empty-desc-color: $color-grey-2;
-$fta-empty-desc-margin-top: zoom(14px);
+$fta-empty-button-margin-top: zoom(40px) !default;
+$fta-empty-image-size: zoom(480px) !default;
+$fta-empty-title-color: $color-grey-1 !default;
+$fta-empty-desc-margin-top: zoom(14px) !default;
+$fta-empty-desc-color: $color-grey-2 !default;
+$fta-empty-desc-margin-top: zoom(14px) !default;
 
 /* Result */
-$fta-result-button-margin-top: zoom(40px);
-$fta-result-image-size: zoom(240px);
-$fta-result-image-margin-top: zoom(200px);
-$fta-result-title-margin-top: zoom(14px);
-$fta-result-title-color: $color-grey-1;
-$fta-result-desc-margin-top: zoom(14px);
-$fta-result-desc-color: $color-grey-2;
-$fta-result-desc-margin-top: zoom(14px);
+$fta-result-button-margin-top: zoom(40px) !default;
+$fta-result-image-size: zoom(240px) !default;
+$fta-result-image-margin-top: zoom(200px) !default;
+$fta-result-title-margin-top: zoom(14px) !default;
+$fta-result-title-color: $color-grey-1 !default;
+$fta-result-desc-margin-top: zoom(14px) !default;
+$fta-result-desc-color: $color-grey-2 !default;
+$fta-result-desc-margin-top: zoom(14px) !default;
