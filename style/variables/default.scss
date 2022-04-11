@@ -371,8 +371,8 @@ $fta-gap-height: zoom(40px) !default;
 /* Image */
 $fta-image-width: zoom(240px) !default;
 $fta-image-height: zoom(240px) !default;
-$fta-image-text-color: $color-grey-1;
-$fta-image-bg-color: $color-bg-base;
+$fta-image-text-color: $color-grey-1 !default;
+$fta-image-bg-color: $color-bg-base !default;
 
 /* Drawer */
 $fta-drawer-content-width: 460px !default;
