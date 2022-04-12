@@ -1,10 +1,15 @@
 @import './radius.scss';
-
+/**
+ * 正方形尺寸
+ */
 @mixin square($size) {
   width: $size;
   height: $size;
 }
 
+/**
+ * 圆形尺寸
+ */
 @mixin square-circle($size) {
   @include square($size);
   @include circle();

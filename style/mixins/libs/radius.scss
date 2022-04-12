@@ -1,4 +1,6 @@
-/* border-radius: 50% hack */
+/**
+* border-radius: 50%
+*/
 @mixin circle {
   border-radius: 10000px;
 }

@@ -12,7 +12,6 @@
 @import './libs/flex';
 @import './libs/border';
 @import './libs/active';
-@import './libs/disabled';
 @import './libs/placeholder';
 @import './libs/alignhack';
 @import './libs/hairline';
@@ -20,7 +19,5 @@
 @import './libs/relative.scss';
 @import './libs/square.scss';
 @import './libs/border-box.scss';
-// 关怀模式
 @import './libs/care.scss';
-//条件编译
 @import './libs/platform.scss';
