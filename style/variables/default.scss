@@ -100,15 +100,6 @@ $font-size-xxl: zoom(44px) !default; // 用于大号的数字
 $line-height-base: 1.3 !default; // 常用字号
 $line-height-zh: $line-height-base !default; // 常用字号
 
-/* #ifndef rn */
-$line-height-xs: $line-height-base !default; // 非常用字号，用于标签
-$line-height-sm: $line-height-base !default; // 用于辅助信息
-$line-height-md: $line-height-base !default; // 常用字号
-$line-height-lg: $line-height-base !default; // 常规标题
-$line-height-xl: $line-height-base !default; // 大标题
-$line-height-xxl: $line-height-base !default; // 用于大号的数字
-/* #endif */
-
 /* #ifdef rn */
 $line-height-xs: $line-height-base * $font-size-xs !default; // 非常用字号，用于标签
 $line-height-sm: $line-height-base * $font-size-sm !default; // 用于辅助信息
@@ -116,6 +107,15 @@ $line-height-md: $line-height-base * $font-size-md !default; // 常用字号
 $line-height-lg: $line-height-base * $font-size-lg !default; // 常规标题
 $line-height-xl: $line-height-base * $font-size-xl !default; // 大标题
 $line-height-xxl: $line-height-base * $font-size-xxl !default; // 用于大号的数字
+/* #endif */
+
+/* #ifndef rn */
+$line-height-xs: $line-height-base !default; // 非常用字号，用于标签
+$line-height-sm: $line-height-base !default; // 用于辅助信息
+$line-height-md: $line-height-base !default; // 常用字号
+$line-height-lg: $line-height-base !default; // 常规标题
+$line-height-xl: $line-height-base !default; // 大标题
+$line-height-xxl: $line-height-base !default; // 用于大号的数字
 /* #endif */
 
 /* Font Weight */
