@@ -1,12 +1,12 @@
 import View from '@fta/components-rn/dist/components/View'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
-import React, { Component, useRef, useEffect } from 'react'
-import Modal, { isFunction, isString, Assets } from '../common'
-import { StyleSheet, Animated, Easing } from 'react-native'
+import React, { Fragment, Component, useRef, useEffect } from 'react'
+import { Modal as Modal$1, StyleSheet, Animated, Easing } from 'react-native'
 import { scalePx2dp } from '@fta/runtime-rn/dist/scale2dp'
 import SafeArea from '../safe-area'
 import Text from '@fta/components-rn/dist/components/Text'
+import { isFunction, isString, Assets } from '../common'
 import Button from '../button'
 import Image from '@fta/components-rn/dist/components/Image'
 
@@ -110,6 +110,45 @@ function _getPrototypeOf(o) {
         return o.__proto__ || Object.getPrototypeOf(o)
       }
   return _getPrototypeOf(o)
+}
+
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {}
+  var target = {}
+  var sourceKeys = Object.keys(source)
+  var key, i
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i]
+    if (excluded.indexOf(key) >= 0) continue
+    target[key] = source[key]
+  }
+  return target
+}
+
+function _objectWithoutProperties(source, excluded) {
+  if (source == null) return {}
+  var target = _objectWithoutPropertiesLoose(source, excluded)
+  var key, i
+  if (Object.getOwnPropertySymbols) {
+    var sourceSymbolKeys = Object.getOwnPropertySymbols(source)
+    for (i = 0; i < sourceSymbolKeys.length; i++) {
+      key = sourceSymbolKeys[i]
+      if (excluded.indexOf(key) >= 0) continue
+      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue
+      target[key] = source[key]
+    }
+  }
+  return target
+}
+
+var _excluded = ['useNative', 'children']
+function Modal(props) {
+  var useNative = props.useNative,
+    children = props.children,
+    modalProps = _objectWithoutProperties(props, _excluded)
+  return useNative
+    ? React.createElement(Modal$1, modalProps, children)
+    : React.createElement(Fragment, null, children)
 }
 
 var indexScssStyleSheet = StyleSheet.create({

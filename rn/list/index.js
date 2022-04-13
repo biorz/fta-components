@@ -2,7 +2,6 @@ import View from '@fta/components-rn/dist/components/View'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 import React from 'react'
-import indexScssStyleSheet from '../icon'
 import { StyleSheet } from 'react-native'
 import { scalePx2dp } from '@fta/runtime-rn/dist/scale2dp'
 import Image from '@fta/components-rn/dist/components/Image'
@@ -113,6 +112,44 @@ function _extends() {
     }
   return _extends.apply(this, arguments)
 }
+
+var indexScssStyleSheet = StyleSheet.create({
+  'fta-icon__badge': {
+    top: scalePx2dp(-11.5),
+    left: scalePx2dp(11.5),
+  },
+  'fta-icon__dot': {
+    top: scalePx2dp(-6),
+    left: scalePx2dp(17),
+  },
+  'fta-icon': {
+    borderRadius: scalePx2dp(3),
+  },
+  'fta-icon--medium': {
+    width: scalePx2dp(23),
+    height: scalePx2dp(23),
+  },
+  'fta-icon--medium--care': {
+    width: scalePx2dp(30),
+    height: scalePx2dp(30),
+  },
+  'fta-icon--large': {
+    width: scalePx2dp(46),
+    height: scalePx2dp(46),
+  },
+  'fta-icon--large--care': {
+    width: scalePx2dp(60),
+    height: scalePx2dp(60),
+  },
+  'fta-icon--large__badge': {
+    top: scalePx2dp(-7.5),
+    left: scalePx2dp(11.5),
+  },
+  'fta-icon--large__badge--dot': {
+    top: scalePx2dp(-6),
+    left: scalePx2dp(17),
+  },
+})
 
 var indexScssStyleSheet1 = StyleSheet.create({
   'fta-list': {

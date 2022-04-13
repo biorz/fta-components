@@ -1,8 +1,16 @@
 import View from '@fta/components-rn/dist/components/View'
 import classNames from 'classnames'
-import React, { forwardRef, useState, useRef, useEffect, useImperativeHandle, useMemo } from 'react'
-import Modal, { useEnhancedState, inRN } from '../common'
-import { StyleSheet } from 'react-native'
+import React, {
+  Fragment,
+  forwardRef,
+  useState,
+  useRef,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+} from 'react'
+import { useEnhancedState, inRN } from '../common'
+import { Modal as Modal$1, StyleSheet } from 'react-native'
 import { scaleVu2dp, scalePx2dp } from '@fta/runtime-rn/dist/scale2dp'
 import Loading from '../loading'
 import { Text } from '../typography'
@@ -101,6 +109,45 @@ function _slicedToArray(arr, i) {
     _unsupportedIterableToArray(arr, i) ||
     _nonIterableRest()
   )
+}
+
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {}
+  var target = {}
+  var sourceKeys = Object.keys(source)
+  var key, i
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i]
+    if (excluded.indexOf(key) >= 0) continue
+    target[key] = source[key]
+  }
+  return target
+}
+
+function _objectWithoutProperties(source, excluded) {
+  if (source == null) return {}
+  var target = _objectWithoutPropertiesLoose(source, excluded)
+  var key, i
+  if (Object.getOwnPropertySymbols) {
+    var sourceSymbolKeys = Object.getOwnPropertySymbols(source)
+    for (i = 0; i < sourceSymbolKeys.length; i++) {
+      key = sourceSymbolKeys[i]
+      if (excluded.indexOf(key) >= 0) continue
+      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue
+      target[key] = source[key]
+    }
+  }
+  return target
+}
+
+var _excluded = ['useNative', 'children']
+function Modal(props) {
+  var useNative = props.useNative,
+    children = props.children,
+    modalProps = _objectWithoutProperties(props, _excluded)
+  return useNative
+    ? React.createElement(Modal$1, modalProps, children)
+    : React.createElement(Fragment, null, children)
 }
 
 var indexScssStyleSheet = StyleSheet.create({
