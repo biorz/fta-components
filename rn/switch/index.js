@@ -1,13 +1,10 @@
 import TaroSwitch from '@fta/components-rn/dist/components/Switch'
-import TaroText from '@fta/components-rn/dist/components/Text'
+import Text from '@fta/components-rn/dist/components/Text'
 import View from '@fta/components-rn/dist/components/View'
-import React, { createContext } from 'react'
+import React from 'react'
+import { inRN, Themes, isString } from '../common'
 import { StyleSheet } from 'react-native'
 import { scalePx2dp } from '@fta/runtime-rn/dist/scale2dp'
-import { getSystemInfoSync } from '@fta/taro-rn/dist/lib/getSystemInfoSync'
-import '@fta/taro-rn'
-import { getEnv } from '@fta/taro-rn/dist/lib/getEnv'
-import '@fta/taro-rn/dist/lib/ENV_TYPE'
 
 function _extends() {
   _extends =
@@ -1144,107 +1141,6 @@ var factoryWithTypeCheckers = function factoryWithTypeCheckers(
 }
 var PropTypes = propTypes.exports
 
-var defaultContext = { careMode: false, platform: 'ymm', debugger: true }
-var Context = createContext(defaultContext)
-Context.displayName = 'GlobalConfigContext'
-Context.Consumer
-
-StyleSheet.create({
-  'fta-text': {},
-  'fta-text--1': {
-    fontSize: scalePx2dp(21),
-    lineHeight: scalePx2dp(27.3),
-  },
-  'fta-text--1--care': {
-    fontSize: scalePx2dp(27.5),
-    lineHeight: scalePx2dp(35.5),
-  },
-  'fta-text--2': {
-    fontSize: scalePx2dp(19),
-    lineHeight: scalePx2dp(24.7),
-  },
-  'fta-text--2--care': {
-    fontSize: scalePx2dp(24.5),
-    lineHeight: scalePx2dp(32),
-  },
-  'fta-text--3': {
-    fontSize: scalePx2dp(17.5),
-    lineHeight: scalePx2dp(22.75),
-  },
-  'fta-text--3--care': {
-    fontSize: scalePx2dp(23),
-    lineHeight: scalePx2dp(29.5),
-  },
-  'fta-text--4': {
-    fontSize: scalePx2dp(15.5),
-    lineHeight: scalePx2dp(20.15),
-  },
-  'fta-text--4--care': {
-    fontSize: scalePx2dp(20),
-    lineHeight: scalePx2dp(26),
-  },
-  'fta-text--5': {
-    fontSize: scalePx2dp(13.5),
-    lineHeight: scalePx2dp(17.55),
-  },
-  'fta-text--5--care': {
-    fontSize: scalePx2dp(17.5),
-    lineHeight: scalePx2dp(23),
-  },
-  'fta-text--6': {
-    fontSize: scalePx2dp(11.5),
-    lineHeight: scalePx2dp(14.95),
-  },
-  'fta-text--6--care': {
-    fontSize: scalePx2dp(15),
-    lineHeight: scalePx2dp(19.5),
-  },
-})
-
-StyleSheet.create({
-  'fta-debugger': {
-    position: 'absolute',
-    bottom: scalePx2dp(50),
-    right: scalePx2dp(20),
-    width: scalePx2dp(40),
-    height: scalePx2dp(40),
-    backgroundColor: '#fff',
-    borderRadius: scalePx2dp(150),
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: '#fa871e',
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 100,
-  },
-  'fta-debugger__text': {
-    color: '#fa871e',
-  },
-  'fta-debugger--care': {
-    width: scalePx2dp(50),
-    height: scalePx2dp(50),
-  },
-})
-
-var Themes = { color: { brand: '#fa871e', white: '#fff' } }
-
-var systemInfo = getSystemInfoSync()
-systemInfo.windowWidth / 750
-var inIOS = systemInfo.platform === 'ios'
-var inIPhone =
-  systemInfo.system === 'iOS' ||
-  systemInfo.brand === 'iPhone' ||
-  systemInfo.model === 'iPhone' ||
-  inIOS
-inIPhone && (systemInfo.screenHeight >= 812 || systemInfo.screenWidth >= 812)
-systemInfo.platform === 'android'
-
-getEnv()
-
-var isString = function isString(val) {
-  return typeof val === 'string'
-}
-
 var indexScssStyleSheet = StyleSheet.create({
   'fta-switch': {
     display: 'flex',
@@ -1388,10 +1284,10 @@ var Switch = (function (_React$Component) {
           color = _this$props.color
         var rootCls = classNames('fta-switch', { 'fta-switch--without-border': !border }, className)
         var containerCls = classNames('fta-switch__container', { 'fta-switch--disabled': disabled })
-        var swithStyle = {
-          backgroundColor: this.state.checked ? color : disabled ? '#ccc' : '#efefef',
-        }
-        var extraProps = { width: 52, height: 32 }
+        var swithStyle = inRN
+          ? { backgroundColor: this.state.checked ? color : disabled ? '#ccc' : '#efefef' }
+          : {}
+        var extraProps = inRN ? { width: 52, height: 32 } : {}
         var switchClz = classNames('fta-switch__switch', disabled && 'switch--disabled')
         var switchElm = React.createElement(
           View,
@@ -1404,7 +1300,7 @@ var Switch = (function (_React$Component) {
                 style: _mergeEleStyles(_getStyle(switchClz), swithStyle),
                 disabled: disabled,
                 checked: this.state.checked,
-                color: Themes.color.white,
+                color: inRN ? Themes.color.white : color,
                 onChange: this.handleChange,
               },
               extraProps
@@ -1416,7 +1312,7 @@ var Switch = (function (_React$Component) {
           View,
           { style: _mergeEleStyles(_getStyle(rootCls), customStyle) },
           isString(title)
-            ? React.createElement(TaroText, { style: _styleSheet['fta-switch__title'] }, title)
+            ? React.createElement(Text, { style: _styleSheet['fta-switch__title'] }, title)
             : title,
           switchElm
         )

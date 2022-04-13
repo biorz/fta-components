@@ -1,12 +1,9 @@
-import TaroText from '@fta/components-rn/dist/components/Text'
+import Text from '@fta/components-rn/dist/components/Text'
 import View from '@fta/components-rn/dist/components/View'
-import React, { createContext, useContext, Fragment } from 'react'
+import React, { Fragment } from 'react'
+import { useCareClass, useCarelessClass } from '../common'
 import { StyleSheet } from 'react-native'
 import { scalePx2dp } from '@fta/runtime-rn/dist/scale2dp'
-import { getSystemInfoSync } from '@fta/taro-rn/dist/lib/getSystemInfoSync'
-import '@fta/taro-rn'
-import { getEnv } from '@fta/taro-rn/dist/lib/getEnv'
-import '@fta/taro-rn/dist/lib/ENV_TYPE'
 
 function _extends() {
   _extends =
@@ -1098,195 +1095,6 @@ var factoryWithTypeCheckers = function factoryWithTypeCheckers(
 }
 var PropTypes = propTypes$1.exports
 
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i]
-  }
-  return arr2
-}
-
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return
-  if (typeof o === 'string') return _arrayLikeToArray(o, minLen)
-  var n = Object.prototype.toString.call(o).slice(8, -1)
-  if (n === 'Object' && o.constructor) n = o.constructor.name
-  if (n === 'Map' || n === 'Set') return Array.from(o)
-  if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
-    return _arrayLikeToArray(o, minLen)
-}
-
-var defaultContext = { careMode: false, platform: 'ymm', debugger: true }
-var Context = createContext(defaultContext)
-Context.displayName = 'GlobalConfigContext'
-function useConfig(key) {
-  var ctx = useContext(Context)
-  if (key) return ctx[key]
-  return ctx
-}
-Context.Consumer
-
-StyleSheet.create({
-  'fta-text': {},
-  'fta-text--1': {
-    fontSize: scalePx2dp(21),
-    lineHeight: scalePx2dp(27.3),
-  },
-  'fta-text--1--care': {
-    fontSize: scalePx2dp(27.5),
-    lineHeight: scalePx2dp(35.5),
-  },
-  'fta-text--2': {
-    fontSize: scalePx2dp(19),
-    lineHeight: scalePx2dp(24.7),
-  },
-  'fta-text--2--care': {
-    fontSize: scalePx2dp(24.5),
-    lineHeight: scalePx2dp(32),
-  },
-  'fta-text--3': {
-    fontSize: scalePx2dp(17.5),
-    lineHeight: scalePx2dp(22.75),
-  },
-  'fta-text--3--care': {
-    fontSize: scalePx2dp(23),
-    lineHeight: scalePx2dp(29.5),
-  },
-  'fta-text--4': {
-    fontSize: scalePx2dp(15.5),
-    lineHeight: scalePx2dp(20.15),
-  },
-  'fta-text--4--care': {
-    fontSize: scalePx2dp(20),
-    lineHeight: scalePx2dp(26),
-  },
-  'fta-text--5': {
-    fontSize: scalePx2dp(13.5),
-    lineHeight: scalePx2dp(17.55),
-  },
-  'fta-text--5--care': {
-    fontSize: scalePx2dp(17.5),
-    lineHeight: scalePx2dp(23),
-  },
-  'fta-text--6': {
-    fontSize: scalePx2dp(11.5),
-    lineHeight: scalePx2dp(14.95),
-  },
-  'fta-text--6--care': {
-    fontSize: scalePx2dp(15),
-    lineHeight: scalePx2dp(19.5),
-  },
-})
-
-function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) return _arrayLikeToArray(arr)
-}
-
-function _iterableToArray(iter) {
-  if (
-    (typeof Symbol !== 'undefined' && iter[Symbol.iterator] != null) ||
-    iter['@@iterator'] != null
-  )
-    return Array.from(iter)
-}
-
-function _nonIterableSpread() {
-  throw new TypeError(
-    'Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.'
-  )
-}
-
-function _toConsumableArray(arr) {
-  return (
-    _arrayWithoutHoles(arr) ||
-    _iterableToArray(arr) ||
-    _unsupportedIterableToArray(arr) ||
-    _nonIterableSpread()
-  )
-}
-
-var isString = function isString(s) {
-  return typeof s === 'string' && s.length > 0
-}
-var useCareClass = function useCareClass(careClazz) {
-  var suffix = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '--care'
-  var careMode = useConfig('careMode')
-  return classNames(
-    careMode
-      ? careClazz.map(function (v) {
-          return isString(v) ? v + ' ' + v + suffix : ''
-        })
-      : careClazz
-  )
-}
-useCareClass.single = function () {
-  var careMode = useConfig('careMode')
-  for (var _len = arguments.length, careClazz = new Array(_len), _key = 0; _key < _len; _key++) {
-    careClazz[_key] = arguments[_key]
-  }
-  return classNames(
-    careMode
-      ? careClazz.map(function (v) {
-          return isString(v) ? v + ' ' + v + '--care' : ''
-        })
-      : careClazz
-  )
-}
-var useCarelessClass = function useCarelessClass(careClazz, nonCareClasszz) {
-  var suffix = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '--care'
-  var careMode = useConfig('careMode')
-  return classNames.apply(
-    void 0,
-    _toConsumableArray(
-      (nonCareClasszz != null ? nonCareClasszz : []).concat(
-        careMode
-          ? careClazz.map(function (v) {
-              return isString(v) ? v + ' ' + v + suffix : ''
-            })
-          : careClazz
-      )
-    )
-  )
-}
-
-StyleSheet.create({
-  'fta-debugger': {
-    position: 'absolute',
-    bottom: scalePx2dp(50),
-    right: scalePx2dp(20),
-    width: scalePx2dp(40),
-    height: scalePx2dp(40),
-    backgroundColor: '#fff',
-    borderRadius: scalePx2dp(150),
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: '#fa871e',
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 100,
-  },
-  'fta-debugger__text': {
-    color: '#fa871e',
-  },
-  'fta-debugger--care': {
-    width: scalePx2dp(50),
-    height: scalePx2dp(50),
-  },
-})
-
-var systemInfo = getSystemInfoSync()
-systemInfo.windowWidth / 750
-var inIOS = systemInfo.platform === 'ios'
-var inIPhone =
-  systemInfo.system === 'iOS' ||
-  systemInfo.brand === 'iPhone' ||
-  systemInfo.model === 'iPhone' ||
-  inIOS
-inIPhone && (systemInfo.screenHeight >= 812 || systemInfo.screenWidth >= 812)
-systemInfo.platform === 'android'
-
-getEnv()
-
 var indexScssStyleSheet = StyleSheet.create({
   'fta-badge': {
     display: 'flex',
@@ -1599,7 +1407,7 @@ function Badge(props) {
     isDot
       ? null
       : React.createElement(
-          TaroText,
+          Text,
           { style: _mergeEleStyles(_getStyle(textClz), textStyles) },
           realVal
         ),

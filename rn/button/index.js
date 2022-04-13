@@ -1,14 +1,11 @@
 import Button from '@fta/components-rn/dist/components/Button'
-import '@fta/components-rn/dist/components/Form'
-import TaroText from '@fta/components-rn/dist/components/Text'
+import Form from '@fta/components-rn/dist/components/Form'
+import Text from '@fta/components-rn/dist/components/Text'
 import View from '@fta/components-rn/dist/components/View'
-import React, { createContext, useRef, useEffect, Component } from 'react'
+import React, { useRef, useEffect, Component } from 'react'
+import { inAndroid, inWeapp, inWeb, inAlipay, isUndef } from '../common'
 import { StyleSheet, Easing, Animated } from 'react-native'
 import { scalePx2dp } from '@fta/runtime-rn/dist/scale2dp'
-import { getSystemInfoSync } from '@fta/taro-rn/dist/lib/getSystemInfoSync'
-import '@fta/taro-rn'
-import { getEnv } from '@fta/taro-rn/dist/lib/getEnv'
-import '@fta/taro-rn/dist/lib/ENV_TYPE'
 
 function _defineProperty(obj, key, value) {
   if (key in obj) {
@@ -1159,154 +1156,6 @@ var factoryWithTypeCheckers = function factoryWithTypeCheckers(
 }
 var PropTypes = propTypes.exports
 
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i]
-  }
-  return arr2
-}
-
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return
-  if (typeof o === 'string') return _arrayLikeToArray(o, minLen)
-  var n = Object.prototype.toString.call(o).slice(8, -1)
-  if (n === 'Object' && o.constructor) n = o.constructor.name
-  if (n === 'Map' || n === 'Set') return Array.from(o)
-  if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
-    return _arrayLikeToArray(o, minLen)
-}
-
-var defaultContext = { careMode: false, platform: 'ymm', debugger: true }
-var Context = createContext(defaultContext)
-Context.displayName = 'GlobalConfigContext'
-Context.Consumer
-
-StyleSheet.create({
-  'fta-text': {},
-  'fta-text--1': {
-    fontSize: scalePx2dp(21),
-    lineHeight: scalePx2dp(27.3),
-  },
-  'fta-text--1--care': {
-    fontSize: scalePx2dp(27.5),
-    lineHeight: scalePx2dp(35.5),
-  },
-  'fta-text--2': {
-    fontSize: scalePx2dp(19),
-    lineHeight: scalePx2dp(24.7),
-  },
-  'fta-text--2--care': {
-    fontSize: scalePx2dp(24.5),
-    lineHeight: scalePx2dp(32),
-  },
-  'fta-text--3': {
-    fontSize: scalePx2dp(17.5),
-    lineHeight: scalePx2dp(22.75),
-  },
-  'fta-text--3--care': {
-    fontSize: scalePx2dp(23),
-    lineHeight: scalePx2dp(29.5),
-  },
-  'fta-text--4': {
-    fontSize: scalePx2dp(15.5),
-    lineHeight: scalePx2dp(20.15),
-  },
-  'fta-text--4--care': {
-    fontSize: scalePx2dp(20),
-    lineHeight: scalePx2dp(26),
-  },
-  'fta-text--5': {
-    fontSize: scalePx2dp(13.5),
-    lineHeight: scalePx2dp(17.55),
-  },
-  'fta-text--5--care': {
-    fontSize: scalePx2dp(17.5),
-    lineHeight: scalePx2dp(23),
-  },
-  'fta-text--6': {
-    fontSize: scalePx2dp(11.5),
-    lineHeight: scalePx2dp(14.95),
-  },
-  'fta-text--6--care': {
-    fontSize: scalePx2dp(15),
-    lineHeight: scalePx2dp(19.5),
-  },
-})
-
-function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) return _arrayLikeToArray(arr)
-}
-
-function _iterableToArray(iter) {
-  if (
-    (typeof Symbol !== 'undefined' && iter[Symbol.iterator] != null) ||
-    iter['@@iterator'] != null
-  )
-    return Array.from(iter)
-}
-
-function _nonIterableSpread() {
-  throw new TypeError(
-    'Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.'
-  )
-}
-
-function _toConsumableArray(arr) {
-  return (
-    _arrayWithoutHoles(arr) ||
-    _iterableToArray(arr) ||
-    _unsupportedIterableToArray(arr) ||
-    _nonIterableSpread()
-  )
-}
-
-StyleSheet.create({
-  'fta-debugger': {
-    position: 'absolute',
-    bottom: scalePx2dp(50),
-    right: scalePx2dp(20),
-    width: scalePx2dp(40),
-    height: scalePx2dp(40),
-    backgroundColor: '#fff',
-    borderRadius: scalePx2dp(150),
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: '#fa871e',
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 100,
-  },
-  'fta-debugger__text': {
-    color: '#fa871e',
-  },
-  'fta-debugger--care': {
-    width: scalePx2dp(50),
-    height: scalePx2dp(50),
-  },
-})
-
-var TARO_ENV = 'rn'
-var inWeb = TARO_ENV === 'h5'
-var inWeapp = TARO_ENV === 'weapp'
-var inAlipay = TARO_ENV === 'alipay'
-var systemInfo = getSystemInfoSync()
-systemInfo.windowWidth / 750
-var inIOS = systemInfo.platform === 'ios'
-var inIPhone =
-  systemInfo.system === 'iOS' ||
-  systemInfo.brand === 'iPhone' ||
-  systemInfo.model === 'iPhone' ||
-  inIOS
-inIPhone && (systemInfo.screenHeight >= 812 || systemInfo.screenWidth >= 812)
-var inAndroid = systemInfo.platform === 'android'
-
-getEnv()
-
-var isUndef = function isUndef(val) {
-  return typeof val === 'undefined'
-}
-
 var indexScssStyleSheet$1 = StyleSheet.create({
   'fta-button': {
     display: 'flex',
@@ -1318,9 +1167,9 @@ var indexScssStyleSheet$1 = StyleSheet.create({
     marginBottom: 0,
     marginLeft: 'auto',
     paddingTop: 0,
-    paddingRight: scalePx2dp(144),
+    paddingRight: scalePx2dp(15.5),
     paddingBottom: 0,
-    paddingLeft: scalePx2dp(144),
+    paddingLeft: scalePx2dp(15.5),
     height: scalePx2dp(42),
     color: '#333',
     fontSize: scalePx2dp(17.5),
@@ -1473,6 +1322,51 @@ var indexScssStyleSheet$1 = StyleSheet.create({
     borderRightWidth: 0,
   },
 })
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i]
+  }
+  return arr2
+}
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) return _arrayLikeToArray(arr)
+}
+
+function _iterableToArray(iter) {
+  if (
+    (typeof Symbol !== 'undefined' && iter[Symbol.iterator] != null) ||
+    iter['@@iterator'] != null
+  )
+    return Array.from(iter)
+}
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return
+  if (typeof o === 'string') return _arrayLikeToArray(o, minLen)
+  var n = Object.prototype.toString.call(o).slice(8, -1)
+  if (n === 'Object' && o.constructor) n = o.constructor.name
+  if (n === 'Map' || n === 'Set') return Array.from(o)
+  if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
+    return _arrayLikeToArray(o, minLen)
+}
+
+function _nonIterableSpread() {
+  throw new TypeError(
+    'Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.'
+  )
+}
+
+function _toConsumableArray(arr) {
+  return (
+    _arrayWithoutHoles(arr) ||
+    _iterableToArray(arr) ||
+    _unsupportedIterableToArray(arr) ||
+    _nonIterableSpread()
+  )
+}
 
 var indexScssStyleSheet = StyleSheet.create({
   'fta-loading': {
@@ -1838,8 +1732,22 @@ var FTAButton = (function (_Component) {
         return disabled ? undefined : classNames('fta-button--' + type + '--active', hoverClassName)
       },
     },
-    { key: 'onSumit', value: function onSumit(event) {} },
-    { key: 'onReset', value: function onReset(event) {} },
+    {
+      key: 'onSumit',
+      value: function onSumit(event) {
+        if (inWeapp || inWeb) {
+          this.$scope.triggerEvent('submit', event.detail, { bubbles: true, composed: true })
+        }
+      },
+    },
+    {
+      key: 'onReset',
+      value: function onReset(event) {
+        if (inWeapp || inWeb) {
+          this.$scope.triggerEvent('reset', event.detail, { bubbles: true, composed: true })
+        }
+      },
+    },
     {
       key: 'render',
       value: function render() {
@@ -1897,13 +1805,13 @@ var FTAButton = (function (_Component) {
         } else {
           loadingComponent = loading
         }
-        React.createElement(Button, {
+        var webButton = React.createElement(Button, {
           lang: lang,
           disabled: disabled,
           formType: formType,
           style: _styleSheet['fta-button__wxbutton'],
         })
-        React.createElement(Button, {
+        var button = React.createElement(Button, {
           formType: formType,
           openType: openType,
           lang: lang,
@@ -1931,14 +1839,20 @@ var FTAButton = (function (_Component) {
             hoverStyle: _mergeEleStyles(_getStyle(this.hoverClass), this.hoverStyle),
             hoverClass: this.hoverClass,
           },
-          inWeb,
-          inWeapp,
-          inAlipay,
+          inWeb && !disabled && webButton,
+          inWeapp &&
+            !disabled &&
+            React.createElement(
+              Form,
+              { onSubmit: this.onSumit.bind(this), onReset: this.onReset.bind(this) },
+              button
+            ),
+          inAlipay && !disabled && button,
           loadingComponent,
           isUndef(children)
             ? null
             : React.createElement(
-                TaroText,
+                Text,
                 { style: _mergeEleStyles(_getStyle(textClass), textStyle) },
                 children
               )

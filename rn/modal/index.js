@@ -1,12 +1,9 @@
 import Text from '@fta/components-rn/dist/components/Text'
 import View from '@fta/components-rn/dist/components/View'
-import React, { createContext, Component, cloneElement, Fragment } from 'react'
+import React, { Component, cloneElement, Fragment } from 'react'
 import { StyleSheet, Modal } from 'react-native'
+import { inRN, createSelectorQuery, isString, handleTouchScroll } from '../common'
 import { scalePx2dp, scaleVu2dp } from '@fta/runtime-rn/dist/scale2dp'
-import { getSystemInfoSync } from '@fta/taro-rn/dist/lib/getSystemInfoSync'
-import Taro from '@fta/taro-rn'
-import { getEnv } from '@fta/taro-rn/dist/lib/getEnv'
-import { ENV_TYPE } from '@fta/taro-rn/dist/lib/ENV_TYPE'
 import ScrollView from '@fta/components-rn/dist/components/ScrollView'
 
 function _classCallCheck(instance, Constructor) {
@@ -1144,257 +1141,6 @@ var factoryWithTypeCheckers = function factoryWithTypeCheckers(
 }
 var PropTypes = propTypes.exports
 
-function _arrayWithHoles(arr) {
-  if (Array.isArray(arr)) return arr
-}
-
-function _iterableToArrayLimit(arr, i) {
-  var _i =
-    arr == null
-      ? null
-      : (typeof Symbol !== 'undefined' && arr[Symbol.iterator]) || arr['@@iterator']
-  if (_i == null) return
-  var _arr = []
-  var _n = true
-  var _d = false
-  var _s, _e
-  try {
-    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
-      _arr.push(_s.value)
-      if (i && _arr.length === i) break
-    }
-  } catch (err) {
-    _d = true
-    _e = err
-  } finally {
-    try {
-      if (!_n && _i['return'] != null) _i['return']()
-    } finally {
-      if (_d) throw _e
-    }
-  }
-  return _arr
-}
-
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i]
-  }
-  return arr2
-}
-
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return
-  if (typeof o === 'string') return _arrayLikeToArray(o, minLen)
-  var n = Object.prototype.toString.call(o).slice(8, -1)
-  if (n === 'Object' && o.constructor) n = o.constructor.name
-  if (n === 'Map' || n === 'Set') return Array.from(o)
-  if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
-    return _arrayLikeToArray(o, minLen)
-}
-
-function _nonIterableRest() {
-  throw new TypeError(
-    'Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.'
-  )
-}
-
-function _slicedToArray(arr, i) {
-  return (
-    _arrayWithHoles(arr) ||
-    _iterableToArrayLimit(arr, i) ||
-    _unsupportedIterableToArray(arr, i) ||
-    _nonIterableRest()
-  )
-}
-
-function _objectWithoutPropertiesLoose(source, excluded) {
-  if (source == null) return {}
-  var target = {}
-  var sourceKeys = Object.keys(source)
-  var key, i
-  for (i = 0; i < sourceKeys.length; i++) {
-    key = sourceKeys[i]
-    if (excluded.indexOf(key) >= 0) continue
-    target[key] = source[key]
-  }
-  return target
-}
-
-function _objectWithoutProperties(source, excluded) {
-  if (source == null) return {}
-  var target = _objectWithoutPropertiesLoose(source, excluded)
-  var key, i
-  if (Object.getOwnPropertySymbols) {
-    var sourceSymbolKeys = Object.getOwnPropertySymbols(source)
-    for (i = 0; i < sourceSymbolKeys.length; i++) {
-      key = sourceSymbolKeys[i]
-      if (excluded.indexOf(key) >= 0) continue
-      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue
-      target[key] = source[key]
-    }
-  }
-  return target
-}
-
-var defaultContext = { careMode: false, platform: 'ymm', debugger: true }
-var Context = createContext(defaultContext)
-Context.displayName = 'GlobalConfigContext'
-Context.Consumer
-
-StyleSheet.create({
-  'fta-text': {},
-  'fta-text--1': {
-    fontSize: scalePx2dp(21),
-    lineHeight: scalePx2dp(27.3),
-  },
-  'fta-text--1--care': {
-    fontSize: scalePx2dp(27.5),
-    lineHeight: scalePx2dp(35.5),
-  },
-  'fta-text--2': {
-    fontSize: scalePx2dp(19),
-    lineHeight: scalePx2dp(24.7),
-  },
-  'fta-text--2--care': {
-    fontSize: scalePx2dp(24.5),
-    lineHeight: scalePx2dp(32),
-  },
-  'fta-text--3': {
-    fontSize: scalePx2dp(17.5),
-    lineHeight: scalePx2dp(22.75),
-  },
-  'fta-text--3--care': {
-    fontSize: scalePx2dp(23),
-    lineHeight: scalePx2dp(29.5),
-  },
-  'fta-text--4': {
-    fontSize: scalePx2dp(15.5),
-    lineHeight: scalePx2dp(20.15),
-  },
-  'fta-text--4--care': {
-    fontSize: scalePx2dp(20),
-    lineHeight: scalePx2dp(26),
-  },
-  'fta-text--5': {
-    fontSize: scalePx2dp(13.5),
-    lineHeight: scalePx2dp(17.55),
-  },
-  'fta-text--5--care': {
-    fontSize: scalePx2dp(17.5),
-    lineHeight: scalePx2dp(23),
-  },
-  'fta-text--6': {
-    fontSize: scalePx2dp(11.5),
-    lineHeight: scalePx2dp(14.95),
-  },
-  'fta-text--6--care': {
-    fontSize: scalePx2dp(15),
-    lineHeight: scalePx2dp(19.5),
-  },
-})
-
-function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) return _arrayLikeToArray(arr)
-}
-
-function _iterableToArray(iter) {
-  if (
-    (typeof Symbol !== 'undefined' && iter[Symbol.iterator] != null) ||
-    iter['@@iterator'] != null
-  )
-    return Array.from(iter)
-}
-
-function _nonIterableSpread() {
-  throw new TypeError(
-    'Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.'
-  )
-}
-
-function _toConsumableArray(arr) {
-  return (
-    _arrayWithoutHoles(arr) ||
-    _iterableToArray(arr) ||
-    _unsupportedIterableToArray(arr) ||
-    _nonIterableSpread()
-  )
-}
-
-StyleSheet.create({
-  'fta-debugger': {
-    position: 'absolute',
-    bottom: scalePx2dp(50),
-    right: scalePx2dp(20),
-    width: scalePx2dp(40),
-    height: scalePx2dp(40),
-    backgroundColor: '#fff',
-    borderRadius: scalePx2dp(150),
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: '#fa871e',
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 100,
-  },
-  'fta-debugger__text': {
-    color: '#fa871e',
-  },
-  'fta-debugger--care': {
-    width: scalePx2dp(50),
-    height: scalePx2dp(50),
-  },
-})
-
-var TARO_ENV = 'rn'
-var inRN = TARO_ENV === 'rn'
-var systemInfo = getSystemInfoSync()
-systemInfo.windowWidth / 750
-var inIOS = systemInfo.platform === 'ios'
-var inIPhone =
-  systemInfo.system === 'iOS' ||
-  systemInfo.brand === 'iPhone' ||
-  systemInfo.model === 'iPhone' ||
-  inIOS
-inIPhone && (systemInfo.screenHeight >= 812 || systemInfo.screenWidth >= 812)
-systemInfo.platform === 'android'
-
-var callbackAdaptor = function callbackAdaptor(callback) {
-  return function (rect) {
-    return callback(Array.isArray(rect) ? rect[0] : rect)
-  }
-}
-function PolyCreateSelectorQuery(selector, callback) {
-  var cb = callbackAdaptor(callback)
-  var query = Taro.createSelectorQuery == null ? void 0 : Taro.createSelectorQuery()
-  if (!query) return
-  var el = query.select(selector)
-  el.boundingClientRect(cb)
-  query.exec(cb)
-}
-
-var ENV = getEnv()
-var scrollTop = 0
-function handleTouchScroll(flag) {
-  if (ENV !== ENV_TYPE.WEB) {
-    return
-  }
-  if (flag) {
-    scrollTop = document.documentElement.scrollTop
-    document.body.classList.add('at-frozen')
-    document.body.style.top = -scrollTop + 'px'
-  } else {
-    document.body.style.top = ''
-    document.body.classList.remove('at-frozen')
-    document.documentElement.scrollTop = scrollTop
-  }
-}
-
-var isString = function isString(val) {
-  return typeof val === 'string'
-}
-
 var indexScssStyleSheet$1 = StyleSheet.create({
   button: {
     color: '#333',
@@ -1486,20 +1232,141 @@ var indexScssStyleSheet$1 = StyleSheet.create({
   },
 })
 
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {}
+  var target = {}
+  var sourceKeys = Object.keys(source)
+  var key, i
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i]
+    if (excluded.indexOf(key) >= 0) continue
+    target[key] = source[key]
+  }
+  return target
+}
+
+function _objectWithoutProperties(source, excluded) {
+  if (source == null) return {}
+  var target = _objectWithoutPropertiesLoose(source, excluded)
+  var key, i
+  if (Object.getOwnPropertySymbols) {
+    var sourceSymbolKeys = Object.getOwnPropertySymbols(source)
+    for (i = 0; i < sourceSymbolKeys.length; i++) {
+      key = sourceSymbolKeys[i]
+      if (excluded.indexOf(key) >= 0) continue
+      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue
+      target[key] = source[key]
+    }
+  }
+  return target
+}
+
 var indexScssStyleSheet = StyleSheet.create({
   'fta-view-disabled': {
     opacity: 0.8,
   },
 })
 
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr
+}
+
+function _iterableToArrayLimit(arr, i) {
+  var _i =
+    arr == null
+      ? null
+      : (typeof Symbol !== 'undefined' && arr[Symbol.iterator]) || arr['@@iterator']
+  if (_i == null) return
+  var _arr = []
+  var _n = true
+  var _d = false
+  var _s, _e
+  try {
+    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value)
+      if (i && _arr.length === i) break
+    }
+  } catch (err) {
+    _d = true
+    _e = err
+  } finally {
+    try {
+      if (!_n && _i['return'] != null) _i['return']()
+    } finally {
+      if (_d) throw _e
+    }
+  }
+  return _arr
+}
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i]
+  }
+  return arr2
+}
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return
+  if (typeof o === 'string') return _arrayLikeToArray(o, minLen)
+  var n = Object.prototype.toString.call(o).slice(8, -1)
+  if (n === 'Object' && o.constructor) n = o.constructor.name
+  if (n === 'Map' || n === 'Set') return Array.from(o)
+  if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
+    return _arrayLikeToArray(o, minLen)
+}
+
+function _nonIterableRest() {
+  throw new TypeError(
+    'Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.'
+  )
+}
+
+function _slicedToArray(arr, i) {
+  return (
+    _arrayWithHoles(arr) ||
+    _iterableToArrayLimit(arr, i) ||
+    _unsupportedIterableToArray(arr, i) ||
+    _nonIterableRest()
+  )
+}
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) return _arrayLikeToArray(arr)
+}
+
+function _iterableToArray(iter) {
+  if (
+    (typeof Symbol !== 'undefined' && iter[Symbol.iterator] != null) ||
+    iter['@@iterator'] != null
+  )
+    return Array.from(iter)
+}
+
+function _nonIterableSpread() {
+  throw new TypeError(
+    'Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.'
+  )
+}
+
+function _toConsumableArray(arr) {
+  return (
+    _arrayWithoutHoles(arr) ||
+    _iterableToArray(arr) ||
+    _unsupportedIterableToArray(arr) ||
+    _nonIterableSpread()
+  )
+}
+
 var COLOR = {
   black: ['#000', '#000000', 'rgb(0,0,0)', 'black'],
   white: ['#fff', '#ffffff', 'rgb(255,255,255)', 'white'],
 }
-Object.values(COLOR).reduce(function (prev, cur) {
+var colorList = Object.values(COLOR).reduce(function (prev, cur) {
   return [].concat(_toConsumableArray(prev), _toConsumableArray(cur))
 }, [])
-Object.entries(COLOR).reduce(function (prev, _ref) {
+var colorMap = Object.entries(COLOR).reduce(function (prev, _ref) {
   var _ref2 = _slicedToArray(_ref, 2),
     key = _ref2[0],
     list = _ref2[1]
@@ -1508,6 +1375,7 @@ Object.entries(COLOR).reduce(function (prev, _ref) {
   })
   return prev
 }, {})
+var opacityList = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
 
 var _excluded = ['onLayout', 'className', 'children', 'style'],
   _excluded2 = ['children', 'activeOpacity'],
@@ -1608,9 +1476,9 @@ var LayoutView = (function (_Component) {
         var _this2 = this
         this.props.onLayout &&
           !inRN &&
-          (PolyCreateSelectorQuery == null
+          (createSelectorQuery == null
             ? void 0
-            : PolyCreateSelectorQuery('._fta-view-layout__' + this._id, function (result) {
+            : createSelectorQuery('._fta-view-layout__' + this._id, function (result) {
                 _this2.props.onLayout(result, result)
               }))
       },
@@ -1673,7 +1541,9 @@ var TouchableOpacity = (function (_Component2) {
   return TouchableOpacity
 })(Component)
 TouchableOpacity.defaultProps = { activeOpacity: 0.8 }
-TouchableOpacity.propTypes = { activeOpacity: PropTypes.number }
+TouchableOpacity.propTypes = {
+  activeOpacity: inRN ? PropTypes.number : PropTypes.oneOf(opacityList),
+}
 var TouchableHighlight = (function (_Component3) {
   _inherits(TouchableHighlight, _Component3)
   var _super3 = _createSuper$4(TouchableHighlight)
@@ -1694,6 +1564,13 @@ var TouchableHighlight = (function (_Component3) {
           props = _objectWithoutProperties(_this$props4, _excluded3)
         var hoverClass
         if (underlayClass) hoverClass = underlayClass
+        else if (!inRN) {
+          if (!~colorList.indexOf(underlayColor)) {
+            underlayColor = '#000'
+          } else {
+            hoverClass = 'fta-view-hover__' + colorMap[underlayColor]
+          }
+        }
         var clonedChildren = cloneElement(children, {
           hoverClass: 'fta-view-hover__' + activeOpacity * 10,
           hoverStyle: { opacity: activeOpacity },
@@ -1712,7 +1589,10 @@ var TouchableHighlight = (function (_Component3) {
   return TouchableHighlight
 })(Component)
 TouchableHighlight.defaultProps = { underlayColor: '#000', activeOpacity: 0.2, underlayClass: null }
-TouchableHighlight.propTypes = { underlayColor: PropTypes.any, activeOpacity: PropTypes.number }
+TouchableHighlight.propTypes = {
+  underlayColor: inRN ? PropTypes.any : PropTypes.oneOf(colorList),
+  activeOpacity: inRN ? PropTypes.number : PropTypes.oneOf(opacityList),
+}
 function renderDisabledView(props) {
   props.hoverClass
   props.hoverStyle

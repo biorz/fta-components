@@ -1,12 +1,27 @@
 import Text from '@fta/components-rn/dist/components/Text'
 import View from '@fta/components-rn/dist/components/View'
-import '@fta/taro-rn'
-import React, { createContext, useContext, Fragment, useRef, useEffect, Component } from 'react'
+import Taro from '@fta/taro-rn'
+import React, { Fragment, useRef, useEffect, Component } from 'react'
+import {
+  useCareClass,
+  useCarelessClass,
+  ConfigConsumer,
+  isNumber,
+  inRN,
+  scale,
+  useClassWithCare,
+  inWeb,
+  inWeapp,
+  inAlipay,
+  useClassesWithCare,
+  isString,
+  isBoolean,
+  Assets,
+  defaultProps as defaultProps$1,
+  propTypes as propTypes$2,
+} from '../common'
 import { StyleSheet, Animated, Easing } from 'react-native'
 import { scalePx2dp } from '@fta/runtime-rn/dist/scale2dp'
-import { getSystemInfoSync } from '@fta/taro-rn/dist/lib/getSystemInfoSync'
-import { getEnv } from '@fta/taro-rn/dist/lib/getEnv'
-import '@fta/taro-rn/dist/lib/ENV_TYPE'
 import Image from '@fta/components-rn/dist/components/Image'
 
 function _arrayWithHoles(arr) {
@@ -220,332 +235,6 @@ var classnames = { exports: {} }
 })(classnames)
 var classNames = classnames.exports
 
-function _objectWithoutPropertiesLoose(source, excluded) {
-  if (source == null) return {}
-  var target = {}
-  var sourceKeys = Object.keys(source)
-  var key, i
-  for (i = 0; i < sourceKeys.length; i++) {
-    key = sourceKeys[i]
-    if (excluded.indexOf(key) >= 0) continue
-    target[key] = source[key]
-  }
-  return target
-}
-
-function _objectWithoutProperties(source, excluded) {
-  if (source == null) return {}
-  var target = _objectWithoutPropertiesLoose(source, excluded)
-  var key, i
-  if (Object.getOwnPropertySymbols) {
-    var sourceSymbolKeys = Object.getOwnPropertySymbols(source)
-    for (i = 0; i < sourceSymbolKeys.length; i++) {
-      key = sourceSymbolKeys[i]
-      if (excluded.indexOf(key) >= 0) continue
-      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue
-      target[key] = source[key]
-    }
-  }
-  return target
-}
-
-var defaultContext = { careMode: false, platform: 'ymm', debugger: true }
-var Context = createContext(defaultContext)
-Context.displayName = 'GlobalConfigContext'
-function useConfig(key) {
-  var ctx = useContext(Context)
-  if (key) return ctx[key]
-  return ctx
-}
-var ConfigConsumer = Context.Consumer
-
-function _extends() {
-  _extends =
-    Object.assign ||
-    function (target) {
-      for (var i = 1; i < arguments.length; i++) {
-        var source = arguments[i]
-        for (var key in source) {
-          if (Object.prototype.hasOwnProperty.call(source, key)) {
-            target[key] = source[key]
-          }
-        }
-      }
-      return target
-    }
-  return _extends.apply(this, arguments)
-}
-
-StyleSheet.create({
-  'fta-text': {},
-  'fta-text--1': {
-    fontSize: scalePx2dp(21),
-    lineHeight: scalePx2dp(27.3),
-  },
-  'fta-text--1--care': {
-    fontSize: scalePx2dp(27.5),
-    lineHeight: scalePx2dp(35.5),
-  },
-  'fta-text--2': {
-    fontSize: scalePx2dp(19),
-    lineHeight: scalePx2dp(24.7),
-  },
-  'fta-text--2--care': {
-    fontSize: scalePx2dp(24.5),
-    lineHeight: scalePx2dp(32),
-  },
-  'fta-text--3': {
-    fontSize: scalePx2dp(17.5),
-    lineHeight: scalePx2dp(22.75),
-  },
-  'fta-text--3--care': {
-    fontSize: scalePx2dp(23),
-    lineHeight: scalePx2dp(29.5),
-  },
-  'fta-text--4': {
-    fontSize: scalePx2dp(15.5),
-    lineHeight: scalePx2dp(20.15),
-  },
-  'fta-text--4--care': {
-    fontSize: scalePx2dp(20),
-    lineHeight: scalePx2dp(26),
-  },
-  'fta-text--5': {
-    fontSize: scalePx2dp(13.5),
-    lineHeight: scalePx2dp(17.55),
-  },
-  'fta-text--5--care': {
-    fontSize: scalePx2dp(17.5),
-    lineHeight: scalePx2dp(23),
-  },
-  'fta-text--6': {
-    fontSize: scalePx2dp(11.5),
-    lineHeight: scalePx2dp(14.95),
-  },
-  'fta-text--6--care': {
-    fontSize: scalePx2dp(15),
-    lineHeight: scalePx2dp(19.5),
-  },
-})
-
-function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) return _arrayLikeToArray(arr)
-}
-
-function _iterableToArray(iter) {
-  if (
-    (typeof Symbol !== 'undefined' && iter[Symbol.iterator] != null) ||
-    iter['@@iterator'] != null
-  )
-    return Array.from(iter)
-}
-
-function _nonIterableSpread() {
-  throw new TypeError(
-    'Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.'
-  )
-}
-
-function _toConsumableArray(arr) {
-  return (
-    _arrayWithoutHoles(arr) ||
-    _iterableToArray(arr) ||
-    _unsupportedIterableToArray(arr) ||
-    _nonIterableSpread()
-  )
-}
-
-var isString$1 = function isString(s) {
-  return typeof s === 'string' && s.length > 0
-}
-var useCareClass = function useCareClass(careClazz) {
-  var suffix = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '--care'
-  var careMode = useConfig('careMode')
-  return classNames(
-    careMode
-      ? careClazz.map(function (v) {
-          return isString$1(v) ? v + ' ' + v + suffix : ''
-        })
-      : careClazz
-  )
-}
-useCareClass.single = function () {
-  var careMode = useConfig('careMode')
-  for (var _len = arguments.length, careClazz = new Array(_len), _key = 0; _key < _len; _key++) {
-    careClazz[_key] = arguments[_key]
-  }
-  return classNames(
-    careMode
-      ? careClazz.map(function (v) {
-          return isString$1(v) ? v + ' ' + v + '--care' : ''
-        })
-      : careClazz
-  )
-}
-var useCarelessClass = function useCarelessClass(careClazz, nonCareClasszz) {
-  var suffix = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '--care'
-  var careMode = useConfig('careMode')
-  return classNames.apply(
-    void 0,
-    _toConsumableArray(
-      (nonCareClasszz != null ? nonCareClasszz : []).concat(
-        careMode
-          ? careClazz.map(function (v) {
-              return isString$1(v) ? v + ' ' + v + suffix : ''
-            })
-          : careClazz
-      )
-    )
-  )
-}
-var useClassWithCare = function useClassWithCare(careMode, careClazz) {
-  var suffix = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '--care'
-  return classNames(
-    careMode
-      ? careClazz.map(function (v) {
-          return isString$1(v) ? v + ' ' + v + suffix : ''
-        })
-      : careClazz
-  )
-}
-useClassWithCare.single = function (careMode, careClass) {
-  var suffix = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '--care'
-  return careMode ? (isString$1(careMode) ? careClass + ' ' + careClass + suffix : '') : careClass
-}
-var useClassesWithCare = function useClassesWithCare(careMode) {
-  for (
-    var _len4 = arguments.length, careClazzes = new Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1;
-    _key4 < _len4;
-    _key4++
-  ) {
-    careClazzes[_key4 - 1] = arguments[_key4]
-  }
-  return careClazzes.map(function (careClazz) {
-    return classNames(
-      careMode
-        ? careClazz.map(function (v) {
-            return isString$1(v) ? v + ' ' + v + '--care' : ''
-          })
-        : careClazz
-    )
-  })
-}
-useClassesWithCare.single = function (careMode) {
-  for (
-    var _len5 = arguments.length, careClazz = new Array(_len5 > 1 ? _len5 - 1 : 0), _key5 = 1;
-    _key5 < _len5;
-    _key5++
-  ) {
-    careClazz[_key5 - 1] = arguments[_key5]
-  }
-  return careClazz.map(function (v) {
-    return careMode ? (isString$1(v) ? v + ' ' + v + '--care' : '') : v
-  })
-}
-
-StyleSheet.create({
-  'fta-debugger': {
-    position: 'absolute',
-    bottom: scalePx2dp(50),
-    right: scalePx2dp(20),
-    width: scalePx2dp(40),
-    height: scalePx2dp(40),
-    backgroundColor: '#fff',
-    borderRadius: scalePx2dp(150),
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: '#fa871e',
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 100,
-  },
-  'fta-debugger__text': {
-    color: '#fa871e',
-  },
-  'fta-debugger--care': {
-    width: scalePx2dp(50),
-    height: scalePx2dp(50),
-  },
-})
-
-var Assets = {
-  close: {
-    default:
-      'https://image.ymm56.com/ymmfile/operation-biz/a5e1c2a8-e59e-4bb8-9a59-c8092d058258.png',
-    circle:
-      'https://image.ymm56.com/ymmfile/operation-biz/1e270684-078d-49c8-9e69-23fbe607404a.png',
-    circleFull:
-      'https://imagecdn.ymm56.com/ymmfile/static/resource/c4aa5762-5aad-40c8-9fab-9912569aec6c.png',
-  },
-  arrow: {
-    true: 'https://imagecdn.ymm56.com/ymmfile/common-operation/65dd3d3d-1b53-4d36-b47a-160fce6d40f6.png',
-    right:
-      'https://imagecdn.ymm56.com/ymmfile/common-operation/65dd3d3d-1b53-4d36-b47a-160fce6d40f6.png',
-    down: 'https://image.ymm56.com/ymmfile/operation-biz/27653ee0-6dc6-446a-a60c-38c322e280cc.png',
-    up: 'https://image.ymm56.com/ymmfile/operation-biz/4193cb2e-863f-471f-b3bf-80f49c22069a.png',
-    left: 'http://image.ymm56.com/boss/2018/1212/1544598761',
-  },
-  tip: {
-    success:
-      'https://imagecdn.ymm56.com/ymmfile/static/resource/a826715a-5d51-4bb9-8cd3-a2f75c03d1b7.png',
-    error:
-      'https://imagecdn.ymm56.com/ymmfile/static/resource/9c1dd2fc-40be-4363-ad7c-1038efba8f23.png',
-    waiting:
-      'https://imagecdn.ymm56.com/ymmfile/static/resource/f99ecdf5-66d2-4e59-9b20-425affff0f68.png',
-    warning:
-      'https://image.ymm56.com/ymmfile/operation-biz/ef9aa9a9-710f-40a6-922b-ac044ae168fb.png',
-    info: 'https://image.ymm56.com/ymmfile/operation-biz/62398c75-bcc3-40c0-be5e-db16031c0fc5.png',
-  },
-  empty: {
-    default:
-      'https://image.ymm56.com/ymmfile/operation-biz/4469e30e-fe6b-4673-952c-c6a2d92ddc7b.png',
-    error: 'https://image.ymm56.com/ymmfile/operation-biz/49c712cb-69cc-4e80-9ca8-d752605c403e.png',
-  },
-  check: {
-    default:
-      'https://imagecdn.ymm56.com/ymmfile/static/resource/f1b19e18-3105-4951-8e95-f0de00b221d2.png',
-  },
-  loading: {
-    default:
-      'https://imagecdn.ymm56.com/ymmfile/static/image/short_distance/rn_sd_loding_wihite_x2_2201280.png',
-    blue: 'https://imagecdn.ymm56.com/ymmfile/static/image/short_distance/rn_loading_view_2201230.png',
-  },
-}
-
-var TARO_ENV = 'rn'
-var inWeapp = TARO_ENV === 'weapp'
-var systemInfo = getSystemInfoSync()
-var deviceRatio = systemInfo.windowWidth / 750
-var px = function (size) {
-  return size
-}
-var autoFix = function autoFix(size) {
-  return size * deviceRatio
-}
-var scale = function scale(size) {
-  return px(autoFix(size))
-}
-var inIOS = systemInfo.platform === 'ios'
-var inIPhone =
-  systemInfo.system === 'iOS' ||
-  systemInfo.brand === 'iPhone' ||
-  systemInfo.model === 'iPhone' ||
-  inIOS
-inIPhone && (systemInfo.screenHeight >= 812 || systemInfo.screenWidth >= 812)
-systemInfo.platform === 'android'
-
-getEnv()
-
-var isString = function isString(val) {
-  return typeof val === 'string'
-}
-var isNumber = function isNumber(val) {
-  return typeof val === 'number'
-}
-var isBoolean = function isBoolean(val) {
-  return typeof val === 'boolean'
-}
-
 var indexScssStyleSheet$2 = StyleSheet.create({
   'fta-noticebar': {
     display: 'flex',
@@ -615,7 +304,53 @@ var indexScssStyleSheet$2 = StyleSheet.create({
   'fta-noticebar__text--single': {},
 })
 
-var propTypes$2 = { exports: {} }
+function _extends() {
+  _extends =
+    Object.assign ||
+    function (target) {
+      for (var i = 1; i < arguments.length; i++) {
+        var source = arguments[i]
+        for (var key in source) {
+          if (Object.prototype.hasOwnProperty.call(source, key)) {
+            target[key] = source[key]
+          }
+        }
+      }
+      return target
+    }
+  return _extends.apply(this, arguments)
+}
+
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {}
+  var target = {}
+  var sourceKeys = Object.keys(source)
+  var key, i
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i]
+    if (excluded.indexOf(key) >= 0) continue
+    target[key] = source[key]
+  }
+  return target
+}
+
+function _objectWithoutProperties(source, excluded) {
+  if (source == null) return {}
+  var target = _objectWithoutPropertiesLoose(source, excluded)
+  var key, i
+  if (Object.getOwnPropertySymbols) {
+    var sourceSymbolKeys = Object.getOwnPropertySymbols(source)
+    for (i = 0; i < sourceSymbolKeys.length; i++) {
+      key = sourceSymbolKeys[i]
+      if (excluded.indexOf(key) >= 0) continue
+      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue
+      target[key] = source[key]
+    }
+  }
+  return target
+}
+
+var propTypes$1 = { exports: {} }
 
 var reactIs = { exports: {} }
 
@@ -1597,9 +1332,9 @@ var factoryWithTypeCheckers = function factoryWithTypeCheckers(
 {
   var ReactIs = reactIs.exports
   var throwOnDirectAccess = true
-  propTypes$2.exports = factoryWithTypeCheckers(ReactIs.isElement, throwOnDirectAccess)
+  propTypes$1.exports = factoryWithTypeCheckers(ReactIs.isElement, throwOnDirectAccess)
 }
-var PropTypes = propTypes$2.exports
+var PropTypes = propTypes$1.exports
 
 var indexScssStyleSheet$1 = StyleSheet.create({
   'fta-icon__badge': {
@@ -1974,7 +1709,7 @@ function Badge(props) {
       : null
   )
 }
-var defaultProps$1 = {
+var defaultProps = {
   isDot: false,
   show: true,
   type: 'error',
@@ -1985,7 +1720,7 @@ var defaultProps$1 = {
   color: '',
   bgColor: '',
 }
-var propTypes$1 = {
+var propTypes = {
   type: PropTypes.oneOf(types),
   numberType: PropTypes.oneOf(numberTypes),
   shape: PropTypes.oneOf(shapes),
@@ -1994,8 +1729,8 @@ var propTypes$1 = {
     PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
   ]),
 }
-Badge.defaultProps = defaultProps$1
-Badge.propTypes = propTypes$1
+Badge.defaultProps = defaultProps
+Badge.propTypes = propTypes
 
 var _excluded = ['customStyle', 'className', 'isDot']
 function ownKeys$1(object, enumerableOnly) {
@@ -2083,7 +1818,7 @@ function _mergeEleStyles$1() {
   return [].concat.apply([], arguments).reduce((pre, cur) => Object.assign(pre, cur), {})
 }
 var _styleSheet$1 = indexScssStyleSheet$1
-var ContainerAdaptor = View
+var ContainerAdaptor = inRN ? View : Fragment
 var Icon = (function (_React$Component) {
   _inherits(Icon, _React$Component)
   var _super = _createSuper$1(Icon)
@@ -2144,25 +1879,27 @@ var Icon = (function (_React$Component) {
           size = _this$props3.size,
           color = _this$props3.color,
           scale$1 = _this$props3.scale,
-          src = _this$props3.src
-        _this$props3.image
-        var badge = _this$props3.badge
-        var IconAdaptor = Image
+          src = _this$props3.src,
+          image = _this$props3.image,
+          badge = _this$props3.badge
+        var IconAdaptor = inRN || image ? Image : Text
         return React.createElement(ConfigConsumer, null, function (_ref) {
           var careMode = _ref.careMode
           var careClass = ''
           var rootStyle = _objectSpread$1({}, customStyle)
           if (isNumber(size)) {
             var _size = careMode ? size * 1.3 : size
-            {
+            if (inRN) {
               rootStyle.height = scale$1 ? scale(_size) : _size
               rootStyle.width = rootStyle.height
+            } else {
+              rootStyle.fontSize = scale$1 ? scale(_size) : _size
             }
           } else {
             careClass = useClassWithCare(careMode, ['fta-icon--' + size])
           }
           if (color) {
-            rootStyle['tintColor'] = color
+            rootStyle[inRN ? 'tintColor' : 'color'] = color
           }
           var iconName = value ? prefixClass + '-' + value : ''
           return React.createElement(
@@ -2179,9 +1916,9 @@ var Icon = (function (_React$Component) {
                 tintColor: color,
                 onClick: _this2.handleClick,
               },
-              null
+              !inRN && badge ? _this2.renderBadge() : null
             ),
-            badge ? _this2.renderBadge() : null
+            inRN && badge ? _this2.renderBadge() : null
           )
         })
       },
@@ -2236,18 +1973,6 @@ var AnimatedView = function AnimatedView(_ref) {
     run()
   }, [])
   return React.createElement(Animated.View, { className: className, style: composeStyle }, children)
-}
-
-var defaultProps = { close: false, single: false, marquee: false, icon: false, speed: 100 }
-var propTypes = {
-  close: PropTypes.oneOfType([PropTypes.element, PropTypes.bool]),
-  single: PropTypes.bool,
-  marquee: PropTypes.bool,
-  speed: PropTypes.number,
-  moreText: PropTypes.string,
-  icon: PropTypes.oneOfType([PropTypes.element, PropTypes.bool]),
-  customStyle: PropTypes.object,
-  onClose: PropTypes.func,
 }
 
 function ownKeys(object, enumerableOnly) {
@@ -2373,7 +2098,61 @@ var NoticeBar = (function (_Component) {
     {
       key: 'initAnimation',
       value: function initAnimation() {
-        return
+        var _this2 = this
+        if (inRN) return
+        this.timeout = setTimeout(function () {
+          _this2.timeout = null
+          if (inWeb) {
+            var _this2$props$speed = _this2.props.speed,
+              speed = _this2$props$speed === void 0 ? 100 : _this2$props$speed
+            var elem = document.querySelector('.' + _this2.state.animElemId)
+            if (!elem) return
+            var width = elem.getBoundingClientRect().width
+            var dura = width / +speed
+            _this2.setState({ dura: dura })
+          } else if (inWeapp || inAlipay) {
+            var query = Taro.createSelectorQuery()
+            var queryCb = function queryCb(res) {
+              var queryRes = res[0]
+              if (!queryRes) return
+              var width = queryRes.width
+              var _this2$props$speed2 = _this2.props.speed,
+                speed = _this2$props$speed2 === void 0 ? 100 : _this2$props$speed2
+              var dura = width / +speed
+              var animation = Taro.createAnimation({
+                duration: dura * 1000,
+                timingFunction: 'linear',
+              })
+              var resetAnimation = Taro.createAnimation({ duration: 0, timingFunction: 'linear' })
+              var resetOpacityAnimation = Taro.createAnimation({
+                duration: 0,
+                timingFunction: 'linear',
+              })
+              var animBody = function animBody() {
+                resetOpacityAnimation.opacity(0).step()
+                _this2.setState({ animationData: resetOpacityAnimation.export() })
+                setTimeout(function () {
+                  resetAnimation.translateX(0).step()
+                  _this2.setState({ animationData: resetAnimation.export() })
+                }, 300)
+                setTimeout(function () {
+                  resetOpacityAnimation.opacity(1).step()
+                  _this2.setState({ animationData: resetOpacityAnimation.export() })
+                }, 600)
+                setTimeout(function () {
+                  animation.translateX(-width).step()
+                  _this2.setState({ animationData: animation.export() })
+                }, 900)
+              }
+              animBody()
+              _this2.interval = setInterval(animBody, dura * 1000 + 1000)
+            }
+            query
+              .select('.' + _this2.state.animElemId)
+              .boundingClientRect(queryCb)
+              .exec(queryCb)
+          }
+        }, 1000)
       },
     },
     {
@@ -2408,10 +2187,10 @@ var NoticeBar = (function (_Component) {
         }
         var classObject = {
           'fta-noticebar--marquee': marquee,
-          'fta-noticebar--weapp': marquee && inWeapp,
+          'fta-noticebar--weapp': marquee && (inAlipay || inWeapp),
         }
         var composeTextStyle = _objectSpread({}, textStyle)
-        var AnimatedAdaptor = marquee ? AnimatedView : View
+        var AnimatedAdaptor = inRN && marquee ? AnimatedView : View
         return show
           ? React.createElement(ConfigConsumer, null, function (_ref) {
               var careMode = _ref.careMode
@@ -2501,7 +2280,7 @@ var NoticeBar = (function (_Component) {
   ])
   return NoticeBar
 })(Component)
-NoticeBar.defaultProps = defaultProps
-NoticeBar.propTypes = propTypes
+NoticeBar.defaultProps = defaultProps$1
+NoticeBar.propTypes = propTypes$2
 
 export { NoticeBar as default }

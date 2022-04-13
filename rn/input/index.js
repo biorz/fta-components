@@ -1147,7 +1147,7 @@ var indexScssStyleSheet = StyleSheet.create({
     paddingTop: scalePx2dp(9.5),
     paddingRight: 0,
     paddingBottom: scalePx2dp(9.5),
-    paddingLeft: scalePx2dp(144),
+    paddingLeft: scalePx2dp(15.5),
     color: '#333',
     backgroundColor: '#fff',
     marginBottom: scalePx2dp(0.5),

@@ -1,13 +1,18 @@
 import Image from '@fta/components-rn/dist/components/Image'
 import Text from '@fta/components-rn/dist/components/Text'
 import View from '@fta/components-rn/dist/components/View'
-import React, { createContext, useContext, Fragment } from 'react'
+import React, { Fragment } from 'react'
+import {
+  useCareClass,
+  useCarelessClass,
+  ConfigConsumer,
+  isNumber,
+  inRN,
+  scale,
+  useClassWithCare,
+} from '../common'
 import { StyleSheet } from 'react-native'
 import { scalePx2dp } from '@fta/runtime-rn/dist/scale2dp'
-import { getSystemInfoSync } from '@fta/taro-rn/dist/lib/getSystemInfoSync'
-import '@fta/taro-rn'
-import { getEnv } from '@fta/taro-rn/dist/lib/getEnv'
-import '@fta/taro-rn/dist/lib/ENV_TYPE'
 
 function _defineProperty(obj, key, value) {
   if (key in obj) {
@@ -1187,222 +1192,6 @@ var factoryWithTypeCheckers = function factoryWithTypeCheckers(
 }
 var PropTypes = propTypes$1.exports
 
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i]
-  }
-  return arr2
-}
-
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return
-  if (typeof o === 'string') return _arrayLikeToArray(o, minLen)
-  var n = Object.prototype.toString.call(o).slice(8, -1)
-  if (n === 'Object' && o.constructor) n = o.constructor.name
-  if (n === 'Map' || n === 'Set') return Array.from(o)
-  if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
-    return _arrayLikeToArray(o, minLen)
-}
-
-var defaultContext = { careMode: false, platform: 'ymm', debugger: true }
-var Context = createContext(defaultContext)
-Context.displayName = 'GlobalConfigContext'
-function useConfig(key) {
-  var ctx = useContext(Context)
-  if (key) return ctx[key]
-  return ctx
-}
-var ConfigConsumer = Context.Consumer
-
-StyleSheet.create({
-  'fta-text': {},
-  'fta-text--1': {
-    fontSize: scalePx2dp(21),
-    lineHeight: scalePx2dp(27.3),
-  },
-  'fta-text--1--care': {
-    fontSize: scalePx2dp(27.5),
-    lineHeight: scalePx2dp(35.5),
-  },
-  'fta-text--2': {
-    fontSize: scalePx2dp(19),
-    lineHeight: scalePx2dp(24.7),
-  },
-  'fta-text--2--care': {
-    fontSize: scalePx2dp(24.5),
-    lineHeight: scalePx2dp(32),
-  },
-  'fta-text--3': {
-    fontSize: scalePx2dp(17.5),
-    lineHeight: scalePx2dp(22.75),
-  },
-  'fta-text--3--care': {
-    fontSize: scalePx2dp(23),
-    lineHeight: scalePx2dp(29.5),
-  },
-  'fta-text--4': {
-    fontSize: scalePx2dp(15.5),
-    lineHeight: scalePx2dp(20.15),
-  },
-  'fta-text--4--care': {
-    fontSize: scalePx2dp(20),
-    lineHeight: scalePx2dp(26),
-  },
-  'fta-text--5': {
-    fontSize: scalePx2dp(13.5),
-    lineHeight: scalePx2dp(17.55),
-  },
-  'fta-text--5--care': {
-    fontSize: scalePx2dp(17.5),
-    lineHeight: scalePx2dp(23),
-  },
-  'fta-text--6': {
-    fontSize: scalePx2dp(11.5),
-    lineHeight: scalePx2dp(14.95),
-  },
-  'fta-text--6--care': {
-    fontSize: scalePx2dp(15),
-    lineHeight: scalePx2dp(19.5),
-  },
-})
-
-function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) return _arrayLikeToArray(arr)
-}
-
-function _iterableToArray(iter) {
-  if (
-    (typeof Symbol !== 'undefined' && iter[Symbol.iterator] != null) ||
-    iter['@@iterator'] != null
-  )
-    return Array.from(iter)
-}
-
-function _nonIterableSpread() {
-  throw new TypeError(
-    'Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.'
-  )
-}
-
-function _toConsumableArray(arr) {
-  return (
-    _arrayWithoutHoles(arr) ||
-    _iterableToArray(arr) ||
-    _unsupportedIterableToArray(arr) ||
-    _nonIterableSpread()
-  )
-}
-
-var isString = function isString(s) {
-  return typeof s === 'string' && s.length > 0
-}
-var useCareClass = function useCareClass(careClazz) {
-  var suffix = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '--care'
-  var careMode = useConfig('careMode')
-  return classNames(
-    careMode
-      ? careClazz.map(function (v) {
-          return isString(v) ? v + ' ' + v + suffix : ''
-        })
-      : careClazz
-  )
-}
-useCareClass.single = function () {
-  var careMode = useConfig('careMode')
-  for (var _len = arguments.length, careClazz = new Array(_len), _key = 0; _key < _len; _key++) {
-    careClazz[_key] = arguments[_key]
-  }
-  return classNames(
-    careMode
-      ? careClazz.map(function (v) {
-          return isString(v) ? v + ' ' + v + '--care' : ''
-        })
-      : careClazz
-  )
-}
-var useCarelessClass = function useCarelessClass(careClazz, nonCareClasszz) {
-  var suffix = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '--care'
-  var careMode = useConfig('careMode')
-  return classNames.apply(
-    void 0,
-    _toConsumableArray(
-      (nonCareClasszz != null ? nonCareClasszz : []).concat(
-        careMode
-          ? careClazz.map(function (v) {
-              return isString(v) ? v + ' ' + v + suffix : ''
-            })
-          : careClazz
-      )
-    )
-  )
-}
-var useClassWithCare = function useClassWithCare(careMode, careClazz) {
-  var suffix = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '--care'
-  return classNames(
-    careMode
-      ? careClazz.map(function (v) {
-          return isString(v) ? v + ' ' + v + suffix : ''
-        })
-      : careClazz
-  )
-}
-useClassWithCare.single = function (careMode, careClass) {
-  var suffix = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '--care'
-  return careMode ? (isString(careMode) ? careClass + ' ' + careClass + suffix : '') : careClass
-}
-
-StyleSheet.create({
-  'fta-debugger': {
-    position: 'absolute',
-    bottom: scalePx2dp(50),
-    right: scalePx2dp(20),
-    width: scalePx2dp(40),
-    height: scalePx2dp(40),
-    backgroundColor: '#fff',
-    borderRadius: scalePx2dp(150),
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: '#fa871e',
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 100,
-  },
-  'fta-debugger__text': {
-    color: '#fa871e',
-  },
-  'fta-debugger--care': {
-    width: scalePx2dp(50),
-    height: scalePx2dp(50),
-  },
-})
-
-var systemInfo = getSystemInfoSync()
-var deviceRatio = systemInfo.windowWidth / 750
-var px = function (size) {
-  return size
-}
-var autoFix = function autoFix(size) {
-  return size * deviceRatio
-}
-var scale = function scale(size) {
-  return px(autoFix(size))
-}
-var inIOS = systemInfo.platform === 'ios'
-var inIPhone =
-  systemInfo.system === 'iOS' ||
-  systemInfo.brand === 'iPhone' ||
-  systemInfo.model === 'iPhone' ||
-  inIOS
-inIPhone && (systemInfo.screenHeight >= 812 || systemInfo.screenWidth >= 812)
-systemInfo.platform === 'android'
-
-getEnv()
-
-var isNumber = function isNumber(val) {
-  return typeof val === 'number'
-}
-
 var indexScssStyleSheet$1 = StyleSheet.create({
   'fta-icon__badge': {
     top: scalePx2dp(-11.5),
@@ -1885,7 +1674,7 @@ function _mergeEleStyles() {
   return [].concat.apply([], arguments).reduce((pre, cur) => Object.assign(pre, cur), {})
 }
 var _styleSheet = indexScssStyleSheet$1
-var ContainerAdaptor = View
+var ContainerAdaptor = inRN ? View : Fragment
 var Icon = (function (_React$Component) {
   _inherits(Icon, _React$Component)
   var _super = _createSuper(Icon)
@@ -1946,25 +1735,27 @@ var Icon = (function (_React$Component) {
           size = _this$props3.size,
           color = _this$props3.color,
           scale$1 = _this$props3.scale,
-          src = _this$props3.src
-        _this$props3.image
-        var badge = _this$props3.badge
-        var IconAdaptor = Image
+          src = _this$props3.src,
+          image = _this$props3.image,
+          badge = _this$props3.badge
+        var IconAdaptor = inRN || image ? Image : Text
         return React.createElement(ConfigConsumer, null, function (_ref) {
           var careMode = _ref.careMode
           var careClass = ''
           var rootStyle = _objectSpread({}, customStyle)
           if (isNumber(size)) {
             var _size = careMode ? size * 1.3 : size
-            {
+            if (inRN) {
               rootStyle.height = scale$1 ? scale(_size) : _size
               rootStyle.width = rootStyle.height
+            } else {
+              rootStyle.fontSize = scale$1 ? scale(_size) : _size
             }
           } else {
             careClass = useClassWithCare(careMode, ['fta-icon--' + size])
           }
           if (color) {
-            rootStyle['tintColor'] = color
+            rootStyle[inRN ? 'tintColor' : 'color'] = color
           }
           var iconName = value ? prefixClass + '-' + value : ''
           return React.createElement(
@@ -1981,9 +1772,9 @@ var Icon = (function (_React$Component) {
                 tintColor: color,
                 onClick: _this2.handleClick,
               },
-              null
+              !inRN && badge ? _this2.renderBadge() : null
             ),
-            badge ? _this2.renderBadge() : null
+            inRN && badge ? _this2.renderBadge() : null
           )
         })
       },
