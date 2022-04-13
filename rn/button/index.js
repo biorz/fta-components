@@ -1,14 +1,12 @@
 import Button from '@fta/components-rn/dist/components/Button'
-import '@fta/components-rn/dist/components/Form'
-import TaroText from '@fta/components-rn/dist/components/Text'
+import Form from '@fta/components-rn/dist/components/Form'
+import Text from '@fta/components-rn/dist/components/Text'
 import View from '@fta/components-rn/dist/components/View'
-import React, { createContext, useRef, useEffect, Component } from 'react'
-import { StyleSheet, Easing, Animated } from 'react-native'
+import React, { Component } from 'react'
+import { inWeapp, inWeb, inAlipay, isUndef } from '../common'
+import { StyleSheet } from 'react-native'
 import { scalePx2dp } from '@fta/runtime-rn/dist/scale2dp'
-import { getSystemInfoSync } from '@fta/taro-rn/dist/lib/getSystemInfoSync'
-import '@fta/taro-rn'
-import { getEnv } from '@fta/taro-rn/dist/lib/getEnv'
-import '@fta/taro-rn/dist/lib/ENV_TYPE'
+import Loading from '../loading'
 
 function _defineProperty(obj, key, value) {
   if (key in obj) {
@@ -1159,155 +1157,7 @@ var factoryWithTypeCheckers = function factoryWithTypeCheckers(
 }
 var PropTypes = propTypes.exports
 
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i]
-  }
-  return arr2
-}
-
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return
-  if (typeof o === 'string') return _arrayLikeToArray(o, minLen)
-  var n = Object.prototype.toString.call(o).slice(8, -1)
-  if (n === 'Object' && o.constructor) n = o.constructor.name
-  if (n === 'Map' || n === 'Set') return Array.from(o)
-  if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
-    return _arrayLikeToArray(o, minLen)
-}
-
-var defaultContext = { careMode: false, platform: 'ymm', debugger: true }
-var Context = createContext(defaultContext)
-Context.displayName = 'GlobalConfigContext'
-Context.Consumer
-
-StyleSheet.create({
-  'fta-text': {},
-  'fta-text--1': {
-    fontSize: scalePx2dp(21),
-    lineHeight: scalePx2dp(27.3),
-  },
-  'fta-text--1--care': {
-    fontSize: scalePx2dp(27.5),
-    lineHeight: scalePx2dp(35.5),
-  },
-  'fta-text--2': {
-    fontSize: scalePx2dp(19),
-    lineHeight: scalePx2dp(24.7),
-  },
-  'fta-text--2--care': {
-    fontSize: scalePx2dp(24.5),
-    lineHeight: scalePx2dp(32),
-  },
-  'fta-text--3': {
-    fontSize: scalePx2dp(17.5),
-    lineHeight: scalePx2dp(22.75),
-  },
-  'fta-text--3--care': {
-    fontSize: scalePx2dp(23),
-    lineHeight: scalePx2dp(29.5),
-  },
-  'fta-text--4': {
-    fontSize: scalePx2dp(15.5),
-    lineHeight: scalePx2dp(20.15),
-  },
-  'fta-text--4--care': {
-    fontSize: scalePx2dp(20),
-    lineHeight: scalePx2dp(26),
-  },
-  'fta-text--5': {
-    fontSize: scalePx2dp(13.5),
-    lineHeight: scalePx2dp(17.55),
-  },
-  'fta-text--5--care': {
-    fontSize: scalePx2dp(17.5),
-    lineHeight: scalePx2dp(23),
-  },
-  'fta-text--6': {
-    fontSize: scalePx2dp(11.5),
-    lineHeight: scalePx2dp(14.95),
-  },
-  'fta-text--6--care': {
-    fontSize: scalePx2dp(15),
-    lineHeight: scalePx2dp(19.5),
-  },
-})
-
-function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) return _arrayLikeToArray(arr)
-}
-
-function _iterableToArray(iter) {
-  if (
-    (typeof Symbol !== 'undefined' && iter[Symbol.iterator] != null) ||
-    iter['@@iterator'] != null
-  )
-    return Array.from(iter)
-}
-
-function _nonIterableSpread() {
-  throw new TypeError(
-    'Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.'
-  )
-}
-
-function _toConsumableArray(arr) {
-  return (
-    _arrayWithoutHoles(arr) ||
-    _iterableToArray(arr) ||
-    _unsupportedIterableToArray(arr) ||
-    _nonIterableSpread()
-  )
-}
-
-StyleSheet.create({
-  'fta-debugger': {
-    position: 'absolute',
-    bottom: scalePx2dp(50),
-    right: scalePx2dp(20),
-    width: scalePx2dp(40),
-    height: scalePx2dp(40),
-    backgroundColor: '#fff',
-    borderRadius: scalePx2dp(150),
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: '#fa871e',
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 100,
-  },
-  'fta-debugger__text': {
-    color: '#fa871e',
-  },
-  'fta-debugger--care': {
-    width: scalePx2dp(50),
-    height: scalePx2dp(50),
-  },
-})
-
-var TARO_ENV = 'rn'
-var inWeb = TARO_ENV === 'h5'
-var inWeapp = TARO_ENV === 'weapp'
-var inAlipay = TARO_ENV === 'alipay'
-var systemInfo = getSystemInfoSync()
-systemInfo.windowWidth / 750
-var inIOS = systemInfo.platform === 'ios'
-var inIPhone =
-  systemInfo.system === 'iOS' ||
-  systemInfo.brand === 'iPhone' ||
-  systemInfo.model === 'iPhone' ||
-  inIOS
-inIPhone && (systemInfo.screenHeight >= 812 || systemInfo.screenWidth >= 812)
-var inAndroid = systemInfo.platform === 'android'
-
-getEnv()
-
-var isUndef = function isUndef(val) {
-  return typeof val === 'undefined'
-}
-
-var indexScssStyleSheet$1 = StyleSheet.create({
+var indexScssStyleSheet = StyleSheet.create({
   'fta-button': {
     display: 'flex',
     flexDirection: 'row',
@@ -1318,9 +1168,9 @@ var indexScssStyleSheet$1 = StyleSheet.create({
     marginBottom: 0,
     marginLeft: 'auto',
     paddingTop: 0,
-    paddingRight: scalePx2dp(144),
+    paddingRight: scalePx2dp(15.5),
     paddingBottom: 0,
-    paddingLeft: scalePx2dp(144),
+    paddingLeft: scalePx2dp(15.5),
     height: scalePx2dp(42),
     color: '#333',
     fontSize: scalePx2dp(17.5),
@@ -1474,218 +1324,6 @@ var indexScssStyleSheet$1 = StyleSheet.create({
   },
 })
 
-var indexScssStyleSheet = StyleSheet.create({
-  'fta-loading': {
-    overflow: 'hidden',
-    width: scalePx2dp(15.5),
-    height: scalePx2dp(15.5),
-  },
-  'fta-loading--small': {
-    width: scalePx2dp(15.5),
-    height: scalePx2dp(15.5),
-  },
-  'fta-loading--medium': {
-    width: scalePx2dp(19),
-    height: scalePx2dp(19),
-  },
-  'fta-loading--large': {
-    width: scalePx2dp(23),
-    height: scalePx2dp(23),
-  },
-  'fta-loading__view': {
-    borderRadius: scalePx2dp(5000),
-    width: '100%',
-    height: '100%',
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderTopColor: '#fa871e',
-    borderRightColor: '#fa871e',
-    borderBottomColor: '#fa871e',
-    borderLeftColor: 'transparent',
-  },
-  'fta-loading__view--small': {
-    borderWidth: 1,
-  },
-  'fta-loading__view--medium': {
-    borderWidth: 2,
-  },
-  'fta-loading__view--large': {
-    borderWidth: 3,
-  },
-  'fta-loading__image': {
-    width: '100%',
-    height: '100%',
-  },
-  'fta-loading--circle': {
-    borderRadius: scalePx2dp(5000),
-  },
-})
-
-var Assets = {
-  default:
-    'https://imagecdn.ymm56.com/ymmfile/static/image/short_distance/rn_sd_loding_wihite_x2_2201280.png',
-  dt: 'https://imagecdn.ymm56.com/ymmfile/static/image/short_distance/rn_loading_view_2201230.png',
-}
-
-function ownKeys$1(object, enumerableOnly) {
-  var keys = Object.keys(object)
-  if (Object.getOwnPropertySymbols) {
-    var symbols = Object.getOwnPropertySymbols(object)
-    enumerableOnly &&
-      (symbols = symbols.filter(function (sym) {
-        return Object.getOwnPropertyDescriptor(object, sym).enumerable
-      })),
-      keys.push.apply(keys, symbols)
-  }
-  return keys
-}
-function _objectSpread$1(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = null != arguments[i] ? arguments[i] : {}
-    i % 2
-      ? ownKeys$1(Object(source), !0).forEach(function (key) {
-          _defineProperty(target, key, source[key])
-        })
-      : Object.getOwnPropertyDescriptors
-      ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source))
-      : ownKeys$1(Object(source)).forEach(function (key) {
-          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key))
-        })
-  }
-  return target
-}
-function _getClassName$1() {
-  var className = []
-  var args = arguments[0]
-  var type = Object.prototype.toString.call(args).slice(8, -1).toLowerCase()
-  if (type === 'string') {
-    args = args.trim()
-    args && className.push(args)
-  } else if (type === 'array') {
-    args.forEach(function (cls) {
-      cls = _getClassName$1(cls).trim()
-      cls && className.push(cls)
-    })
-  } else if (type === 'object') {
-    for (var k in args) {
-      k = k.trim()
-      if (k && args.hasOwnProperty(k) && args[k]) {
-        className.push(k)
-      }
-    }
-  }
-  return className.join(' ').trim()
-}
-function _getStyle$1(classNameExpression) {
-  var className = _getClassName$1(classNameExpression)
-  var classNameArr = className.split(/\s+/)
-  var style = {}
-  classNameArr.reduce((sty, cls) => Object.assign(sty, _styleSheet$1[cls.trim()]), style)
-  return style
-}
-function _mergeEleStyles$1() {
-  return [].concat.apply([], arguments).reduce((pre, cur) => Object.assign(pre, cur), {})
-}
-var _styleSheet$1 = indexScssStyleSheet
-var EASING = {
-  ease: Easing.inOut(Easing.ease),
-  linear: Easing.linear,
-  'ease-in': Easing.in(Easing.ease),
-  'ease-out': Easing.out(Easing.ease),
-  'ease-in-out': Easing.inOut(Easing.ease),
-}
-function Loading(props) {
-  var angleAnim = useRef(new Animated.Value(0)).current
-  var animateRef = useRef({ stop: function stop() {}, start: function start() {} })
-  var src = props.src,
-    customStyle = props.customStyle,
-    className = props.className,
-    style = props.style,
-    stop = props.stop,
-    duration = props.duration,
-    easing = props.easing,
-    circle = props.circle,
-    useImage = props.useImage,
-    size = props.size,
-    color = props.color,
-    tintColor = props.tintColor
-  var run = function run() {
-    animateRef.current = Animated.loop(
-      Animated.timing(angleAnim, {
-        duration: duration * 1000,
-        toValue: 1,
-        useNativeDriver: false,
-        easing: EASING[easing] || Easing.bezier.apply(Easing, _toConsumableArray(easing)),
-      })
-    )
-    animateRef.current.start()
-  }
-  var spin = angleAnim.interpolate({ inputRange: [0, 1], outputRange: ['0deg', '360deg'] })
-  useEffect(
-    function () {
-      stop ? (animateRef.current.stop == null ? void 0 : animateRef.current.stop()) : run()
-      return animateRef.current.stop
-    },
-    [stop]
-  )
-  var rootClz = classNames('fta-loading', 'fta-loading--' + size, className)
-  var borderStyle = color
-    ? {
-        borderTopColor: color,
-        borderRightColor: color,
-        borderBottomColor: color,
-        borderLeftColor: 'transparent',
-      }
-    : {}
-  return React.createElement(
-    View,
-    {
-      style: _mergeEleStyles$1(
-        _getStyle$1(rootClz),
-        _objectSpread$1(
-          _objectSpread$1(_objectSpread$1({}, customStyle), style),
-          {},
-          { borderRadius: circle ? 1000 : 0 }
-        )
-      ),
-    },
-    useImage
-      ? React.createElement(Animated.Image, {
-          source: { uri: src },
-          style: _mergeEleStyles$1(_styleSheet$1['fta-loading__image'], {
-            transform: [{ rotate: spin }],
-          }),
-        })
-      : React.createElement(
-          Animated.View,
-          {
-            style: _mergeEleStyles$1(
-              _getStyle$1(classNames('fta-loading__view', 'fta-loading__view--' + size)),
-              _objectSpread$1({ transform: [{ rotate: spin }] }, borderStyle)
-            ),
-          },
-          inAndroid
-            ? React.createElement(View, {
-                style: {
-                  width: '100%',
-                  height: '100%',
-                  top: '50%',
-                  left: '50%',
-                  backgroundColor: tintColor,
-                },
-              })
-            : null
-        )
-  )
-}
-Loading.defaultProps = {
-  size: 'medium',
-  src: Assets.default,
-  duration: 1,
-  easing: 'linear',
-  tintColor: '#fff',
-}
-
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object)
   if (Object.getOwnPropertySymbols) {
@@ -1770,7 +1408,7 @@ function _getStyle(classNameExpression) {
 function _mergeEleStyles() {
   return [].concat.apply([], arguments).reduce((pre, cur) => Object.assign(pre, cur), {})
 }
-var _styleSheet = indexScssStyleSheet$1
+var _styleSheet = indexScssStyleSheet
 var SIZE_CLASS = { small: 'small', medium: 'medium', large: 'large' }
 var TYPE_CLASS = { primary: 'primary', secondary: 'secondary', tertiary: 'tertiary' }
 var FTAButton = (function (_Component) {
@@ -1838,8 +1476,22 @@ var FTAButton = (function (_Component) {
         return disabled ? undefined : classNames('fta-button--' + type + '--active', hoverClassName)
       },
     },
-    { key: 'onSumit', value: function onSumit(event) {} },
-    { key: 'onReset', value: function onReset(event) {} },
+    {
+      key: 'onSumit',
+      value: function onSumit(event) {
+        if (inWeapp || inWeb) {
+          this.$scope.triggerEvent('submit', event.detail, { bubbles: true, composed: true })
+        }
+      },
+    },
+    {
+      key: 'onReset',
+      value: function onReset(event) {
+        if (inWeapp || inWeb) {
+          this.$scope.triggerEvent('reset', event.detail, { bubbles: true, composed: true })
+        }
+      },
+    },
     {
       key: 'render',
       value: function render() {
@@ -1897,13 +1549,13 @@ var FTAButton = (function (_Component) {
         } else {
           loadingComponent = loading
         }
-        React.createElement(Button, {
+        var webButton = React.createElement(Button, {
           lang: lang,
           disabled: disabled,
           formType: formType,
           style: _styleSheet['fta-button__wxbutton'],
         })
-        React.createElement(Button, {
+        var button = React.createElement(Button, {
           formType: formType,
           openType: openType,
           lang: lang,
@@ -1931,14 +1583,20 @@ var FTAButton = (function (_Component) {
             hoverStyle: _mergeEleStyles(_getStyle(this.hoverClass), this.hoverStyle),
             hoverClass: this.hoverClass,
           },
-          inWeb,
-          inWeapp,
-          inAlipay,
+          inWeb && !disabled && webButton,
+          inWeapp &&
+            !disabled &&
+            React.createElement(
+              Form,
+              { onSubmit: this.onSumit.bind(this), onReset: this.onReset.bind(this) },
+              button
+            ),
+          inAlipay && !disabled && button,
           loadingComponent,
           isUndef(children)
             ? null
             : React.createElement(
-                TaroText,
+                Text,
                 { style: _mergeEleStyles(_getStyle(textClass), textStyle) },
                 children
               )
