@@ -7,6 +7,7 @@
     "fta-theme": "./bin/theme-handler.js"
   },
   "scripts": {
+    "preinstall": "node ./bin/preinstall.js",
     "build:map": "node ./extract-component-map.js",
     "broadcast": "node ./bin/broadcast.js",
     "theme:clear": "node ./bin/theme-hook.js clear",

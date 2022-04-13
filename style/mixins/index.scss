@@ -3,21 +3,21 @@
  */
 
 /* library */
-@import './libs/absolute-center';
-@import './libs/clearfix';
-@import './libs/line';
-@import './libs/overlay';
-@import './libs/shade';
-@import './libs/tint';
-@import './libs/flex';
-@import './libs/border';
-@import './libs/active';
-@import './libs/placeholder';
-@import './libs/alignhack';
-@import './libs/hairline';
-@import './libs/radius.scss';
-@import './libs/relative.scss';
-@import './libs/square.scss';
-@import './libs/border-box.scss';
-@import './libs/care.scss';
-@import './libs/platform.scss';
+@import './libs/absolute-center'; // 绝对定位居中
+@import './libs/clearfix'; // 清除浮动
+@import './libs/line'; // 文本溢出行数隐藏
+@import './libs/overlay'; // 统一遮罩层
+@import './libs/shade'; // 以黑色为底色混合计算出新的颜色
+@import './libs/tint'; // 以白色为底色混合计算出新的颜色
+@import './libs/flex'; // flex布局相关
+@import './libs/border'; // 边框线
+@import './libs/active'; // 非RN平台激活样式
+@import './libs/placeholder'; // 非RN平台表单组件placeholder样式
+@import './libs/alignhack'; // 修复小元素文本垂直居中
+@import './libs/hairline'; // 细线
+@import './libs/radius.scss'; // 圆角尺寸为圆形
+@import './libs/relative.scss'; // 相对定位
+@import './libs/square.scss'; // 元素尺寸为正方形或圆形
+@import './libs/border-box.scss'; // 盒模型为border-box
+@import './libs/care.scss'; // 关怀模式
+@import './libs/platform.scss'; // 条件编译
