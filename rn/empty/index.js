@@ -1,15 +1,23 @@
 import Image from '@fta/components-rn/dist/components/Image'
 import View from '@fta/components-rn/dist/components/View'
-import React, { createContext, useContext, useRef, useEffect, Component } from 'react'
-import TaroText from '@fta/components-rn/dist/components/Text'
+import React, { useRef, useEffect, Component } from 'react'
+import {
+  inAndroid,
+  inWeapp,
+  inWeb,
+  inAlipay,
+  isUndef,
+  useCarelessClass,
+  useCareMode,
+  scale,
+  px,
+  Assets as Assets$1,
+} from '../common'
 import { StyleSheet, Easing, Animated } from 'react-native'
 import { scalePx2dp } from '@fta/runtime-rn/dist/scale2dp'
-import { getSystemInfoSync } from '@fta/taro-rn/dist/lib/getSystemInfoSync'
-import '@fta/taro-rn'
-import { getEnv } from '@fta/taro-rn/dist/lib/getEnv'
-import '@fta/taro-rn/dist/lib/ENV_TYPE'
 import Button from '@fta/components-rn/dist/components/Button'
-import '@fta/components-rn/dist/components/Form'
+import Form from '@fta/components-rn/dist/components/Form'
+import Text$1 from '@fta/components-rn/dist/components/Text'
 
 function _defineProperty(obj, key, value) {
   if (key in obj) {
@@ -113,254 +121,38 @@ function _getPrototypeOf(o) {
   return _getPrototypeOf(o)
 }
 
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i]
-  }
-  return arr2
-}
-
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return
-  if (typeof o === 'string') return _arrayLikeToArray(o, minLen)
-  var n = Object.prototype.toString.call(o).slice(8, -1)
-  if (n === 'Object' && o.constructor) n = o.constructor.name
-  if (n === 'Map' || n === 'Set') return Array.from(o)
-  if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
-    return _arrayLikeToArray(o, minLen)
-}
-
-function _objectWithoutPropertiesLoose(source, excluded) {
-  if (source == null) return {}
-  var target = {}
-  var sourceKeys = Object.keys(source)
-  var key, i
-  for (i = 0; i < sourceKeys.length; i++) {
-    key = sourceKeys[i]
-    if (excluded.indexOf(key) >= 0) continue
-    target[key] = source[key]
-  }
-  return target
-}
-
-function _objectWithoutProperties(source, excluded) {
-  if (source == null) return {}
-  var target = _objectWithoutPropertiesLoose(source, excluded)
-  var key, i
-  if (Object.getOwnPropertySymbols) {
-    var sourceSymbolKeys = Object.getOwnPropertySymbols(source)
-    for (i = 0; i < sourceSymbolKeys.length; i++) {
-      key = sourceSymbolKeys[i]
-      if (excluded.indexOf(key) >= 0) continue
-      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue
-      target[key] = source[key]
-    }
-  }
-  return target
-}
-
-var defaultContext = { careMode: false, platform: 'ymm', debugger: true }
-var Context = createContext(defaultContext)
-Context.displayName = 'GlobalConfigContext'
-function useCareMode() {
-  return useConfig('careMode')
-}
-function useConfig(key) {
-  var ctx = useContext(Context)
-  if (key) return ctx[key]
-  return ctx
-}
-Context.Consumer
-
-function _extends() {
-  _extends =
-    Object.assign ||
-    function (target) {
-      for (var i = 1; i < arguments.length; i++) {
-        var source = arguments[i]
-        for (var key in source) {
-          if (Object.prototype.hasOwnProperty.call(source, key)) {
-            target[key] = source[key]
-          }
-        }
-      }
-      return target
-    }
-  return _extends.apply(this, arguments)
-}
-
 var indexScssStyleSheet$3 = StyleSheet.create({
-  'fta-text': {},
-  'fta-text--1': {
-    fontSize: scalePx2dp(21),
-    lineHeight: scalePx2dp(27.3),
+  'fta-empty': {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  'fta-text--1--care': {
-    fontSize: scalePx2dp(27.5),
-    lineHeight: scalePx2dp(35.5),
+  'fta-empty-image': {
+    width: scalePx2dp(230.5),
+    height: scalePx2dp(230.5),
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  'fta-text--2': {
-    fontSize: scalePx2dp(19),
-    lineHeight: scalePx2dp(24.7),
+  'fta-empty-title': {
+    marginTop: scalePx2dp(6.5),
   },
-  'fta-text--2--care': {
-    fontSize: scalePx2dp(24.5),
-    lineHeight: scalePx2dp(32),
+  'fta-empty-title__text': {
+    fontWeight: '600',
+    color: '#666',
   },
-  'fta-text--3': {
-    fontSize: scalePx2dp(17.5),
-    lineHeight: scalePx2dp(22.75),
+  'fta-empty-desc': {
+    marginTop: scalePx2dp(6.5),
   },
-  'fta-text--3--care': {
-    fontSize: scalePx2dp(23),
-    lineHeight: scalePx2dp(29.5),
+  'fta-empty-desc__text': {
+    color: '#999',
   },
-  'fta-text--4': {
-    fontSize: scalePx2dp(15.5),
-    lineHeight: scalePx2dp(20.15),
-  },
-  'fta-text--4--care': {
-    fontSize: scalePx2dp(20),
-    lineHeight: scalePx2dp(26),
-  },
-  'fta-text--5': {
-    fontSize: scalePx2dp(13.5),
-    lineHeight: scalePx2dp(17.55),
-  },
-  'fta-text--5--care': {
-    fontSize: scalePx2dp(17.5),
-    lineHeight: scalePx2dp(23),
-  },
-  'fta-text--6': {
-    fontSize: scalePx2dp(11.5),
-    lineHeight: scalePx2dp(14.95),
-  },
-  'fta-text--6--care': {
-    fontSize: scalePx2dp(15),
-    lineHeight: scalePx2dp(19.5),
+  'fta-empty-button': {
+    marginTop: scalePx2dp(19),
   },
 })
-
-var _excluded = ['className', 'style', 'level', 'children', 'size', 'color', 'scale', 'weight']
-function ownKeys$3(object, enumerableOnly) {
-  var keys = Object.keys(object)
-  if (Object.getOwnPropertySymbols) {
-    var symbols = Object.getOwnPropertySymbols(object)
-    enumerableOnly &&
-      (symbols = symbols.filter(function (sym) {
-        return Object.getOwnPropertyDescriptor(object, sym).enumerable
-      })),
-      keys.push.apply(keys, symbols)
-  }
-  return keys
-}
-function _objectSpread$3(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = null != arguments[i] ? arguments[i] : {}
-    i % 2
-      ? ownKeys$3(Object(source), !0).forEach(function (key) {
-          _defineProperty(target, key, source[key])
-        })
-      : Object.getOwnPropertyDescriptors
-      ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source))
-      : ownKeys$3(Object(source)).forEach(function (key) {
-          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key))
-        })
-  }
-  return target
-}
-function _getClassName$3() {
-  var className = []
-  var args = arguments[0]
-  var type = Object.prototype.toString.call(args).slice(8, -1).toLowerCase()
-  if (type === 'string') {
-    args = args.trim()
-    args && className.push(args)
-  } else if (type === 'array') {
-    args.forEach(function (cls) {
-      cls = _getClassName$3(cls).trim()
-      cls && className.push(cls)
-    })
-  } else if (type === 'object') {
-    for (var k in args) {
-      k = k.trim()
-      if (k && args.hasOwnProperty(k) && args[k]) {
-        className.push(k)
-      }
-    }
-  }
-  return className.join(' ').trim()
-}
-function _getStyle$3(classNameExpression) {
-  var className = _getClassName$3(classNameExpression)
-  var classNameArr = className.split(/\s+/)
-  var style = {}
-  classNameArr.reduce((sty, cls) => Object.assign(sty, _styleSheet$3[cls.trim()]), style)
-  return style
-}
-function _mergeEleStyles$2() {
-  return [].concat.apply([], arguments).reduce((pre, cur) => Object.assign(pre, cur), {})
-}
-var _styleSheet$3 = indexScssStyleSheet$3
-function Text(props) {
-  var className = props.className,
-    style = props.style,
-    level = props.level,
-    children = props.children,
-    size = props.size,
-    color = props.color,
-    scale$1 = props.scale,
-    weight = props.weight,
-    extraProps = _objectWithoutProperties(props, _excluded)
-  var textClz = useCarelessClass(['fta-text', size ? '' : 'fta-text--' + level], [className])
-  var careMode = useCareMode()
-  var textStyle = _objectSpread$3({}, style)
-  if (color) {
-    textStyle.color = color
-  }
-  if (weight) {
-    textStyle.fontWeight = weight
-  }
-  if (size) {
-    var fontSize = careMode ? size * 1.3 : size
-    textStyle.fontSize = scale$1 ? scale(fontSize) : px(fontSize)
-  }
-  return React.createElement(
-    TaroText,
-    _extends({ style: _mergeEleStyles$2(_getStyle$3(textClz), textStyle) }, extraProps),
-    children
-  )
-}
-var textDefaultProps = { level: 4, scale: true }
-Text.defaultProps = textDefaultProps
-
-function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) return _arrayLikeToArray(arr)
-}
-
-function _iterableToArray(iter) {
-  if (
-    (typeof Symbol !== 'undefined' && iter[Symbol.iterator] != null) ||
-    iter['@@iterator'] != null
-  )
-    return Array.from(iter)
-}
-
-function _nonIterableSpread() {
-  throw new TypeError(
-    'Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.'
-  )
-}
-
-function _toConsumableArray(arr) {
-  return (
-    _arrayWithoutHoles(arr) ||
-    _iterableToArray(arr) ||
-    _unsupportedIterableToArray(arr) ||
-    _nonIterableSpread()
-  )
-}
 
 var classnames = { exports: {} }
 
@@ -405,158 +197,6 @@ var classnames = { exports: {} }
   })()
 })(classnames)
 var classNames = classnames.exports
-
-var isString = function isString(s) {
-  return typeof s === 'string' && s.length > 0
-}
-var useCarelessClass = function useCarelessClass(careClazz, nonCareClasszz) {
-  var suffix = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '--care'
-  var careMode = useConfig('careMode')
-  return classNames.apply(
-    void 0,
-    _toConsumableArray(
-      (nonCareClasszz != null ? nonCareClasszz : []).concat(
-        careMode
-          ? careClazz.map(function (v) {
-              return isString(v) ? v + ' ' + v + suffix : ''
-            })
-          : careClazz
-      )
-    )
-  )
-}
-
-StyleSheet.create({
-  'fta-debugger': {
-    position: 'absolute',
-    bottom: scalePx2dp(50),
-    right: scalePx2dp(20),
-    width: scalePx2dp(40),
-    height: scalePx2dp(40),
-    backgroundColor: '#fff',
-    borderRadius: scalePx2dp(150),
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: '#fa871e',
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 100,
-  },
-  'fta-debugger__text': {
-    color: '#fa871e',
-  },
-  'fta-debugger--care': {
-    width: scalePx2dp(50),
-    height: scalePx2dp(50),
-  },
-})
-
-var Assets$1 = {
-  close: {
-    default:
-      'https://image.ymm56.com/ymmfile/operation-biz/a5e1c2a8-e59e-4bb8-9a59-c8092d058258.png',
-    circle:
-      'https://image.ymm56.com/ymmfile/operation-biz/1e270684-078d-49c8-9e69-23fbe607404a.png',
-    circleFull:
-      'https://imagecdn.ymm56.com/ymmfile/static/resource/c4aa5762-5aad-40c8-9fab-9912569aec6c.png',
-  },
-  arrow: {
-    true: 'https://imagecdn.ymm56.com/ymmfile/common-operation/65dd3d3d-1b53-4d36-b47a-160fce6d40f6.png',
-    right:
-      'https://imagecdn.ymm56.com/ymmfile/common-operation/65dd3d3d-1b53-4d36-b47a-160fce6d40f6.png',
-    down: 'https://image.ymm56.com/ymmfile/operation-biz/27653ee0-6dc6-446a-a60c-38c322e280cc.png',
-    up: 'https://image.ymm56.com/ymmfile/operation-biz/4193cb2e-863f-471f-b3bf-80f49c22069a.png',
-    left: 'http://image.ymm56.com/boss/2018/1212/1544598761',
-  },
-  tip: {
-    success:
-      'https://imagecdn.ymm56.com/ymmfile/static/resource/a826715a-5d51-4bb9-8cd3-a2f75c03d1b7.png',
-    error:
-      'https://imagecdn.ymm56.com/ymmfile/static/resource/9c1dd2fc-40be-4363-ad7c-1038efba8f23.png',
-    waiting:
-      'https://imagecdn.ymm56.com/ymmfile/static/resource/f99ecdf5-66d2-4e59-9b20-425affff0f68.png',
-    warning:
-      'https://image.ymm56.com/ymmfile/operation-biz/ef9aa9a9-710f-40a6-922b-ac044ae168fb.png',
-    info: 'https://image.ymm56.com/ymmfile/operation-biz/62398c75-bcc3-40c0-be5e-db16031c0fc5.png',
-  },
-  empty: {
-    default:
-      'https://image.ymm56.com/ymmfile/operation-biz/4469e30e-fe6b-4673-952c-c6a2d92ddc7b.png',
-    error: 'https://image.ymm56.com/ymmfile/operation-biz/49c712cb-69cc-4e80-9ca8-d752605c403e.png',
-  },
-  check: {
-    default:
-      'https://imagecdn.ymm56.com/ymmfile/static/resource/f1b19e18-3105-4951-8e95-f0de00b221d2.png',
-  },
-  loading: {
-    default:
-      'https://imagecdn.ymm56.com/ymmfile/static/image/short_distance/rn_sd_loding_wihite_x2_2201280.png',
-    blue: 'https://imagecdn.ymm56.com/ymmfile/static/image/short_distance/rn_loading_view_2201230.png',
-  },
-}
-
-var TARO_ENV = 'rn'
-var inWeb = TARO_ENV === 'h5'
-var inWeapp = TARO_ENV === 'weapp'
-var inAlipay = TARO_ENV === 'alipay'
-var systemInfo = getSystemInfoSync()
-var deviceRatio = systemInfo.windowWidth / 750
-var px = function (size) {
-  return size
-}
-var autoFix = function autoFix(size) {
-  return size * deviceRatio
-}
-var scale = function scale(size) {
-  return px(autoFix(size))
-}
-var inIOS = systemInfo.platform === 'ios'
-var inIPhone =
-  systemInfo.system === 'iOS' ||
-  systemInfo.brand === 'iPhone' ||
-  systemInfo.model === 'iPhone' ||
-  inIOS
-inIPhone && (systemInfo.screenHeight >= 812 || systemInfo.screenWidth >= 812)
-var inAndroid = systemInfo.platform === 'android'
-
-getEnv()
-
-var isUndef = function isUndef(val) {
-  return typeof val === 'undefined'
-}
-
-var indexScssStyleSheet$2 = StyleSheet.create({
-  'fta-empty': {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  'fta-empty-image': {
-    width: scalePx2dp(230.5),
-    height: scalePx2dp(230.5),
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  'fta-empty-title': {
-    marginTop: scalePx2dp(6.5),
-  },
-  'fta-empty-title__text': {
-    fontWeight: '600',
-    color: '#666',
-  },
-  'fta-empty-desc': {
-    marginTop: scalePx2dp(6.5),
-  },
-  'fta-empty-desc__text': {
-    color: '#999',
-  },
-  'fta-empty-button': {
-    marginTop: scalePx2dp(19),
-  },
-})
 
 var propTypes = { exports: {} }
 
@@ -737,6 +377,23 @@ var reactIs_development = {}
 
 {
   reactIs.exports = reactIs_development
+}
+
+function _extends() {
+  _extends =
+    Object.assign ||
+    function (target) {
+      for (var i = 1; i < arguments.length; i++) {
+        var source = arguments[i]
+        for (var key in source) {
+          if (Object.prototype.hasOwnProperty.call(source, key)) {
+            target[key] = source[key]
+          }
+        }
+      }
+      return target
+    }
+  return _extends.apply(this, arguments)
 }
 
 var getOwnPropertySymbols = Object.getOwnPropertySymbols
@@ -1544,7 +1201,7 @@ var factoryWithTypeCheckers = function factoryWithTypeCheckers(
 }
 var PropTypes = propTypes.exports
 
-var indexScssStyleSheet$1 = StyleSheet.create({
+var indexScssStyleSheet$2 = StyleSheet.create({
   'fta-button': {
     display: 'flex',
     flexDirection: 'row',
@@ -1555,9 +1212,9 @@ var indexScssStyleSheet$1 = StyleSheet.create({
     marginBottom: 0,
     marginLeft: 'auto',
     paddingTop: 0,
-    paddingRight: scalePx2dp(144),
+    paddingRight: scalePx2dp(15.5),
     paddingBottom: 0,
-    paddingLeft: scalePx2dp(144),
+    paddingLeft: scalePx2dp(15.5),
     height: scalePx2dp(42),
     color: '#333',
     fontSize: scalePx2dp(17.5),
@@ -1711,7 +1368,52 @@ var indexScssStyleSheet$1 = StyleSheet.create({
   },
 })
 
-var indexScssStyleSheet = StyleSheet.create({
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i]
+  }
+  return arr2
+}
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) return _arrayLikeToArray(arr)
+}
+
+function _iterableToArray(iter) {
+  if (
+    (typeof Symbol !== 'undefined' && iter[Symbol.iterator] != null) ||
+    iter['@@iterator'] != null
+  )
+    return Array.from(iter)
+}
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return
+  if (typeof o === 'string') return _arrayLikeToArray(o, minLen)
+  var n = Object.prototype.toString.call(o).slice(8, -1)
+  if (n === 'Object' && o.constructor) n = o.constructor.name
+  if (n === 'Map' || n === 'Set') return Array.from(o)
+  if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
+    return _arrayLikeToArray(o, minLen)
+}
+
+function _nonIterableSpread() {
+  throw new TypeError(
+    'Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.'
+  )
+}
+
+function _toConsumableArray(arr) {
+  return (
+    _arrayWithoutHoles(arr) ||
+    _iterableToArray(arr) ||
+    _unsupportedIterableToArray(arr) ||
+    _nonIterableSpread()
+  )
+}
+
+var indexScssStyleSheet$1 = StyleSheet.create({
   'fta-loading': {
     overflow: 'hidden',
     width: scalePx2dp(15.5),
@@ -1764,7 +1466,7 @@ var Assets = {
   dt: 'https://imagecdn.ymm56.com/ymmfile/static/image/short_distance/rn_loading_view_2201230.png',
 }
 
-function ownKeys$2(object, enumerableOnly) {
+function ownKeys$3(object, enumerableOnly) {
   var keys = Object.keys(object)
   if (Object.getOwnPropertySymbols) {
     var symbols = Object.getOwnPropertySymbols(object)
@@ -1776,22 +1478,22 @@ function ownKeys$2(object, enumerableOnly) {
   }
   return keys
 }
-function _objectSpread$2(target) {
+function _objectSpread$3(target) {
   for (var i = 1; i < arguments.length; i++) {
     var source = null != arguments[i] ? arguments[i] : {}
     i % 2
-      ? ownKeys$2(Object(source), !0).forEach(function (key) {
+      ? ownKeys$3(Object(source), !0).forEach(function (key) {
           _defineProperty(target, key, source[key])
         })
       : Object.getOwnPropertyDescriptors
       ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source))
-      : ownKeys$2(Object(source)).forEach(function (key) {
+      : ownKeys$3(Object(source)).forEach(function (key) {
           Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key))
         })
   }
   return target
 }
-function _getClassName$2() {
+function _getClassName$3() {
   var className = []
   var args = arguments[0]
   var type = Object.prototype.toString.call(args).slice(8, -1).toLowerCase()
@@ -1800,7 +1502,7 @@ function _getClassName$2() {
     args && className.push(args)
   } else if (type === 'array') {
     args.forEach(function (cls) {
-      cls = _getClassName$2(cls).trim()
+      cls = _getClassName$3(cls).trim()
       cls && className.push(cls)
     })
   } else if (type === 'object') {
@@ -1813,17 +1515,17 @@ function _getClassName$2() {
   }
   return className.join(' ').trim()
 }
-function _getStyle$2(classNameExpression) {
-  var className = _getClassName$2(classNameExpression)
+function _getStyle$3(classNameExpression) {
+  var className = _getClassName$3(classNameExpression)
   var classNameArr = className.split(/\s+/)
   var style = {}
-  classNameArr.reduce((sty, cls) => Object.assign(sty, _styleSheet$2[cls.trim()]), style)
+  classNameArr.reduce((sty, cls) => Object.assign(sty, _styleSheet$3[cls.trim()]), style)
   return style
 }
-function _mergeEleStyles$1() {
+function _mergeEleStyles$2() {
   return [].concat.apply([], arguments).reduce((pre, cur) => Object.assign(pre, cur), {})
 }
-var _styleSheet$2 = indexScssStyleSheet
+var _styleSheet$3 = indexScssStyleSheet$1
 var EASING = {
   ease: Easing.inOut(Easing.ease),
   linear: Easing.linear,
@@ -1877,10 +1579,10 @@ function Loading(props) {
   return React.createElement(
     View,
     {
-      style: _mergeEleStyles$1(
-        _getStyle$2(rootClz),
-        _objectSpread$2(
-          _objectSpread$2(_objectSpread$2({}, customStyle), style),
+      style: _mergeEleStyles$2(
+        _getStyle$3(rootClz),
+        _objectSpread$3(
+          _objectSpread$3(_objectSpread$3({}, customStyle), style),
           {},
           { borderRadius: circle ? 1000 : 0 }
         )
@@ -1889,16 +1591,16 @@ function Loading(props) {
     useImage
       ? React.createElement(Animated.Image, {
           source: { uri: src },
-          style: _mergeEleStyles$1(_styleSheet$2['fta-loading__image'], {
+          style: _mergeEleStyles$2(_styleSheet$3['fta-loading__image'], {
             transform: [{ rotate: spin }],
           }),
         })
       : React.createElement(
           Animated.View,
           {
-            style: _mergeEleStyles$1(
-              _getStyle$2(classNames('fta-loading__view', 'fta-loading__view--' + size)),
-              _objectSpread$2({ transform: [{ rotate: spin }] }, borderStyle)
+            style: _mergeEleStyles$2(
+              _getStyle$3(classNames('fta-loading__view', 'fta-loading__view--' + size)),
+              _objectSpread$3({ transform: [{ rotate: spin }] }, borderStyle)
             ),
           },
           inAndroid
@@ -1923,7 +1625,7 @@ Loading.defaultProps = {
   tintColor: '#fff',
 }
 
-function ownKeys$1(object, enumerableOnly) {
+function ownKeys$2(object, enumerableOnly) {
   var keys = Object.keys(object)
   if (Object.getOwnPropertySymbols) {
     var symbols = Object.getOwnPropertySymbols(object)
@@ -1935,16 +1637,16 @@ function ownKeys$1(object, enumerableOnly) {
   }
   return keys
 }
-function _objectSpread$1(target) {
+function _objectSpread$2(target) {
   for (var i = 1; i < arguments.length; i++) {
     var source = null != arguments[i] ? arguments[i] : {}
     i % 2
-      ? ownKeys$1(Object(source), !0).forEach(function (key) {
+      ? ownKeys$2(Object(source), !0).forEach(function (key) {
           _defineProperty(target, key, source[key])
         })
       : Object.getOwnPropertyDescriptors
       ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source))
-      : ownKeys$1(Object(source)).forEach(function (key) {
+      : ownKeys$2(Object(source)).forEach(function (key) {
           Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key))
         })
   }
@@ -1975,7 +1677,7 @@ function _isNativeReflectConstruct$1() {
     return false
   }
 }
-function _getClassName$1() {
+function _getClassName$2() {
   var className = []
   var args = arguments[0]
   var type = Object.prototype.toString.call(args).slice(8, -1).toLowerCase()
@@ -1984,7 +1686,7 @@ function _getClassName$1() {
     args && className.push(args)
   } else if (type === 'array') {
     args.forEach(function (cls) {
-      cls = _getClassName$1(cls).trim()
+      cls = _getClassName$2(cls).trim()
       cls && className.push(cls)
     })
   } else if (type === 'object') {
@@ -1997,17 +1699,17 @@ function _getClassName$1() {
   }
   return className.join(' ').trim()
 }
-function _getStyle$1(classNameExpression) {
-  var className = _getClassName$1(classNameExpression)
+function _getStyle$2(classNameExpression) {
+  var className = _getClassName$2(classNameExpression)
   var classNameArr = className.split(/\s+/)
   var style = {}
-  classNameArr.reduce((sty, cls) => Object.assign(sty, _styleSheet$1[cls.trim()]), style)
+  classNameArr.reduce((sty, cls) => Object.assign(sty, _styleSheet$2[cls.trim()]), style)
   return style
 }
-function _mergeEleStyles() {
+function _mergeEleStyles$1() {
   return [].concat.apply([], arguments).reduce((pre, cur) => Object.assign(pre, cur), {})
 }
-var _styleSheet$1 = indexScssStyleSheet$1
+var _styleSheet$2 = indexScssStyleSheet$2
 var SIZE_CLASS = { small: 'small', medium: 'medium', large: 'large' }
 var TYPE_CLASS = { primary: 'primary', secondary: 'secondary', tertiary: 'tertiary' }
 var FTAButton = (function (_Component) {
@@ -2075,8 +1777,22 @@ var FTAButton = (function (_Component) {
         return disabled ? undefined : classNames('fta-button--' + type + '--active', hoverClassName)
       },
     },
-    { key: 'onSumit', value: function onSumit(event) {} },
-    { key: 'onReset', value: function onReset(event) {} },
+    {
+      key: 'onSumit',
+      value: function onSumit(event) {
+        if (inWeapp || inWeb) {
+          this.$scope.triggerEvent('submit', event.detail, { bubbles: true, composed: true })
+        }
+      },
+    },
+    {
+      key: 'onReset',
+      value: function onReset(event) {
+        if (inWeapp || inWeb) {
+          this.$scope.triggerEvent('reset', event.detail, { bubbles: true, composed: true })
+        }
+      },
+    },
     {
       key: 'render',
       value: function render() {
@@ -2127,20 +1843,20 @@ var FTAButton = (function (_Component) {
         if (loading === true) {
           loadingComponent = React.createElement(
             View,
-            { style: _styleSheet$1['fta-button__icon'] },
+            { style: _styleSheet$2['fta-button__icon'] },
             React.createElement(Loading, { color: loadingColor, size: size, useImage: true })
           )
           rootClassName = classNames(rootClassName)
         } else {
           loadingComponent = loading
         }
-        React.createElement(Button, {
+        var webButton = React.createElement(Button, {
           lang: lang,
           disabled: disabled,
           formType: formType,
-          style: _styleSheet$1['fta-button__wxbutton'],
+          style: _styleSheet$2['fta-button__wxbutton'],
         })
-        React.createElement(Button, {
+        var button = React.createElement(Button, {
           formType: formType,
           openType: openType,
           lang: lang,
@@ -2155,28 +1871,34 @@ var FTAButton = (function (_Component) {
           onOpenSetting: this.onOpenSetting.bind(this),
           onError: this.onError.bind(this),
           onContact: this.onContact.bind(this),
-          style: _styleSheet$1['fta-button__wxbutton'],
+          style: _styleSheet$2['fta-button__wxbutton'],
         })
         return React.createElement(
           View,
           {
-            style: _mergeEleStyles(
-              _getStyle$1(rootClassName),
-              _objectSpread$1(_objectSpread$1({}, style), customStyle)
+            style: _mergeEleStyles$1(
+              _getStyle$2(rootClassName),
+              _objectSpread$2(_objectSpread$2({}, style), customStyle)
             ),
             onClick: this.onClick.bind(this),
-            hoverStyle: _mergeEleStyles(_getStyle$1(this.hoverClass), this.hoverStyle),
+            hoverStyle: _mergeEleStyles$1(_getStyle$2(this.hoverClass), this.hoverStyle),
             hoverClass: this.hoverClass,
           },
-          inWeb,
-          inWeapp,
-          inAlipay,
+          inWeb && !disabled && webButton,
+          inWeapp &&
+            !disabled &&
+            React.createElement(
+              Form,
+              { onSubmit: this.onSumit.bind(this), onReset: this.onReset.bind(this) },
+              button
+            ),
+          inAlipay && !disabled && button,
           loadingComponent,
           isUndef(children)
             ? null
             : React.createElement(
-                TaroText,
-                { style: _mergeEleStyles(_getStyle$1(textClass), textStyle) },
+                Text$1,
+                { style: _mergeEleStyles$1(_getStyle$2(textClass), textStyle) },
                 children
               )
         )
@@ -2223,6 +1945,180 @@ FTAButton.propTypes = {
   onOpenSetting: PropTypes.func,
 }
 FTAButton.defaultProps = { customStyle: {}, textStyle: {}, type: 'primary' }
+
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {}
+  var target = {}
+  var sourceKeys = Object.keys(source)
+  var key, i
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i]
+    if (excluded.indexOf(key) >= 0) continue
+    target[key] = source[key]
+  }
+  return target
+}
+
+function _objectWithoutProperties(source, excluded) {
+  if (source == null) return {}
+  var target = _objectWithoutPropertiesLoose(source, excluded)
+  var key, i
+  if (Object.getOwnPropertySymbols) {
+    var sourceSymbolKeys = Object.getOwnPropertySymbols(source)
+    for (i = 0; i < sourceSymbolKeys.length; i++) {
+      key = sourceSymbolKeys[i]
+      if (excluded.indexOf(key) >= 0) continue
+      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue
+      target[key] = source[key]
+    }
+  }
+  return target
+}
+
+var indexScssStyleSheet = StyleSheet.create({
+  'fta-text': {},
+  'fta-text--1': {
+    fontSize: scalePx2dp(21),
+    lineHeight: scalePx2dp(27.3),
+  },
+  'fta-text--1--care': {
+    fontSize: scalePx2dp(27.5),
+    lineHeight: scalePx2dp(35.5),
+  },
+  'fta-text--2': {
+    fontSize: scalePx2dp(19),
+    lineHeight: scalePx2dp(24.7),
+  },
+  'fta-text--2--care': {
+    fontSize: scalePx2dp(24.5),
+    lineHeight: scalePx2dp(32),
+  },
+  'fta-text--3': {
+    fontSize: scalePx2dp(17.5),
+    lineHeight: scalePx2dp(22.75),
+  },
+  'fta-text--3--care': {
+    fontSize: scalePx2dp(23),
+    lineHeight: scalePx2dp(29.5),
+  },
+  'fta-text--4': {
+    fontSize: scalePx2dp(15.5),
+    lineHeight: scalePx2dp(20.15),
+  },
+  'fta-text--4--care': {
+    fontSize: scalePx2dp(20),
+    lineHeight: scalePx2dp(26),
+  },
+  'fta-text--5': {
+    fontSize: scalePx2dp(13.5),
+    lineHeight: scalePx2dp(17.55),
+  },
+  'fta-text--5--care': {
+    fontSize: scalePx2dp(17.5),
+    lineHeight: scalePx2dp(23),
+  },
+  'fta-text--6': {
+    fontSize: scalePx2dp(11.5),
+    lineHeight: scalePx2dp(14.95),
+  },
+  'fta-text--6--care': {
+    fontSize: scalePx2dp(15),
+    lineHeight: scalePx2dp(19.5),
+  },
+})
+
+var _excluded = ['className', 'style', 'level', 'children', 'size', 'color', 'scale', 'weight']
+function ownKeys$1(object, enumerableOnly) {
+  var keys = Object.keys(object)
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object)
+    enumerableOnly &&
+      (symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable
+      })),
+      keys.push.apply(keys, symbols)
+  }
+  return keys
+}
+function _objectSpread$1(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = null != arguments[i] ? arguments[i] : {}
+    i % 2
+      ? ownKeys$1(Object(source), !0).forEach(function (key) {
+          _defineProperty(target, key, source[key])
+        })
+      : Object.getOwnPropertyDescriptors
+      ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source))
+      : ownKeys$1(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key))
+        })
+  }
+  return target
+}
+function _getClassName$1() {
+  var className = []
+  var args = arguments[0]
+  var type = Object.prototype.toString.call(args).slice(8, -1).toLowerCase()
+  if (type === 'string') {
+    args = args.trim()
+    args && className.push(args)
+  } else if (type === 'array') {
+    args.forEach(function (cls) {
+      cls = _getClassName$1(cls).trim()
+      cls && className.push(cls)
+    })
+  } else if (type === 'object') {
+    for (var k in args) {
+      k = k.trim()
+      if (k && args.hasOwnProperty(k) && args[k]) {
+        className.push(k)
+      }
+    }
+  }
+  return className.join(' ').trim()
+}
+function _getStyle$1(classNameExpression) {
+  var className = _getClassName$1(classNameExpression)
+  var classNameArr = className.split(/\s+/)
+  var style = {}
+  classNameArr.reduce((sty, cls) => Object.assign(sty, _styleSheet$1[cls.trim()]), style)
+  return style
+}
+function _mergeEleStyles() {
+  return [].concat.apply([], arguments).reduce((pre, cur) => Object.assign(pre, cur), {})
+}
+var _styleSheet$1 = indexScssStyleSheet
+function Text(props) {
+  var className = props.className,
+    style = props.style,
+    level = props.level,
+    children = props.children,
+    size = props.size,
+    color = props.color,
+    scale$1 = props.scale,
+    weight = props.weight,
+    extraProps = _objectWithoutProperties(props, _excluded)
+  var textClz = useCarelessClass(['fta-text', size ? '' : 'fta-text--' + level], [className])
+  var careMode = useCareMode()
+  var textStyle = _objectSpread$1({}, style)
+  if (color) {
+    textStyle.color = color
+  }
+  if (weight) {
+    textStyle.fontWeight = weight
+  }
+  if (size) {
+    var fontSize = careMode ? size * 1.3 : size
+    textStyle.fontSize = scale$1 ? scale(fontSize) : px(fontSize)
+  }
+  return React.createElement(
+    Text$1,
+    _extends({ style: _mergeEleStyles(_getStyle$1(textClz), textStyle) }, extraProps),
+    children
+  )
+}
+var textDefaultProps = { level: 4, scale: true }
+Text.defaultProps = textDefaultProps
 
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object)
@@ -2305,7 +2201,7 @@ function _getStyle(classNameExpression) {
   classNameArr.reduce((sty, cls) => Object.assign(sty, _styleSheet[cls.trim()]), style)
   return style
 }
-var _styleSheet = indexScssStyleSheet$2
+var _styleSheet = indexScssStyleSheet$3
 var defaultDesc = {
   empty: { title: '暂无数据', desc: '让数据再飞一会', src: Assets$1.empty.default },
   error: { title: '呃，出错了…', desc: '刷新一下试试吧', src: Assets$1.empty.error },

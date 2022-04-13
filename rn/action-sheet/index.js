@@ -2,13 +2,24 @@ import View from '@fta/components-rn/dist/components/View'
 import React, { Fragment, createContext, Component, useRef, useEffect } from 'react'
 import { Modal as Modal$1, StyleSheet, Easing, Animated } from 'react-native'
 import { scalePx2dp } from '@fta/runtime-rn/dist/scale2dp'
+import {
+  systemInfo,
+  inRN,
+  inAndroid,
+  inNotch,
+  inWeb,
+  px,
+  inAlipay,
+  upperCase,
+  isFunction,
+  isString,
+  inWeapp,
+  isUndef,
+  Assets as Assets$1,
+} from '../common'
 import Text from '@fta/components-rn/dist/components/Text'
-import { getSystemInfoSync } from '@fta/taro-rn/dist/lib/getSystemInfoSync'
-import '@fta/taro-rn'
-import { getEnv } from '@fta/taro-rn/dist/lib/getEnv'
-import '@fta/taro-rn/dist/lib/ENV_TYPE'
 import Button from '@fta/components-rn/dist/components/Button'
-import '@fta/components-rn/dist/components/Form'
+import Form from '@fta/components-rn/dist/components/Form'
 import Image from '@fta/components-rn/dist/components/Image'
 
 function _defineProperty(obj, key, value) {
@@ -1233,210 +1244,6 @@ var indexScssStyleSheet$3 = StyleSheet.create({
   },
 })
 
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i]
-  }
-  return arr2
-}
-
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return
-  if (typeof o === 'string') return _arrayLikeToArray(o, minLen)
-  var n = Object.prototype.toString.call(o).slice(8, -1)
-  if (n === 'Object' && o.constructor) n = o.constructor.name
-  if (n === 'Map' || n === 'Set') return Array.from(o)
-  if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
-    return _arrayLikeToArray(o, minLen)
-}
-
-var defaultContext = { careMode: false, platform: 'ymm', debugger: true }
-var Context = createContext(defaultContext)
-Context.displayName = 'GlobalConfigContext'
-Context.Consumer
-
-StyleSheet.create({
-  'fta-text': {},
-  'fta-text--1': {
-    fontSize: scalePx2dp(21),
-    lineHeight: scalePx2dp(27.3),
-  },
-  'fta-text--1--care': {
-    fontSize: scalePx2dp(27.5),
-    lineHeight: scalePx2dp(35.5),
-  },
-  'fta-text--2': {
-    fontSize: scalePx2dp(19),
-    lineHeight: scalePx2dp(24.7),
-  },
-  'fta-text--2--care': {
-    fontSize: scalePx2dp(24.5),
-    lineHeight: scalePx2dp(32),
-  },
-  'fta-text--3': {
-    fontSize: scalePx2dp(17.5),
-    lineHeight: scalePx2dp(22.75),
-  },
-  'fta-text--3--care': {
-    fontSize: scalePx2dp(23),
-    lineHeight: scalePx2dp(29.5),
-  },
-  'fta-text--4': {
-    fontSize: scalePx2dp(15.5),
-    lineHeight: scalePx2dp(20.15),
-  },
-  'fta-text--4--care': {
-    fontSize: scalePx2dp(20),
-    lineHeight: scalePx2dp(26),
-  },
-  'fta-text--5': {
-    fontSize: scalePx2dp(13.5),
-    lineHeight: scalePx2dp(17.55),
-  },
-  'fta-text--5--care': {
-    fontSize: scalePx2dp(17.5),
-    lineHeight: scalePx2dp(23),
-  },
-  'fta-text--6': {
-    fontSize: scalePx2dp(11.5),
-    lineHeight: scalePx2dp(14.95),
-  },
-  'fta-text--6--care': {
-    fontSize: scalePx2dp(15),
-    lineHeight: scalePx2dp(19.5),
-  },
-})
-
-function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) return _arrayLikeToArray(arr)
-}
-
-function _iterableToArray(iter) {
-  if (
-    (typeof Symbol !== 'undefined' && iter[Symbol.iterator] != null) ||
-    iter['@@iterator'] != null
-  )
-    return Array.from(iter)
-}
-
-function _nonIterableSpread() {
-  throw new TypeError(
-    'Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.'
-  )
-}
-
-function _toConsumableArray(arr) {
-  return (
-    _arrayWithoutHoles(arr) ||
-    _iterableToArray(arr) ||
-    _unsupportedIterableToArray(arr) ||
-    _nonIterableSpread()
-  )
-}
-
-StyleSheet.create({
-  'fta-debugger': {
-    position: 'absolute',
-    bottom: scalePx2dp(50),
-    right: scalePx2dp(20),
-    width: scalePx2dp(40),
-    height: scalePx2dp(40),
-    backgroundColor: '#fff',
-    borderRadius: scalePx2dp(150),
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: '#fa871e',
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 100,
-  },
-  'fta-debugger__text': {
-    color: '#fa871e',
-  },
-  'fta-debugger--care': {
-    width: scalePx2dp(50),
-    height: scalePx2dp(50),
-  },
-})
-
-var Assets$1 = {
-  close: {
-    default:
-      'https://image.ymm56.com/ymmfile/operation-biz/a5e1c2a8-e59e-4bb8-9a59-c8092d058258.png',
-    circle:
-      'https://image.ymm56.com/ymmfile/operation-biz/1e270684-078d-49c8-9e69-23fbe607404a.png',
-    circleFull:
-      'https://imagecdn.ymm56.com/ymmfile/static/resource/c4aa5762-5aad-40c8-9fab-9912569aec6c.png',
-  },
-  arrow: {
-    true: 'https://imagecdn.ymm56.com/ymmfile/common-operation/65dd3d3d-1b53-4d36-b47a-160fce6d40f6.png',
-    right:
-      'https://imagecdn.ymm56.com/ymmfile/common-operation/65dd3d3d-1b53-4d36-b47a-160fce6d40f6.png',
-    down: 'https://image.ymm56.com/ymmfile/operation-biz/27653ee0-6dc6-446a-a60c-38c322e280cc.png',
-    up: 'https://image.ymm56.com/ymmfile/operation-biz/4193cb2e-863f-471f-b3bf-80f49c22069a.png',
-    left: 'http://image.ymm56.com/boss/2018/1212/1544598761',
-  },
-  tip: {
-    success:
-      'https://imagecdn.ymm56.com/ymmfile/static/resource/a826715a-5d51-4bb9-8cd3-a2f75c03d1b7.png',
-    error:
-      'https://imagecdn.ymm56.com/ymmfile/static/resource/9c1dd2fc-40be-4363-ad7c-1038efba8f23.png',
-    waiting:
-      'https://imagecdn.ymm56.com/ymmfile/static/resource/f99ecdf5-66d2-4e59-9b20-425affff0f68.png',
-    warning:
-      'https://image.ymm56.com/ymmfile/operation-biz/ef9aa9a9-710f-40a6-922b-ac044ae168fb.png',
-    info: 'https://image.ymm56.com/ymmfile/operation-biz/62398c75-bcc3-40c0-be5e-db16031c0fc5.png',
-  },
-  empty: {
-    default:
-      'https://image.ymm56.com/ymmfile/operation-biz/4469e30e-fe6b-4673-952c-c6a2d92ddc7b.png',
-    error: 'https://image.ymm56.com/ymmfile/operation-biz/49c712cb-69cc-4e80-9ca8-d752605c403e.png',
-  },
-  check: {
-    default:
-      'https://imagecdn.ymm56.com/ymmfile/static/resource/f1b19e18-3105-4951-8e95-f0de00b221d2.png',
-  },
-  loading: {
-    default:
-      'https://imagecdn.ymm56.com/ymmfile/static/image/short_distance/rn_sd_loding_wihite_x2_2201280.png',
-    blue: 'https://imagecdn.ymm56.com/ymmfile/static/image/short_distance/rn_loading_view_2201230.png',
-  },
-}
-
-var TARO_ENV = 'rn'
-var inWeb = TARO_ENV === 'h5'
-var inWeapp = TARO_ENV === 'weapp'
-var inAlipay = TARO_ENV === 'alipay'
-var systemInfo = getSystemInfoSync()
-systemInfo.windowWidth / 750
-var px = function (size) {
-  return size
-}
-var inIOS = systemInfo.platform === 'ios'
-var inIPhone =
-  systemInfo.system === 'iOS' ||
-  systemInfo.brand === 'iPhone' ||
-  systemInfo.model === 'iPhone' ||
-  inIOS
-var inNotch = inIPhone && (systemInfo.screenHeight >= 812 || systemInfo.screenWidth >= 812)
-var inAndroid = systemInfo.platform === 'android'
-
-getEnv()
-
-var isUndef = function isUndef(val) {
-  return typeof val === 'undefined'
-}
-var isString = function isString(val) {
-  return typeof val === 'string'
-}
-var isFunction = function isFunction(val) {
-  return typeof val === 'function'
-}
-var upperCase = function upperCase(val) {
-  return val[0].toUpperCase() + val.slice(1)
-}
-
 var indexScssStyleSheet$2 = StyleSheet.create({})
 
 var safeAreaContext = createContext({ disabled: false })
@@ -1445,17 +1252,18 @@ var safeArea = systemInfo.safeArea || { top: 0, bottom: 0, width: 0, height: 0, 
 var isImmersive = systemInfo.screenHeight === systemInfo.windowHeight
 var needSafeArea = isImmersive && inNotch
 var _safeArea = {
-  top: inAndroid
-    ? 0
-    : safeArea.top
-    ? safeArea.top < 44 && inNotch
-      ? 44
+  top:
+    inRN && inAndroid
+      ? 0
       : safeArea.top
-    : isImmersive && inWeb
-    ? (window._MBWEB_statusbarHeight || 0) / systemInfo.pixelRatio
-    : inNotch
-    ? 44
-    : 0,
+      ? safeArea.top < 44 && inNotch
+        ? 44
+        : safeArea.top
+      : isImmersive && inWeb
+      ? (window._MBWEB_statusbarHeight || 0) / systemInfo.pixelRatio
+      : inNotch
+      ? 44
+      : 0,
   bottom: safeArea.bottom
     ? systemInfo.screenHeight - safeArea.bottom
     : needSafeArea
@@ -1583,6 +1391,7 @@ var SafeAreaView = (function (_Component) {
       key: 'render',
       value: function render() {
         var _this = this
+        if (inAlipay) return React.createElement(Fragment, null, this.props.children)
         return React.createElement(safeAreaContext.Consumer, null, function (ctx) {
           if (_this.props.disabled || ctx.disabled) {
             var _this$props = _this.props
@@ -1655,6 +1464,7 @@ var SafeArea = (function (_Component2) {
       key: 'render',
       value: function render() {
         var _this2 = this
+        if (inAlipay) return null
         return React.createElement(safeAreaContext.Consumer, null, function (ctx) {
           if (_this2.props.disabled || ctx.disabled) {
             var _this2$props = _this2.props
@@ -2124,6 +1934,51 @@ var indexScssStyleSheet$1 = StyleSheet.create({
   },
 })
 
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i]
+  }
+  return arr2
+}
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) return _arrayLikeToArray(arr)
+}
+
+function _iterableToArray(iter) {
+  if (
+    (typeof Symbol !== 'undefined' && iter[Symbol.iterator] != null) ||
+    iter['@@iterator'] != null
+  )
+    return Array.from(iter)
+}
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return
+  if (typeof o === 'string') return _arrayLikeToArray(o, minLen)
+  var n = Object.prototype.toString.call(o).slice(8, -1)
+  if (n === 'Object' && o.constructor) n = o.constructor.name
+  if (n === 'Map' || n === 'Set') return Array.from(o)
+  if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
+    return _arrayLikeToArray(o, minLen)
+}
+
+function _nonIterableSpread() {
+  throw new TypeError(
+    'Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.'
+  )
+}
+
+function _toConsumableArray(arr) {
+  return (
+    _arrayWithoutHoles(arr) ||
+    _iterableToArray(arr) ||
+    _unsupportedIterableToArray(arr) ||
+    _nonIterableSpread()
+  )
+}
+
 var indexScssStyleSheet = StyleSheet.create({
   'fta-loading': {
     overflow: 'hidden',
@@ -2488,8 +2343,22 @@ var FTAButton = (function (_Component) {
         return disabled ? undefined : classNames('fta-button--' + type + '--active', hoverClassName)
       },
     },
-    { key: 'onSumit', value: function onSumit(event) {} },
-    { key: 'onReset', value: function onReset(event) {} },
+    {
+      key: 'onSumit',
+      value: function onSumit(event) {
+        if (inWeapp || inWeb) {
+          this.$scope.triggerEvent('submit', event.detail, { bubbles: true, composed: true })
+        }
+      },
+    },
+    {
+      key: 'onReset',
+      value: function onReset(event) {
+        if (inWeapp || inWeb) {
+          this.$scope.triggerEvent('reset', event.detail, { bubbles: true, composed: true })
+        }
+      },
+    },
     {
       key: 'render',
       value: function render() {
@@ -2547,13 +2416,13 @@ var FTAButton = (function (_Component) {
         } else {
           loadingComponent = loading
         }
-        React.createElement(Button, {
+        var webButton = React.createElement(Button, {
           lang: lang,
           disabled: disabled,
           formType: formType,
           style: _styleSheet$4['fta-button__wxbutton'],
         })
-        React.createElement(Button, {
+        var button = React.createElement(Button, {
           formType: formType,
           openType: openType,
           lang: lang,
@@ -2581,9 +2450,15 @@ var FTAButton = (function (_Component) {
             hoverStyle: _mergeEleStyles$1(_getStyle$3(this.hoverClass), this.hoverStyle),
             hoverClass: this.hoverClass,
           },
-          inWeb,
-          inWeapp,
-          inAlipay,
+          inWeb && !disabled && webButton,
+          inWeapp &&
+            !disabled &&
+            React.createElement(
+              Form,
+              { onSubmit: this.onSumit.bind(this), onReset: this.onReset.bind(this) },
+              button
+            ),
+          inAlipay && !disabled && button,
           loadingComponent,
           isUndef(children)
             ? null

@@ -1,13 +1,28 @@
 import Image from '@fta/components-rn/dist/components/Image'
 import View from '@fta/components-rn/dist/components/View'
-import React, { createContext, useContext, Component, cloneElement, Fragment } from 'react'
-import TaroText from '@fta/components-rn/dist/components/Text'
+import React, { createContext, Fragment, Component, cloneElement } from 'react'
+import {
+  systemInfo,
+  inRN,
+  inAndroid,
+  inNotch,
+  inWeb,
+  px,
+  inAlipay,
+  upperCase,
+  useCarelessClass,
+  useCareMode,
+  scale,
+  createSelectorQuery,
+  useCareClass,
+  inIOS,
+  ConfigConsumer,
+  Assets,
+  useClassWithCare,
+} from '../common'
 import { StyleSheet, StatusBar } from 'react-native'
 import { scalePx2dp } from '@fta/runtime-rn/dist/scale2dp'
-import { getSystemInfoSync } from '@fta/taro-rn/dist/lib/getSystemInfoSync'
-import Taro from '@fta/taro-rn'
-import { getEnv } from '@fta/taro-rn/dist/lib/getEnv'
-import '@fta/taro-rn/dist/lib/ENV_TYPE'
+import TaroText from '@fta/components-rn/dist/components/Text'
 
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -1187,427 +1202,7 @@ var factoryWithTypeCheckers = function factoryWithTypeCheckers(
 }
 var PropTypes = propTypes.exports
 
-function _arrayWithHoles(arr) {
-  if (Array.isArray(arr)) return arr
-}
-
-function _iterableToArrayLimit(arr, i) {
-  var _i =
-    arr == null
-      ? null
-      : (typeof Symbol !== 'undefined' && arr[Symbol.iterator]) || arr['@@iterator']
-  if (_i == null) return
-  var _arr = []
-  var _n = true
-  var _d = false
-  var _s, _e
-  try {
-    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
-      _arr.push(_s.value)
-      if (i && _arr.length === i) break
-    }
-  } catch (err) {
-    _d = true
-    _e = err
-  } finally {
-    try {
-      if (!_n && _i['return'] != null) _i['return']()
-    } finally {
-      if (_d) throw _e
-    }
-  }
-  return _arr
-}
-
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i]
-  }
-  return arr2
-}
-
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return
-  if (typeof o === 'string') return _arrayLikeToArray(o, minLen)
-  var n = Object.prototype.toString.call(o).slice(8, -1)
-  if (n === 'Object' && o.constructor) n = o.constructor.name
-  if (n === 'Map' || n === 'Set') return Array.from(o)
-  if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
-    return _arrayLikeToArray(o, minLen)
-}
-
-function _nonIterableRest() {
-  throw new TypeError(
-    'Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.'
-  )
-}
-
-function _slicedToArray(arr, i) {
-  return (
-    _arrayWithHoles(arr) ||
-    _iterableToArrayLimit(arr, i) ||
-    _unsupportedIterableToArray(arr, i) ||
-    _nonIterableRest()
-  )
-}
-
-var defaultContext = { careMode: false, platform: 'ymm', debugger: true }
-var Context = createContext(defaultContext)
-Context.displayName = 'GlobalConfigContext'
-function useCareMode() {
-  return useConfig('careMode')
-}
-function useConfig(key) {
-  var ctx = useContext(Context)
-  if (key) return ctx[key]
-  return ctx
-}
-var ConfigConsumer = Context.Consumer
-
 var indexScssStyleSheet$3 = StyleSheet.create({
-  'fta-text': {},
-  'fta-text--1': {
-    fontSize: scalePx2dp(21),
-    lineHeight: scalePx2dp(27.3),
-  },
-  'fta-text--1--care': {
-    fontSize: scalePx2dp(27.5),
-    lineHeight: scalePx2dp(35.5),
-  },
-  'fta-text--2': {
-    fontSize: scalePx2dp(19),
-    lineHeight: scalePx2dp(24.7),
-  },
-  'fta-text--2--care': {
-    fontSize: scalePx2dp(24.5),
-    lineHeight: scalePx2dp(32),
-  },
-  'fta-text--3': {
-    fontSize: scalePx2dp(17.5),
-    lineHeight: scalePx2dp(22.75),
-  },
-  'fta-text--3--care': {
-    fontSize: scalePx2dp(23),
-    lineHeight: scalePx2dp(29.5),
-  },
-  'fta-text--4': {
-    fontSize: scalePx2dp(15.5),
-    lineHeight: scalePx2dp(20.15),
-  },
-  'fta-text--4--care': {
-    fontSize: scalePx2dp(20),
-    lineHeight: scalePx2dp(26),
-  },
-  'fta-text--5': {
-    fontSize: scalePx2dp(13.5),
-    lineHeight: scalePx2dp(17.55),
-  },
-  'fta-text--5--care': {
-    fontSize: scalePx2dp(17.5),
-    lineHeight: scalePx2dp(23),
-  },
-  'fta-text--6': {
-    fontSize: scalePx2dp(11.5),
-    lineHeight: scalePx2dp(14.95),
-  },
-  'fta-text--6--care': {
-    fontSize: scalePx2dp(15),
-    lineHeight: scalePx2dp(19.5),
-  },
-})
-
-var _excluded$3 = ['className', 'style', 'level', 'children', 'size', 'color', 'scale', 'weight']
-function ownKeys$2(object, enumerableOnly) {
-  var keys = Object.keys(object)
-  if (Object.getOwnPropertySymbols) {
-    var symbols = Object.getOwnPropertySymbols(object)
-    enumerableOnly &&
-      (symbols = symbols.filter(function (sym) {
-        return Object.getOwnPropertyDescriptor(object, sym).enumerable
-      })),
-      keys.push.apply(keys, symbols)
-  }
-  return keys
-}
-function _objectSpread$2(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = null != arguments[i] ? arguments[i] : {}
-    i % 2
-      ? ownKeys$2(Object(source), !0).forEach(function (key) {
-          _defineProperty(target, key, source[key])
-        })
-      : Object.getOwnPropertyDescriptors
-      ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source))
-      : ownKeys$2(Object(source)).forEach(function (key) {
-          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key))
-        })
-  }
-  return target
-}
-function _getClassName$4() {
-  var className = []
-  var args = arguments[0]
-  var type = Object.prototype.toString.call(args).slice(8, -1).toLowerCase()
-  if (type === 'string') {
-    args = args.trim()
-    args && className.push(args)
-  } else if (type === 'array') {
-    args.forEach(function (cls) {
-      cls = _getClassName$4(cls).trim()
-      cls && className.push(cls)
-    })
-  } else if (type === 'object') {
-    for (var k in args) {
-      k = k.trim()
-      if (k && args.hasOwnProperty(k) && args[k]) {
-        className.push(k)
-      }
-    }
-  }
-  return className.join(' ').trim()
-}
-function _getStyle$4(classNameExpression) {
-  var className = _getClassName$4(classNameExpression)
-  var classNameArr = className.split(/\s+/)
-  var style = {}
-  classNameArr.reduce((sty, cls) => Object.assign(sty, _styleSheet$4[cls.trim()]), style)
-  return style
-}
-function _mergeEleStyles$4() {
-  return [].concat.apply([], arguments).reduce((pre, cur) => Object.assign(pre, cur), {})
-}
-var _styleSheet$4 = indexScssStyleSheet$3
-function Text(props) {
-  var className = props.className,
-    style = props.style,
-    level = props.level,
-    children = props.children,
-    size = props.size,
-    color = props.color,
-    scale$1 = props.scale,
-    weight = props.weight,
-    extraProps = _objectWithoutProperties(props, _excluded$3)
-  var textClz = useCarelessClass(['fta-text', size ? '' : 'fta-text--' + level], [className])
-  var careMode = useCareMode()
-  var textStyle = _objectSpread$2({}, style)
-  if (color) {
-    textStyle.color = color
-  }
-  if (weight) {
-    textStyle.fontWeight = weight
-  }
-  if (size) {
-    var fontSize = careMode ? size * 1.3 : size
-    textStyle.fontSize = scale$1 ? scale(fontSize) : px(fontSize)
-  }
-  return React.createElement(
-    TaroText,
-    _extends({ style: _mergeEleStyles$4(_getStyle$4(textClz), textStyle) }, extraProps),
-    children
-  )
-}
-var textDefaultProps = { level: 4, scale: true }
-Text.defaultProps = textDefaultProps
-
-function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) return _arrayLikeToArray(arr)
-}
-
-function _iterableToArray(iter) {
-  if (
-    (typeof Symbol !== 'undefined' && iter[Symbol.iterator] != null) ||
-    iter['@@iterator'] != null
-  )
-    return Array.from(iter)
-}
-
-function _nonIterableSpread() {
-  throw new TypeError(
-    'Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.'
-  )
-}
-
-function _toConsumableArray(arr) {
-  return (
-    _arrayWithoutHoles(arr) ||
-    _iterableToArray(arr) ||
-    _unsupportedIterableToArray(arr) ||
-    _nonIterableSpread()
-  )
-}
-
-var isString = function isString(s) {
-  return typeof s === 'string' && s.length > 0
-}
-var useCareClass = function useCareClass(careClazz) {
-  var suffix = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '--care'
-  var careMode = useConfig('careMode')
-  return classNames(
-    careMode
-      ? careClazz.map(function (v) {
-          return isString(v) ? v + ' ' + v + suffix : ''
-        })
-      : careClazz
-  )
-}
-useCareClass.single = function () {
-  var careMode = useConfig('careMode')
-  for (var _len = arguments.length, careClazz = new Array(_len), _key = 0; _key < _len; _key++) {
-    careClazz[_key] = arguments[_key]
-  }
-  return classNames(
-    careMode
-      ? careClazz.map(function (v) {
-          return isString(v) ? v + ' ' + v + '--care' : ''
-        })
-      : careClazz
-  )
-}
-var useCarelessClass = function useCarelessClass(careClazz, nonCareClasszz) {
-  var suffix = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '--care'
-  var careMode = useConfig('careMode')
-  return classNames.apply(
-    void 0,
-    _toConsumableArray(
-      (nonCareClasszz != null ? nonCareClasszz : []).concat(
-        careMode
-          ? careClazz.map(function (v) {
-              return isString(v) ? v + ' ' + v + suffix : ''
-            })
-          : careClazz
-      )
-    )
-  )
-}
-var useClassWithCare = function useClassWithCare(careMode, careClazz) {
-  var suffix = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '--care'
-  return classNames(
-    careMode
-      ? careClazz.map(function (v) {
-          return isString(v) ? v + ' ' + v + suffix : ''
-        })
-      : careClazz
-  )
-}
-useClassWithCare.single = function (careMode, careClass) {
-  var suffix = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '--care'
-  return careMode ? (isString(careMode) ? careClass + ' ' + careClass + suffix : '') : careClass
-}
-
-StyleSheet.create({
-  'fta-debugger': {
-    position: 'absolute',
-    bottom: scalePx2dp(50),
-    right: scalePx2dp(20),
-    width: scalePx2dp(40),
-    height: scalePx2dp(40),
-    backgroundColor: '#fff',
-    borderRadius: scalePx2dp(150),
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: '#fa871e',
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 100,
-  },
-  'fta-debugger__text': {
-    color: '#fa871e',
-  },
-  'fta-debugger--care': {
-    width: scalePx2dp(50),
-    height: scalePx2dp(50),
-  },
-})
-
-var Assets = {
-  close: {
-    default:
-      'https://image.ymm56.com/ymmfile/operation-biz/a5e1c2a8-e59e-4bb8-9a59-c8092d058258.png',
-    circle:
-      'https://image.ymm56.com/ymmfile/operation-biz/1e270684-078d-49c8-9e69-23fbe607404a.png',
-    circleFull:
-      'https://imagecdn.ymm56.com/ymmfile/static/resource/c4aa5762-5aad-40c8-9fab-9912569aec6c.png',
-  },
-  arrow: {
-    true: 'https://imagecdn.ymm56.com/ymmfile/common-operation/65dd3d3d-1b53-4d36-b47a-160fce6d40f6.png',
-    right:
-      'https://imagecdn.ymm56.com/ymmfile/common-operation/65dd3d3d-1b53-4d36-b47a-160fce6d40f6.png',
-    down: 'https://image.ymm56.com/ymmfile/operation-biz/27653ee0-6dc6-446a-a60c-38c322e280cc.png',
-    up: 'https://image.ymm56.com/ymmfile/operation-biz/4193cb2e-863f-471f-b3bf-80f49c22069a.png',
-    left: 'http://image.ymm56.com/boss/2018/1212/1544598761',
-  },
-  tip: {
-    success:
-      'https://imagecdn.ymm56.com/ymmfile/static/resource/a826715a-5d51-4bb9-8cd3-a2f75c03d1b7.png',
-    error:
-      'https://imagecdn.ymm56.com/ymmfile/static/resource/9c1dd2fc-40be-4363-ad7c-1038efba8f23.png',
-    waiting:
-      'https://imagecdn.ymm56.com/ymmfile/static/resource/f99ecdf5-66d2-4e59-9b20-425affff0f68.png',
-    warning:
-      'https://image.ymm56.com/ymmfile/operation-biz/ef9aa9a9-710f-40a6-922b-ac044ae168fb.png',
-    info: 'https://image.ymm56.com/ymmfile/operation-biz/62398c75-bcc3-40c0-be5e-db16031c0fc5.png',
-  },
-  empty: {
-    default:
-      'https://image.ymm56.com/ymmfile/operation-biz/4469e30e-fe6b-4673-952c-c6a2d92ddc7b.png',
-    error: 'https://image.ymm56.com/ymmfile/operation-biz/49c712cb-69cc-4e80-9ca8-d752605c403e.png',
-  },
-  check: {
-    default:
-      'https://imagecdn.ymm56.com/ymmfile/static/resource/f1b19e18-3105-4951-8e95-f0de00b221d2.png',
-  },
-  loading: {
-    default:
-      'https://imagecdn.ymm56.com/ymmfile/static/image/short_distance/rn_sd_loding_wihite_x2_2201280.png',
-    blue: 'https://imagecdn.ymm56.com/ymmfile/static/image/short_distance/rn_loading_view_2201230.png',
-  },
-}
-
-var TARO_ENV = 'rn'
-var inRN = TARO_ENV === 'rn'
-var inWeb = TARO_ENV === 'h5'
-var systemInfo = getSystemInfoSync()
-var deviceRatio = systemInfo.windowWidth / 750
-var px = function (size) {
-  return size
-}
-var autoFix = function autoFix(size) {
-  return size * deviceRatio
-}
-var scale = function scale(size) {
-  return px(autoFix(size))
-}
-var inIOS = systemInfo.platform === 'ios'
-var inIPhone =
-  systemInfo.system === 'iOS' ||
-  systemInfo.brand === 'iPhone' ||
-  systemInfo.model === 'iPhone' ||
-  inIOS
-var inNotch = inIPhone && (systemInfo.screenHeight >= 812 || systemInfo.screenWidth >= 812)
-var inAndroid = systemInfo.platform === 'android'
-
-var callbackAdaptor = function callbackAdaptor(callback) {
-  return function (rect) {
-    return callback(Array.isArray(rect) ? rect[0] : rect)
-  }
-}
-function PolyCreateSelectorQuery(selector, callback) {
-  var cb = callbackAdaptor(callback)
-  var query = Taro.createSelectorQuery == null ? void 0 : Taro.createSelectorQuery()
-  if (!query) return
-  var el = query.select(selector)
-  el.boundingClientRect(cb)
-  query.exec(cb)
-}
-
-getEnv()
-
-var upperCase = function upperCase(val) {
-  return val[0].toUpperCase() + val.slice(1)
-}
-
-var indexScssStyleSheet$2 = StyleSheet.create({
   'fta-nav-bar': {
     backgroundColor: '#fff',
   },
@@ -1673,7 +1268,7 @@ var indexScssStyleSheet$2 = StyleSheet.create({
   },
 })
 
-var indexScssStyleSheet$1 = StyleSheet.create({})
+var indexScssStyleSheet$2 = StyleSheet.create({})
 
 var safeAreaContext = createContext({ disabled: false })
 
@@ -1681,17 +1276,18 @@ var safeArea = systemInfo.safeArea || { top: 0, bottom: 0, width: 0, height: 0, 
 var isImmersive = systemInfo.screenHeight === systemInfo.windowHeight
 var needSafeArea = isImmersive && inNotch
 var _safeArea = {
-  top: inAndroid
-    ? 0
-    : safeArea.top
-    ? safeArea.top < 44 && inNotch
-      ? 44
+  top:
+    inRN && inAndroid
+      ? 0
       : safeArea.top
-    : isImmersive && inWeb
-    ? (window._MBWEB_statusbarHeight || 0) / systemInfo.pixelRatio
-    : inNotch
-    ? 44
-    : 0,
+      ? safeArea.top < 44 && inNotch
+        ? 44
+        : safeArea.top
+      : isImmersive && inWeb
+      ? (window._MBWEB_statusbarHeight || 0) / systemInfo.pixelRatio
+      : inNotch
+      ? 44
+      : 0,
   bottom: safeArea.bottom
     ? systemInfo.screenHeight - safeArea.bottom
     : needSafeArea
@@ -1701,12 +1297,12 @@ var _safeArea = {
   right: safeArea.right ? systemInfo.screenWidth - safeArea.right : 0,
 }
 
-var _excluded$2 = ['disabled'],
+var _excluded$3 = ['disabled'],
   _excluded2$2 = ['className', 'style', 'children', 'useMargin'],
   _excluded3$1 = ['style', 'className', 'children', 'useMargin'],
   _excluded4$1 = ['disabled'],
   _excluded5 = ['top', 'bottom']
-function ownKeys$1(object, enumerableOnly) {
+function ownKeys$2(object, enumerableOnly) {
   var keys = Object.keys(object)
   if (Object.getOwnPropertySymbols) {
     var symbols = Object.getOwnPropertySymbols(object)
@@ -1718,16 +1314,16 @@ function ownKeys$1(object, enumerableOnly) {
   }
   return keys
 }
-function _objectSpread$1(target) {
+function _objectSpread$2(target) {
   for (var i = 1; i < arguments.length; i++) {
     var source = null != arguments[i] ? arguments[i] : {}
     i % 2
-      ? ownKeys$1(Object(source), !0).forEach(function (key) {
+      ? ownKeys$2(Object(source), !0).forEach(function (key) {
           _defineProperty(target, key, source[key])
         })
       : Object.getOwnPropertyDescriptors
       ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source))
-      : ownKeys$1(Object(source)).forEach(function (key) {
+      : ownKeys$2(Object(source)).forEach(function (key) {
           Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key))
         })
   }
@@ -1757,6 +1353,245 @@ function _isNativeReflectConstruct$2() {
   } catch (e) {
     return false
   }
+}
+function _getClassName$4() {
+  var className = []
+  var args = arguments[0]
+  var type = Object.prototype.toString.call(args).slice(8, -1).toLowerCase()
+  if (type === 'string') {
+    args = args.trim()
+    args && className.push(args)
+  } else if (type === 'array') {
+    args.forEach(function (cls) {
+      cls = _getClassName$4(cls).trim()
+      cls && className.push(cls)
+    })
+  } else if (type === 'object') {
+    for (var k in args) {
+      k = k.trim()
+      if (k && args.hasOwnProperty(k) && args[k]) {
+        className.push(k)
+      }
+    }
+  }
+  return className.join(' ').trim()
+}
+function _getStyle$4(classNameExpression) {
+  var className = _getClassName$4(classNameExpression)
+  var classNameArr = className.split(/\s+/)
+  var style = {}
+  classNameArr.reduce((sty, cls) => Object.assign(sty, _styleSheet$4[cls.trim()]), style)
+  return style
+}
+function _mergeEleStyles$4() {
+  return [].concat.apply([], arguments).reduce((pre, cur) => Object.assign(pre, cur), {})
+}
+var _styleSheet$4 = indexScssStyleSheet$2
+var SafeAreaView = (function (_Component) {
+  _inherits(SafeAreaView, _Component)
+  var _super = _createSuper$2(SafeAreaView)
+  function SafeAreaView() {
+    _classCallCheck(this, SafeAreaView)
+    return _super.apply(this, arguments)
+  }
+  _createClass(SafeAreaView, [
+    {
+      key: 'getInlineStyle',
+      value: function getInlineStyle(style) {
+        var _objectSpread2
+        var attr = this.props.useMargin ? 'margin' : 'padding'
+        return _objectSpread$2(
+          ((_objectSpread2 = {}),
+          _defineProperty(_objectSpread2, attr + 'Top', px(_safeArea.top)),
+          _defineProperty(_objectSpread2, attr + 'Bottom', px(_safeArea.bottom)),
+          _defineProperty(_objectSpread2, attr + 'Left', px(_safeArea.left)),
+          _defineProperty(_objectSpread2, attr + 'Right', px(_safeArea.right)),
+          _objectSpread2),
+          style
+        )
+      },
+    },
+    {
+      key: 'render',
+      value: function render() {
+        var _this = this
+        if (inAlipay) return React.createElement(Fragment, null, this.props.children)
+        return React.createElement(safeAreaContext.Consumer, null, function (ctx) {
+          if (_this.props.disabled || ctx.disabled) {
+            var _this$props = _this.props
+            _this$props.disabled
+            var _props = _objectWithoutProperties(_this$props, _excluded$3)
+            return React.createElement(View, _props)
+          }
+          var _this$props2 = _this.props,
+            className = _this$props2.className,
+            style = _this$props2.style,
+            children = _this$props2.children,
+            useMargin = _this$props2.useMargin,
+            props = _objectWithoutProperties(_this$props2, _excluded2$2)
+          var rootCla = classNames(
+            className,
+            'fta-safe-area-container' + (useMargin ? '__margin' : '')
+          )
+          var rootStyle = _this.getInlineStyle(style)
+          return React.createElement(
+            View,
+            _extends({}, props, { style: _mergeEleStyles$4(_getStyle$4(rootCla), rootStyle) }),
+            children
+          )
+        })
+      },
+    },
+  ])
+  return SafeAreaView
+})(Component)
+SafeAreaView.defaultProps = { style: {}, disabled: false }
+var SafeArea = (function (_Component2) {
+  _inherits(SafeArea, _Component2)
+  var _super2 = _createSuper$2(SafeArea)
+  function SafeArea() {
+    _classCallCheck(this, SafeArea)
+    return _super2.apply(this, arguments)
+  }
+  _createClass(SafeArea, [
+    {
+      key: 'getInlineStyle',
+      value: function getInlineStyle(position, style) {
+        var attr = this.props.useMargin ? 'margin' : 'padding'
+        return _objectSpread$2(
+          _defineProperty({}, '' + attr + upperCase(position), px(_safeArea[position])),
+          style
+        )
+      },
+    },
+    {
+      key: 'renderSafeArea',
+      value: function renderSafeArea(position, props) {
+        props.style
+        props.className
+        var children = props.children,
+          useMargin = props.useMargin,
+          extraProps = _objectWithoutProperties(props, _excluded3$1)
+        var rootStyle = this.getInlineStyle(position, props.style)
+        var rootCla = classNames(
+          props.className,
+          'fta-safe-area-' + position + (useMargin ? '__margin' : '')
+        )
+        return React.createElement(
+          View,
+          _extends({}, extraProps, { style: _mergeEleStyles$4(_getStyle$4(rootCla), rootStyle) }),
+          children
+        )
+      },
+    },
+    {
+      key: 'render',
+      value: function render() {
+        var _this2 = this
+        if (inAlipay) return null
+        return React.createElement(safeAreaContext.Consumer, null, function (ctx) {
+          if (_this2.props.disabled || ctx.disabled) {
+            var _this2$props = _this2.props
+            _this2$props.disabled
+            var _props2 = _objectWithoutProperties(_this2$props, _excluded4$1)
+            return React.createElement(View, _props2)
+          }
+          var _this2$props2 = _this2.props,
+            top = _this2$props2.top,
+            bottom = _this2$props2.bottom,
+            props = _objectWithoutProperties(_this2$props2, _excluded5)
+          var position = !top && bottom ? 'bottom' : 'top'
+          return _this2.renderSafeArea(position, props)
+        })
+      },
+    },
+  ])
+  return SafeArea
+})(Component)
+SafeArea.defaultProps = { bottom: true, top: false, style: {}, disabled: false }
+SafeArea.Consumer = safeAreaContext.Consumer
+SafeArea.Provider = safeAreaContext.Provider
+SafeArea.View = SafeAreaView
+
+var indexScssStyleSheet$1 = StyleSheet.create({
+  'fta-text': {},
+  'fta-text--1': {
+    fontSize: scalePx2dp(21),
+    lineHeight: scalePx2dp(27.3),
+  },
+  'fta-text--1--care': {
+    fontSize: scalePx2dp(27.5),
+    lineHeight: scalePx2dp(35.5),
+  },
+  'fta-text--2': {
+    fontSize: scalePx2dp(19),
+    lineHeight: scalePx2dp(24.7),
+  },
+  'fta-text--2--care': {
+    fontSize: scalePx2dp(24.5),
+    lineHeight: scalePx2dp(32),
+  },
+  'fta-text--3': {
+    fontSize: scalePx2dp(17.5),
+    lineHeight: scalePx2dp(22.75),
+  },
+  'fta-text--3--care': {
+    fontSize: scalePx2dp(23),
+    lineHeight: scalePx2dp(29.5),
+  },
+  'fta-text--4': {
+    fontSize: scalePx2dp(15.5),
+    lineHeight: scalePx2dp(20.15),
+  },
+  'fta-text--4--care': {
+    fontSize: scalePx2dp(20),
+    lineHeight: scalePx2dp(26),
+  },
+  'fta-text--5': {
+    fontSize: scalePx2dp(13.5),
+    lineHeight: scalePx2dp(17.55),
+  },
+  'fta-text--5--care': {
+    fontSize: scalePx2dp(17.5),
+    lineHeight: scalePx2dp(23),
+  },
+  'fta-text--6': {
+    fontSize: scalePx2dp(11.5),
+    lineHeight: scalePx2dp(14.95),
+  },
+  'fta-text--6--care': {
+    fontSize: scalePx2dp(15),
+    lineHeight: scalePx2dp(19.5),
+  },
+})
+
+var _excluded$2 = ['className', 'style', 'level', 'children', 'size', 'color', 'scale', 'weight']
+function ownKeys$1(object, enumerableOnly) {
+  var keys = Object.keys(object)
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object)
+    enumerableOnly &&
+      (symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable
+      })),
+      keys.push.apply(keys, symbols)
+  }
+  return keys
+}
+function _objectSpread$1(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = null != arguments[i] ? arguments[i] : {}
+    i % 2
+      ? ownKeys$1(Object(source), !0).forEach(function (key) {
+          _defineProperty(target, key, source[key])
+        })
+      : Object.getOwnPropertyDescriptors
+      ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source))
+      : ownKeys$1(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key))
+        })
+  }
+  return target
 }
 function _getClassName$3() {
   var className = []
@@ -1791,129 +1626,37 @@ function _mergeEleStyles$3() {
   return [].concat.apply([], arguments).reduce((pre, cur) => Object.assign(pre, cur), {})
 }
 var _styleSheet$3 = indexScssStyleSheet$1
-var SafeAreaView = (function (_Component) {
-  _inherits(SafeAreaView, _Component)
-  var _super = _createSuper$2(SafeAreaView)
-  function SafeAreaView() {
-    _classCallCheck(this, SafeAreaView)
-    return _super.apply(this, arguments)
+function Text(props) {
+  var className = props.className,
+    style = props.style,
+    level = props.level,
+    children = props.children,
+    size = props.size,
+    color = props.color,
+    scale$1 = props.scale,
+    weight = props.weight,
+    extraProps = _objectWithoutProperties(props, _excluded$2)
+  var textClz = useCarelessClass(['fta-text', size ? '' : 'fta-text--' + level], [className])
+  var careMode = useCareMode()
+  var textStyle = _objectSpread$1({}, style)
+  if (color) {
+    textStyle.color = color
   }
-  _createClass(SafeAreaView, [
-    {
-      key: 'getInlineStyle',
-      value: function getInlineStyle(style) {
-        var _objectSpread2
-        var attr = this.props.useMargin ? 'margin' : 'padding'
-        return _objectSpread$1(
-          ((_objectSpread2 = {}),
-          _defineProperty(_objectSpread2, attr + 'Top', px(_safeArea.top)),
-          _defineProperty(_objectSpread2, attr + 'Bottom', px(_safeArea.bottom)),
-          _defineProperty(_objectSpread2, attr + 'Left', px(_safeArea.left)),
-          _defineProperty(_objectSpread2, attr + 'Right', px(_safeArea.right)),
-          _objectSpread2),
-          style
-        )
-      },
-    },
-    {
-      key: 'render',
-      value: function render() {
-        var _this = this
-        return React.createElement(safeAreaContext.Consumer, null, function (ctx) {
-          if (_this.props.disabled || ctx.disabled) {
-            var _this$props = _this.props
-            _this$props.disabled
-            var _props = _objectWithoutProperties(_this$props, _excluded$2)
-            return React.createElement(View, _props)
-          }
-          var _this$props2 = _this.props,
-            className = _this$props2.className,
-            style = _this$props2.style,
-            children = _this$props2.children,
-            useMargin = _this$props2.useMargin,
-            props = _objectWithoutProperties(_this$props2, _excluded2$2)
-          var rootCla = classNames(
-            className,
-            'fta-safe-area-container' + (useMargin ? '__margin' : '')
-          )
-          var rootStyle = _this.getInlineStyle(style)
-          return React.createElement(
-            View,
-            _extends({}, props, { style: _mergeEleStyles$3(_getStyle$3(rootCla), rootStyle) }),
-            children
-          )
-        })
-      },
-    },
-  ])
-  return SafeAreaView
-})(Component)
-SafeAreaView.defaultProps = { style: {}, disabled: false }
-var SafeArea = (function (_Component2) {
-  _inherits(SafeArea, _Component2)
-  var _super2 = _createSuper$2(SafeArea)
-  function SafeArea() {
-    _classCallCheck(this, SafeArea)
-    return _super2.apply(this, arguments)
+  if (weight) {
+    textStyle.fontWeight = weight
   }
-  _createClass(SafeArea, [
-    {
-      key: 'getInlineStyle',
-      value: function getInlineStyle(position, style) {
-        var attr = this.props.useMargin ? 'margin' : 'padding'
-        return _objectSpread$1(
-          _defineProperty({}, '' + attr + upperCase(position), px(_safeArea[position])),
-          style
-        )
-      },
-    },
-    {
-      key: 'renderSafeArea',
-      value: function renderSafeArea(position, props) {
-        props.style
-        props.className
-        var children = props.children,
-          useMargin = props.useMargin,
-          extraProps = _objectWithoutProperties(props, _excluded3$1)
-        var rootStyle = this.getInlineStyle(position, props.style)
-        var rootCla = classNames(
-          props.className,
-          'fta-safe-area-' + position + (useMargin ? '__margin' : '')
-        )
-        return React.createElement(
-          View,
-          _extends({}, extraProps, { style: _mergeEleStyles$3(_getStyle$3(rootCla), rootStyle) }),
-          children
-        )
-      },
-    },
-    {
-      key: 'render',
-      value: function render() {
-        var _this2 = this
-        return React.createElement(safeAreaContext.Consumer, null, function (ctx) {
-          if (_this2.props.disabled || ctx.disabled) {
-            var _this2$props = _this2.props
-            _this2$props.disabled
-            var _props2 = _objectWithoutProperties(_this2$props, _excluded4$1)
-            return React.createElement(View, _props2)
-          }
-          var _this2$props2 = _this2.props,
-            top = _this2$props2.top,
-            bottom = _this2$props2.bottom,
-            props = _objectWithoutProperties(_this2$props2, _excluded5)
-          var position = !top && bottom ? 'bottom' : 'top'
-          return _this2.renderSafeArea(position, props)
-        })
-      },
-    },
-  ])
-  return SafeArea
-})(Component)
-SafeArea.defaultProps = { bottom: true, top: false, style: {}, disabled: false }
-SafeArea.Consumer = safeAreaContext.Consumer
-SafeArea.Provider = safeAreaContext.Provider
-SafeArea.View = SafeAreaView
+  if (size) {
+    var fontSize = careMode ? size * 1.3 : size
+    textStyle.fontSize = scale$1 ? scale(fontSize) : px(fontSize)
+  }
+  return React.createElement(
+    TaroText,
+    _extends({ style: _mergeEleStyles$3(_getStyle$3(textClz), textStyle) }, extraProps),
+    children
+  )
+}
+var textDefaultProps = { level: 4, scale: true }
+Text.defaultProps = textDefaultProps
 
 var indexScssStyleSheet = StyleSheet.create({
   'fta-view-disabled': {
@@ -1921,14 +1664,106 @@ var indexScssStyleSheet = StyleSheet.create({
   },
 })
 
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr
+}
+
+function _iterableToArrayLimit(arr, i) {
+  var _i =
+    arr == null
+      ? null
+      : (typeof Symbol !== 'undefined' && arr[Symbol.iterator]) || arr['@@iterator']
+  if (_i == null) return
+  var _arr = []
+  var _n = true
+  var _d = false
+  var _s, _e
+  try {
+    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value)
+      if (i && _arr.length === i) break
+    }
+  } catch (err) {
+    _d = true
+    _e = err
+  } finally {
+    try {
+      if (!_n && _i['return'] != null) _i['return']()
+    } finally {
+      if (_d) throw _e
+    }
+  }
+  return _arr
+}
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i]
+  }
+  return arr2
+}
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return
+  if (typeof o === 'string') return _arrayLikeToArray(o, minLen)
+  var n = Object.prototype.toString.call(o).slice(8, -1)
+  if (n === 'Object' && o.constructor) n = o.constructor.name
+  if (n === 'Map' || n === 'Set') return Array.from(o)
+  if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
+    return _arrayLikeToArray(o, minLen)
+}
+
+function _nonIterableRest() {
+  throw new TypeError(
+    'Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.'
+  )
+}
+
+function _slicedToArray(arr, i) {
+  return (
+    _arrayWithHoles(arr) ||
+    _iterableToArrayLimit(arr, i) ||
+    _unsupportedIterableToArray(arr, i) ||
+    _nonIterableRest()
+  )
+}
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) return _arrayLikeToArray(arr)
+}
+
+function _iterableToArray(iter) {
+  if (
+    (typeof Symbol !== 'undefined' && iter[Symbol.iterator] != null) ||
+    iter['@@iterator'] != null
+  )
+    return Array.from(iter)
+}
+
+function _nonIterableSpread() {
+  throw new TypeError(
+    'Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.'
+  )
+}
+
+function _toConsumableArray(arr) {
+  return (
+    _arrayWithoutHoles(arr) ||
+    _iterableToArray(arr) ||
+    _unsupportedIterableToArray(arr) ||
+    _nonIterableSpread()
+  )
+}
+
 var COLOR = {
   black: ['#000', '#000000', 'rgb(0,0,0)', 'black'],
   white: ['#fff', '#ffffff', 'rgb(255,255,255)', 'white'],
 }
-Object.values(COLOR).reduce(function (prev, cur) {
+var colorList = Object.values(COLOR).reduce(function (prev, cur) {
   return [].concat(_toConsumableArray(prev), _toConsumableArray(cur))
 }, [])
-Object.entries(COLOR).reduce(function (prev, _ref) {
+var colorMap = Object.entries(COLOR).reduce(function (prev, _ref) {
   var _ref2 = _slicedToArray(_ref, 2),
     key = _ref2[0],
     list = _ref2[1]
@@ -1937,6 +1772,7 @@ Object.entries(COLOR).reduce(function (prev, _ref) {
   })
   return prev
 }, {})
+var opacityList = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
 
 var _excluded$1 = ['onLayout', 'className', 'children', 'style'],
   _excluded2$1 = ['children', 'activeOpacity'],
@@ -2037,9 +1873,9 @@ var LayoutView = (function (_Component) {
         var _this2 = this
         this.props.onLayout &&
           !inRN &&
-          (PolyCreateSelectorQuery == null
+          (createSelectorQuery == null
             ? void 0
-            : PolyCreateSelectorQuery('._fta-view-layout__' + this._id, function (result) {
+            : createSelectorQuery('._fta-view-layout__' + this._id, function (result) {
                 _this2.props.onLayout(result, result)
               }))
       },
@@ -2102,7 +1938,9 @@ var TouchableOpacity = (function (_Component2) {
   return TouchableOpacity
 })(Component)
 TouchableOpacity.defaultProps = { activeOpacity: 0.8 }
-TouchableOpacity.propTypes = { activeOpacity: PropTypes.number }
+TouchableOpacity.propTypes = {
+  activeOpacity: inRN ? PropTypes.number : PropTypes.oneOf(opacityList),
+}
 var TouchableHighlight = (function (_Component3) {
   _inherits(TouchableHighlight, _Component3)
   var _super3 = _createSuper$1(TouchableHighlight)
@@ -2123,6 +1961,13 @@ var TouchableHighlight = (function (_Component3) {
           props = _objectWithoutProperties(_this$props4, _excluded3)
         var hoverClass
         if (underlayClass) hoverClass = underlayClass
+        else if (!inRN) {
+          if (!~colorList.indexOf(underlayColor)) {
+            underlayColor = '#000'
+          } else {
+            hoverClass = 'fta-view-hover__' + colorMap[underlayColor]
+          }
+        }
         var clonedChildren = cloneElement(children, {
           hoverClass: 'fta-view-hover__' + activeOpacity * 10,
           hoverStyle: { opacity: activeOpacity },
@@ -2141,7 +1986,10 @@ var TouchableHighlight = (function (_Component3) {
   return TouchableHighlight
 })(Component)
 TouchableHighlight.defaultProps = { underlayColor: '#000', activeOpacity: 0.2, underlayClass: null }
-TouchableHighlight.propTypes = { underlayColor: PropTypes.any, activeOpacity: PropTypes.number }
+TouchableHighlight.propTypes = {
+  underlayColor: inRN ? PropTypes.any : PropTypes.oneOf(colorList),
+  activeOpacity: inRN ? PropTypes.number : PropTypes.oneOf(opacityList),
+}
 function renderDisabledView(props) {
   props.hoverClass
   props.hoverStyle
@@ -2353,7 +2201,7 @@ function _getStyle(classNameExpression) {
 function _mergeEleStyles() {
   return [].concat.apply([], arguments).reduce((pre, cur) => Object.assign(pre, cur), {})
 }
-var _styleSheet = indexScssStyleSheet$2
+var _styleSheet = indexScssStyleSheet$3
 function useBackIcon(props) {
   props.className
   var style = props.style,
