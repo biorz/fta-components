@@ -1,7 +1,7 @@
 const { resolve } = require('path')
 const { execSync } = require('child_process')
 
-const exDeps = ['classname', 'prop-types']
+const exDeps = ['classnames', 'prop-types']
 // 安装确实依赖
 function preinstall() {
   const notInstalledDeps = []
