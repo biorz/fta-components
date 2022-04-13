@@ -1,8 +1,6 @@
 #!/usr/bin/env node
 const path = require('path')
 const fs = require('fs-extra')
-const cwd = process.cwd()
-const { resolve, relative } = require('path')
 const { execSync } = require('child_process')
 
 const taroRoot = path.resolve(__dirname, '../../../')
@@ -12,9 +10,11 @@ const getComponents = () => {
   const components = require('../component-map.json')
 
   return Object.entries(components).map(([key, item]) => {
-    return item.replace
+    return [key, item.replace]
   })
 }
+
+const OUTPUT = 'rn'
 
 const main = () => {
   const pathPrefix = path.relative(taroRoot, pkgRoot)
@@ -30,16 +30,27 @@ const main = () => {
     cwd: taroRoot,
   }
 
-  components.forEach((component) => {
-    const input = path.resolve(pkgRoot, component)
-    const output = path.join(outputDir, `${component.replace('components', '')}`)
-    console.log(`build: ${input}, output: ${output}`)
+  components.forEach(([name, componentPath]) => {
+    const input = path.resolve(pkgRoot, componentPath)
+    const componentFilename = componentPath.replace('components', '')
+    const output = path.join(outputDir, componentFilename)
+    console.log(`
+=> build: ${input}
+=> output: ${output}`)
 
     execSync(
       `taro build native-components --type arn --input ${input} --output ${output}`,
       execOpts
     )
+
+    const tsPath = path.resolve(pkgRoot, `types/${componentFilename}.d.ts`)
+    const tsOutput = path.resolve(pkgRoot, `${OUTPUT}/${componentFilename}/index.d.ts`)
+    fs.copySync(tsPath, tsOutput)
+    // copy typescript 到当前目录
   })
+
+  console.log(`
+=> build rn components success`)
 }
 
 main()
