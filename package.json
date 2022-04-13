@@ -12,7 +12,7 @@
     "broadcast": "node ./bin/broadcast.js",
     "theme:clear": "node ./bin/theme-hook.js clear",
     "theme:recover": "node ./bin/theme-hook.js recover",
-    "build:rn": "node ./bin/build-component-rn.js",
+    "build:rn": "rimraf rn && npm run build:map && node ./bin/build-component-rn.js",
     "prepublishOnly": "npm run build:map && npm run theme:clear && npm run broadcast",
     "postpublish": "npm run theme:recover",
     "test": "echo \"Error: no test specified\" && exit 1"

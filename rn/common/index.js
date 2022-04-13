@@ -9,6 +9,8 @@ import {
 } from '../common'
 import { StyleSheet } from 'react-native'
 import { scalePx2dp } from '@fta/runtime-rn/dist/scale2dp'
+import classNames from 'classnames'
+export { default as classNames } from 'classnames'
 import { getSystemInfoSync } from '@fta/taro-rn/dist/lib/getSystemInfoSync'
 import Taro from '@fta/taro-rn'
 import { getEnv } from '@fta/taro-rn/dist/lib/getEnv'
@@ -381,50 +383,6 @@ function _toConsumableArray(arr) {
     _nonIterableSpread()
   )
 }
-
-var classnames = { exports: {} }
-
-;(function (module) {
-  ;(function () {
-    var hasOwn = {}.hasOwnProperty
-    function classNames() {
-      var classes = []
-      for (var i = 0; i < arguments.length; i++) {
-        var arg = arguments[i]
-        if (!arg) continue
-        var argType = typeof arg
-        if (argType === 'string' || argType === 'number') {
-          classes.push(arg)
-        } else if (Array.isArray(arg)) {
-          if (arg.length) {
-            var inner = classNames.apply(null, arg)
-            if (inner) {
-              classes.push(inner)
-            }
-          }
-        } else if (argType === 'object') {
-          if (arg.toString === Object.prototype.toString) {
-            for (var key in arg) {
-              if (hasOwn.call(arg, key) && arg[key]) {
-                classes.push(key)
-              }
-            }
-          } else {
-            classes.push(arg.toString())
-          }
-        }
-      }
-      return classes.join(' ')
-    }
-    if (module.exports) {
-      classNames.default = classNames
-      module.exports = classNames
-    } else {
-      window.classNames = classNames
-    }
-  })()
-})(classnames)
-var classNames = classnames.exports
 
 var isString$1 = function isString(s) {
   return typeof s === 'string' && s.length > 0
@@ -928,7 +886,6 @@ export {
   TARO_ENV,
   Themes,
   autoFix,
-  classNames,
   PolyCreateSelectorQuery as createSelectorQuery,
   deepMerge,
   delay,
