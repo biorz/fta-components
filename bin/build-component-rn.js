@@ -22,6 +22,10 @@ const main = () => {
   fs.ensureDirSync(path.resolve(taroRoot, outputDir))
 
   const components = getComponents()
+  /**
+   * common包打包
+   */
+  components.push('common')
   if (!components) {
     throw new Error('请先生成 component.map.js')
   }
@@ -40,6 +44,8 @@ const main = () => {
       execOpts
     )
   })
+
+  execSync(`taro build native-components --type arn --input ${input} --output ${output}`, execOpts)
 }
 
 main()
