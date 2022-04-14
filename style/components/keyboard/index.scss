@@ -1,0 +1,72 @@
+@import '../../mixins/index.scss';
+@import '../../variables/default.scss';
+
+$fta-keyboard-input-padding: zoom(28px) zoom(32px);
+$fta-keyboard-input-inner-height: zoom(84px);
+$fta-keyboard-input-inner-radius: zoom(12px);
+$fta-keyboard-input-inner-padding: zoom(32px);
+$fta-keyboard-input-inner-bg-color: #f6f6f6;
+$fta-keyboard-input-inner-color: $color-grey-0;
+$fta-keyboard-input-inner-font-size: $font-size-xl;
+$fta-keyboard-bg-color: #ececec;
+$fta-keyboard-padding: 0 zoom(16px) zoom(16px);
+
+$fta-keyboard-item-width: zoom(220px);
+$fta-keyboard-item-height: zoom(84px);
+$fta-keyboard-item-radius: zoom(8px);
+$fta-keyboard-item-bg-color: $color-white;
+$fta-keyboard-item-font-size: $font-size-xxl;
+$fta-keyboard-item-color: $color-grey-0;
+
+.fta-keyboard {
+  background-color: $fta-keyboard-bg-color;
+  padding: $fta-keyboard-padding;
+  @include display-flex(row);
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  &-input {
+    padding: $fta-keyboard-input-padding;
+
+    &__inner {
+      @include display-flex();
+      @include border-box();
+      width: 100%;
+      height: $fta-keyboard-input-inner-height;
+      border-radius: $fta-keyboard-input-inner-radius;
+      background-color: $fta-keyboard-input-inner-bg-color;
+      padding: 0 $fta-keyboard-input-inner-padding;
+      flex-direction: column;
+      justify-content: center;
+      overflow: hidden;
+
+      &-text {
+        font-weight: $font-weight-bold;
+        color: $fta-keyboard-input-inner-color;
+        font-size: $fta-keyboard-input-inner-font-size;
+
+        @include nrn {
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+
+  &-item {
+    @include flex-center();
+    margin-top: 16px;
+    width: $fta-keyboard-item-width;
+    height: $fta-keyboard-item-height;
+    background-color: $fta-keyboard-item-bg-color;
+    border-radius: $fta-keyboard-item-radius;
+
+    &__text {
+      font-size: $fta-keyboard-item-font-size;
+      color: $fta-keyboard-item-color;
+    }
+
+    &--hover {
+      background: #dddddd;
+    }
+  }
+}
