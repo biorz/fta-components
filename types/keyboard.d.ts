@@ -6,6 +6,16 @@ export type KeyboardType = 'id' | 'number' | 'decimal' | 'custom'
 
 export interface KeyboardProps extends Partial<ActionSheetProps> {
   /**
+   * 默认值，组件接受后被转成字符串类型
+   * @default ''
+   */
+  value?: string | number
+  /**
+   * 是否是受控组件，不执行校验
+   * @default false
+   */
+  controls?: boolean
+  /**
    * 键盘类型
    * @default 'number'
    */
@@ -24,6 +34,10 @@ export interface KeyboardProps extends Partial<ActionSheetProps> {
    * @default false
    */
   disorder?: boolean
+  /**
+   * 绑定值改变时
+   */
+  onChange?: (newVal: string) => void
 }
 // Pick<
 // ActionSheetProps,

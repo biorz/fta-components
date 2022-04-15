@@ -1,5 +1,5 @@
 import { Text, View } from '@tarojs/components'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { isNumber, isString } from '../../common'
 import '../../style/components/keyboard/index.scss'
 import { KeyboardButtonProps, KeyboardProps, KeyboardType } from '../../types/keyboard'
@@ -20,6 +20,7 @@ function disorderList<T = any>(list: T[], flag: boolean) {
 
 const baseButtons = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 const Validators = {
+  number: /^(([1-9]\d*)|((0|([1-9]\d*))(\.\d+)))$/,
   id: /^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/,
   phone: /^(0|86|17951)?(13[0-9]|15[012356789]|166|17[3678]|18[0-9]|14[57])[0-9]{8}$/,
   email: /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/,
@@ -38,8 +39,14 @@ const keyboardTypes: Record<
 }
 
 function Keyboard(props: KeyboardProps): JSX.Element {
-  const { type, input, validator = Validators.phone, disorder = true, ...actionSheetProps } = props
-  const [val, setVal] = useState('320320320320320320')
+  const { type, input, value, controls, validator, disorder, ...actionSheetProps } = props
+  const [val, setVal] = useState<string>(String(value))
+
+  useEffect(() => {
+    if (controls) {
+      setVal(String(value))
+    }
+  }, [val, controls])
   // const setVal = (newVal: string) => {
   //   if (newVal.length < val.length) return _setVal(newVal)
   //   let valid = true
@@ -135,6 +142,8 @@ function DeleteButton(): JSX.Element {
 }
 
 const defaultProps: KeyboardProps = {
+  value: '',
+  controls: false,
   input: true,
   type: 'number',
   title: {
@@ -143,6 +152,9 @@ const defaultProps: KeyboardProps = {
     confirmText: '确定',
   },
   isOpened: true,
+  disorder: false,
+  validator: Validators.number,
+  onChange() {},
 }
 
 const defaultItemProps: KeyboardButtonProps = {
