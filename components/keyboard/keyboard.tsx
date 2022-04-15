@@ -2,14 +2,62 @@ import { Text, View } from '@tarojs/components'
 import React, { useState } from 'react'
 import { isNumber, isString } from '../../common'
 import '../../style/components/keyboard/index.scss'
-import { KeyboardItemProps, KeyboardProps } from '../../types/keyboard'
+import { KeyboardButtonProps, KeyboardProps, KeyboardType } from '../../types/keyboard'
 import ActionSheet from '../action-sheet'
 
-const Types = {}
+/** 乱序排列 */
+function disorderList<T = any>(list: T[], flag: boolean) {
+  if (flag) return list
+  const newer: T[] = []
+  const copied = list.slice()
+  let len = copied.length
+  while (len) {
+    newer.push(copied.splice(~~(Math.random() * len), 1)[0])
+    len = copied.length
+  }
+  return newer
+}
 
-function Keyboard(props: KeyboardProps) {
-  const { type, input, ...actionSheetProps } = props
+const baseButtons = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+const Validators = {
+  id: /^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/,
+  phone: /^(0|86|17951)?(13[0-9]|15[012356789]|166|17[3678]|18[0-9]|14[57])[0-9]{8}$/,
+  email: /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/,
+  postcode: /^[1-9]\d{5}(?!\d)$/,
+}
+
+const keyboardTypes: Record<
+  KeyboardType,
+  {
+    validator: KeyboardProps['validator']
+  }
+> = {
+  number: {
+    validator: /1/,
+  },
+}
+
+function Keyboard(props: KeyboardProps): JSX.Element {
+  const { type, input, validator = Validators.phone, disorder = true, ...actionSheetProps } = props
   const [val, setVal] = useState('320320320320320320')
+  // const setVal = (newVal: string) => {
+  //   if (newVal.length < val.length) return _setVal(newVal)
+  //   let valid = true
+  //   if (validator) {
+  //     if (validator instanceof RegExp) {
+  //       valid = validator.test(newVal)
+  //     } else {
+  //       valid = validator(newVal)
+  //     }
+  //   }
+  //   if (valid) _setVal(newVal)
+  // }
+  const renderDeleteButton = () => (
+    <KeyboardButton onClick={() => setVal(val.slice(0, -1))}>
+      <DeleteButton />
+    </KeyboardButton>
+  )
+
   return (
     <ActionSheet {...actionSheetProps}>
       <>
@@ -23,18 +71,30 @@ function Keyboard(props: KeyboardProps) {
         ) : null}
         {/* 键盘区 */}
         <View className='fta-keyboard'>
-          {new Array(9).fill(null).map((v, i) => (
-            <KeyboardItem key={i} val={i + 1} index={i}>
-              {i + 1}
-            </KeyboardItem>
+          {baseButtons.map((v, i) => (
+            <KeyboardButton
+              key={i}
+              val={v}
+              index={i}
+              onClick={(input) => setVal(val + String(input))}>
+              {v}
+            </KeyboardButton>
           ))}
+          <KeyboardButton val={'.'} onClick={(input) => setVal(val + String(input))}>
+            .
+          </KeyboardButton>
+          <KeyboardButton val={0} onClick={(input) => setVal(val + String(input))} />
+          {renderDeleteButton()}
         </View>
       </>
     </ActionSheet>
   )
 }
 
-function KeyboardItem(props: KeyboardItemProps) {
+/**
+ * 输入按钮
+ */
+function KeyboardButton(props: KeyboardButtonProps): JSX.Element {
   const { onClick, onLongClick, val, index, hoverStyle, children } = props
 
   return (
@@ -47,8 +107,29 @@ function KeyboardItem(props: KeyboardItemProps) {
       {isString(children) || isNumber(children) ? (
         <Text className='fta-keyboard-item__text'>{children}</Text>
       ) : (
-        children
+        children || <Text className='fta-keyboard-item__text'>{val}</Text>
       )}
+    </View>
+  )
+}
+
+/**
+ * 空白占位符
+ */
+function Placeholder(): JSX.Element {
+  return <View className='fta-keyboard-item' />
+}
+
+/**
+ * 删除按钮
+ */
+function DeleteButton(): JSX.Element {
+  return (
+    <View className='fta-keyboard-delete'>
+      <View className='fta-keyboard-delete-triangle' />
+      <View className='fta-keyboard-delete-square'>
+        <Text className='fta-keyboard-delete__text'>×</Text>
+      </View>
     </View>
   )
 }
@@ -57,21 +138,23 @@ const defaultProps: KeyboardProps = {
   input: true,
   type: 'number',
   title: {
-    title: '请输入',
+    title: '数字键盘',
     cancelText: '取消',
     confirmText: '确定',
   },
   isOpened: true,
 }
 
-const defaultItemProps: KeyboardItemProps = {
+const defaultItemProps: KeyboardButtonProps = {
   hoverStyle: {
     backgroundColor: '#dddddd',
   },
 }
 
-KeyboardItem.defaultProps = defaultItemProps
+KeyboardButton.defaultProps = defaultItemProps
 
 Keyboard.defaultProps = defaultProps
+
+export { DeleteButton, Placeholder, KeyboardButton }
 
 export default Keyboard

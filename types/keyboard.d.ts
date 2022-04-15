@@ -15,6 +15,15 @@ export interface KeyboardProps extends Partial<ActionSheetProps> {
    * @default true
    */
   input?: boolean
+  /**
+   * 校验规则正则或函数
+   */
+  validator?: RegExp | ((result: string) => boolean)
+  /**
+   * 是否乱序排列
+   * @default false
+   */
+  disorder?: boolean
 }
 // Pick<
 // ActionSheetProps,
@@ -27,15 +36,11 @@ export interface KeyboardProps extends Partial<ActionSheetProps> {
 // | 'isOpened'
 // | 'useNativeModal'
 // >
-export interface KeyboardItemProps extends PropsWithChildren {
+export interface KeyboardButtonProps extends PropsWithChildren {
   /**
    * 当前键盘项绑定的值
    */
   val?: any
-  /**
-   * 校验规则正则或函数
-   */
-  validator?: RegExp | ((result: string) => boolean)
   /**
    * 点击回调
    */
@@ -55,6 +60,11 @@ export interface KeyboardItemProps extends PropsWithChildren {
    */
   index?: number
 }
+
+/**
+ * 空白占位符
+ */
+declare const Placeholder: FC<{}>
 
 declare const Keyboard: FC<KeyboardProps>
 

@@ -37,10 +37,10 @@ export interface ActionSheetProps extends BaseComponent {
    * 元素被关闭触发的事件
    */
   onClose?: (event?: CommonEvent) => void
-  /**
-   * 点击了底部取消按钮触发的事件
-   */
-  onCancel?: (event?: CommonEvent) => void
+  // /**
+  //  * 点击了底部取消按钮触发的事件
+  //  */
+  // onCancel?: (event?: CommonEvent) => void
   /**
    * RN端使用原生Modal组件
    * @default true

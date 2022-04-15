@@ -69,4 +69,43 @@ $fta-keyboard-item-color: $color-grey-0;
       background: #dddddd;
     }
   }
+
+  &-delete {
+    @include relative();
+    // @include flex-center();
+    width: 61px;
+    height: 36px;
+    overflow: hidden;
+
+    &-square {
+      position: absolute;
+      height: 100%;
+      width: 43px;
+      top: 0;
+      left: 18px;
+      background: #666666;
+      text-align: center;
+    }
+
+    &-triangle {
+      @include square(0);
+      position: absolute;
+      left: -18px;
+      top: 0;
+      border: 18px solid transparent;
+      border-right-color: #666666;
+    }
+
+    &__text {
+      @include relative();
+      z-index: 1;
+      color: $color-white;
+      font-size: $font-size-md;
+      @include nrn {
+        display: block;
+        line-height: 30px;
+        height: 36px;
+      }
+    }
+  }
 }
