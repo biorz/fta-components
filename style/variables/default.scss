@@ -723,3 +723,25 @@ $fta-result-title-color: $color-grey-1 !default;
 $fta-result-desc-margin-top: zoom(14px) !default;
 $fta-result-desc-color: $color-grey-2 !default;
 $fta-result-desc-margin-top: zoom(14px) !default;
+
+/* Keyboard */
+$fta-keyboard-input-padding: zoom(28px) zoom(32px);
+$fta-keyboard-input-inner-height: zoom(84px);
+$fta-keyboard-input-inner-radius: zoom(12px);
+$fta-keyboard-input-inner-padding: zoom(32px);
+$fta-keyboard-input-inner-bg-color: #f6f6f6;
+$fta-keyboard-input-inner-color: $color-grey-0;
+$fta-keyboard-input-placeholder-color: $color-grey-2;
+$fta-keyboard-input-placeholder-size: $font-size-md;
+$fta-keyboard-input-inner-font-size: $font-size-xl;
+
+$fta-keyboard-bg-color: #ececec;
+$fta-keyboard-padding: 0 zoom(16px) zoom(16px);
+
+$fta-keyboard-item-margin-top: zoom(16px);
+$fta-keyboard-item-width: zoom(220px);
+$fta-keyboard-item-height: zoom(84px);
+$fta-keyboard-item-radius: zoom(8px);
+$fta-keyboard-item-bg-color: $color-white;
+$fta-keyboard-item-font-size: $font-size-xxl;
+$fta-keyboard-item-color: $color-grey-0;

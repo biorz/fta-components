@@ -1,23 +1,6 @@
 @import '../../mixins/index.scss';
 @import '../../variables/default.scss';
 
-$fta-keyboard-input-padding: zoom(28px) zoom(32px);
-$fta-keyboard-input-inner-height: zoom(84px);
-$fta-keyboard-input-inner-radius: zoom(12px);
-$fta-keyboard-input-inner-padding: zoom(32px);
-$fta-keyboard-input-inner-bg-color: #f6f6f6;
-$fta-keyboard-input-inner-color: $color-grey-0;
-$fta-keyboard-input-inner-font-size: $font-size-xl;
-$fta-keyboard-bg-color: #ececec;
-$fta-keyboard-padding: 0 zoom(16px) zoom(16px);
-
-$fta-keyboard-item-width: zoom(220px);
-$fta-keyboard-item-height: zoom(84px);
-$fta-keyboard-item-radius: zoom(8px);
-$fta-keyboard-item-bg-color: $color-white;
-$fta-keyboard-item-font-size: $font-size-xxl;
-$fta-keyboard-item-color: $color-grey-0;
-
 .fta-keyboard {
   background-color: $fta-keyboard-bg-color;
   padding: $fta-keyboard-padding;
@@ -54,7 +37,7 @@ $fta-keyboard-item-color: $color-grey-0;
 
   &-item {
     @include flex-center();
-    margin-top: 16px;
+    margin-top: $fta-keyboard-item-margin-top;
     width: $fta-keyboard-item-width;
     height: $fta-keyboard-item-height;
     background-color: $fta-keyboard-item-bg-color;
@@ -73,26 +56,27 @@ $fta-keyboard-item-color: $color-grey-0;
   &-delete {
     @include relative();
     // @include flex-center();
-    width: 61px;
-    height: 36px;
+    width: zoom(61px);
+    height: zoom(36px);
     overflow: hidden;
 
     &-square {
       position: absolute;
       height: 100%;
-      width: 43px;
+      width: zoom(43px);
       top: 0;
-      left: 18px;
+      left: zoom(18px);
       background: #666666;
       text-align: center;
+      @include flex-center();
     }
 
     &-triangle {
       @include square(0);
       position: absolute;
-      left: -18px;
+      left: zoom(-17px);
       top: 0;
-      border: 18px solid transparent;
+      border: zoom(18px) solid transparent;
       border-right-color: #666666;
     }
 
@@ -101,11 +85,16 @@ $fta-keyboard-item-color: $color-grey-0;
       z-index: 1;
       color: $color-white;
       font-size: $font-size-md;
+      line-height: zoom(36px);
       @include nrn {
-        display: block;
-        line-height: 30px;
-        height: 36px;
+        top: zoom(-3px);
       }
     }
+  }
+
+  &-placeholder {
+    color: $fta-keyboard-input-placeholder-color;
+    font-weight: $font-weight-normal;
+    font-size: $fta-keyboard-input-placeholder-size;
   }
 }
