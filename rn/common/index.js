@@ -700,7 +700,7 @@ var inWeb = TARO_ENV === 'h5'
 var inWeapp = TARO_ENV === 'weapp'
 var inAlipay = TARO_ENV === 'alipay'
 var systemInfo = getSystemInfoSync()
-var deviceRatio$1 = systemInfo.windowWidth / 750
+var deviceRatio$1 = systemInfo.windowWidth / 720
 var px = function (size) {
   return size
 }
