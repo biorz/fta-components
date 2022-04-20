@@ -1,4 +1,4 @@
-import { Form } from '@tarojs/components'
+import { Form, View } from '@tarojs/components'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
@@ -47,3 +47,9 @@ Form.propTypes = {
   onSubmit: PropTypes.func,
   onReset: PropTypes.func,
 }
+
+function FormItem(): JSX.Element {
+  return <View className='fta-form-item'></View>
+}
+
+export { FormItem }
