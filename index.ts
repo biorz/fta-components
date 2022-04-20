@@ -31,6 +31,7 @@ export { default as SafeArea, SafeAreaView } from './components/safe-area'
 export { default as SegmentedControl } from './components/segmented-control'
 export { default as Steps, StepsItem } from './components/steps'
 export { default as SwipeAction } from './components/swipe-action'
+export { default as Swiper, SwiperItem } from './components/swiper'
 export { default as Switch } from './components/switch'
 export { default as TabBar } from './components/tab-bar'
 export { default as Tabs, Tab } from './components/tabs'
@@ -45,4 +46,3 @@ export {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from './components/view'
-export { default as Swiper } from './components/swiper'

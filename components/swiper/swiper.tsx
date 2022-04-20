@@ -1,19 +1,19 @@
-/**
- * title: 'Swiper 滑动视图容器'
- * componentName: 'Swiper'
- * des: '滑块视图容器，常用于走马灯、轮播图'
- * previewUrl: 'components/form/checkbox'
- * materialType: 'component'
- * package: '@fta/components'
- */
-
+import { Swiper as TaroSwiper, SwiperItem as TaroSwiperItem } from '@tarojs/components'
+import classNames from 'classnames'
 import React from 'react'
-import { SwiperProps } from '../../types/swiper'
 import '../../style/components/swiper/index.scss'
-import { View } from '@tarojs/components'
+import { SwiperItemProps, SwiperProps } from '../../types/swiper'
 
 function Swiper(props: SwiperProps) {
-  return <View className='fta-swiper'></View>
+  const { className, style, ...extraProps } = props
+  const rootClz = classNames('fta-swiper', className)
+  return <TaroSwiper className={rootClz} style={style} {...extraProps} />
 }
 
-export default Swiper
+function SwiperItem(props: SwiperItemProps) {
+  const { className, style, ...extraProps } = props
+  const rootClz = classNames('fta-swiper-item', className)
+  return <TaroSwiperItem className={rootClz} style={style} {...extraProps} />
+}
+
+export { SwiperItem, Swiper as default }

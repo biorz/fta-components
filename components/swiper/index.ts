@@ -1,1 +1,1 @@
-export { default } from './swiper'
+export { default, SwiperItem } from './swiper'
