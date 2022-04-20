@@ -1,1 +1,1 @@
-function Picker() {}
+export { Picker as default } from '@tarojs/components'

@@ -1,6 +1,5 @@
+import { PickerProps } from '@tarojs/components/types/Picker'
 import { FC } from 'react'
-
-interface PickerProps {}
 
 declare const Picker: FC<PickerProps>
 
