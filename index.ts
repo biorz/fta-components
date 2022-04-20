@@ -45,3 +45,4 @@ export {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from './components/view'
+export { default as Swiper } from './components/swiper'

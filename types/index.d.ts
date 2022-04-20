@@ -41,3 +41,4 @@ export {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from './view'
+export { default as Swiper } from './swiper'
