@@ -1,24 +1,24 @@
 import { CommonEvent } from '@tarojs/components/types/common'
-import { ComponentClass, ReactElement, ReactNode } from 'react'
-import BaseComponent from './base'
+import { CSSProperties, FC, ReactElement, ReactNode } from 'react'
+import BaseComponent, { PropsWithChildren } from './base'
 
 declare type FormFunction = (event: CommonEvent) => void
 
-export interface FormProps extends BaseComponent {
-  /**
-   * 是否返回 formId 用于发送模板消息
-   * @default false
-   */
-  reportSubmit?: boolean
-  /**
-   * 携带 form 中的数据触发 submit 事件，由于小程序组件化的限制，onSubmit 事件获得的 event 中的 event.detail.value 始终为空对象，开发者要获取数据，可以自行在页面的 state 中获取
-   */
-  onSubmit?: FormFunction
-  /**
-   * 表单重置时会触发 reset 事件
-   */
-  onReset?: FormFunction
-}
+// export interface FormProps extends BaseComponent {
+//   /**
+//    * 是否返回 formId 用于发送模板消息
+//    * @default false
+//    */
+//   reportSubmit?: boolean
+//   /**
+//    * 携带 form 中的数据触发 submit 事件，由于小程序组件化的限制，onSubmit 事件获得的 event 中的 event.detail.value 始终为空对象，开发者要获取数据，可以自行在页面的 state 中获取
+//    */
+//   onSubmit?: FormFunction
+//   /**
+//    * 表单重置时会触发 reset 事件
+//    */
+//   onReset?: FormFunction
+// }
 
 type Validator = (rule: ValidateRule, value: any, callback: (message?: string) => void) => void
 
@@ -37,9 +37,18 @@ export interface ValidateRule {
   validator?: Validator
 }
 
-export type Align = 'center' | 'end' | 'flex-end' | 'flex-start' | 'start'
+export type Align = 'left' | 'center' | 'right'
 
-export interface FormProps {
+export interface FormProps extends BaseComponent, PropsWithChildren {
+  /**
+   * 表单标题
+   */
+  title?: ReactNode
+  /**
+   * 标题对其方式
+   * @default 'left'
+   */
+  titleAlign?: Align
   /**
    * 校验出错时是否滚动到可是范围内
    * @default true
@@ -56,21 +65,33 @@ export interface FormProps {
    */
   border?: boolean
   /**
-   * 右侧对其方式
+   * 右侧内容区域对其方式
    */
   align?: Align
   /**
    * 校验规则
    */
-  rules: Record<string, ValidateRule>
+  rules?: Record<string, ValidateRule>
   /**
    * 提交表单时的回调
    */
   onSubmit?: () => void
+  /**
+   * 标签className
+   */
+  labelClassName?: string
+  /**
+   * 标签内联样式
+   */
+  labelStyle?: CSSProperties
 }
 
-export interface FormItem
-  extends Pick<FormProps, 'scrollIntoView' | 'readonly' | 'border' | 'align'> {
+export interface FormItemProps
+  extends Pick<
+      FormProps,
+      'scrollIntoView' | 'readonly' | 'border' | 'align' | 'labelClassName' | 'labelStyle'
+    >,
+    BaseComponent {
   /**
    * 左侧标题
    */
@@ -94,7 +115,7 @@ export interface FormItem
   /**
    * 校验规则
    */
-  rule: Validator
+  rule?: Validator
   /**
    * 值的最大长度
    */
@@ -110,24 +131,28 @@ export interface FormItem
   /**
    * 点击tooltip的回调
    */
-  onTooltipClick: (prop: string) => void
+  onTooltipClick?: (prop: string) => void
   /**
    * 点击tooltip的全屏提示
    */
-  renderTooltip?: ReactElement
+  renderTooltip?: ReactNode
   /**
    * input框自动聚焦
    * @default false
    */
   autofocus?: boolean
   /**
-   * 自定义内容
+   * 自定义右侧显示
    */
   children?: ReactNode
   /**
    * 校验回调
    */
   validator?: (rule: ValidateRule, value?: any, callback?: (val: ?any) => void) => void
+  /**
+   * 点击内容区域的回调
+   */
+  onClick?: () => void
   /**
    * 值变化时的回调
    */
@@ -181,6 +206,15 @@ interface FormItemRefMethods {
   clearValidate: () => void
 }
 
-declare const Form: ComponentClass<FormProps>
+export type ToolTipProps = Pick<
+  FormItemProps,
+  'tooltip' | 'onTooltipClick' | 'renderTooltip' | 'prop'
+>
 
-export default Form
+declare const FormItem: FC<FormItemProps>
+
+declare const Form: FC<FormProps> & {
+  Item: typeof FormItem
+}
+
+export { Form as default, FormItem }

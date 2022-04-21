@@ -12,6 +12,7 @@
   "Drawer": { "replace": "components/drawer", "default": true },
   "Empty": { "replace": "components/empty", "default": true },
   "Form": { "replace": "components/form", "default": true },
+  "FormItem": { "replace": "components/form", "default": false },
   "Gap": { "replace": "components/gap", "default": true },
   "Icon": { "replace": "components/icon", "default": true },
   "Image": { "replace": "components/image", "default": true },
