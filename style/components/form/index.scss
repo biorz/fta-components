@@ -53,6 +53,8 @@ $fta-form-bg-color: $color-bg;
   }
 
   &-content {
+    @include relative();
+    // @include border-box();
     height: 100%;
     flex: 1 1 auto;
     // background-color: green;
