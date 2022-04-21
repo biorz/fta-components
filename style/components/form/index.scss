@@ -49,6 +49,10 @@ $fta-form-bg-color: $color-bg;
       font-size: $font-size-md;
       font-weight: $font-weight-normal;
       color: $color-grey-1;
+
+      &--error {
+        color: red;
+      }
     }
   }
 
@@ -61,7 +65,7 @@ $fta-form-bg-color: $color-bg;
     @include display-flex(row);
     justify-content: flex-end;
     align-items: center;
-    padding-right: zoom(28px);
+    // padding-right: zoom(28px);
 
     &__text {
       font-size: $font-size-md;

@@ -1,9 +1,17 @@
 import { Image, ScrollView, Text, View } from '@tarojs/components'
 import classNames from 'classnames'
-import React, { CSSProperties, ReactElement, ReactNode, useState } from 'react'
+import React, {
+  CSSProperties,
+  forwardRef,
+  ReactElement,
+  ReactNode,
+  Ref,
+  useImperativeHandle,
+  useState,
+} from 'react'
 import { isString, noop } from '../../common'
 import '../../style/components/form/index.scss'
-import { Align, FormItemProps, FormProps, ToolTipProps } from '../../types/form'
+import { Align, FormItemProps, FormProps, FormRefMethods, ToolTipProps } from '../../types/form'
 import { FormConsumer, FormProvider } from './context'
 
 const justifyContentMap: Record<Align, CSSProperties['justifyContent']> = {
@@ -12,7 +20,7 @@ const justifyContentMap: Record<Align, CSSProperties['justifyContent']> = {
   right: 'flex-end',
 }
 
-function Form(props: FormProps): JSX.Element {
+function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
   const {
     children,
     border,
@@ -26,6 +34,18 @@ function Form(props: FormProps): JSX.Element {
     style,
   } = props
   const rootClass = classNames('fta-form', className)
+
+  useImperativeHandle(ref, () => ({
+    validate(callback: (valid: boolean, failedProps: string[]) => void) {
+      return Promise.resolve()
+    },
+    validateField(props: string[], callback: (valid: boolean, failedProps: string[]) => void) {
+      return Promise.resolve()
+    },
+    clearValidate() {},
+    resetFields() {},
+    submit() {},
+  }))
   return (
     <FormProvider value={{ readonly, border, align }}>
       <ScrollView
@@ -69,28 +89,40 @@ function FormItem(props: FormItemProps): JSX.Element {
     labelStyle,
   } = props
 
+  const [error, toggleError] = useState(false)
+
   return (
     <FormConsumer>
       {(ctx) => {
+        // 内容对其方式
         const _align = align || ctx.align
+        // 是否只读
         const _readonly = readonly || (ctx.readonly && readonly !== false)
+        // 是否有下方边框线
         const _border = border || (ctx.border && border !== false)
+        // 是否可点击
         const _onClick = _readonly ? noop : onClick
+
         const _labelClassName = classNames(
           'fta-form-item-label',
           ctx.labelClassName,
           labelClassName
         )
         const _labelStyle = { ...ctx.labelStyle, ...labelStyle }
+
         const rootClass = classNames('fta-form-item', {
           'fta-form-item--border': _border,
           'fta-form-item--readonly': _readonly,
+        })
+
+        const labelTextClass = classNames('fta-form-item-label__text', {
+          'fta-form-item-label__text--error': error,
         })
         return (
           <View className={rootClass}>
             {/* label */}
             <View className={_labelClassName} style={_labelStyle}>
-              <Text className='fta-form-item-label__text'>{label}</Text>
+              <Text className={labelTextClass}>{label}</Text>
               {tooltip ? (
                 <ToolTip
                   onTooltipClick={onTooltipClick}
@@ -177,12 +209,12 @@ const formItemDefaultProps: FormItemProps = {
   onClick() {},
 }
 
-Form.defaultProps = formDefaultProps
-
-Form.Item = FormItem
-
 FormItem.defaultProps = formItemDefaultProps
 
 ToolTip.defaultProps = tooltipDefaultProps
 
-export { Form as default, FormItem }
+const ForwardForm = forwardRef(Form)
+
+ForwardForm.defaultProps = formDefaultProps
+
+export { ForwardForm as default, FormItem }

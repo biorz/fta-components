@@ -167,7 +167,7 @@ export interface FormItemProps
   onBlur?: () => void
 }
 
-interface FormRefMethods {
+export interface FormRefMethods {
   /**
    * 手动验证所有表单项，返回一个Promise对象
    */
@@ -195,7 +195,7 @@ interface FormRefMethods {
   submit: () => void
 }
 
-interface FormItemRefMethods {
+export interface FormItemRefMethods {
   /**
    * 对该表单项进行重置，将其值重置为初始值并移除校验结果
    */
