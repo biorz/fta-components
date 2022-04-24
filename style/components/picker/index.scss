@@ -8,8 +8,9 @@
   @include display-flex(row);
   width: 100%;
 
-  &-scrollview {
-    overflow: scroll;
+  &-block {
+    // overflow: auto;
+    flex: 1;
     // prettier-ignore
     height: 156PX;
   }
@@ -22,17 +23,14 @@
     overflow: hidden;
 
     &__text {
+      @include nrn {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
       // prettier-ignore
       font-size: 14PX;
       color: $color-grey-0;
-    }
-
-    &-block {
-      // @include display-flex(column);
-      // justify-content: center;
-      // align-items: center;
-      // flex-wrap: nowrap;
-      // flex: 1 1 auto;
     }
 
     /* Modifiers */
@@ -41,9 +39,16 @@
       height: 50PX;
       opacity: 1;
 
+      // @include nrn {
+      //   transition: height opacity 0.2s;
+      // }
+
       &__text {
         // prettier-ignore
         font-size: 20PX;
+        @include nrn {
+          transition: font-size 0.2s;
+        }
       }
     }
 
@@ -52,10 +57,23 @@
       height: 33PX;
       opacity: 0.4;
 
+      // @include nrn {
+      //   transition: height 0.1s;
+      // }
+
       &__text {
         // prettier-ignore
         font-size: 18PX;
+        @include nrn {
+          transition: font-size 0.1s;
+        }
       }
+    }
+
+    &--placeholder {
+      // prettier-ignore
+      height: 53PX;
+      width: 100%;
     }
   }
 
@@ -67,7 +85,9 @@
     // prettier-ignore
     border-top-width: 1PX;
     border-top-color: #e9e9e9;
-    border-top-style: solid;
+    @include nrn {
+      border-top-style: solid;
+    }
 
     &--top {
       // prettier-ignore
