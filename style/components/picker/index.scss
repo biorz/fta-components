@@ -1,0 +1,82 @@
+@import '../../mixins/index.scss';
+@import '../../variables/default.scss';
+
+.fta-picker {
+  // prettier-ignore
+  padding: 27PX 0;
+  @include relative;
+  @include display-flex(row);
+  width: 100%;
+
+  &-scrollview {
+    overflow: scroll;
+    // prettier-ignore
+    height: 156PX;
+  }
+
+  &-item {
+    @include flex-center();
+    // prettier-ignore
+    height: 20PX;
+    opacity: 0.3;
+    overflow: hidden;
+
+    &__text {
+      // prettier-ignore
+      font-size: 14PX;
+      color: $color-grey-0;
+    }
+
+    &-block {
+      // @include display-flex(column);
+      // justify-content: center;
+      // align-items: center;
+      // flex-wrap: nowrap;
+      // flex: 1 1 auto;
+    }
+
+    /* Modifiers */
+    &--active {
+      // prettier-ignore
+      height: 50PX;
+      opacity: 1;
+
+      &__text {
+        // prettier-ignore
+        font-size: 20PX;
+      }
+    }
+
+    &--almost {
+      // prettier-ignore
+      height: 33PX;
+      opacity: 0.4;
+
+      &__text {
+        // prettier-ignore
+        font-size: 18PX;
+      }
+    }
+  }
+
+  &-line {
+    @include border-box;
+    position: absolute;
+    margin-left: 32px;
+    width: 656px;
+    // prettier-ignore
+    border-top-width: 1PX;
+    border-top-color: #e9e9e9;
+    border-top-style: solid;
+
+    &--top {
+      // prettier-ignore
+      top: 80PX
+    }
+
+    &--bottom {
+      // prettier-ignore
+      bottom: 80PX
+    }
+  }
+}

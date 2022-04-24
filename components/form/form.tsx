@@ -11,7 +11,14 @@ import React, {
 } from 'react'
 import { isString, noop } from '../../common'
 import '../../style/components/form/index.scss'
-import { Align, FormItemProps, FormProps, FormRefMethods, ToolTipProps } from '../../types/form'
+import {
+  Align,
+  FormItemProps,
+  FormItemRefMethods,
+  FormProps,
+  FormRefMethods,
+  ToolTipProps,
+} from '../../types/form'
 import { FormConsumer, FormProvider } from './context'
 
 const justifyContentMap: Record<Align, CSSProperties['justifyContent']> = {
@@ -71,7 +78,7 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
   )
 }
 
-function FormItem(props: FormItemProps): JSX.Element {
+function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Element {
   const {
     label,
     tooltip,
@@ -90,6 +97,11 @@ function FormItem(props: FormItemProps): JSX.Element {
   } = props
 
   const [error, toggleError] = useState(false)
+
+  useImperativeHandle(ref, () => ({
+    resetField() {},
+    clearValidate() {},
+  }))
 
   return (
     <FormConsumer>
@@ -193,6 +205,8 @@ function Arrow(): JSX.Element {
   )
 }
 
+function useForm() {}
+
 const tooltipDefaultProps: ToolTipProps = {
   tooltip: '',
   onTooltipClick() {},
@@ -209,12 +223,14 @@ const formItemDefaultProps: FormItemProps = {
   onClick() {},
 }
 
-FormItem.defaultProps = formItemDefaultProps
-
 ToolTip.defaultProps = tooltipDefaultProps
 
 const ForwardForm = forwardRef(Form)
 
+const FowardFormItem = forwardRef(FormItem)
+
 ForwardForm.defaultProps = formDefaultProps
 
-export { ForwardForm as default, FormItem }
+FowardFormItem.defaultProps = formItemDefaultProps
+
+export { ForwardForm as default, FowardFormItem as FormItem }
