@@ -1,9 +1,17 @@
 import { ScrollView, Text, View } from '@tarojs/components'
 import classNames from 'classnames'
-import React, { FC, memo, useRef, useState } from 'react'
+import React, { FC, memo, useEffect, useRef, useState } from 'react'
 import '../../style/components/picker/index.scss'
-import { PickerMode, PickerProps } from '../../types/picker'
+import { ActionSheetProps, CustomTitle } from '../../types/action-sheet'
+import { Arrayable, PickerMode, PickerProps, PickerSelectorProps } from '../../types/picker'
 import FloatLayout from '../action-sheet'
+
+type ScrollEvent = {
+  detail: {
+    scrollTop: number
+    [key: string]: any
+  }
+}
 
 const builtInModes: PickerMode[] = [
   'selector',
@@ -34,40 +42,6 @@ const getScrollTopOverIndex = (index: number) => {
 
 const range = new Array(20).fill(0).map((v, i) => 2010 + i)
 
-const pickerMap: Record<PickerMode, FC<PickerProps>> = {
-  selector: SelectorPicker,
-  multiSelector: MultiSelectorPicker,
-  time: TimePicker,
-  date: DatePicker,
-  region: RegionPicker,
-}
-
-function BasePicker(props: PickerProps): JSX.Element {
-  return (
-    <FloatLayout
-      isOpened={true}
-      title={{
-        title: '请选择',
-        cancelText: '取消',
-        confirmText: '确定',
-      }}>
-      <View className='fta-picker'>
-        <ScrollArea
-          range={range}
-          activeIndex={1}
-          format={(v) => `${v}年`}
-          onChange={(newIndex, oldIndex) => {
-            console.log('onChange', newIndex, oldIndex)
-          }}
-        />
-        {/* 分割线 */}
-        <View className='fta-picker-line fta-picker-line--top'></View>
-        <View className='fta-picker-line fta-picker-line--bottom'></View>
-      </View>
-    </FloatLayout>
-  )
-}
-
 function _ScrollArea(props: {
   onScroll?: (e: any) => void
   onChange?: (newIndex: number, oldIndex: number) => void
@@ -76,10 +50,14 @@ function _ScrollArea(props: {
   format?: (value: any) => string | number
 }): JSX.Element {
   const { onScroll, activeIndex, range, format, onChange } = props
-  const activeIndexRef = useRef(activeIndex)
-  const [scrollTop, setScrollTop] = useState(getScrollTopOverIndex(activeIndex))
+  const activeIndexRef = useRef(+activeIndex >= 0 ? +activeIndex : 0)
+  const [scrollTop, setScrollTop] = useState(0)
 
-  const _onScroll = (e) => {
+  useEffect(() => {
+    setScrollTop(getScrollTopOverIndex(activeIndex))
+  }, [])
+
+  const _onScroll = (e: ScrollEvent) => {
     const scrollTop = e.detail.scrollTop
     setScrollTop(scrollTop)
     onScroll?.(e.detail)
@@ -103,6 +81,7 @@ function _ScrollArea(props: {
       onScroll={_onScroll}>
       {/* placeholder */}
       <View className='fta-picker-item--placeholder' />
+      {/* scroll items */}
       {range.map((v, i) => {
         const _activeIndex = activeIndexRef.current
         const hitActive = _activeIndex === i
@@ -135,29 +114,89 @@ function _ScrollArea(props: {
 }
 
 _ScrollArea.defaultProps = {
-  format: (v) => v,
+  activeIndex: 0,
+  format: (v: string | number) => v,
+  onChange() {},
 }
 
 const ScrollArea = memo(_ScrollArea)
 
-function Picker(props: PickerProps): JSX.Element {
-  const { mode, ...extraProps } = props
+const pickerMap: Record<PickerMode, FC<any>> = {
+  selector: SelectorPicker,
+  multiSelector: MultiSelectorPicker,
+  time: TimePicker,
+  date: DatePicker,
+  region: RegionPicker,
+}
+
+/**
+ * @component
+ * 基础Picker
+ */
+function BasePicker(props: ActionSheetProps): JSX.Element {
+  const { isOpened, children, title, ...extrapProps } = props
+  return (
+    <FloatLayout
+      isOpened={isOpened}
+      title={{
+        title: '请选择',
+        cancelText: '取消',
+        confirmText: '确定',
+        onConfirm() {
+          console.log('点击了确定')
+        },
+        onCancel() {},
+        ...(title as CustomTitle),
+      }}
+      {...extrapProps}>
+      <View className='fta-picker'>
+        {children}
+        {/* 分割线 */}
+        <View className='fta-picker-line fta-picker-line--top'></View>
+        <View className='fta-picker-line fta-picker-line--bottom'></View>
+      </View>
+    </FloatLayout>
+  )
+}
+
+/** Picker */
+function Picker(props: Partial<PickerProps>): JSX.Element {
+  const { mode } = props
   const _mode: PickerMode = builtInModes.includes(mode!) ? mode! : 'selector'
-  const RealPicker = pickerMap[_mode]
-  return <RealPicker mode={_mode} {...extraProps} />
+  const TypedPicker = pickerMap[_mode] as FC
+  return <TypedPicker {...props} />
 }
 
 const pickerDefaultProps: PickerProps = {
   mode: 'selector',
   range: [],
   onChange() {},
-  itemHeight: 40,
+  isOpened: true,
 }
 
 Picker.defaultProps = pickerDefaultProps
 
-function SelectorPicker(): JSX.Element {
-  return <BasePicker />
+type singleFormat = (value: any) => string | number
+
+type Compose<T> = T &
+  ActionSheetProps & {
+    onChange?: (newVal: number, oldVal: number) => void
+    format?: Arrayable<singleFormat>
+  }
+
+function SelectorPicker(props: Compose<PickerSelectorProps>): JSX.Element {
+  const { range, rangeKey, value, onChange, format } = props
+  const _format = format || (rangeKey ? (item: object) => item[rangeKey] : void 0)
+  return (
+    <BasePicker {...props}>
+      <ScrollArea
+        format={_format as singleFormat}
+        range={range}
+        activeIndex={value!}
+        onChange={onChange}
+      />
+    </BasePicker>
+  )
 }
 
 function MultiSelectorPicker(): JSX.Element {
@@ -177,4 +216,4 @@ function RegionPicker(): JSX.Element {
   return <BasePicker />
 }
 
-export { BasePicker as default }
+export { Picker as default }

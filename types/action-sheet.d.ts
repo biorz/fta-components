@@ -1,6 +1,6 @@
 import { CommonEvent } from '@tarojs/components/types/common'
 import { ComponentClass, CSSProperties, ReactNode } from 'react'
-import BaseComponent, { BaseTextComponent } from './base'
+import BaseComponent, { BaseTextComponent, PropsWithChildren } from './base'
 
 export interface CustomTitle {
   title: ReactNode
@@ -11,7 +11,7 @@ export interface CustomTitle {
   icon?: ReactNode
   border?: boolean
 }
-export interface ActionSheetProps extends BaseComponent {
+export interface ActionSheetProps extends BaseComponent, PropsWithChildren {
   /**
    * 是否展示元素
    * @default false

@@ -65,7 +65,7 @@
         // prettier-ignore
         font-size: 18PX;
         @include nrn {
-          transition: font-size 0.1s;
+          transition: font-size 0.05s;
         }
       }
     }
@@ -80,8 +80,8 @@
   &-line {
     @include border-box;
     position: absolute;
-    margin-left: 32px;
-    width: 656px;
+    margin-left: 4.45vw;
+    width: 91vw;
     // prettier-ignore
     border-top-width: 1PX;
     border-top-color: #e9e9e9;
