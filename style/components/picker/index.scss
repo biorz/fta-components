@@ -46,9 +46,9 @@
       &__text {
         // prettier-ignore
         font-size: 20PX;
-        @include nrn {
-          transition: font-size 0.2s;
-        }
+        // @include nrn {
+        //   transition: font-size 0.2s;
+        // }
       }
     }
 
@@ -64,9 +64,9 @@
       &__text {
         // prettier-ignore
         font-size: 18PX;
-        @include nrn {
-          transition: font-size 0.05s;
-        }
+        // @include nrn {
+        //   transition: font-size 0.05s;
+        // }
       }
     }
 

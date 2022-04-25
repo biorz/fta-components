@@ -1,10 +1,39 @@
 import { ScrollView, Text, View } from '@tarojs/components'
+import { PickerDateProps } from '@tarojs/components/types/Picker'
 import classNames from 'classnames'
-import React, { FC, memo, useEffect, useRef, useState } from 'react'
+import React, {
+  FC,
+  forwardRef,
+  memo,
+  ReactNode,
+  Ref,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react'
 import '../../style/components/picker/index.scss'
-import { ActionSheetProps, CustomTitle } from '../../types/action-sheet'
-import { Arrayable, PickerMode, PickerProps, PickerSelectorProps } from '../../types/picker'
+import {
+  Arrayable,
+  FloatLayoutProps,
+  PickerMode,
+  PickerMultiSelectorProps,
+  PickerProps,
+  PickerRefMethods,
+  PickerSelectorProps,
+} from '../../types/picker'
 import FloatLayout from '../action-sheet'
+import {
+  formatNum,
+  genPeriodList,
+  getAcitveIndex,
+  getCurrentDate,
+  getDaysCount,
+  getScrollTopOverIndex,
+  getSelectorDepth,
+  parseDate,
+} from './util'
 
 type ScrollEvent = {
   detail: {
@@ -25,23 +54,6 @@ const builtInModes: PickerMode[] = [
   'region',
 ]
 
-/** 获取当前激活的索引 */
-const getAcitveIndex = (scrollTop: number) => {
-  if (scrollTop < 25) return 0
-  if (scrollTop < 25 + 33 - 10) return 1
-  if (scrollTop < 25 + 33 + 10) return 2
-  return Math.round((scrollTop - (25 + 33 + 15)) / 20) + 3
-}
-
-/** 根据索引获得当前位置 */
-const getScrollTopOverIndex = (index: number) => {
-  if (index === 0) return 0
-  if (index === 1) return 33
-  return 33 + 20 * (index - 1)
-}
-
-const range = new Array(20).fill(0).map((v, i) => 2010 + i)
-
 function _ScrollArea(props: {
   onScroll?: (e: any) => void
   onChange?: (newIndex: number, oldIndex: number) => void
@@ -55,7 +67,7 @@ function _ScrollArea(props: {
 
   useEffect(() => {
     setScrollTop(getScrollTopOverIndex(activeIndex))
-  }, [])
+  }, [activeIndex])
 
   const _onScroll = (e: ScrollEvent) => {
     const scrollTop = e.detail.scrollTop
@@ -75,18 +87,19 @@ function _ScrollArea(props: {
       showsVerticalScrollIndicator={false}
       alwaysBounceVertical={false}
       scrollY
-      scrollWithAnimation={false}
+      scrollWithAnimation={true}
       className='fta-picker-block'
       scrollTop={scrollTop}
       onScroll={_onScroll}>
       {/* placeholder */}
-      <View className='fta-picker-item--placeholder' />
+      <View className='fta-picker-item--placeholder' key={'_p1'} />
       {/* scroll items */}
       {range.map((v, i) => {
         const _activeIndex = activeIndexRef.current
         const hitActive = _activeIndex === i
         const hitAlmost = Math.abs(_activeIndex - i) === 1
 
+        // TODO: 性能优化
         const itemClass = classNames('fta-picker-item', {
           'fta-picker-item--active': hitActive,
           'fta-picker-item--almost': hitAlmost,
@@ -97,7 +110,7 @@ function _ScrollArea(props: {
         })
 
         return (
-          <View key={i} className={itemClass}>
+          <View key={String(v) + i} className={itemClass}>
             <Text
               // @ts-ignore
               numberOfLines={1}
@@ -108,7 +121,7 @@ function _ScrollArea(props: {
         )
       })}
       {/* placeholder */}
-      <View className='fta-picker-item--placeholder' />
+      <View className='fta-picker-item--placeholder' key={'_p2'} />
     </ScrollView>
   )
 }
@@ -133,20 +146,36 @@ const pickerMap: Record<PickerMode, FC<any>> = {
  * @component
  * 基础Picker
  */
-function BasePicker(props: ActionSheetProps): JSX.Element {
-  const { isOpened, children, title, ...extrapProps } = props
+function BasePicker(props: FloatLayoutProps & { value?: Arrayable<number> | string }): JSX.Element {
+  const {
+    isOpened,
+    children,
+    title,
+    methods,
+    cancelText,
+    confirmText,
+    onConfirm,
+    onCancel,
+    value,
+    ...extrapProps
+  } = props
+
   return (
     <FloatLayout
       isOpened={isOpened}
       title={{
-        title: '请选择',
-        cancelText: '取消',
-        confirmText: '确定',
+        title,
+        cancelText,
+        confirmText,
         onConfirm() {
-          console.log('点击了确定')
+          onConfirm?.(value!)
+          console.log('确认值', value)
+          methods!.hide()
         },
-        onCancel() {},
-        ...(title as CustomTitle),
+        onCancel() {
+          onCancel?.(value!)
+          methods!.hide()
+        },
       }}
       {...extrapProps}>
       <View className='fta-picker'>
@@ -159,61 +188,231 @@ function BasePicker(props: ActionSheetProps): JSX.Element {
   )
 }
 
+BasePicker.defaultProps = {
+  title: ' ',
+  cancelText: '取消',
+  confirmText: '确认',
+}
+
 /** Picker */
-function Picker(props: Partial<PickerProps>): JSX.Element {
+function _Picker(props: Partial<PickerProps>, ref: Ref<PickerRefMethods>): JSX.Element {
+  const [visible, toggle] = useState(false)
+  const methods = {
+    show() {
+      toggle(true)
+    },
+    hide() {
+      toggle(false)
+    },
+  }
+  useImperativeHandle(ref, () => methods)
+
   const { mode } = props
   const _mode: PickerMode = builtInModes.includes(mode!) ? mode! : 'selector'
-  const TypedPicker = pickerMap[_mode] as FC
-  return <TypedPicker {...props} />
+  const TypedPicker = pickerMap[_mode] as FC<PickerProps>
+  // @ts-ignore
+  return <TypedPicker {...props} isOpened={visible} onClose={methods.hide} methods={methods} />
 }
+
+const Picker = forwardRef(_Picker)
 
 const pickerDefaultProps: PickerProps = {
   mode: 'selector',
   range: [],
   onChange() {},
-  isOpened: true,
 }
-
+// @ts-ignore
 Picker.defaultProps = pickerDefaultProps
 
-type singleFormat = (value: any) => string | number
-
 type Compose<T> = T &
-  ActionSheetProps & {
-    onChange?: (newVal: number, oldVal: number) => void
-    format?: Arrayable<singleFormat>
+  FloatLayoutProps & {
+    // onChange?: (newVal: number, oldVal: number) => void
+    format?: (value: any) => string | number
   }
+/** 默认的格式化函数 */
+const createDefaultFormat = (rangeKey?: string) =>
+  rangeKey ? (value: Record<string, string | number>) => value[rangeKey] : void 0
 
+/* ========================= 类型选择器具体实现 ======================= */
+
+/**
+ * @component
+ * 单列选择器
+ */
 function SelectorPicker(props: Compose<PickerSelectorProps>): JSX.Element {
   const { range, rangeKey, value, onChange, format } = props
-  const _format = format || (rangeKey ? (item: object) => item[rangeKey] : void 0)
+  const _format = format || createDefaultFormat(rangeKey)
+
+  const ref = useRef<number>(value || 0)
+  const _onChange = (newVal: number, oldVal: number) => {
+    onChange?.(newVal, oldVal)
+    ref.current = newVal
+  }
   return (
-    <BasePicker {...props}>
-      <ScrollArea
-        format={_format as singleFormat}
-        range={range}
-        activeIndex={value!}
-        onChange={onChange}
-      />
+    <BasePicker {...props} value={ref.current}>
+      <ScrollArea format={_format} range={range} activeIndex={value!} onChange={_onChange} />
     </BasePicker>
   )
 }
 
-function MultiSelectorPicker(): JSX.Element {
-  return <BasePicker />
+/**
+ * @component
+ * 多列选择器
+ */
+function MultiSelectorPicker(props: Compose<PickerMultiSelectorProps>): JSX.Element {
+  const { range, rangeKey, value, onChange, format } = props
+
+  const [_value, setValue] = useState(value?.length ? value : new Array(range.length).fill(0))
+  const ref = useRef<number[]>(_value)
+
+  const _onChange = (newIndex: number, index: number) => {
+    const copy = _value.slice()
+    copy[index] = newIndex
+    onChange?.(copy, _value)
+    setValue(copy)
+    ref.current = copy
+  }
+  return (
+    <BasePicker {...props} value={ref.current}>
+      {range.map((column: unknown[], index: number) => {
+        const _format = format || createDefaultFormat(rangeKey)
+        return (
+          <ScrollArea
+            key={index}
+            format={_format}
+            range={column}
+            activeIndex={_value[index]!}
+            onChange={(newV) => _onChange(newV, index)}
+          />
+        )
+      })}
+    </BasePicker>
+  )
 }
 
-function DatePicker(): JSX.Element {
-  return <BasePicker />
+/**
+ * @component
+ * 日期选择器
+ */
+const months = genPeriodList(1, 12)
+const days = genPeriodList(1, 31)
+
+// const restrict =
+function DatePicker(props: Compose<PickerDateProps>): JSX.Element {
+  const { start, end, value, onChange, format, fields } = props
+  const depth = getSelectorDepth(fields!)
+  const [y1, m1, d1] = parseDate(start!)
+  const [y2, m2, d2] = parseDate(end!)
+
+  const [indexs, _setIndexs] = useState([0, 0, 0])
+  const setIndexs = useCallback(
+    (value: number, depth: number) => {
+      const copy = indexs.slice()
+      copy[depth] = value
+      _setIndexs(copy)
+    },
+    [indexs]
+  )
+
+  const nowDates = parseDate(value!)
+  const dateRef = useRef(nowDates).current
+  const [y, m, d] = dateRef
+  const years = useRef(genPeriodList(y1, y2)).current
+
+  let MonthElement: ReactNode = null
+  let DayElement: ReactNode = null
+  const yIndex = years.indexOf(y)
+  // 年份
+  const YearElement = (
+    <ScrollArea
+      activeIndex={yIndex}
+      range={years}
+      format={(v) => `${v}年`}
+      onChange={(i) => {
+        dateRef[0] = years[i]
+        setIndexs(i, 0)
+      }}
+    />
+  )
+  // console.log('rerender')
+  // 月份
+  if (depth > 1) {
+    const _months = months.slice()
+    if (m1 !== 1 && dateRef[0] === y1) {
+      _months.splice(0, m1 - 1)
+    }
+    let i
+    let mActiveIndex = (i = _months.indexOf(m)) === -1 ? 0 : i
+    // console.log('mActiveIndex', mActiveIndex)
+    MonthElement = (
+      <ScrollArea
+        activeIndex={mActiveIndex}
+        range={_months}
+        format={(v) => `${v}月`}
+        onChange={(i) => {
+          dateRef[1] = _months[i]
+          setIndexs(i, 1)
+        }}
+      />
+    )
+
+    // 日期
+    if (depth > 2) {
+      const count = getDaysCount(y, m)
+
+      const _days = days.slice(0, count)
+      if (d1 !== 1 && dateRef[0] === y1 && dateRef[1] === m1) {
+        _days.splice(0, d1 - 1)
+      }
+
+      console.log('当前月份天数', count, _days)
+      let i
+      let dActiveIndex = (i = _days.indexOf(d)) === -1 ? 0 : i
+      DayElement = (
+        <ScrollArea
+          activeIndex={dActiveIndex}
+          range={_days}
+          format={(v) => `${v}日`}
+          onChange={(i) => {
+            dateRef[2] = _days[i]
+            setIndexs(i, 2)
+          }}
+        />
+      )
+    }
+  }
+
+  return (
+    <BasePicker {...props} value={dateRef.map(formatNum).join('-')}>
+      {YearElement}
+      {MonthElement}
+      {DayElement}
+    </BasePicker>
+  )
 }
 
+DatePicker.defaultProps = {
+  start: '1970-01-01',
+  end: '2099-12-31',
+  fields: 'day',
+  value: getCurrentDate(),
+}
+
+/**
+ * @component
+ * 时间选择器
+ */
 function TimePicker(): JSX.Element {
   return <BasePicker />
 }
 
-// TODO: 待支持
+/**
+ * TODO: 待支持
+ * @component
+ * 地址选择器
+ */
 function RegionPicker(): JSX.Element {
   return <BasePicker />
 }
 
-export { Picker as default }
+export { Picker as default, SelectorPicker, MultiSelectorPicker, DatePicker, TimePicker }

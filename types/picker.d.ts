@@ -5,10 +5,53 @@ import {
   PickerStandardProps,
   PickerTimeProps as _PickerTimeProps,
 } from '@tarojs/components/types/Picker'
-import { FC } from 'react'
+import { FC, ReactNode, Ref } from 'react'
 import { ActionSheetProps } from './action-sheet'
 
 export type Arrayable<T> = T | T[]
+
+/**
+ * 重写部分属性
+ */
+export interface FloatLayoutProps extends Omit<ActionSheetProps, 'title'> {
+  /**
+   * 点击确定按钮的回调
+   */
+  onConfirm?(val: Arrayable<number> | string): void
+  /**
+   * 点击取消按钮的回调
+   */
+  onCancel?(val: Arrayable<number> | string): void
+  /**
+   * 确认文本
+   */
+  confirmText?: string
+  /**
+   * 取消文本
+   */
+  cancalText?: string
+  /**
+   * 标题
+   */
+  title?: ReactNode
+  /**
+   * @private
+   */
+  forwardRef?: Ref<any>
+  /**
+   * @private
+   */
+  methods?: {
+    show(): void
+    hide(): void
+  }
+  /**
+   * @private
+   * 内部维护开启关闭
+   */
+  isOpened?: boolean
+}
+
 interface PickerOnChange<T extends 'single' | 'multi' | 'mixin'> {
   onChange?: T extends 'single'
     ? (newVal: number, oldVal: number) => void
@@ -45,17 +88,29 @@ export {
   PickerTimeProps,
 }
 
+export type PickerRefMethods = {
+  /**
+   * 弹出选择器面板
+   */
+  show(): void
+  /**
+   * 隐藏选择器面板
+   */
+  hide(): void
+}
+
 export type PickerProps = (
   | PickerSelectorProps
   | PickerMultiSelectorProps
   | PickerTimeProps
   | PickerDateProps
 ) &
-  ActionSheetProps & {
+  FloatLayoutProps & {
     /**
      * 格式化文本
+     * @param columnIndex 多列选择时生效
      */
-    format?: Arrayable<(value: any) => string | number>
+    format?: (value: any, columnIndex: number) => string | number
   }
 
 declare const Picker: FC<PickerProps>

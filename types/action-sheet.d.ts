@@ -40,7 +40,7 @@ export interface ActionSheetProps extends BaseComponent, PropsWithChildren {
   /**
    * 点击了底部取消按钮触发的事件
    */
-  onCancel?: (event?: CommonEvent) => void
+  // onCancel?: (event?: CommonEvent) => void
   /**
    * RN端使用原生Modal组件
    * @default true
@@ -71,6 +71,7 @@ export interface ActionSheetProps extends BaseComponent, PropsWithChildren {
 }
 
 export interface ActionSheetState {
+  /** @private */
   _isOpened: boolean
 }
 
