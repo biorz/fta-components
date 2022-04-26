@@ -32,7 +32,6 @@ import {
   getScrollTopOverIndex,
   getSelectorDepth,
   parseDate,
-  resolveSafeScrollTop,
 } from './util'
 
 type ScrollEvent = {
@@ -63,53 +62,58 @@ function _ScrollArea(props: {
 }): JSX.Element {
   const { onScroll, activeIndex, range, format, onChange } = props
   const activeIndexRef = useRef(+activeIndex >= 0 ? +activeIndex : 0)
-  const [scrollTop, setScrollTop] = useState(0)
+  const [scrollTop, setScrollTop] = useState(getScrollTopOverIndex(activeIndex))
 
   useEffect(() => {
-    Promise.resolve(() => {
-      setScrollTop(getScrollTopOverIndex(activeIndex))
-    })
+    activeIndexRef.current !== activeIndex && setScrollTop(getScrollTopOverIndex(activeIndex))
+    // console.log(getScrollTopOverIndex(activeIndex), 'getScrollTopOverIndex(activeIndex)')
   }, [activeIndex])
 
   const _onScroll = (e: ScrollEvent) => {
     const scrollTop = e.detail.scrollTop
-    // Fix 滑动溢出
-    const safeScrollTop = resolveSafeScrollTop(scrollTop, range.length)
-    setScrollTop(safeScrollTop)
-    onScroll?.(e.detail)
-    let _activeIndex = getAcitveIndex(safeScrollTop, range.length)
+
+    let _activeIndex = getAcitveIndex(scrollTop, range.length)
 
     const _prevIndex = activeIndexRef.current
     if (_prevIndex !== _activeIndex) {
-      // console.log('object', _prevIndex, _activeIndex)
       onChange?.(_activeIndex, _prevIndex)
       activeIndexRef.current = _activeIndex
     }
+    setScrollTop(scrollTop)
+    onScroll?.(e.detail)
   }
+
+  // const fixLocation = (isActive, index) => {
+  //   if (!isActive) {
+  //     const prev = activeIndexRef.current
+  //     activeIndexRef.current = index
+  //     // onChange?.(index, prev)
+  //     setScrollTop(getScrollTopOverIndex(index))
+  //   }
+  // }
+
   return (
     <ScrollView
       // @ts-ignore
       showsVerticalScrollIndicator={false}
       alwaysBounceVertical={false}
       scrollY
+      enhanced
       scrollWithAnimation
       className='fta-picker-block'
       scrollTop={scrollTop}
-      onScroll={_onScroll}
-      // onScrollToLower={_onScroll}
-    >
+      onScroll={_onScroll}>
       {/* placeholder */}
       <View className='fta-picker-item--placeholder'>
         {/* scroll items */}
         {range.map((v, i) => {
           const _activeIndex = activeIndexRef.current
           const hitActive = _activeIndex === i
-          const hitAlmost = Math.abs(_activeIndex - i) === 1
+          // const hitAlmost = Math.abs(_activeIndex - i) === 1
 
           // TODO: 性能优化
           const itemClass = classNames('fta-picker-item', {
             'fta-picker-item--active': hitActive,
-            'fta-picker-item--almost': hitAlmost,
           })
           // const itemTextClass = classNames('fta-picker-item__text', {
           //   'fta-picker-item--active__text': hitActive,
@@ -118,7 +122,11 @@ function _ScrollArea(props: {
           const _value = format!(v)
 
           return (
-            <View key={`${i}-${_value}`} className={itemClass}>
+            <View
+              key={`${i}-${_value}`}
+              className={itemClass}
+              // onClick={() => fixLocation(hitActive, i)}
+            >
               <Text
                 // @ts-ignore
                 numberOfLines={1}
@@ -251,7 +259,6 @@ const createDefaultFormat = (rangeKey?: string) =>
 function SelectorPicker(props: Compose<PickerSelectorProps>): JSX.Element {
   const { range, rangeKey, value, onChange, format } = props
   const _format = format || createDefaultFormat(rangeKey)
-
   const ref = useRef<number>(value || 0)
   const _onChange = (newVal: number, oldVal: number) => {
     onChange?.(newVal, oldVal)

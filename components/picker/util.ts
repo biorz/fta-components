@@ -1,18 +1,20 @@
-/** 获取当前激活的索引 */
-export const getAcitveIndex = (scrollTop: number, maxLenth) => {
-  if (scrollTop < 25) return 0
-  if (scrollTop < 25 + 33 - 10) return 1
-  if (scrollTop < 25 + 33 + 10) return 2
-  const index = Math.round((scrollTop - (25 + 33 + 15)) / 20) + 3
+const ItemHeight = 30
 
+/** 获取当前激活的索引 */
+export const getAcitveIndex = (scrollTop: number, maxLenth: number) => {
+  // if (scrollTop < 25) return 0
+  // if (scrollTop < 25 + 33 - 10) return 1
+  // if (scrollTop < 25 + 33 + 10) return 2
+  // const index = Math.round((scrollTop - (25 + 33 + 15)) / 20) + 3
+
+  //
+  const index = Math.round(scrollTop / ItemHeight)
   return index >= maxLenth ? maxLenth - 1 : index
 }
 
 /** 根据索引获得当前位置 */
 export const getScrollTopOverIndex = (index: number) => {
-  if (index === 0) return 0
-  if (index === 1) return 33
-  return 33 + 20 * (index - 1)
+  return ItemHeight * index
 }
 
 export const formatNum = (num: number) => (num < 10 ? `0${num}` : String(num))
@@ -34,12 +36,12 @@ export const getDaysCount = (year: number, month: number) => new Date(year, mont
 
 /** 获取安全的scrollTop */
 export const resolveSafeScrollTop = (scrollTop: number, length: number) => {
-  let safeScrollTop = scrollTop
-  if (length >= 5) {
-    const maxScrollTop = 20 * length + 13 * 2 + 30 * 2
-    if (safeScrollTop > maxScrollTop) {
-      safeScrollTop = maxScrollTop
-    }
-  }
-  return safeScrollTop
+  // let safeScrollTop = scrollTop
+  // if (length >= 5) {
+  //   const maxScrollTop = 20 * length + 13 * 2 + 30 * 2
+  //   if (safeScrollTop > maxScrollTop) {
+  //     safeScrollTop = maxScrollTop
+  //   }
+  // }
+  return scrollTop
 }

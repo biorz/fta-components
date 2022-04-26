@@ -12,15 +12,21 @@
     // overflow: auto;
     flex: 1;
     // prettier-ignore
-    height: 156PX;
+    height: 150PX;
+    @include nrn {
+      transform-style: preserve-3d;
+    }
   }
 
   &-item {
     @include flex-center();
     // prettier-ignore
-    height: 20PX;
-    opacity: 0.3;
+    height: 30PX;
+    opacity: 0.4;
     overflow: hidden;
+    @include nrn {
+      backface-visibility: hidden;
+    }
 
     &__text {
       @include nrn {
@@ -29,50 +35,50 @@
         text-overflow: ellipsis;
       }
       // prettier-ignore
-      font-size: 14PX;
+      font-size: 18PX;
       color: $color-grey-0;
     }
 
     /* Modifiers */
     &--active {
       // prettier-ignore
-      height: 50PX;
+      // height: 50PX;
       opacity: 1;
 
       // @include nrn {
       //   transition: height opacity 0.2s;
       // }
 
-      &__text {
-        // prettier-ignore
-        font-size: 20PX;
-        // @include nrn {
-        //   transition: font-size 0.2s;
-        // }
-      }
-    }
-
-    &--almost {
-      // prettier-ignore
-      height: 33PX;
-      opacity: 0.4;
-
-      // @include nrn {
-      //   transition: height 0.1s;
+      // &__text {
+      //   // prettier-ignore
+      //   font-size: 20PX;
+      //   // @include nrn {
+      //   //   transition: font-size 0.2s;
+      //   // }
       // }
-
-      &__text {
-        // prettier-ignore
-        font-size: 18PX;
-        // @include nrn {
-        //   transition: font-size 0.05s;
-        // }
-      }
     }
+
+    // &--almost {
+    //   // prettier-ignore
+    //   height: 33PX;
+    //   opacity: 0.4;
+
+    //   // @include nrn {
+    //   //   transition: height 0.1s;
+    //   // }
+
+    //   &__text {
+    //     // prettier-ignore
+    //     font-size: 18PX;
+    //     // @include nrn {
+    //     //   transition: font-size 0.05s;
+    //     // }
+    //   }
+    // }
 
     &--placeholder {
       // prettier-ignore
-      margin: 53PX 0;
+      margin: 60PX 0;
       width: 100%;
     }
   }
@@ -91,12 +97,12 @@
 
     &--top {
       // prettier-ignore
-      top: 80PX
+      top: 87PX
     }
 
     &--bottom {
       // prettier-ignore
-      bottom: 80PX
+      bottom: 87PX
     }
   }
 }
