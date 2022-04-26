@@ -65,9 +65,11 @@ function _ScrollArea(props: {
   const [scrollTop, setScrollTop] = useState(getScrollTopOverIndex(activeIndex))
 
   useEffect(() => {
-    activeIndexRef.current !== activeIndex && setScrollTop(getScrollTopOverIndex(activeIndex))
-    // console.log(getScrollTopOverIndex(activeIndex), 'getScrollTopOverIndex(activeIndex)')
-  }, [activeIndex])
+    if (activeIndexRef.current !== activeIndex) {
+      activeIndexRef.current = activeIndex
+      setScrollTop(getScrollTopOverIndex(activeIndex))
+    }
+  }, [activeIndex, range])
 
   const _onScroll = (e: ScrollEvent) => {
     const scrollTop = e.detail.scrollTop
@@ -82,15 +84,6 @@ function _ScrollArea(props: {
     setScrollTop(scrollTop)
     onScroll?.(e.detail)
   }
-
-  // const fixLocation = (isActive, index) => {
-  //   if (!isActive) {
-  //     const prev = activeIndexRef.current
-  //     activeIndexRef.current = index
-  //     // onChange?.(index, prev)
-  //     setScrollTop(getScrollTopOverIndex(index))
-  //   }
-  // }
 
   return (
     <ScrollView
@@ -107,26 +100,14 @@ function _ScrollArea(props: {
       <View className='fta-picker-item--placeholder'>
         {/* scroll items */}
         {range.map((v, i) => {
-          const _activeIndex = activeIndexRef.current
-          const hitActive = _activeIndex === i
-          // const hitAlmost = Math.abs(_activeIndex - i) === 1
-
-          // TODO: 性能优化
-          const itemClass = classNames('fta-picker-item', {
-            'fta-picker-item--active': hitActive,
-          })
-          // const itemTextClass = classNames('fta-picker-item__text', {
-          //   'fta-picker-item--active__text': hitActive,
-          //   'fta-picker-item--almost__text': hitAlmost,
-          // })
+          const itemClass = classNames(
+            'fta-picker-item',
+            activeIndexRef.current === i && 'fta-picker-item--active'
+          )
           const _value = format!(v)
 
           return (
-            <View
-              key={`${i}-${_value}`}
-              className={itemClass}
-              // onClick={() => fixLocation(hitActive, i)}
-            >
+            <View key={`${i}-${_value}`} className={itemClass}>
               <Text
                 // @ts-ignore
                 numberOfLines={1}
@@ -137,8 +118,6 @@ function _ScrollArea(props: {
           )
         })}
       </View>
-      {/* placeholder */}
-      {/* <View className='fta-picker-item--placeholder' /> */}
     </ScrollView>
   )
 }
@@ -316,9 +295,18 @@ const days = genPeriodList(1, 31)
 // const restrict =
 function DatePicker(props: Compose<PickerDateProps>): JSX.Element {
   const { start, end, value, onChange, format, fields } = props
+
   const depth = getSelectorDepth(fields!)
   const [y1, m1, d1] = parseDate(start!)
   const [y2, m2, d2] = parseDate(end!)
+
+  // const CustomScrollView = useRef(
+  //   depth > 2
+  //     ? memo(_ScrollArea, (prevProps, nexProps) => {
+  //         return prevProps.range
+  //       })
+  //     : null
+  // )
 
   const [indexs, _setIndexs] = useState([0, 0, 0])
   const setIndexs = (value: number, depth: number) => {
@@ -348,21 +336,34 @@ function DatePicker(props: Compose<PickerDateProps>): JSX.Element {
       }}
     />
   )
-  // console.log('rerender')
+
   // 月份
   if (depth > 1) {
     const _months = months.slice()
     if (
-      // 起始月份不是从第一天开始
+      // 结束月份早于12月
+      m2 !== 12 &&
+      // 当前位于结束年份
+      dateRef[0] === y2
+    ) {
+      _months.splice(m2, 12 - m2)
+    }
+    if (
+      // 起始月份不是从第一个月开始
       m1 !== 1 &&
       // 当前位于起始年份
       dateRef[0] === y1
     ) {
       _months.splice(0, m1 - 1)
     }
-    let i
-    let mActiveIndex = (i = _months.indexOf(m)) === -1 ? 0 : i
-    // console.log('mActiveIndex', mActiveIndex)
+    let tmp: number
+    let mActiveIndex =
+      (tmp = _months.indexOf(m)) === -1
+        ? m > _months[_months.length - 1]
+          ? _months.length - 1
+          : 0
+        : tmp
+
     MonthElement = (
       <ScrollArea
         activeIndex={mActiveIndex}
@@ -382,6 +383,16 @@ function DatePicker(props: Compose<PickerDateProps>): JSX.Element {
 
       const _days = days.slice(0, count)
       if (
+        // 结束日期不是最后一天
+        d2 !== count &&
+        // 当前位于结束年份
+        dateRef[0] === y2 &&
+        // 当前位于结束月份
+        dateRef[1] === m2
+      ) {
+        _days.splice(d2, count - d2)
+      }
+      if (
         // 起始日期不是从第一天开始
         d1 !== 1 &&
         // 当前位于起始年份
@@ -394,7 +405,7 @@ function DatePicker(props: Compose<PickerDateProps>): JSX.Element {
 
       let i: number
       let dActiveIndex =
-        (i = _days.indexOf(d)) === -1 ? (i >= _days.length ? _days.length - 1 : 0) : i
+        (i = _days.indexOf(d)) === -1 ? (d > _days[_days.length - 1] ? _days.length - 1 : 0) : i
       console.log('当前月份天数', count, dActiveIndex, d, 'index:' + i, JSON.stringify(_days))
       DayElement = (
         <ScrollArea
