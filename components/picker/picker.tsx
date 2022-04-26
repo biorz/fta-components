@@ -75,13 +75,13 @@ function _ScrollArea(props: {
     const scrollTop = e.detail.scrollTop
 
     let _activeIndex = getAcitveIndex(scrollTop, range.length)
-
+    setScrollTop(scrollTop)
     const _prevIndex = activeIndexRef.current
     if (_prevIndex !== _activeIndex) {
       onChange?.(_activeIndex, _prevIndex)
       activeIndexRef.current = _activeIndex
     }
-    setScrollTop(scrollTop)
+
     onScroll?.(e.detail)
   }
 
@@ -222,7 +222,7 @@ Picker.defaultProps = pickerDefaultProps
 
 type Compose<T> = T &
   FloatLayoutProps & {
-    // onChange?: (newVal: number, oldVal: number) => void
+    onChange?: (newVal: any, oldVal: any) => void
     format?: (value: any) => string | number
   }
 /** 默认的格式化函数 */
@@ -294,26 +294,29 @@ const days = genPeriodList(1, 31)
 
 // const restrict =
 function DatePicker(props: Compose<PickerDateProps>): JSX.Element {
-  const { start, end, value, onChange, format, fields } = props
+  const {
+    start,
+    end,
+    value,
+    onChange,
+    // TODO: format函数
+    format,
+    fields,
+  } = props
 
   const depth = getSelectorDepth(fields!)
   const [y1, m1, d1] = parseDate(start!)
   const [y2, m2, d2] = parseDate(end!)
 
-  // const CustomScrollView = useRef(
-  //   depth > 2
-  //     ? memo(_ScrollArea, (prevProps, nexProps) => {
-  //         return prevProps.range
-  //       })
-  //     : null
-  // )
-
   const [indexs, _setIndexs] = useState([0, 0, 0])
   const setIndexs = (value: number, depth: number) => {
+    // if(depth)
     const copy = indexs.slice()
     copy[depth] = value
     console.log('indexs', copy, indexs)
     _setIndexs(copy)
+    // @ts-ignore
+    onChange?.(dateRef)
   }
 
   const nowDates = parseDate(value!)
