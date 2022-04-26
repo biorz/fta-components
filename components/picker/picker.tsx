@@ -7,7 +7,6 @@ import React, {
   memo,
   ReactNode,
   Ref,
-  useCallback,
   useEffect,
   useImperativeHandle,
   useRef,
@@ -33,6 +32,7 @@ import {
   getScrollTopOverIndex,
   getSelectorDepth,
   parseDate,
+  resolveSafeScrollTop,
 } from './util'
 
 type ScrollEvent = {
@@ -66,62 +66,71 @@ function _ScrollArea(props: {
   const [scrollTop, setScrollTop] = useState(0)
 
   useEffect(() => {
-    setScrollTop(getScrollTopOverIndex(activeIndex))
+    Promise.resolve(() => {
+      setScrollTop(getScrollTopOverIndex(activeIndex))
+    })
   }, [activeIndex])
 
   const _onScroll = (e: ScrollEvent) => {
     const scrollTop = e.detail.scrollTop
-    setScrollTop(scrollTop)
+    // Fix 滑动溢出
+    const safeScrollTop = resolveSafeScrollTop(scrollTop, range.length)
+    setScrollTop(safeScrollTop)
     onScroll?.(e.detail)
-    const _activeIndex = getAcitveIndex(scrollTop)
+    let _activeIndex = getAcitveIndex(safeScrollTop, range.length)
+
     const _prevIndex = activeIndexRef.current
     if (_prevIndex !== _activeIndex) {
+      // console.log('object', _prevIndex, _activeIndex)
       onChange?.(_activeIndex, _prevIndex)
       activeIndexRef.current = _activeIndex
     }
   }
-
   return (
     <ScrollView
       // @ts-ignore
       showsVerticalScrollIndicator={false}
       alwaysBounceVertical={false}
       scrollY
-      scrollWithAnimation={true}
+      scrollWithAnimation
       className='fta-picker-block'
       scrollTop={scrollTop}
-      onScroll={_onScroll}>
+      onScroll={_onScroll}
+      // onScrollToLower={_onScroll}
+    >
       {/* placeholder */}
-      <View className='fta-picker-item--placeholder' key={'_p1'} />
-      {/* scroll items */}
-      {range.map((v, i) => {
-        const _activeIndex = activeIndexRef.current
-        const hitActive = _activeIndex === i
-        const hitAlmost = Math.abs(_activeIndex - i) === 1
+      <View className='fta-picker-item--placeholder'>
+        {/* scroll items */}
+        {range.map((v, i) => {
+          const _activeIndex = activeIndexRef.current
+          const hitActive = _activeIndex === i
+          const hitAlmost = Math.abs(_activeIndex - i) === 1
 
-        // TODO: 性能优化
-        const itemClass = classNames('fta-picker-item', {
-          'fta-picker-item--active': hitActive,
-          'fta-picker-item--almost': hitAlmost,
-        })
-        const itemTextClass = classNames('fta-picker-item__text', {
-          'fta-picker-item--active__text': hitActive,
-          'fta-picker-item--almost__text': hitAlmost,
-        })
+          // TODO: 性能优化
+          const itemClass = classNames('fta-picker-item', {
+            'fta-picker-item--active': hitActive,
+            'fta-picker-item--almost': hitAlmost,
+          })
+          // const itemTextClass = classNames('fta-picker-item__text', {
+          //   'fta-picker-item--active__text': hitActive,
+          //   'fta-picker-item--almost__text': hitAlmost,
+          // })
+          const _value = format!(v)
 
-        return (
-          <View key={String(v) + i} className={itemClass}>
-            <Text
-              // @ts-ignore
-              numberOfLines={1}
-              className={itemTextClass}>
-              {format!(v)}
-            </Text>
-          </View>
-        )
-      })}
+          return (
+            <View key={`${i}-${_value}`} className={itemClass}>
+              <Text
+                // @ts-ignore
+                numberOfLines={1}
+                className={'fta-picker-item__text'}>
+                {_value}
+              </Text>
+            </View>
+          )
+        })}
+      </View>
       {/* placeholder */}
-      <View className='fta-picker-item--placeholder' key={'_p2'} />
+      {/* <View className='fta-picker-item--placeholder' /> */}
     </ScrollView>
   )
 }
@@ -305,14 +314,12 @@ function DatePicker(props: Compose<PickerDateProps>): JSX.Element {
   const [y2, m2, d2] = parseDate(end!)
 
   const [indexs, _setIndexs] = useState([0, 0, 0])
-  const setIndexs = useCallback(
-    (value: number, depth: number) => {
-      const copy = indexs.slice()
-      copy[depth] = value
-      _setIndexs(copy)
-    },
-    [indexs]
-  )
+  const setIndexs = (value: number, depth: number) => {
+    const copy = indexs.slice()
+    copy[depth] = value
+    console.log('indexs', copy, indexs)
+    _setIndexs(copy)
+  }
 
   const nowDates = parseDate(value!)
   const dateRef = useRef(nowDates).current
@@ -338,7 +345,12 @@ function DatePicker(props: Compose<PickerDateProps>): JSX.Element {
   // 月份
   if (depth > 1) {
     const _months = months.slice()
-    if (m1 !== 1 && dateRef[0] === y1) {
+    if (
+      // 起始月份不是从第一天开始
+      m1 !== 1 &&
+      // 当前位于起始年份
+      dateRef[0] === y1
+    ) {
       _months.splice(0, m1 - 1)
     }
     let i
@@ -350,6 +362,7 @@ function DatePicker(props: Compose<PickerDateProps>): JSX.Element {
         range={_months}
         format={(v) => `${v}月`}
         onChange={(i) => {
+          console.log('m change')
           dateRef[1] = _months[i]
           setIndexs(i, 1)
         }}
@@ -361,19 +374,28 @@ function DatePicker(props: Compose<PickerDateProps>): JSX.Element {
       const count = getDaysCount(y, m)
 
       const _days = days.slice(0, count)
-      if (d1 !== 1 && dateRef[0] === y1 && dateRef[1] === m1) {
+      if (
+        // 起始日期不是从第一天开始
+        d1 !== 1 &&
+        // 当前位于起始年份
+        dateRef[0] === y1 &&
+        // 当前位于起始月份
+        dateRef[1] === m1
+      ) {
         _days.splice(0, d1 - 1)
       }
 
-      console.log('当前月份天数', count, _days)
-      let i
-      let dActiveIndex = (i = _days.indexOf(d)) === -1 ? 0 : i
+      let i: number
+      let dActiveIndex =
+        (i = _days.indexOf(d)) === -1 ? (i >= _days.length ? _days.length - 1 : 0) : i
+      console.log('当前月份天数', count, dActiveIndex, d, 'index:' + i, JSON.stringify(_days))
       DayElement = (
         <ScrollArea
           activeIndex={dActiveIndex}
           range={_days}
           format={(v) => `${v}日`}
           onChange={(i) => {
+            console.log('d changed index:' + i, 'value:' + _days[i])
             dateRef[2] = _days[i]
             setIndexs(i, 2)
           }}

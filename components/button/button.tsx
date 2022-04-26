@@ -4,7 +4,7 @@ import { BaseEventOrig, CommonEvent } from '@tarojs/components/types/common'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React, { Component } from 'react'
-import { inAlipay, inWeapp, inWeb, isUndef } from '../../common'
+import { inAlipay, inWeapp, inWeb, isString } from '../../common'
 import '../../style/components/button/index.scss'
 import { ButtonProps as FTAButtonProps } from '../../types/button'
 import Loading from '../loading'
@@ -195,10 +195,12 @@ export default class FTAButton extends Component<FTAButtonProps> {
         )}
         {inAlipay && !disabled && button}
         {loadingComponent}
-        {isUndef(children) ? null : (
+        {isString(children) ? (
           <Text className={textClass} style={textStyle}>
             {children}
           </Text>
+        ) : (
+          children
         )}
       </View>
     )
