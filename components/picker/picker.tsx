@@ -1,5 +1,4 @@
 import { ScrollView, Text, View } from '@tarojs/components'
-import { PickerDateProps } from '@tarojs/components/types/Picker'
 import classNames from 'classnames'
 import React, {
   FC,
@@ -16,6 +15,7 @@ import '../../style/components/picker/index.scss'
 import {
   Arrayable,
   FloatLayoutProps,
+  PickerDateProps,
   PickerMode,
   PickerMultiSelectorProps,
   PickerProps,
@@ -121,7 +121,7 @@ function _ScrollArea(props: {
         scrollRef.setScrollTop(offset)
         timerRef.current = null
       }
-    }, 200)
+    }, 500)
   }
 
   return (
@@ -339,6 +339,7 @@ function DatePicker(props: Compose<PickerDateProps>): JSX.Element {
     end,
     value,
     onChange,
+    longterm,
     // TODO: format函数
     format,
     fields,
@@ -362,7 +363,7 @@ function DatePicker(props: Compose<PickerDateProps>): JSX.Element {
   const nowDates = parseDate(value!)
   const dateRef = useRef(nowDates).current
   const [y, m, d] = dateRef
-  const years = useRef(genPeriodList(y1, y2)).current
+  const years = useRef(genPeriodList(y1, y2).concat(longterm ? [9999] : [])).current
 
   let MonthElement: ReactNode = null
   let DayElement: ReactNode = null
@@ -372,10 +373,10 @@ function DatePicker(props: Compose<PickerDateProps>): JSX.Element {
     <ScrollArea
       activeIndex={yIndex}
       range={years}
-      format={(v) => `${v}年`}
+      format={(v) => (v === 9999 ? '长期' : `${v}年`)}
       onChange={(i) => {
         dateRef[0] = years[i]
-        setIndexs(i, 0)
+        setIndexs(years[i] === 9999 ? indexs[0] : i, 0)
       }}
     />
   )
@@ -479,6 +480,7 @@ DatePicker.defaultProps = {
   end: '2099-12-31',
   fields: 'day',
   value: getCurrentDate(),
+  longterm: false,
 }
 
 /**

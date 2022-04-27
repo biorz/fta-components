@@ -76,7 +76,12 @@ interface PickerSelectorProps extends PickerOnChange<'single'>, _PickerSelectorP
 
 interface PickerMultiSelectorProps extends PickerOnChange<'multi'>, _PickerMultiSelectorProps {}
 
-interface PickerDateProps extends PickerOnChange<'mixin'>, _PickerDateProps {}
+interface PickerDateProps extends PickerOnChange<'mixin'>, _PickerDateProps {
+  /**
+   * 带长期选项
+   */
+  longterm?: boolean
+}
 
 interface PickerTimeProps extends PickerOnChange<'mixin'>, _PickerTimeProps {}
 
