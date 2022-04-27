@@ -27,6 +27,7 @@ import {
   formatNum,
   genPeriodList,
   getAcitveIndex,
+  getAlignedIndex,
   getCurrentDate,
   getDaysCount,
   getScrollTopOverIndex,
@@ -63,6 +64,13 @@ function _ScrollArea(props: {
   const { onScroll, activeIndex, range, format, onChange } = props
   const activeIndexRef = useRef(+activeIndex >= 0 ? +activeIndex : 0)
   const [scrollTop, setScrollTop] = useState(getScrollTopOverIndex(activeIndex))
+  const timerRef = useRef<any>()
+  const scrollRef = useRef({ scrollTop, setScrollTop }).current
+
+  useEffect(() => {
+    scrollRef.scrollTop = scrollTop
+    scrollRef.setScrollTop = setScrollTop
+  }, [scrollTop, setScrollTop])
 
   useEffect(() => {
     if (activeIndexRef.current !== activeIndex) {
@@ -70,6 +78,10 @@ function _ScrollArea(props: {
       setScrollTop(getScrollTopOverIndex(activeIndex))
     }
   }, [activeIndex])
+
+  useEffect(() => {
+    fixOffset()
+  }, [scrollTop])
   /** 滚动 */
   const _onScroll = (e: ScrollEvent) => {
     const scrollTop = e.detail.scrollTop
@@ -94,6 +106,22 @@ function _ScrollArea(props: {
     max !== activeIndexRef.current && onChange?.(max, activeIndexRef.current)
     setScrollTop(getScrollTopOverIndex(max))
     onScroll?.(e.detail)
+  }
+
+  /**
+   * 滑动停止后修复位置偏移
+   */
+  const fixOffset = () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current)
+    }
+    timerRef.current = setTimeout(() => {
+      const offset = getAlignedIndex(scrollRef.scrollTop)
+      if (offset > -1) {
+        scrollRef.setScrollTop(offset)
+        timerRef.current = null
+      }
+    }, 200)
   }
 
   return (
