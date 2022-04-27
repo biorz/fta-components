@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 const ItemHeight = 30
 
 /** 获取当前激活的索引 */
@@ -47,7 +49,7 @@ export const resolveSafeScrollTop = (scrollTop: number, length: number) => {
 }
 
 /** item是否对齐 */
-export const getAlignedIndex = (scrollTop: number, precision = 0.1) => {
+export const getAlignedIndex = (scrollTop: number, precision = 0.08) => {
   const indexOffset = scrollTop / ItemHeight
   const indexAligned = Math.round(indexOffset)
   const withinPrecision = Math.abs(indexOffset - indexAligned) <= precision
@@ -55,4 +57,30 @@ export const getAlignedIndex = (scrollTop: number, precision = 0.1) => {
     return -1
   }
   return indexAligned * ItemHeight
+}
+
+/** 获取当前时间 */
+export const getCurrentTime = () => {
+  const date = new Date()
+  const hours = date.getHours()
+  const minutes = date.getMinutes()
+  return formatNum(hours) + ':' + formatNum(minutes)
+}
+
+/** 解析时间·hh:mm· */
+export const parseTime = <T extends [number, number] = [number, number]>(time: string) => {
+  return time.split(':').map(Number) as T
+}
+
+/** useArray hook */
+export const useArray = <T extends any[]>(initialArray: T | (() => T)) => {
+  const [array, _setArray] = useState<T>(initialArray)
+  const setArray = (value: T[number], index: number) => {
+    if (value === array[index]) return
+    const copy = array.slice()
+    copy[index] = value
+    _setArray(copy as T)
+  }
+
+  return [array, setArray, _setArray] as const
 }

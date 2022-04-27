@@ -21,6 +21,7 @@ import {
   PickerProps,
   PickerRefMethods,
   PickerSelectorProps,
+  PickerTimeProps,
 } from '../../types/picker'
 import FloatLayout from '../action-sheet'
 import {
@@ -29,10 +30,13 @@ import {
   getAcitveIndex,
   getAlignedIndex,
   getCurrentDate,
+  getCurrentTime,
   getDaysCount,
   getScrollTopOverIndex,
   getSelectorDepth,
   parseDate,
+  parseTime,
+  useArray,
 } from './util'
 
 type ScrollEvent = {
@@ -107,6 +111,7 @@ function _ScrollArea(props: {
     setScrollTop(getScrollTopOverIndex(max))
     onScroll?.(e.detail)
   }
+  const keyprefx = Date.now()
 
   /**
    * 滑动停止后修复位置偏移
@@ -129,6 +134,7 @@ function _ScrollArea(props: {
       // @ts-ignore
       showsVerticalScrollIndicator={false}
       alwaysBounceVertical={false}
+      bounces={false}
       scrollY
       enhanced
       scrollWithAnimation
@@ -147,7 +153,7 @@ function _ScrollArea(props: {
           )
           const _value = format!(v)
           return (
-            <View key={`${i}-${_value}`} className={itemClass}>
+            <View key={`${_value}-${i}`} className={itemClass}>
               <Text
                 // @ts-ignore
                 numberOfLines={1}
@@ -483,21 +489,143 @@ DatePicker.defaultProps = {
   longterm: false,
 }
 
+const totalHours = genPeriodList(0, 23)
+const totalMins = genPeriodList(0, 59)
+
 /**
  * @component
  * 时间选择器
  */
-function TimePicker(): JSX.Element {
-  return <BasePicker />
+function TimePicker(props: Compose<PickerTimeProps>): JSX.Element {
+  const { start, end, value = getCurrentTime() } = props
+  // 起始时分
+  const [[h1, m1], [h2, m2]] = useRef([parseTime(start!), parseTime(end!)] as const).current
+  // 小时区间不变, 用Ref存储
+  const hours = useRef(totalHours.slice(h1, h2 + 1)).current
+
+  const [times, setTimes, replaceTimes] = useArray<[number, number]>(parseTime(value))
+  const [indexs, setIndexs, replaceIndexs] = useArray<[number, number]>([0, 0])
+
+  const preRef = useRef(totalMins.length)
+
+  const [mins, setMins] = useState(totalMins.slice())
+
+  // 根据value值来取索引
+  useEffect(() => {
+    const [h, m] = parseTime(value)
+    let hIndex = 0
+    let mIndex = 0
+    if (h >= h1 && h <= h2) {
+      hIndex = hours.indexOf(h)
+      // 分针位置
+      if (h1 === h2) {
+        if (h === h1 && m >= m1 && m <= m2) {
+          mIndex = m - m1
+        }
+      } else if (h > h1 && h < h2) {
+        mIndex = m
+      } else if (h === h1) {
+        mIndex = m >= m1 ? m - m1 : 0
+      } else if (h === h2) {
+        mIndex = m <= m2 ? m : 0
+      }
+    }
+    // let hIndex = hours.indexOf(h)
+    // let mIndex = mins.indexOf(m)
+    // hIndex = hIndex > -1 ? hIndex : 0
+    // mIndex = mIndex > -1 ? mIndex : 0
+    replaceIndexs([hIndex, mIndex])
+    replaceTimes([hours[hIndex], mins[hIndex]])
+    console.log('执行了', value, [hIndex, mIndex])
+  }, [value])
+
+  // 根据当前选择的小时来展示分钟区间
+  useEffect(() => {
+    const minsCopy = totalMins.slice()
+    const activeHour = hours[indexs[0]]
+
+    let shortened = false // 列表是否被裁剪
+
+    // 选择了结束小时
+    if (m2 !== 59 && hours[hours.length - 1] === activeHour) {
+      minsCopy.splice(m2, 60 - m2)
+      shortened = true
+    }
+
+    // 选择了初始小时
+    if (m1 !== 0 && hours[0] === activeHour) {
+      minsCopy.splice(0, m1)
+      shortened = true
+    }
+
+    if (
+      // 裁剪了
+      shortened ||
+      // 之前的长度不等于现在数组的长度
+      preRef.current !== minsCopy.length ||
+      // 之前被裁剪过
+      preRef.current !== 60
+    ) {
+      // console.log('更新分针列表：' + indexs[1])
+      preRef.current = minsCopy.length
+      // 更新分钟列表
+      setMins(minsCopy)
+
+      const mVal = mins[indexs[1]]
+      let tmp: number
+      if ((tmp = minsCopy.indexOf(mVal)) > -1) {
+        setIndexs(tmp, 1)
+      } else {
+        setIndexs(0, 1)
+      }
+    }
+  }, [indexs[0]])
+
+  // useEffect(() => {
+  //   // 分钟聚焦的逻辑
+  //   const activeMin = mins[indexs[1]]
+  //   let newActiveMin = mins.indexOf(activeMin)
+  //   console.log('更新分钟列表', { activeMin }, { newActiveMin }, { mins }, { indexs })
+  //   newActiveMin = newActiveMin > -1 ? newActiveMin : 0
+
+  //   setIndexs(newActiveMin, 1)
+  // }, [mins])
+
+  return (
+    <BasePicker {...props} value={times.map(formatNum).join(':')}>
+      <ScrollArea
+        activeIndex={indexs[0]}
+        range={hours}
+        format={(v) => `${formatNum(v)}时`}
+        onChange={(i) => {
+          setIndexs(i, 0)
+          setTimes(hours[i], 0)
+        }}
+      />
+      <ScrollArea
+        activeIndex={indexs[1]}
+        range={mins}
+        format={(v) => `${formatNum(v)}分`}
+        onChange={(i) => {
+          setIndexs(i, 1)
+          setTimes(mins[i], 1)
+        }}
+      />
+    </BasePicker>
+  )
 }
 
+TimePicker.defaultProps = {
+  start: '00:00',
+  end: '23:59',
+}
 /**
  * TODO: 待支持
  * @component
  * 地址选择器
  */
 function RegionPicker(): JSX.Element {
-  return <BasePicker />
+  return <BasePicker></BasePicker>
 }
 
 export { Picker as default, SelectorPicker, MultiSelectorPicker, DatePicker, TimePicker }

@@ -11,6 +11,17 @@
   left: $icon-size-md - $icon-size-md-dot-offset;
 }
 
+@mixin cross-size($size) {
+  /* #ifdef rn */
+  width: $size;
+  height: $size;
+  /* #endif */
+
+  /* #ifndef rn */
+  font-size: $size;
+  /* #endif */
+}
+
 .fta-icon {
   border-radius: $icon-radius;
   @include relative();
@@ -32,10 +43,10 @@
   }
 
   &--medium {
-    @include square($icon-size-md);
+    @include cross-size($icon-size-md);
 
     &--care {
-      @include square(care($icon-size-md));
+      @include cross-size(care($icon-size-md));
     }
 
     // &__badge {
@@ -47,19 +58,19 @@
   }
 
   &--large {
-    @include square($icon-size-lg);
+    @include cross-size($icon-size-lg);
 
     &--care {
-      @include square(care($icon-size-lg));
+      @include cross-size(care($icon-size-lg));
     }
 
     &__badge {
       top: -$icon-size-lg-badge-offset;
-      left: $icon-size-md - $icon-size-md-badge-offset;
+      left: $icon-size-lg - $icon-size-lg-badge-offset;
 
       &--dot {
-        top: -$icon-size-md-dot-offset;
-        left: $icon-size-md - $icon-size-md-dot-offset;
+        top: -$icon-size-lg-dot-offset;
+        left: $icon-size-lg - $icon-size-lg-dot-offset;
       }
     }
   }
