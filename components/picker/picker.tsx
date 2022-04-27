@@ -69,19 +69,30 @@ function _ScrollArea(props: {
       activeIndexRef.current = activeIndex
       setScrollTop(getScrollTopOverIndex(activeIndex))
     }
-  }, [activeIndex, range])
-
+  }, [activeIndex])
+  /** 滚动 */
   const _onScroll = (e: ScrollEvent) => {
     const scrollTop = e.detail.scrollTop
 
     let _activeIndex = getAcitveIndex(scrollTop, range.length)
-    setScrollTop(scrollTop)
+
     const _prevIndex = activeIndexRef.current
     if (_prevIndex !== _activeIndex) {
-      onChange?.(_activeIndex, _prevIndex)
       activeIndexRef.current = _activeIndex
+      onChange?.(_activeIndex, _prevIndex)
     }
+    setScrollTop(scrollTop)
+    onScroll?.(e.detail)
+  }
 
+  /** 滚动到底部 */
+  const _onScrollToLower = (e: ScrollEvent) => {
+    let max = range.length - 1
+    if (max === activeIndexRef.current) return
+
+    activeIndexRef.current = max
+    max !== activeIndexRef.current && onChange?.(max, activeIndexRef.current)
+    setScrollTop(getScrollTopOverIndex(max))
     onScroll?.(e.detail)
   }
 
@@ -95,7 +106,9 @@ function _ScrollArea(props: {
       scrollWithAnimation
       className='fta-picker-block'
       scrollTop={scrollTop}
-      onScroll={_onScroll}>
+      onScroll={_onScroll}
+      onScrollToLower={_onScrollToLower}
+      lowerThreshold={10}>
       {/* placeholder */}
       <View className='fta-picker-item--placeholder'>
         {/* scroll items */}
@@ -105,7 +118,6 @@ function _ScrollArea(props: {
             activeIndexRef.current === i && 'fta-picker-item--active'
           )
           const _value = format!(v)
-
           return (
             <View key={`${i}-${_value}`} className={itemClass}>
               <Text
@@ -409,7 +421,7 @@ function DatePicker(props: Compose<PickerDateProps>): JSX.Element {
       let i: number
       let dActiveIndex =
         (i = _days.indexOf(d)) === -1 ? (d > _days[_days.length - 1] ? _days.length - 1 : 0) : i
-      console.log('当前月份天数', count, dActiveIndex, d, 'index:' + i, JSON.stringify(_days))
+      // console.log('当前月份天数', count, dActiveIndex, d, 'index:' + i, JSON.stringify(_days))
       DayElement = (
         <ScrollArea
           activeIndex={dActiveIndex}
