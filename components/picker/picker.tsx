@@ -59,24 +59,18 @@ const builtInModes: PickerMode[] = [
 ]
 
 function _ScrollArea(props: {
+  scrollWithAnimation?: boolean
   onScroll?: (e: any) => void
   onChange?: (newIndex: number, oldIndex: number) => void
   activeIndex: number
   range: any[]
   format?: (value: any) => string | number
 }): JSX.Element {
-  const { onScroll, activeIndex, range, format, onChange } = props
+  const { onScroll, activeIndex, range, format, onChange, scrollWithAnimation } = props
   const activeIndexRef = useRef(+activeIndex >= 0 ? +activeIndex : 0)
   const [scrollTop, setScrollTop] = useState(getScrollTopOverIndex(activeIndex))
   const timerRef = useRef<any>()
   const scrollRef = useRef({ scrollTop, setScrollTop }).current
-  // const [rangeChanged, setChanged] = useState(1)
-  // const [range, setRange] = useState(_range)
-
-  // useEffect(() => {
-  //   setChanged(rangeChanged + 1)
-  //   setRange(_range)
-  // }, [_range])
 
   useEffect(() => {
     scrollRef.scrollTop = scrollTop
@@ -108,18 +102,21 @@ function _ScrollArea(props: {
       activeIndexRef.current = _activeIndex
       onChange?.(_activeIndex, _prevIndex)
     }
-
     onScroll?.(e.detail)
   }
 
   /** 滚动到底部 */
   const _onScrollToLower = (e: ScrollEvent) => {
     let max = range.length - 1
-    if (max === activeIndexRef.current) return
+    if (max === activeIndexRef.current) console.log('已经滚动到最后了')
 
     activeIndexRef.current = max
     max !== activeIndexRef.current && onChange?.(max, activeIndexRef.current)
-    setScrollTop(getScrollTopOverIndex(max))
+    setScrollTop(
+      getScrollTopOverIndex(max) +
+        // 加0.001 防止滑动过快视图不更新，强制更新视图
+        0.001
+    )
     onScroll?.(e.detail)
   }
 
@@ -133,7 +130,6 @@ function _ScrollArea(props: {
     timerRef.current = setTimeout(() => {
       const offset = getAlignedIndex(scrollRef.scrollTop)
       if (offset > -1) {
-        console.log('设置scrollTop ========')
         scrollRef.setScrollTop(offset)
         timerRef.current = null
       }
@@ -142,18 +138,17 @@ function _ScrollArea(props: {
 
   return (
     <ScrollView
-      // @ts-ignore
-      showsVerticalScrollIndicator={false}
-      alwaysBounceVertical={false}
-      bounces={false}
       scrollY
-      // enhanced
-      scrollWithAnimation
       className='fta-picker-block'
+      lowerThreshold={10}
       scrollTop={scrollTop}
+      bounces={false}
+      // @ts-ignore
+      alwaysBounceVertical={false}
+      scrollWithAnimation={scrollWithAnimation}
+      showsVerticalScrollIndicator={false}
       onScroll={_onScroll}
-      onScrollToLower={_onScrollToLower}
-      lowerThreshold={10}>
+      onScrollToLower={_onScrollToLower}>
       {/* placeholder */}
       <View className='fta-picker-item--placeholder'>
         {/* scroll items */}
@@ -164,7 +159,7 @@ function _ScrollArea(props: {
           )
           const _value = format!(v)
           return (
-            <View key={`${v}-${i}-${range[0]}-${range.length}`} className={itemClass}>
+            <View key={`${_value}-${i}-${range[0]}-${range.length}`} className={itemClass}>
               <Text
                 // @ts-ignore
                 numberOfLines={1}
@@ -180,6 +175,7 @@ function _ScrollArea(props: {
 }
 
 _ScrollArea.defaultProps = {
+  scrollWithAnimation: true,
   activeIndex: 0,
   format: (v: string | number) => v,
   onChange() {},
@@ -223,11 +219,11 @@ function BasePicker(props: FloatLayoutProps & { value?: Arrayable<number> | stri
         onConfirm() {
           onConfirm?.(value!)
           console.log('确认值', value)
-          methods!.hide()
+          methods?.hide()
         },
         onCancel() {
           onCancel?.(value!)
-          methods!.hide()
+          methods?.hide()
         },
       }}
       {...extrapProps}>
@@ -277,11 +273,7 @@ const pickerDefaultProps: PickerProps = {
 // @ts-ignore
 Picker.defaultProps = pickerDefaultProps
 
-type Compose<T> = T &
-  FloatLayoutProps & {
-    onChange?: (newVal: any, oldVal: any) => void
-    format?: (value: any) => string | number
-  }
+type Compose<T> = T & FloatLayoutProps
 /** 默认的格式化函数 */
 const createDefaultFormat = (rangeKey?: string) =>
   rangeKey ? (value: Record<string, string | number>) => value[rangeKey] : void 0
@@ -326,8 +318,9 @@ function MultiSelectorPicker(props: Compose<PickerMultiSelectorProps>): JSX.Elem
   }
   return (
     <BasePicker {...props} value={ref.current}>
-      {range.map((column: unknown[], index: number) => {
-        const _format = format || createDefaultFormat(rangeKey)
+      {range.map((column: any[], index: number) => {
+        const _format =
+          Array.isArray(format) && format[index] ? format[index] : createDefaultFormat(rangeKey)
         return (
           <ScrollArea
             key={index}
@@ -342,14 +335,23 @@ function MultiSelectorPicker(props: Compose<PickerMultiSelectorProps>): JSX.Elem
   )
 }
 
+const createTimeFormat = (
+  format: Array<(value: any) => string | number> | undefined,
+  index: number,
+  defaultFormat: (value: number) => string | number
+) => (Array.isArray(format) && format[index] ? format[index] : defaultFormat)
+
+const months = genPeriodList(1, 12)
+const days = genPeriodList(1, 31)
+
+const dYearFormat = (v: number) => (v === 9999 ? '长期' : `${v}年`)
+const dMonthFormat = (v: number) => `${v}月`
+const dDayFormat = (v: number) => `${v}日`
+
 /**
  * @component
  * 日期选择器
  */
-const months = genPeriodList(1, 12)
-const days = genPeriodList(1, 31)
-
-// const restrict =
 function DatePicker(props: Compose<PickerDateProps>): JSX.Element {
   const {
     start,
@@ -390,7 +392,7 @@ function DatePicker(props: Compose<PickerDateProps>): JSX.Element {
     <ScrollArea
       activeIndex={yIndex}
       range={years}
-      format={(v) => (v === 9999 ? '长期' : `${v}年`)}
+      format={createTimeFormat(format, 0, dYearFormat)}
       onChange={(i) => {
         dateRef[0] = years[i]
         setIndexs(years[i] === 9999 ? indexs[0] : i, 0)
@@ -429,9 +431,9 @@ function DatePicker(props: Compose<PickerDateProps>): JSX.Element {
       <ScrollArea
         activeIndex={mActiveIndex}
         range={_months}
-        format={(v) => `${v}月`}
+        format={createTimeFormat(format, 1, dMonthFormat)}
         onChange={(i) => {
-          console.log('m change')
+          // console.log('m change')
           dateRef[1] = _months[i]
           setIndexs(i, 1)
         }}
@@ -467,14 +469,14 @@ function DatePicker(props: Compose<PickerDateProps>): JSX.Element {
       let i: number
       let dActiveIndex =
         (i = _days.indexOf(d)) === -1 ? (d > _days[_days.length - 1] ? _days.length - 1 : 0) : i
-      // console.log('当前月份天数', count, dActiveIndex, d, 'index:' + i, JSON.stringify(_days))
+
       DayElement = (
         <ScrollArea
           activeIndex={dActiveIndex}
           range={_days}
-          format={(v) => `${v}日`}
+          format={createTimeFormat(format, 2, dDayFormat)}
           onChange={(i) => {
-            console.log('d changed index:' + i, 'value:' + _days[i])
+            // console.log('d changed index:' + i, 'value:' + _days[i])
             dateRef[2] = _days[i]
             setIndexs(i, 2)
           }}
@@ -513,11 +515,11 @@ function TimePicker(props: Compose<PickerTimeProps>): JSX.Element {
   const [[h1, m1], [h2, m2]] = useRef([parseTime(start!), parseTime(end!)] as const).current
   // 小时区间不变, 用Ref存储
   const hours = useRef(totalHours.slice(h1, h2 + 1)).current
+  // 存储更新之前分针的区间
+  const preRef = useRef(totalMins.length)
 
   const [times, setTimes, replaceTimes] = useArray<[number, number]>(parseTime(value))
   const [indexs, setIndexs, replaceIndexs] = useArray<[number, number]>([0, 0])
-
-  const preRef = useRef(totalMins.length)
 
   const [mins, setMins] = useState(totalMins.slice())
 
@@ -541,13 +543,8 @@ function TimePicker(props: Compose<PickerTimeProps>): JSX.Element {
         mIndex = m <= m2 ? m : 0
       }
     }
-    // let hIndex = hours.indexOf(h)
-    // let mIndex = mins.indexOf(m)
-    // hIndex = hIndex > -1 ? hIndex : 0
-    // mIndex = mIndex > -1 ? mIndex : 0
     replaceIndexs([hIndex, mIndex])
     replaceTimes([hours[hIndex], mins[hIndex]])
-    // console.log('执行了', value, [hIndex, mIndex])
   }, [value])
 
   // 根据当前选择的小时来展示分钟区间
@@ -592,16 +589,6 @@ function TimePicker(props: Compose<PickerTimeProps>): JSX.Element {
     }
   }, [indexs[0]])
 
-  // useEffect(() => {
-  //   // 分钟聚焦的逻辑
-  //   const activeMin = mins[indexs[1]]
-  //   let newActiveMin = mins.indexOf(activeMin)
-  //   console.log('更新分钟列表', { activeMin }, { newActiveMin }, { mins }, { indexs })
-  //   newActiveMin = newActiveMin > -1 ? newActiveMin : 0
-
-  //   setIndexs(newActiveMin, 1)
-  // }, [mins])
-
   return (
     <BasePicker {...props} value={times.map(formatNum).join(':')}>
       <ScrollArea
@@ -639,4 +626,9 @@ function RegionPicker(): JSX.Element {
   return <BasePicker></BasePicker>
 }
 
-export { Picker as default, SelectorPicker, MultiSelectorPicker, DatePicker, TimePicker }
+export {
+  Picker as default,
+  BasePicker,
+  ScrollArea,
+  // SelectorPicker, MultiSelectorPicker, DatePicker, TimePicker
+}

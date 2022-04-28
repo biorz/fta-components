@@ -53,6 +53,9 @@ export interface FloatLayoutProps extends Omit<ActionSheetProps, 'title'> {
 }
 
 interface PickerOnChange<T extends 'single' | 'multi' | 'mixin'> {
+  format?: T extends 'single'
+    ? (value: any) => string | number
+    : Array<(value: any) => string | number>
   onChange?: T extends 'single'
     ? (newVal: number, oldVal: number) => void
     : T extends 'multi'
@@ -67,7 +70,7 @@ interface PickerOnChange<T extends 'single' | 'multi' | 'mixin'> {
     ? (newVal: number, oldVal: number) => void
     : T extends 'multi'
     ? (newVal: number[], oldVal: number[]) => void
-    : (newVal: Arrayable<number>, oldVal: Arrayable<number>) => void
+    : (newVal: string) => void
 }
 
 export type PickerMode = keyof PickerStandardProps.Mode
@@ -110,13 +113,7 @@ export type PickerProps = (
   | PickerTimeProps
   | PickerDateProps
 ) &
-  FloatLayoutProps & {
-    /**
-     * 格式化文本
-     * @param columnIndex 多列选择时生效
-     */
-    format?: (value: any, columnIndex: number) => string | number
-  }
+  FloatLayoutProps
 
 declare const Picker: FC<PickerProps>
 
