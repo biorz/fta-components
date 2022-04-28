@@ -3,7 +3,7 @@ import { ComponentClass } from 'react'
 import { BadgeProps } from './badge'
 import Component from './base'
 
-export type IconSize = 'medium' | 'large' | number
+export type IconSize = 'small' | 'medium' | 'large' | number
 export interface IconProps extends Component {
   /**
    * icon名称

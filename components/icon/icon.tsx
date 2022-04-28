@@ -2,7 +2,14 @@ import { Image, Text, View } from '@tarojs/components'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React, { Fragment, ReactNode } from 'react'
-import { ConfigConsumer, inRN, isNumber, scale as Scale, useClassWithCare } from '../../common'
+import {
+  ConfigConsumer,
+  inRN,
+  isNumber,
+  isString,
+  scale as Scale,
+  useClassWithCare,
+} from '../../common'
 import '../../style/components/icon/index.scss'
 import { IconProps } from '../../types/icon'
 import Badge from '../badge'
@@ -28,7 +35,7 @@ export default class Icon extends React.Component<IconProps> {
       const { customStyle, className, isDot, ...props } = badge
       const rootClz = classNames(
         `fta-icon__${isDot ? 'dot' : 'badge'}`,
-        `fta-icon-${size}__badge${isDot ? '--dot' : ''}`,
+        isString(size) && `fta-icon--${size}__badge${isDot ? '--dot' : ''}`,
         className
       )
       return (

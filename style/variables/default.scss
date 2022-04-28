@@ -142,12 +142,18 @@ $spacing-v-xxl: zoom(28px) !default;
 $spacing-v-max: zoom(60px) !default;
 
 /* 图标尺寸 */
+$icon-size-sm: zoom(24px) !default;
 $icon-size-md: zoom(48px) !default;
 $icon-size-lg: zoom(96px) !default;
-$icon-size-md-badge-offset: zoom(24px) !default;
-$icon-size-lg-badge-offset: zoom(16px) !default;
-$icon-size-md-dot-offset: zoom(12px) !default;
-$icon-size-lg-dot-offset: zoom(12px) !default;
+
+$icon-size-sm-badge-offset: zoom(12px) !default;
+$icon-size-md-badge-offset: zoom(18px) !default;
+$icon-size-lg-badge-offset: zoom(24px) !default;
+
+$icon-size-sm-dot-offset: zoom(6px) !default;
+$icon-size-md-dot-offset: zoom(6px) !default;
+$icon-size-lg-dot-offset: zoom(6px) !default;
+
 $icon-radius: zoom(6px) !default;
 
 /* z-index */

@@ -26,20 +26,30 @@
   border-radius: $icon-radius;
   @include relative();
 
-  // &--small {
-  //   @include square($icon-size-sm);
-
-  //   &--care {
-  //     @include square(care($icon-size-sm));
-  //   }
-  // }
-
   &__badge {
     @extend %badge-offset;
   }
 
   &__dot {
     @extend %dot-offset;
+  }
+
+  &--small {
+    @include cross-size($icon-size-sm);
+
+    &--care {
+      @include cross-size(care($icon-size-sm));
+    }
+
+    &__badge {
+      top: -$icon-size-sm-badge-offset;
+      right: -$icon-size-lg-badge-offset;
+
+      &--dot {
+        top: -$icon-size-sm-dot-offset;
+        left: $icon-size-sm - $icon-size-sm-dot-offset;
+      }
+    }
   }
 
   &--medium {
@@ -49,12 +59,15 @@
       @include cross-size(care($icon-size-md));
     }
 
-    // &__badge {
+    &__badge {
+      top: -$icon-size-md-badge-offset;
+      left: $icon-size-md - $icon-size-md-badge-offset;
 
-    //   &--dot {
-
-    //   }
-    // }
+      &--dot {
+        top: -$icon-size-md-dot-offset;
+        left: $icon-size-md - $icon-size-md-dot-offset;
+      }
+    }
   }
 
   &--large {
@@ -69,7 +82,7 @@
       left: $icon-size-lg - $icon-size-lg-badge-offset;
 
       &--dot {
-        top: -$icon-size-lg-dot-offset;
+        top: $icon-size-lg-dot-offset;
         left: $icon-size-lg - $icon-size-lg-dot-offset;
       }
     }
