@@ -84,3 +84,39 @@ export const useArray = <T extends any[]>(initialArray: T | (() => T)) => {
 
   return [array, setArray, _setArray] as const
 }
+
+// export const useLatest = <T extends any>(current: T) => {
+//   const storedValue = useRef(current)
+//   useEffect(() => {
+//     storedValue.current = current
+//   })
+//   return storedValue
+// }
+
+// export const useThrottle = (fn: (...args: any) => any, delay = 10) => {
+//   // const timerRef = useRef<NodeJS.Timeout>()
+//   const latestFn = useLatest(fn).current
+//   const timeRef = useRef(+new Date())
+//   return useCallback(
+//     (...args: any[]) => {
+//       const nowTime = +new Date()
+//       if (nowTime - timeRef.current > delay) {
+//         timeRef.current = nowTime
+//         latestFn.apply(null, args)
+//       } else {
+//         console.log('节流')
+//       }
+//     },
+//     [latestFn]
+//   )
+// }
+
+// export const useForceUpdate = (): (() => void) => {
+//   const [, force2Update] = useState<{}>(Object.create(null))
+
+//   const forceUpdate = useCallback((): void => {
+//     force2Update(Object.create(null))
+//   }, [force2Update])
+
+//   return forceUpdate
+// }

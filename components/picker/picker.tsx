@@ -70,6 +70,13 @@ function _ScrollArea(props: {
   const [scrollTop, setScrollTop] = useState(getScrollTopOverIndex(activeIndex))
   const timerRef = useRef<any>()
   const scrollRef = useRef({ scrollTop, setScrollTop }).current
+  // const [rangeChanged, setChanged] = useState(1)
+  // const [range, setRange] = useState(_range)
+
+  // useEffect(() => {
+  //   setChanged(rangeChanged + 1)
+  //   setRange(_range)
+  // }, [_range])
 
   useEffect(() => {
     scrollRef.scrollTop = scrollTop
@@ -88,16 +95,20 @@ function _ScrollArea(props: {
   }, [scrollTop])
   /** 滚动 */
   const _onScroll = (e: ScrollEvent) => {
+    // console.log('onscroll============', JSON.stringify(range))
     const scrollTop = e.detail.scrollTop
 
     let _activeIndex = getAcitveIndex(scrollTop, range.length)
 
     const _prevIndex = activeIndexRef.current
+    // FIXME: 重新渲染的时候，导致children乱序排列
+    setScrollTop(scrollTop)
+    // setRange(range.slice())
     if (_prevIndex !== _activeIndex) {
       activeIndexRef.current = _activeIndex
       onChange?.(_activeIndex, _prevIndex)
     }
-    setScrollTop(scrollTop)
+
     onScroll?.(e.detail)
   }
 
@@ -111,7 +122,6 @@ function _ScrollArea(props: {
     setScrollTop(getScrollTopOverIndex(max))
     onScroll?.(e.detail)
   }
-  const keyprefx = Date.now()
 
   /**
    * 滑动停止后修复位置偏移
@@ -123,6 +133,7 @@ function _ScrollArea(props: {
     timerRef.current = setTimeout(() => {
       const offset = getAlignedIndex(scrollRef.scrollTop)
       if (offset > -1) {
+        console.log('设置scrollTop ========')
         scrollRef.setScrollTop(offset)
         timerRef.current = null
       }
@@ -136,7 +147,7 @@ function _ScrollArea(props: {
       alwaysBounceVertical={false}
       bounces={false}
       scrollY
-      enhanced
+      // enhanced
       scrollWithAnimation
       className='fta-picker-block'
       scrollTop={scrollTop}
@@ -153,7 +164,7 @@ function _ScrollArea(props: {
           )
           const _value = format!(v)
           return (
-            <View key={`${_value}-${i}`} className={itemClass}>
+            <View key={`${v}-${i}-${range[0]}-${range.length}`} className={itemClass}>
               <Text
                 // @ts-ignore
                 numberOfLines={1}
@@ -360,7 +371,7 @@ function DatePicker(props: Compose<PickerDateProps>): JSX.Element {
     // if(depth)
     const copy = indexs.slice()
     copy[depth] = value
-    console.log('indexs', copy, indexs)
+    // console.log('indexs', copy, indexs)
     _setIndexs(copy)
     // @ts-ignore
     onChange?.(dateRef)
@@ -536,7 +547,7 @@ function TimePicker(props: Compose<PickerTimeProps>): JSX.Element {
     // mIndex = mIndex > -1 ? mIndex : 0
     replaceIndexs([hIndex, mIndex])
     replaceTimes([hours[hIndex], mins[hIndex]])
-    console.log('执行了', value, [hIndex, mIndex])
+    // console.log('执行了', value, [hIndex, mIndex])
   }, [value])
 
   // 根据当前选择的小时来展示分钟区间
