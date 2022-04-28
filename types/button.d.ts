@@ -22,7 +22,7 @@ type TaroButtonProps = Pick<
 >
 
 export type ButtonSize = 'small' | 'medium' | 'large'
-export type ButtonType = 'primary' | 'secondary' | 'tertiary'
+export type ButtonType = 'primary' | 'secondary' | 'tertiary' | 'fourth'
 
 export interface ButtonProps extends BaseComponent, BaseTextComponent, Partial<TaroButtonProps> {
   /**

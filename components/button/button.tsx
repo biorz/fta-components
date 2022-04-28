@@ -19,6 +19,7 @@ const TYPE_CLASS = {
   primary: 'primary',
   secondary: 'secondary',
   tertiary: 'tertiary',
+  fourth: 'fourth',
 }
 
 export default class FTAButton extends Component<FTAButtonProps> {
