@@ -6,6 +6,7 @@
   "bin": {
     "fta-theme": "./bin/theme-handler.js"
   },
+  "react-native": "rn/index.js",
   "scripts": {
     "build:map": "node ./extract-component-map.js",
     "broadcast": "node ./bin/broadcast.js",

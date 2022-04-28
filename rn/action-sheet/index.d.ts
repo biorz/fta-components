@@ -1,6 +1,6 @@
 import { CommonEvent } from '@tarojs/components/types/common'
 import { ComponentClass, CSSProperties, ReactNode } from 'react'
-import BaseComponent, { BaseTextComponent } from './base'
+import BaseComponent, { BaseTextComponent, PropsWithChildren } from './base'
 
 export interface CustomTitle {
   title: ReactNode
@@ -11,7 +11,7 @@ export interface CustomTitle {
   icon?: ReactNode
   border?: boolean
 }
-export interface ActionSheetProps extends BaseComponent {
+export interface ActionSheetProps extends BaseComponent, PropsWithChildren {
   /**
    * 是否展示元素
    * @default false
@@ -37,9 +37,9 @@ export interface ActionSheetProps extends BaseComponent {
    * 元素被关闭触发的事件
    */
   onClose?: (event?: CommonEvent) => void
-  // /**
-  //  * 点击了底部取消按钮触发的事件
-  //  */
+  /**
+   * 点击了底部取消按钮触发的事件
+   */
   // onCancel?: (event?: CommonEvent) => void
   /**
    * RN端使用原生Modal组件
@@ -71,6 +71,7 @@ export interface ActionSheetProps extends BaseComponent {
 }
 
 export interface ActionSheetState {
+  /** @private */
   _isOpened: boolean
 }
 

@@ -156,18 +156,18 @@ function _getPrototypeOf(o) {
 
 var indexScssStyleSheet = StyleSheet.create({
   'fta-image': {
-    width: scalePx2dp(115),
-    height: scalePx2dp(115),
+    width: scalePx2dp(120),
+    height: scalePx2dp(120),
   },
   'fta-image--circle': {
-    borderRadius: scalePx2dp(5000),
+    borderRadius: scalePx2dp(4800),
     overflow: 'hidden',
   },
   'fta-image--loading': {
     position: 'absolute',
     opacity: 0,
-    width: scalePx2dp(0.5),
-    height: scalePx2dp(0.5),
+    width: scalePx2dp(0.48),
+    height: scalePx2dp(0.48),
   },
   'fta-image--flex': {
     display: 'flex',

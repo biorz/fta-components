@@ -70,7 +70,7 @@ function _objectWithoutProperties(source, excluded) {
 
 var indexScssStyleSheet = StyleSheet.create({
   'fta-avatar': {
-    borderRadius: scalePx2dp(6),
+    borderRadius: scalePx2dp(6.24),
     backgroundColor: '#ccc',
     overflow: 'hidden',
   },
@@ -84,43 +84,43 @@ var indexScssStyleSheet = StyleSheet.create({
     height: '100%',
   },
   'fta-avatar--large': {
-    width: scalePx2dp(92),
-    height: scalePx2dp(92),
-    borderRadius: scalePx2dp(7.5),
+    width: scalePx2dp(96),
+    height: scalePx2dp(96),
+    borderRadius: scalePx2dp(8.16),
   },
   'fta-avatar--large__text': {
-    fontSize: scalePx2dp(34.5),
-    lineHeight: scalePx2dp(92),
+    fontSize: scalePx2dp(36),
+    lineHeight: scalePx2dp(96),
   },
   'fta-avatar--medium': {
-    width: scalePx2dp(69),
-    height: scalePx2dp(69),
-    borderRadius: scalePx2dp(6),
+    width: scalePx2dp(72),
+    height: scalePx2dp(72),
+    borderRadius: scalePx2dp(6.24),
   },
   'fta-avatar--medium__text': {
-    fontSize: scalePx2dp(30.5),
-    lineHeight: scalePx2dp(69),
+    fontSize: scalePx2dp(32.16),
+    lineHeight: scalePx2dp(72),
   },
   'fta-avatar--small': {
-    width: scalePx2dp(54),
-    height: scalePx2dp(54),
-    borderRadius: scalePx2dp(5),
+    width: scalePx2dp(56.16),
+    height: scalePx2dp(56.16),
+    borderRadius: scalePx2dp(4.8),
   },
   'fta-avatar--small__text': {
-    fontSize: scalePx2dp(23),
-    lineHeight: scalePx2dp(54),
+    fontSize: scalePx2dp(24),
+    lineHeight: scalePx2dp(56.16),
   },
   'fta-avatar--mini': {
-    width: scalePx2dp(46),
-    height: scalePx2dp(46),
-    borderRadius: scalePx2dp(4),
+    width: scalePx2dp(48),
+    height: scalePx2dp(48),
+    borderRadius: scalePx2dp(3.84),
   },
   'fta-avatar--mini__text': {
-    fontSize: scalePx2dp(19),
-    lineHeight: scalePx2dp(46),
+    fontSize: scalePx2dp(20.16),
+    lineHeight: scalePx2dp(48),
   },
   'fta-avatar--circle': {
-    borderRadius: scalePx2dp(5000),
+    borderRadius: scalePx2dp(4800),
     overflow: 'hidden',
   },
 })

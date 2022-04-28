@@ -115,39 +115,39 @@ function _extends() {
 
 var indexScssStyleSheet = StyleSheet.create({
   'fta-icon__badge': {
-    top: scalePx2dp(-11.5),
-    left: scalePx2dp(11.5),
+    top: scalePx2dp(-12),
+    left: scalePx2dp(12),
   },
   'fta-icon__dot': {
-    top: scalePx2dp(-6),
-    left: scalePx2dp(17),
+    top: scalePx2dp(-6.24),
+    left: scalePx2dp(17.76),
   },
   'fta-icon': {
-    borderRadius: scalePx2dp(3),
+    borderRadius: scalePx2dp(2.88),
   },
   'fta-icon--medium': {
-    width: scalePx2dp(23),
-    height: scalePx2dp(23),
+    width: scalePx2dp(24),
+    height: scalePx2dp(24),
   },
   'fta-icon--medium--care': {
-    width: scalePx2dp(30),
-    height: scalePx2dp(30),
+    width: scalePx2dp(31.2),
+    height: scalePx2dp(31.2),
   },
   'fta-icon--large': {
-    width: scalePx2dp(46),
-    height: scalePx2dp(46),
+    width: scalePx2dp(48),
+    height: scalePx2dp(48),
   },
   'fta-icon--large--care': {
-    width: scalePx2dp(60),
-    height: scalePx2dp(60),
+    width: scalePx2dp(62.4),
+    height: scalePx2dp(62.4),
   },
   'fta-icon--large__badge': {
-    top: scalePx2dp(-7.5),
-    left: scalePx2dp(11.5),
+    top: scalePx2dp(-8.16),
+    left: scalePx2dp(39.84),
   },
   'fta-icon--large__badge--dot': {
-    top: scalePx2dp(-6),
-    left: scalePx2dp(17),
+    top: scalePx2dp(-6.24),
+    left: scalePx2dp(41.76),
   },
 })
 
@@ -229,31 +229,31 @@ var listItemScssStyleSheet = StyleSheet.create({
     alignItems: 'center',
   },
   'item-icon': {
-    marginRight: scalePx2dp(11.5),
+    marginRight: scalePx2dp(12),
   },
   'item-border-line': {
-    borderBottomWidth: scalePx2dp(0.5),
+    borderBottomWidth: scalePx2dp(0.48),
     borderBottomColor: '#e9e9e9',
-    marginLeft: scalePx2dp(11.5),
+    marginLeft: scalePx2dp(12),
   },
   'fta-list__item': {
-    paddingTop: scalePx2dp(9.5),
-    paddingRight: scalePx2dp(11.5),
-    paddingBottom: scalePx2dp(9.5),
-    paddingLeft: scalePx2dp(11.5),
+    paddingTop: scalePx2dp(10.08),
+    paddingRight: scalePx2dp(12),
+    paddingBottom: scalePx2dp(10.08),
+    paddingLeft: scalePx2dp(12),
   },
   'item-thumb': {
-    marginRight: scalePx2dp(11.5),
-    width: scalePx2dp(19),
-    height: scalePx2dp(19),
+    marginRight: scalePx2dp(12),
+    width: scalePx2dp(20.16),
+    height: scalePx2dp(20.16),
   },
   'item-thumb__info': {
     width: '100%',
     height: '100%',
   },
   'item-thumb--care': {
-    width: scalePx2dp(24.5),
-    height: scalePx2dp(24.5),
+    width: scalePx2dp(26.4),
+    height: scalePx2dp(26.4),
   },
   'fta-list__item--disabled': {
     opacity: 0.3,
@@ -267,67 +267,67 @@ var listItemScssStyleSheet = StyleSheet.create({
   'item-extra__info': {
     maxWidth: '100%',
     color: '#999',
-    paddingRight: scalePx2dp(12.66667),
-    fontSize: scalePx2dp(13.5),
-    lineHeight: scalePx2dp(17.55),
+    paddingRight: scalePx2dp(13.44),
+    fontSize: scalePx2dp(13.92),
+    lineHeight: scalePx2dp(18.096),
   },
   'item-extra__info--care': {
-    fontSize: scalePx2dp(17.5),
-    lineHeight: scalePx2dp(23),
+    fontSize: scalePx2dp(18.24),
+    lineHeight: scalePx2dp(23.52),
   },
   'item-extra__icon': {
-    right: scalePx2dp(-4),
+    right: scalePx2dp(-3.84),
     position: 'absolute',
   },
   'item-extra__icon-arrow': {
-    width: scalePx2dp(12.66667),
-    height: scalePx2dp(12.66667),
+    width: scalePx2dp(13.44),
+    height: scalePx2dp(13.44),
   },
   'item-extra__icon-arrow--care': {
-    width: scalePx2dp(16.5),
-    height: scalePx2dp(16.5),
+    width: scalePx2dp(17.28),
+    height: scalePx2dp(17.28),
   },
   'item-extra__image': {
-    width: scalePx2dp(19),
-    height: scalePx2dp(19),
-    marginRight: scalePx2dp(12.66667),
+    width: scalePx2dp(20.16),
+    height: scalePx2dp(20.16),
+    marginRight: scalePx2dp(13.44),
   },
   'item-extra__image-info': {
     width: '100%',
     height: '100%',
   },
   'item-extra__image--care': {
-    width: scalePx2dp(24.5),
-    height: scalePx2dp(24.5),
+    width: scalePx2dp(26.4),
+    height: scalePx2dp(26.4),
   },
   'fta-list__item-content': {
     flexGrow: 1,
     flexShrink: 1,
     flexBasis: 0,
     overflow: 'hidden',
-    marginRight: scalePx2dp(12.66667),
+    marginRight: scalePx2dp(13.44),
   },
   'fta-list__item-extra': {
-    maxWidth: scalePx2dp(113),
+    maxWidth: scalePx2dp(117.6),
     textAlign: 'right',
   },
   'item-content__info-title': {
     color: '#333',
-    fontSize: scalePx2dp(17.5),
-    lineHeight: scalePx2dp(22.75),
+    fontSize: scalePx2dp(18.24),
+    lineHeight: scalePx2dp(23.712),
   },
   'item-content__info-title--care': {
-    fontSize: scalePx2dp(23),
-    lineHeight: scalePx2dp(29.5),
+    fontSize: scalePx2dp(23.52),
+    lineHeight: scalePx2dp(30.72),
   },
   'item-content__info-note': {
     color: '#999',
-    fontSize: scalePx2dp(11.5),
-    lineHeight: scalePx2dp(14.95),
+    fontSize: scalePx2dp(12),
+    lineHeight: scalePx2dp(15.6),
   },
   'item-content__info-note--care': {
-    fontSize: scalePx2dp(15),
-    lineHeight: scalePx2dp(19.5),
+    fontSize: scalePx2dp(15.84),
+    lineHeight: scalePx2dp(20.16),
   },
 })
 

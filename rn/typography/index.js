@@ -67,52 +67,52 @@ function _objectWithoutProperties(source, excluded) {
 var indexScssStyleSheet = StyleSheet.create({
   'fta-text': {},
   'fta-text--1': {
-    fontSize: scalePx2dp(21),
-    lineHeight: scalePx2dp(27.3),
+    fontSize: scalePx2dp(22.08),
+    lineHeight: scalePx2dp(28.704),
   },
   'fta-text--1--care': {
-    fontSize: scalePx2dp(27.5),
-    lineHeight: scalePx2dp(35.5),
+    fontSize: scalePx2dp(28.8),
+    lineHeight: scalePx2dp(37.44),
   },
   'fta-text--2': {
-    fontSize: scalePx2dp(19),
-    lineHeight: scalePx2dp(24.7),
+    fontSize: scalePx2dp(20.16),
+    lineHeight: scalePx2dp(26.208),
   },
   'fta-text--2--care': {
-    fontSize: scalePx2dp(24.5),
-    lineHeight: scalePx2dp(32),
+    fontSize: scalePx2dp(26.4),
+    lineHeight: scalePx2dp(34.08),
   },
   'fta-text--3': {
-    fontSize: scalePx2dp(17.5),
-    lineHeight: scalePx2dp(22.75),
+    fontSize: scalePx2dp(18.24),
+    lineHeight: scalePx2dp(23.712),
   },
   'fta-text--3--care': {
-    fontSize: scalePx2dp(23),
-    lineHeight: scalePx2dp(29.5),
+    fontSize: scalePx2dp(23.52),
+    lineHeight: scalePx2dp(30.72),
   },
   'fta-text--4': {
-    fontSize: scalePx2dp(15.5),
-    lineHeight: scalePx2dp(20.15),
+    fontSize: scalePx2dp(15.84),
+    lineHeight: scalePx2dp(20.592),
   },
   'fta-text--4--care': {
-    fontSize: scalePx2dp(20),
-    lineHeight: scalePx2dp(26),
+    fontSize: scalePx2dp(20.64),
+    lineHeight: scalePx2dp(26.88),
   },
   'fta-text--5': {
-    fontSize: scalePx2dp(13.5),
-    lineHeight: scalePx2dp(17.55),
+    fontSize: scalePx2dp(13.92),
+    lineHeight: scalePx2dp(18.096),
   },
   'fta-text--5--care': {
-    fontSize: scalePx2dp(17.5),
-    lineHeight: scalePx2dp(23),
+    fontSize: scalePx2dp(18.24),
+    lineHeight: scalePx2dp(23.52),
   },
   'fta-text--6': {
-    fontSize: scalePx2dp(11.5),
-    lineHeight: scalePx2dp(14.95),
+    fontSize: scalePx2dp(12),
+    lineHeight: scalePx2dp(15.6),
   },
   'fta-text--6--care': {
-    fontSize: scalePx2dp(15),
-    lineHeight: scalePx2dp(19.5),
+    fontSize: scalePx2dp(15.84),
+    lineHeight: scalePx2dp(20.16),
   },
 })
 

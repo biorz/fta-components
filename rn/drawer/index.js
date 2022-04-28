@@ -151,7 +151,7 @@ var indexScssStyleSheet = StyleSheet.create({
     position: 'absolute',
     top: 0,
     bottom: 0,
-    width: scalePx2dp(230),
+    width: scalePx2dp(220.8),
     textAlign: 'left',
     backgroundColor: '#fff',
     zIndex: 901,

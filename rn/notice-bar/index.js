@@ -189,17 +189,17 @@ function _getPrototypeOf(o) {
 var indexScssStyleSheet = StyleSheet.create({
   'fta-noticebar': {
     display: 'flex',
-    paddingTop: scalePx2dp(8.5),
-    paddingRight: scalePx2dp(13.5),
-    paddingBottom: scalePx2dp(8.5),
-    paddingLeft: scalePx2dp(13.5),
+    paddingTop: scalePx2dp(9.12),
+    paddingRight: scalePx2dp(13.92),
+    paddingBottom: scalePx2dp(9.12),
+    paddingLeft: scalePx2dp(13.92),
     backgroundColor: '#fff3e8',
     flexDirection: 'row',
     alignItems: 'center',
     flexWrap: 'nowrap',
   },
   'fta-noticebar-icon': {
-    marginRight: scalePx2dp(9.5),
+    marginRight: scalePx2dp(10.08),
   },
   'fta-noticebar__content': {
     flexGrow: 1,
@@ -217,18 +217,18 @@ var indexScssStyleSheet = StyleSheet.create({
   },
   'fta-noticebar__content-text': {
     color: '#ff5b00',
-    fontSize: scalePx2dp(15.5),
+    fontSize: scalePx2dp(15.84),
   },
   'fta-noticebar__content-inner--marquee': {
     paddingLeft: '100%',
   },
   'fta-noticebar__content-text--care': {
-    fontSize: scalePx2dp(20),
+    fontSize: scalePx2dp(20.64),
   },
   'fta-noticebar__close': {
-    width: scalePx2dp(15.5),
-    height: scalePx2dp(15.5),
-    marginLeft: scalePx2dp(9.5),
+    width: scalePx2dp(15.84),
+    height: scalePx2dp(15.84),
+    marginLeft: scalePx2dp(10.08),
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
@@ -236,18 +236,18 @@ var indexScssStyleSheet = StyleSheet.create({
   },
   'fta-icon-close': {
     color: '#ff5b00',
-    fontSize: scalePx2dp(15.5),
-    width: scalePx2dp(15.5),
-    height: scalePx2dp(15.5),
+    fontSize: scalePx2dp(15.84),
+    width: scalePx2dp(15.84),
+    height: scalePx2dp(15.84),
   },
   'fta-icon-close--care': {
-    fontSize: scalePx2dp(20),
-    width: scalePx2dp(20),
-    height: scalePx2dp(20),
+    fontSize: scalePx2dp(20.64),
+    width: scalePx2dp(20.64),
+    height: scalePx2dp(20.64),
   },
   'fta-noticebar__close--care': {
-    width: scalePx2dp(20),
-    height: scalePx2dp(20),
+    width: scalePx2dp(20.64),
+    height: scalePx2dp(20.64),
   },
   'fta-noticebar--single': {},
   'fta-noticebar__content-inner': {},

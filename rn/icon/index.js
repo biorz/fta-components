@@ -159,39 +159,39 @@ function _getPrototypeOf(o) {
 
 var indexScssStyleSheet = StyleSheet.create({
   'fta-icon__badge': {
-    top: scalePx2dp(-11.5),
-    left: scalePx2dp(11.5),
+    top: scalePx2dp(-12),
+    left: scalePx2dp(12),
   },
   'fta-icon__dot': {
-    top: scalePx2dp(-6),
-    left: scalePx2dp(17),
+    top: scalePx2dp(-6.24),
+    left: scalePx2dp(17.76),
   },
   'fta-icon': {
-    borderRadius: scalePx2dp(3),
+    borderRadius: scalePx2dp(2.88),
   },
   'fta-icon--medium': {
-    width: scalePx2dp(23),
-    height: scalePx2dp(23),
+    width: scalePx2dp(24),
+    height: scalePx2dp(24),
   },
   'fta-icon--medium--care': {
-    width: scalePx2dp(30),
-    height: scalePx2dp(30),
+    width: scalePx2dp(31.2),
+    height: scalePx2dp(31.2),
   },
   'fta-icon--large': {
-    width: scalePx2dp(46),
-    height: scalePx2dp(46),
+    width: scalePx2dp(48),
+    height: scalePx2dp(48),
   },
   'fta-icon--large--care': {
-    width: scalePx2dp(60),
-    height: scalePx2dp(60),
+    width: scalePx2dp(62.4),
+    height: scalePx2dp(62.4),
   },
   'fta-icon--large__badge': {
-    top: scalePx2dp(-7.5),
-    left: scalePx2dp(11.5),
+    top: scalePx2dp(-8.16),
+    left: scalePx2dp(39.84),
   },
   'fta-icon--large__badge--dot': {
-    top: scalePx2dp(-6),
-    left: scalePx2dp(17),
+    top: scalePx2dp(-6.24),
+    left: scalePx2dp(41.76),
   },
 })
 

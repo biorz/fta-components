@@ -100,7 +100,7 @@ function _getPrototypeOf(o) {
 var indexScssStyleSheet = StyleSheet.create({
   button: {
     color: '#333',
-    fontSize: scalePx2dp(17.5),
+    fontSize: scalePx2dp(18.24),
     fontWeight: '400',
     marginTop: 0,
     borderWidth: 0,
@@ -110,7 +110,7 @@ var indexScssStyleSheet = StyleSheet.create({
   },
   'fta-modal__action__button': {
     color: '#333',
-    fontSize: scalePx2dp(17.5),
+    fontSize: scalePx2dp(18.24),
     fontWeight: '400',
     marginTop: 0,
     borderWidth: 0,
@@ -126,13 +126,13 @@ var indexScssStyleSheet = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    height: scalePx2dp(48),
+    height: scalePx2dp(49.92),
   },
   'content-simple__text': {
     color: '#333',
-    fontSize: scalePx2dp(15.5),
+    fontSize: scalePx2dp(15.84),
     fontWeight: '400',
-    lineHeight: scalePx2dp(20.15),
+    lineHeight: scalePx2dp(20.592),
     textAlign: 'center',
   },
   'fta-modal': {
@@ -160,8 +160,8 @@ var indexScssStyleSheet = StyleSheet.create({
     maxHeight: scaleVu2dp(80, 'vh'),
     alignItems: 'center',
     justifyContent: 'center',
-    width: scalePx2dp(283),
-    borderRadius: scalePx2dp(7.5),
+    width: scalePx2dp(295.2),
+    borderRadius: scalePx2dp(8.16),
     backgroundColor: '#fff',
     overflow: 'hidden',
   },
@@ -171,13 +171,13 @@ var indexScssStyleSheet = StyleSheet.create({
   __viewportUnits: true,
   'fta-modal__header-text': {
     color: '#333',
-    fontSize: scalePx2dp(17.5),
+    fontSize: scalePx2dp(18.24),
     fontWeight: '600',
     textAlign: 'center',
   },
   'fta-modal__action': {},
   'button--border': {
-    borderLeftWidth: scalePx2dp(0.25),
+    borderLeftWidth: scalePx2dp(0.24),
     borderColor: '#ededed',
   },
   'button-confirm__text': {
@@ -192,7 +192,7 @@ var actionScssStyleSheet = StyleSheet.create({
   'fta-modal__footer': {
     display: 'flex',
     flexDirection: 'row',
-    borderTopWidth: scalePx2dp(0.25),
+    borderTopWidth: scalePx2dp(0.24),
     borderColor: '#e9e9e9',
   },
   'fta-modal__action': {
@@ -296,18 +296,18 @@ ModalAction.propTypes = { isSimple: PropTypes.bool }
 var contentScssStyleSheet = StyleSheet.create({
   'fta-modal__content': {
     color: '#333',
-    fontSize: scalePx2dp(15.5),
+    fontSize: scalePx2dp(15.84),
     fontWeight: '400',
-    lineHeight: scalePx2dp(20.15),
-    paddingTop: scalePx2dp(11.5),
-    paddingRight: scalePx2dp(29),
-    paddingBottom: scalePx2dp(29),
-    paddingLeft: scalePx2dp(29),
-    maxHeight: scalePx2dp(420),
+    lineHeight: scalePx2dp(20.592),
+    paddingTop: scalePx2dp(12),
+    paddingRight: scalePx2dp(30.24),
+    paddingBottom: scalePx2dp(30.24),
+    paddingLeft: scalePx2dp(30.24),
+    maxHeight: scalePx2dp(403.2),
     textAlign: 'center',
   },
   'fta-modal__content--no-title': {
-    paddingTop: scalePx2dp(29),
+    paddingTop: scalePx2dp(30.24),
   },
 })
 
@@ -403,14 +403,14 @@ ModalContent.defaultProps = { withTitle: true }
 
 var headerScssStyleSheet = StyleSheet.create({
   'fta-modal__header': {
-    paddingTop: scalePx2dp(29),
-    paddingRight: scalePx2dp(29),
+    paddingTop: scalePx2dp(30.24),
+    paddingRight: scalePx2dp(30.24),
     paddingBottom: 0,
-    paddingLeft: scalePx2dp(29),
+    paddingLeft: scalePx2dp(30.24),
   },
   'fta-modal__header-text': {
     color: '#333',
-    fontSize: scalePx2dp(17.5),
+    fontSize: scalePx2dp(18.24),
     fontWeight: 'bold',
     textAlign: 'center',
   },

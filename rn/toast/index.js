@@ -171,27 +171,27 @@ var indexScssStyleSheet = StyleSheet.create({
     display: 'flex',
     alignSelf: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.8)',
-    paddingTop: scalePx2dp(14.5),
-    paddingRight: scalePx2dp(13.5),
-    paddingBottom: scalePx2dp(14.5),
-    paddingLeft: scalePx2dp(13.5),
-    borderRadius: scalePx2dp(7.5),
-    maxWidth: scalePx2dp(215),
-    minWidth: scalePx2dp(78.5),
+    paddingTop: scalePx2dp(14.88),
+    paddingRight: scalePx2dp(13.92),
+    paddingBottom: scalePx2dp(14.88),
+    paddingLeft: scalePx2dp(13.92),
+    borderRadius: scalePx2dp(8.16),
+    maxWidth: scalePx2dp(224.16),
+    minWidth: scalePx2dp(82.08),
   },
   'fta-toast-view--loading': {
     flexDirection: 'column',
     alignItems: 'center',
-    borderRadius: scalePx2dp(6),
+    borderRadius: scalePx2dp(6.24),
     justifyContent: 'center',
   },
   'fta-toast-view--icon': {
     flexDirection: 'row',
   },
   'fta-toast-loading': {
-    width: scalePx2dp(27),
-    height: scalePx2dp(27),
-    marginBottom: scalePx2dp(7),
+    width: scalePx2dp(27.84),
+    height: scalePx2dp(27.84),
+    marginBottom: scalePx2dp(7.68),
   },
   'fta-toast__text': {
     color: '#fff',
@@ -211,11 +211,11 @@ var indexScssStyleSheet = StyleSheet.create({
   },
   'fta-toast--top': {
     alignItems: 'flex-start',
-    paddingTop: scalePx2dp(96),
+    paddingTop: scalePx2dp(99.84),
   },
   'fta-toast--bottom': {
     alignItems: 'flex-end',
-    paddingBottom: scalePx2dp(96),
+    paddingBottom: scalePx2dp(99.84),
   },
 })
 

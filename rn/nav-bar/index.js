@@ -171,10 +171,10 @@ var indexScssStyleSheet = StyleSheet.create({
     backgroundColor: '#fff',
   },
   'fta-nav-bar-left-button': {
-    marginLeft: scalePx2dp(13.5),
+    marginLeft: scalePx2dp(13.92),
   },
   'fta-nav-bar-right-button': {
-    marginRight: scalePx2dp(13.5),
+    marginRight: scalePx2dp(13.92),
   },
   'fta-nav-bar-title-container': {
     display: 'flex',
@@ -187,7 +187,7 @@ var indexScssStyleSheet = StyleSheet.create({
     alignItems: 'center',
   },
   'fta-nav-bar-title-text': {
-    letterSpacing: scalePx2dp(0.5),
+    letterSpacing: scalePx2dp(0.48),
     color: '#333',
     fontWeight: '600',
   },
@@ -195,29 +195,29 @@ var indexScssStyleSheet = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    bottom: scalePx2dp(7),
+    bottom: scalePx2dp(6.72),
     alignItems: 'center',
   },
   'fta-nav-bar-back': {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft: scalePx2dp(13.5),
+    marginLeft: scalePx2dp(13.92),
   },
   'fta-nav-bar-back__image': {
-    width: scalePx2dp(15.5),
-    height: scalePx2dp(15.5),
+    width: scalePx2dp(15.84),
+    height: scalePx2dp(15.84),
   },
   'fta-nav-bar-back__image--care': {
-    width: scalePx2dp(20),
-    height: scalePx2dp(20),
+    width: scalePx2dp(20.64),
+    height: scalePx2dp(20.64),
   },
   'fta-nav-bar-container': {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: scalePx2dp(42),
+    height: scalePx2dp(44.16),
   },
   'fta-status-bar': {
     height: 44,
@@ -242,7 +242,7 @@ var navbarButtonScssStyleSheet = StyleSheet.create({
     alignItems: 'center',
   },
   'fta-nav-bar-button__text': {
-    letterSpacing: scalePx2dp(0.5),
+    letterSpacing: scalePx2dp(0.48),
     color: '#fa871e',
   },
 })

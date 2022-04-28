@@ -1,130 +1,200 @@
-import Form from '@fta/components-rn/dist/components/Form'
+import Image from '@fta/components-rn/dist/components/Image'
+import ScrollView from '@fta/components-rn/dist/components/ScrollView'
+import Text from '@fta/components-rn/dist/components/Text'
+import View from '@fta/components-rn/dist/components/View'
 import classNames from 'classnames'
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { createContext, forwardRef, useImperativeHandle, useState } from 'react'
+import { isString, noop } from '../common'
 import { StyleSheet } from 'react-native'
 import { scalePx2dp } from '@fta/runtime-rn/dist/scale2dp'
 
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError('Cannot call a class as a function')
-  }
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr
 }
 
-function _defineProperties(target, props) {
-  for (var i = 0; i < props.length; i++) {
-    var descriptor = props[i]
-    descriptor.enumerable = descriptor.enumerable || false
-    descriptor.configurable = true
-    if ('value' in descriptor) descriptor.writable = true
-    Object.defineProperty(target, descriptor.key, descriptor)
-  }
-}
-function _createClass(Constructor, protoProps, staticProps) {
-  if (protoProps) _defineProperties(Constructor.prototype, protoProps)
-  if (staticProps) _defineProperties(Constructor, staticProps)
-  Object.defineProperty(Constructor, 'prototype', { writable: false })
-  return Constructor
-}
-
-function _setPrototypeOf(o, p) {
-  _setPrototypeOf =
-    Object.setPrototypeOf ||
-    function _setPrototypeOf(o, p) {
-      o.__proto__ = p
-      return o
+function _iterableToArrayLimit(arr, i) {
+  var _i =
+    arr == null
+      ? null
+      : (typeof Symbol !== 'undefined' && arr[Symbol.iterator]) || arr['@@iterator']
+  if (_i == null) return
+  var _arr = []
+  var _n = true
+  var _d = false
+  var _s, _e
+  try {
+    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value)
+      if (i && _arr.length === i) break
     }
-  return _setPrototypeOf(o, p)
-}
-
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== 'function' && superClass !== null) {
-    throw new TypeError('Super expression must either be null or a function')
+  } catch (err) {
+    _d = true
+    _e = err
+  } finally {
+    try {
+      if (!_n && _i['return'] != null) _i['return']()
+    } finally {
+      if (_d) throw _e
+    }
   }
-  subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: { value: subClass, writable: true, configurable: true },
-  })
-  Object.defineProperty(subClass, 'prototype', { writable: false })
-  if (superClass) _setPrototypeOf(subClass, superClass)
+  return _arr
 }
 
-function _typeof(obj) {
-  '@babel/helpers - typeof'
-  return (
-    (_typeof =
-      'function' == typeof Symbol && 'symbol' == typeof Symbol.iterator
-        ? function (obj) {
-            return typeof obj
-          }
-        : function (obj) {
-            return obj &&
-              'function' == typeof Symbol &&
-              obj.constructor === Symbol &&
-              obj !== Symbol.prototype
-              ? 'symbol'
-              : typeof obj
-          }),
-    _typeof(obj)
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i]
+  }
+  return arr2
+}
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return
+  if (typeof o === 'string') return _arrayLikeToArray(o, minLen)
+  var n = Object.prototype.toString.call(o).slice(8, -1)
+  if (n === 'Object' && o.constructor) n = o.constructor.name
+  if (n === 'Map' || n === 'Set') return Array.from(o)
+  if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
+    return _arrayLikeToArray(o, minLen)
+}
+
+function _nonIterableRest() {
+  throw new TypeError(
+    'Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.'
   )
 }
 
-function _assertThisInitialized(self) {
-  if (self === void 0) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called")
-  }
-  return self
+function _slicedToArray(arr, i) {
+  return (
+    _arrayWithHoles(arr) ||
+    _iterableToArrayLimit(arr, i) ||
+    _unsupportedIterableToArray(arr, i) ||
+    _nonIterableRest()
+  )
 }
 
-function _possibleConstructorReturn(self, call) {
-  if (call && (_typeof(call) === 'object' || typeof call === 'function')) {
-    return call
-  } else if (call !== void 0) {
-    throw new TypeError('Derived constructors may only return object or undefined')
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true,
+    })
+  } else {
+    obj[key] = value
   }
-  return _assertThisInitialized(self)
-}
-
-function _getPrototypeOf(o) {
-  _getPrototypeOf = Object.setPrototypeOf
-    ? Object.getPrototypeOf
-    : function _getPrototypeOf(o) {
-        return o.__proto__ || Object.getPrototypeOf(o)
-      }
-  return _getPrototypeOf(o)
+  return obj
 }
 
 var indexScssStyleSheet = StyleSheet.create({
   'fta-form': {
+    display: 'flex',
+    flexDirection: 'column',
     backgroundColor: '#fff',
-    borderTopWidth: scalePx2dp(0.25),
-    borderBottomWidth: scalePx2dp(0.25),
+  },
+  'fta-form-title': {
+    marginTop: scalePx2dp(18.72),
+    marginRight: scalePx2dp(13.92),
+    marginBottom: scalePx2dp(15.36),
+    marginLeft: scalePx2dp(13.92),
+  },
+  'fta-form-title__text': {
+    fontSize: scalePx2dp(15.84),
+    fontWeight: '600',
+    color: '#333',
+  },
+  'fta-form-item': {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    minHeight: scalePx2dp(49.92),
+    marginLeft: scalePx2dp(13.92),
+    paddingRight: scalePx2dp(13.92),
+  },
+  'fta-form-item--border': {
+    borderBottomWidth: 1,
+    borderBottomColor: '#e9e9e9',
+  },
+  'fta-form-item-label': {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  'fta-form-item-label__text': {
+    fontSize: scalePx2dp(15.84),
+    fontWeight: '400',
+    color: '#666',
+  },
+  'fta-form-item-label__text--error': {
+    color: 'red',
+  },
+  'fta-form-item-content': {
+    height: '100%',
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: 'auto',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  'fta-form-item-content__text': {
+    fontSize: scalePx2dp(15.84),
+    fontWeight: '400',
+    color: '#333',
+  },
+  'fta-form-item-content--hover': {
+    opacity: 0.6,
+  },
+  'fta-form-item-content--arrow': {
+    paddingRight: scalePx2dp(20.16),
+  },
+  'fta-form-item-arrow': {
+    position: 'absolute',
+    right: 0,
+    width: scalePx2dp(8.16),
+    height: scalePx2dp(13.92),
+  },
+  'fta-form-item-placeholder': {
+    fontSize: scalePx2dp(15.84),
+    fontWeight: '400',
+    color: '#ccc',
   },
 })
 
-function _createSuper(Derived) {
-  var hasNativeReflectConstruct = _isNativeReflectConstruct()
-  return function _createSuperInternal() {
-    var Super = _getPrototypeOf(Derived),
-      result
-    if (hasNativeReflectConstruct) {
-      var NewTarget = _getPrototypeOf(this).constructor
-      result = Reflect.construct(Super, arguments, NewTarget)
-    } else {
-      result = Super.apply(this, arguments)
-    }
-    return _possibleConstructorReturn(this, result)
+var context = createContext({ border: true, readonly: false, _showModal: false })
+var FormProvider = context.Provider,
+  FormConsumer = context.Consumer
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object)
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object)
+    enumerableOnly &&
+      (symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable
+      })),
+      keys.push.apply(keys, symbols)
   }
+  return keys
 }
-function _isNativeReflectConstruct() {
-  if (typeof Reflect === 'undefined' || !Reflect.construct) return false
-  if (Reflect.construct.sham) return false
-  if (typeof Proxy === 'function') return true
-  try {
-    Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}))
-    return true
-  } catch (e) {
-    return false
+function _objectSpread(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = null != arguments[i] ? arguments[i] : {}
+    i % 2
+      ? ownKeys(Object(source), !0).forEach(function (key) {
+          _defineProperty(target, key, source[key])
+        })
+      : Object.getOwnPropertyDescriptors
+      ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source))
+      : ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key))
+        })
   }
+  return target
 }
 function _getClassName() {
   var className = []
@@ -159,56 +229,187 @@ function _mergeEleStyles() {
   return [].concat.apply([], arguments).reduce((pre, cur) => Object.assign(pre, cur), {})
 }
 var _styleSheet = indexScssStyleSheet
-var FTAForm = (function (_React$Component) {
-  _inherits(FTAForm, _React$Component)
-  var _super = _createSuper(FTAForm)
-  function FTAForm() {
-    _classCallCheck(this, FTAForm)
-    return _super.apply(this, arguments)
-  }
-  _createClass(FTAForm, [
-    {
-      key: 'onSubmit',
-      value: function onSubmit() {
-        this.props.onSubmit && this.props.onSubmit(arguments)
+var justifyContentMap = { left: 'flex-start', center: 'center', right: 'flex-end' }
+function Form(props, ref) {
+  var children = props.children,
+    border = props.border,
+    title = props.title,
+    titleAlign = props.titleAlign,
+    customStyle = props.customStyle,
+    className = props.className,
+    readonly = props.readonly,
+    align = props.align,
+    style = props.style
+  var rootClass = classNames('fta-form', className)
+  useImperativeHandle(ref, function () {
+    return {
+      validate: function validate(callback) {
+        return Promise.resolve()
       },
-    },
-    {
-      key: 'onReset',
-      value: function onReset() {
-        this.props.onReset && this.props.onReset(arguments)
+      validateField: function validateField(props, callback) {
+        return Promise.resolve()
       },
-    },
-    {
-      key: 'render',
-      value: function render() {
-        var _this$props = this.props,
-          customStyle = _this$props.customStyle,
-          className = _this$props.className,
-          reportSubmit = _this$props.reportSubmit,
-          children = _this$props.children
-        var rootCls = classNames('fta-form', className)
-        return React.createElement(
-          Form,
-          {
-            style: _mergeEleStyles(_getStyle(rootCls), customStyle),
-            onSubmit: this.onSubmit.bind(this),
-            reportSubmit: reportSubmit,
-            onReset: this.onReset.bind(this),
-          },
-          children
-        )
+      clearValidate: function clearValidate() {},
+      resetFields: function resetFields() {},
+      submit: function submit() {},
+    }
+  })
+  return React.createElement(
+    FormProvider,
+    { value: { readonly: readonly, border: border, align: align } },
+    React.createElement(
+      ScrollView,
+      {
+        scrollY: true,
+        scrollWithAnimation: true,
+        scrollX: false,
+        style: _mergeEleStyles(
+          _getStyle(rootClass),
+          _objectSpread(_objectSpread({}, style), customStyle)
+        ),
       },
-    },
-  ])
-  return FTAForm
-})(React.Component)
-Form.defaultProps = { className: '', reportSubmit: false }
-Form.propTypes = {
-  className: PropTypes.string,
-  reportSubmit: PropTypes.bool,
-  onSubmit: PropTypes.func,
-  onReset: PropTypes.func,
+      React.createElement(
+        View,
+        { style: _mergeEleStyles(_styleSheet['fta-form-title'], { textAlign: titleAlign }) },
+        title
+          ? isString(title)
+            ? React.createElement(
+                Text,
+                {
+                  style: _mergeEleStyles(_styleSheet['fta-form-title__text'], {
+                    textAlign: titleAlign,
+                  }),
+                },
+                title
+              )
+            : title
+          : null
+      ),
+      children
+    )
+  )
 }
+function FormItem(props, ref) {
+  var label = props.label,
+    tooltip = props.tooltip,
+    renderTooltip = props.renderTooltip,
+    prop = props.prop,
+    border = props.border,
+    children = props.children,
+    placeholder = props.placeholder,
+    arrow = props.arrow,
+    readonly = props.readonly,
+    align = props.align,
+    onTooltipClick = props.onTooltipClick,
+    onClick = props.onClick,
+    labelClassName = props.labelClassName,
+    labelStyle = props.labelStyle
+  var _useState = useState(false),
+    _useState2 = _slicedToArray(_useState, 2),
+    error = _useState2[0]
+  _useState2[1]
+  useImperativeHandle(ref, function () {
+    return { resetField: function resetField() {}, clearValidate: function clearValidate() {} }
+  })
+  return React.createElement(FormConsumer, null, function (ctx) {
+    var _align = align || ctx.align
+    var _readonly = readonly || (ctx.readonly && readonly !== false)
+    var _border = border || (ctx.border && border !== false)
+    var _onClick = _readonly ? noop : onClick
+    var _labelClassName = classNames('fta-form-item-label', ctx.labelClassName, labelClassName)
+    var _labelStyle = _objectSpread(_objectSpread({}, ctx.labelStyle), labelStyle)
+    var rootClass = classNames('fta-form-item', {
+      'fta-form-item--border': _border,
+      'fta-form-item--readonly': _readonly,
+    })
+    var labelTextClass = classNames('fta-form-item-label__text', {
+      'fta-form-item-label__text--error': error,
+    })
+    return React.createElement(
+      View,
+      { style: _getStyle(rootClass) },
+      React.createElement(
+        View,
+        { style: _mergeEleStyles(_getStyle(_labelClassName), _labelStyle) },
+        React.createElement(Text, { style: _getStyle(labelTextClass) }, label),
+        tooltip
+          ? React.createElement(ToolTip, {
+              onTooltipClick: onTooltipClick,
+              renderTooltip: renderTooltip,
+              prop: prop,
+            })
+          : null
+      ),
+      React.createElement(
+        View,
+        {
+          style: _mergeEleStyles(
+            _getStyle(classNames('fta-form-item-content', arrow && 'fta-form-item-content--arrow')),
+            _align ? { justifyContent: justifyContentMap[_align] } : void 0
+          ),
+          onClick: _onClick,
+          hoverStyle: _readonly ? void 0 : { opacity: 0.6 },
+          hoverClass: _readonly ? void 0 : 'fta-form-item-content--hover',
+        },
+        isString(children)
+          ? !children.length && placeholder
+            ? React.createElement(Placeholder, null, placeholder)
+            : React.createElement(
+                Text,
+                { style: _styleSheet['fta-form-item-content__text'] },
+                children
+              )
+          : children,
+        arrow ? React.createElement(Arrow, null) : null
+      )
+    )
+  })
+}
+function ToolTip(props) {
+  var _useState3 = useState(false),
+    _useState4 = _slicedToArray(_useState3, 2),
+    visible = _useState4[0],
+    toggle = _useState4[1]
+  var tooltip = props.tooltip,
+    onTooltipClick = props.onTooltipClick,
+    prop = props.prop,
+    renderTooltip = props.renderTooltip
+  return React.createElement(
+    View,
+    {
+      onClick: function onClick() {
+        onTooltipClick(prop)
+        toggle(!visible)
+      },
+      style: _styleSheet['fta-form-item-tooltip'],
+    },
+    isString(tooltip) ? React.createElement(Image, { src: tooltip }) : tooltip,
+    visible ? renderTooltip : null
+  )
+}
+function Placeholder(props) {
+  var children = props.children
+  return isString(children)
+    ? React.createElement(Text, { style: _styleSheet['fta-form-item-placeholder'] }, children)
+    : children
+}
+function Arrow() {
+  return React.createElement(Image, {
+    src: 'https://image.ymm56.com/boss/2019/0123/1548213446',
+    style: _styleSheet['fta-form-item-arrow'],
+  })
+}
+var tooltipDefaultProps = {
+  tooltip: '',
+  onTooltipClick: function onTooltipClick() {},
+  renderTooltip: null,
+}
+var formDefaultProps = { titleAlign: 'left', border: true }
+var formItemDefaultProps = { label: '', onClick: function onClick() {} }
+ToolTip.defaultProps = tooltipDefaultProps
+var ForwardForm = forwardRef(Form)
+var FowardFormItem = forwardRef(FormItem)
+ForwardForm.defaultProps = formDefaultProps
+FowardFormItem.defaultProps = formItemDefaultProps
 
-export { FTAForm as default }
+export { FowardFormItem as FormItem, ForwardForm as default }

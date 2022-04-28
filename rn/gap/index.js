@@ -221,7 +221,7 @@ function _slicedToArray(arr, i) {
 var indexScssStyleSheet = StyleSheet.create({
   'fta-gap': {
     backgroundColor: 'transparent',
-    height: scalePx2dp(19),
+    height: scalePx2dp(20.16),
     marginTop: 0,
     marginBottom: 0,
   },

@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, useRef, useCallback } from 'react'
+import React, { createContext, useState, useContext, useRef, useEffect, useCallback } from 'react'
 import View from '@fta/components-rn/dist/components/View'
 import TaroText from '@fta/components-rn/dist/components/Text'
 import {
@@ -215,52 +215,52 @@ function _extends() {
 var indexScssStyleSheet = StyleSheet.create({
   'fta-text': {},
   'fta-text--1': {
-    fontSize: scalePx2dp(21),
-    lineHeight: scalePx2dp(27.3),
+    fontSize: scalePx2dp(22.08),
+    lineHeight: scalePx2dp(28.704),
   },
   'fta-text--1--care': {
-    fontSize: scalePx2dp(27.5),
-    lineHeight: scalePx2dp(35.5),
+    fontSize: scalePx2dp(28.8),
+    lineHeight: scalePx2dp(37.44),
   },
   'fta-text--2': {
-    fontSize: scalePx2dp(19),
-    lineHeight: scalePx2dp(24.7),
+    fontSize: scalePx2dp(20.16),
+    lineHeight: scalePx2dp(26.208),
   },
   'fta-text--2--care': {
-    fontSize: scalePx2dp(24.5),
-    lineHeight: scalePx2dp(32),
+    fontSize: scalePx2dp(26.4),
+    lineHeight: scalePx2dp(34.08),
   },
   'fta-text--3': {
-    fontSize: scalePx2dp(17.5),
-    lineHeight: scalePx2dp(22.75),
+    fontSize: scalePx2dp(18.24),
+    lineHeight: scalePx2dp(23.712),
   },
   'fta-text--3--care': {
-    fontSize: scalePx2dp(23),
-    lineHeight: scalePx2dp(29.5),
+    fontSize: scalePx2dp(23.52),
+    lineHeight: scalePx2dp(30.72),
   },
   'fta-text--4': {
-    fontSize: scalePx2dp(15.5),
-    lineHeight: scalePx2dp(20.15),
+    fontSize: scalePx2dp(15.84),
+    lineHeight: scalePx2dp(20.592),
   },
   'fta-text--4--care': {
-    fontSize: scalePx2dp(20),
-    lineHeight: scalePx2dp(26),
+    fontSize: scalePx2dp(20.64),
+    lineHeight: scalePx2dp(26.88),
   },
   'fta-text--5': {
-    fontSize: scalePx2dp(13.5),
-    lineHeight: scalePx2dp(17.55),
+    fontSize: scalePx2dp(13.92),
+    lineHeight: scalePx2dp(18.096),
   },
   'fta-text--5--care': {
-    fontSize: scalePx2dp(17.5),
-    lineHeight: scalePx2dp(23),
+    fontSize: scalePx2dp(18.24),
+    lineHeight: scalePx2dp(23.52),
   },
   'fta-text--6': {
-    fontSize: scalePx2dp(11.5),
-    lineHeight: scalePx2dp(14.95),
+    fontSize: scalePx2dp(12),
+    lineHeight: scalePx2dp(15.6),
   },
   'fta-text--6--care': {
-    fontSize: scalePx2dp(15),
-    lineHeight: scalePx2dp(19.5),
+    fontSize: scalePx2dp(15.84),
+    lineHeight: scalePx2dp(20.16),
   },
 })
 
@@ -509,12 +509,12 @@ useClassesWithCare.single = function (careMode) {
 var debuggerScssStyleSheet = StyleSheet.create({
   'fta-debugger': {
     position: 'absolute',
-    bottom: scalePx2dp(50),
-    right: scalePx2dp(20),
-    width: scalePx2dp(40),
-    height: scalePx2dp(40),
+    bottom: scalePx2dp(48),
+    right: scalePx2dp(19.2),
+    width: scalePx2dp(38.4),
+    height: scalePx2dp(38.4),
     backgroundColor: '#fff',
-    borderRadius: scalePx2dp(150),
+    borderRadius: scalePx2dp(144),
     borderWidth: 1,
     borderStyle: 'solid',
     borderColor: '#fa871e',
@@ -526,8 +526,8 @@ var debuggerScssStyleSheet = StyleSheet.create({
     color: '#fa871e',
   },
   'fta-debugger--care': {
-    width: scalePx2dp(50),
-    height: scalePx2dp(50),
+    width: scalePx2dp(48),
+    height: scalePx2dp(48),
   },
 })
 
@@ -809,6 +809,17 @@ function transformIfPx(size) {
   return pxTransform(size)
 }
 
+var useAfterwards = function useAfterwards(fn, deps) {
+  var ref = useRef(false)
+  useEffect(function () {
+    if (!ref.current) {
+      ref.current = true
+    } else {
+      fn == null ? void 0 : fn()
+    }
+  }, deps)
+}
+
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object)
   if (Object.getOwnPropertySymbols) {
@@ -849,6 +860,16 @@ function useEnhancedState(initialState) {
     }
   }
   return [state, useCallback(setEnhancedState, [])]
+}
+
+var useMount = function useMount() {
+  var mountRef = useRef(false)
+  useEffect(function () {
+    mountRef.current = true
+  }, [])
+  return function () {
+    return mountRef.current
+  }
 }
 
 var noob = {}
@@ -922,6 +943,7 @@ export {
   systemInfo,
   transformIfPx,
   upperCase,
+  useAfterwards,
   useCareClass,
   useCareClasses,
   useCareComponent,
@@ -931,5 +953,6 @@ export {
   useClassesWithCare,
   useConfig,
   useEnhancedState,
+  useMount,
   withCare,
 }

@@ -67,23 +67,23 @@ function _toConsumableArray(arr) {
 var indexScssStyleSheet = StyleSheet.create({
   'fta-loading': {
     overflow: 'hidden',
-    width: scalePx2dp(15.5),
-    height: scalePx2dp(15.5),
+    width: scalePx2dp(15.84),
+    height: scalePx2dp(15.84),
   },
   'fta-loading--small': {
-    width: scalePx2dp(15.5),
-    height: scalePx2dp(15.5),
+    width: scalePx2dp(15.84),
+    height: scalePx2dp(15.84),
   },
   'fta-loading--medium': {
-    width: scalePx2dp(19),
-    height: scalePx2dp(19),
+    width: scalePx2dp(20.16),
+    height: scalePx2dp(20.16),
   },
   'fta-loading--large': {
-    width: scalePx2dp(23),
-    height: scalePx2dp(23),
+    width: scalePx2dp(24),
+    height: scalePx2dp(24),
   },
   'fta-loading__view': {
-    borderRadius: scalePx2dp(5000),
+    borderRadius: scalePx2dp(4800),
     width: '100%',
     height: '100%',
     borderWidth: 1,
@@ -107,7 +107,7 @@ var indexScssStyleSheet = StyleSheet.create({
     height: '100%',
   },
   'fta-loading--circle': {
-    borderRadius: scalePx2dp(5000),
+    borderRadius: scalePx2dp(4800),
   },
 })
 

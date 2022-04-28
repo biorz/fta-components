@@ -6,12 +6,16 @@ const { execSync } = require('child_process')
 const taroRoot = path.resolve(__dirname, '../../../')
 const pkgRoot = path.resolve(__dirname, '../')
 
+const copyIndexJS = (dest) => {
+  const entryPath = path.resolve(pkgRoot, 'index.ts')
+  fs.copyFileSync(entryPath, dest)
+}
+
 const getComponents = () => {
   const components = require('../component-map.json')
+  const valueSet = new Set(Object.values(components).map((v) => v.replace))
 
-  return Object.entries(components).map(([key, item]) => {
-    return [key, item.replace]
-  })
+  return [...valueSet]
 }
 
 const OUTPUT = 'rn'
@@ -25,7 +29,7 @@ const main = () => {
   /**
    * common包打包
    */
-  components.push(['common', 'common'])
+  components.push('common')
   if (!components) {
     throw new Error('请先生成 component.map.js')
   }
@@ -34,7 +38,7 @@ const main = () => {
     cwd: taroRoot,
   }
 
-  components.forEach(([name, componentPath]) => {
+  components.forEach((componentPath) => {
     const input = path.resolve(pkgRoot, componentPath)
     const componentFilename = componentPath.replace('components', '')
     const output = path.join(outputDir, componentFilename)
@@ -55,6 +59,7 @@ const main = () => {
     fs.copySync(tsPath, tsOutput)
     // copy typescript 到当前目录
   })
+  copyIndexJS(path.resolve(pkgRoot, 'rn/index.js'))
 
   //   execSync(`taro build native-components --type arn --input ${input} --output ${output}`, execOpts)
   //   console.log(`

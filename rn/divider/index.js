@@ -115,7 +115,7 @@ var indexScssStyleSheet = StyleSheet.create({
     borderBottomWidth: 1,
   },
   'fta-divider-line--offset': {
-    width: scalePx2dp(57.5),
+    width: scalePx2dp(60),
     flexGrow: 0,
     flexShrink: 0,
     flexBasis: 'auto',
@@ -127,14 +127,14 @@ var indexScssStyleSheet = StyleSheet.create({
     borderBottomWidth: 2,
   },
   'fta-divider-dot': {
-    width: scalePx2dp(7.5),
-    height: scalePx2dp(7.5),
-    borderRadius: scalePx2dp(5000),
+    width: scalePx2dp(8.16),
+    height: scalePx2dp(8.16),
+    borderRadius: scalePx2dp(4800),
     backgroundColor: '#999',
   },
   'fta-divider-dot--care': {
-    width: scalePx2dp(10),
-    height: scalePx2dp(10),
+    width: scalePx2dp(10.56),
+    height: scalePx2dp(10.56),
   },
   'fta-divider-line--dashed': {
     borderStyle: 'dashed',
@@ -142,16 +142,16 @@ var indexScssStyleSheet = StyleSheet.create({
   },
   'fta-divider-text': {
     marginTop: 0,
-    marginRight: scalePx2dp(13.5),
+    marginRight: scalePx2dp(13.92),
     marginBottom: 0,
-    marginLeft: scalePx2dp(13.5),
+    marginLeft: scalePx2dp(13.92),
   },
   'fta-divider-text__label': {
-    fontSize: scalePx2dp(15.5),
+    fontSize: scalePx2dp(15.84),
     color: '#666',
   },
   'fta-divider-text__label--care': {
-    fontSize: scalePx2dp(20),
+    fontSize: scalePx2dp(20.64),
   },
 })
 

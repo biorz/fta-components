@@ -46,6 +46,8 @@ type ScrollEvent = {
   }
 }
 
+// console.log(getCurrentDate(), 'getCurrentDate')
+
 const builtInModes: PickerMode[] = [
   'selector',
   /** 多列选择器 */
@@ -108,7 +110,7 @@ function _ScrollArea(props: {
   /** 滚动到底部 */
   const _onScrollToLower = (e: ScrollEvent) => {
     let max = range.length - 1
-    if (max === activeIndexRef.current) console.log('已经滚动到最后了')
+    // if (max === activeIndexRef.current) console.log('已经滚动到最后了')
 
     activeIndexRef.current = max
     max !== activeIndexRef.current && onChange?.(max, activeIndexRef.current)
@@ -353,16 +355,7 @@ const dDayFormat = (v: number) => `${v}日`
  * 日期选择器
  */
 function DatePicker(props: Compose<PickerDateProps>): JSX.Element {
-  const {
-    start,
-    end,
-    value,
-    onChange,
-    longterm,
-    // TODO: format函数
-    format,
-    fields,
-  } = props
+  const { start, end, value, onChange, longterm, format, fields } = props
 
   const depth = getSelectorDepth(fields!)
   const [y1, m1, d1] = parseDate(start!)

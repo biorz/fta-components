@@ -43,16 +43,16 @@ var indexScssStyleSheet = StyleSheet.create({
     alignItems: 'center',
   },
   'fta-step-wrap--dot': {
-    marginBottom: scalePx2dp(9.5),
+    marginBottom: scalePx2dp(10.08),
   },
   'fta-step-wrap--ordered': {
-    marginBottom: scalePx2dp(11.5),
+    marginBottom: scalePx2dp(12),
   },
   'fta-step-wrap--custom': {
-    marginBottom: scalePx2dp(6),
+    marginBottom: scalePx2dp(6.24),
   },
   'fta-step-ball': {
-    borderRadius: scalePx2dp(5000),
+    borderRadius: scalePx2dp(4800),
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
@@ -60,16 +60,16 @@ var indexScssStyleSheet = StyleSheet.create({
     backgroundColor: '#ccc',
   },
   'fta-step-ball--dot': {
-    width: scalePx2dp(8.5),
-    height: scalePx2dp(8.5),
+    width: scalePx2dp(9.12),
+    height: scalePx2dp(9.12),
   },
   'fta-step-ball--ordered': {
-    width: scalePx2dp(23),
-    height: scalePx2dp(23),
+    width: scalePx2dp(24),
+    height: scalePx2dp(24),
     marginTop: 0,
-    marginRight: scalePx2dp(6),
+    marginRight: scalePx2dp(6.24),
     marginBottom: 0,
-    marginLeft: scalePx2dp(6),
+    marginLeft: scalePx2dp(6.24),
   },
   'fta-step-ball--active': {
     backgroundColor: '#fa871e',
@@ -78,7 +78,7 @@ var indexScssStyleSheet = StyleSheet.create({
     flexGrow: 1,
     flexShrink: 1,
     flexBasis: 0,
-    height: scalePx2dp(2),
+    height: scalePx2dp(1.92),
     backgroundColor: '#ccc',
   },
   'fta-step-line--active': {
@@ -100,8 +100,8 @@ var indexScssStyleSheet = StyleSheet.create({
   },
   'fta-step-title__text': {
     color: '#ccc',
-    fontSize: scalePx2dp(13.5),
-    lineHeight: scalePx2dp(20.25),
+    fontSize: scalePx2dp(13.92),
+    lineHeight: scalePx2dp(20.88),
   },
   'fta-step-title__text--active': {
     color: '#000',
@@ -114,15 +114,15 @@ var indexScssStyleSheet = StyleSheet.create({
   },
   'fta-step-desc__text': {
     color: '#ededed',
-    fontSize: scalePx2dp(11.5),
-    lineHeight: scalePx2dp(17.25),
+    fontSize: scalePx2dp(12),
+    lineHeight: scalePx2dp(18),
   },
   'fta-step-desc__text--active': {
     color: '#ccc',
   },
   'fta-step-index': {
     color: '#fff',
-    fontSize: scalePx2dp(13.5),
+    fontSize: scalePx2dp(13.92),
   },
   'fta-step-index--active': {
     color: '#999',

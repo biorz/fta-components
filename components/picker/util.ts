@@ -23,7 +23,7 @@ export const formatNum = (num: number) => (num < 10 ? `0${num}` : String(num))
 /** 获取当前日期·yyyy-mm-dd· */
 export const getCurrentDate = () => {
   const date = new Date()
-  return date.getFullYear() + formatNum(date.getMonth() + 1) + formatNum(date.getDate())
+  return date.getFullYear() + '-' + formatNum(date.getMonth() + 1) + '-' + formatNum(date.getDate())
 }
 /** 获取选择精度 */
 export const getSelectorDepth = (fields: string) =>
