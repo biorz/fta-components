@@ -4,10 +4,13 @@ import { BaseEventOrig, CommonEvent } from '@tarojs/components/types/common'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React, { Component } from 'react'
-import { inAlipay, inWeapp, inWeb, isString } from '../../common'
+import { inAlipay, inRN, inWeapp, inWeb, isString } from '../../common'
 import '../../style/components/button/index.scss'
 import { ButtonProps as FTAButtonProps } from '../../types/button'
 import Loading from '../loading'
+
+// console.log(Button, _Button, _Button === Button)
+const ButtonAdapter = inRN ? Button : View
 
 const SIZE_CLASS = {
   small: 'small',
@@ -91,6 +94,7 @@ export default class FTAButton extends Component<FTAButtonProps> {
   }
 
   public render(): JSX.Element {
+    // console.log(this.hoverClass, 'this.hoverClass', this.hoverStyle)
     const {
       // @ts-ignore
       size,
@@ -134,7 +138,7 @@ export default class FTAButton extends Component<FTAButtonProps> {
       `fta-button__text--${SIZE_CLASS[size!] || 'default'}`,
       `fta-button__text--${TYPE_CLASS[type!] || 'default'}`,
       disabled && `fta-button__text--${type}--disabled`,
-      loading && 'fta-button__text--loading',
+      loading && `fta-button__text--loading fta-button__text--${type}--loading`,
       textClassName
     )
 
@@ -180,7 +184,8 @@ export default class FTAButton extends Component<FTAButtonProps> {
     )
 
     return (
-      <View
+      <ButtonAdapter
+        disabled={disabled}
         className={rootClassName}
         style={{ ...style, ...customStyle }}
         onClick={this.onClick.bind(this)}
@@ -203,7 +208,7 @@ export default class FTAButton extends Component<FTAButtonProps> {
         ) : (
           children
         )}
-      </View>
+      </ButtonAdapter>
     )
   }
 }
@@ -213,7 +218,7 @@ FTAButton.propTypes = {
   type: PropTypes.oneOf(['primary', 'secondary', 'tertiary']),
   circle: PropTypes.bool,
   full: PropTypes.bool,
-  loading: PropTypes.bool,
+  loading: PropTypes.oneOfType([PropTypes.bool, PropTypes.element]),
   disabled: PropTypes.bool,
   onClick: PropTypes.func,
   customStyle: PropTypes.object,

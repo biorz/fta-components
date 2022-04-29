@@ -288,6 +288,16 @@ $fta-button-opacity-active-secondary: 0.8 !default;
 $fta-button-opacity-active-tertiary: 0.8 !default;
 $fta-button-opacity-active-fourth: 0.8 !default;
 
+$fta-button-color-active-primary: $color-white !default;
+$fta-button-color-active-secondary: $color-brand !default;
+$fta-button-color-active-tertiary: $color-brand !default;
+$fta-button-color-active-fourth: $color-grey-1 !default;
+
+$fta-button-color-loading-primary: $color-white !default;
+$fta-button-color-loading-secondary: $color-brand !default;
+$fta-button-color-loading-tertiary: $color-brand !default;
+$fta-button-color-loading-fourth: $color-grey-1 !default;
+
 $fta-button-bg-color-active-primary: $color-brand !default;
 $fta-button-bg-color-active-secondary: $color-white !default;
 $fta-button-bg-color-active-tertiary: $color-white !default;
@@ -306,7 +316,7 @@ $fta-button-opacity-disabled-fourth: 0.4 !default;
 $fta-button-color-disabled-primary: $color-white !default;
 $fta-button-color-disabled-secondary: $color-brand !default;
 $fta-button-color-disabled-tertiary: $color-brand !default;
-$fta-button-color-disabled-tertiary: $color-grey-3 !default;
+$fta-button-color-disabled-fourth: $color-grey-3 !default;
 
 $fta-button-color-primary: $color-white !default;
 $fta-button-color-secondary: $color-brand !default;
@@ -316,7 +326,7 @@ $fta-button-color-fourth: $color-grey-1 !default;
 $fta-button-border-color-primary: $color-brand !default;
 $fta-button-border-color-secondary: $color-brand !default;
 $fta-button-border-color-tertiary: $color-brand !default;
-$fta-button-border-color-tertiary: $color-grey-4 !default;
+$fta-button-border-color-fourth: $color-grey-4 !default;
 
 $fta-button-border-color-active-primary: $color-brand !default;
 $fta-button-border-color-active-secondary: $color-brand !default;
@@ -333,6 +343,8 @@ $fta-button-border-width-primary: 0 !default;
 $fta-button-border-width-secondary: 1PX !default;
 // prettier-ignore
 $fta-button-border-width-tertiary: 1PX !default;
+// prettier-ignore
+$fta-button-border-width-fourth: 1PX !default;
 
 $fta-button-height-sm: 60px !default;
 $fta-button-color: $color-brand !default;

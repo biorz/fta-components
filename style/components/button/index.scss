@@ -2,13 +2,16 @@
 @import '../../variables/default.scss';
 @import '../../mixins/index.scss';
 
-// .at-web-button {
-//   border: 0;
-//   background: transparent;
-//   padding: 0;
-//   // outline: none;
-//   box-shadow: none;
-// }
+@mixin active-color($color, $active-color) {
+  @if $color != $active-color {
+    color: $active-color;
+    /* #ifndef rn */
+    .fta-button__text {
+      color: $active-color;
+    }
+    /* #endif */
+  }
+}
 
 .fta-button {
   @include relative();
@@ -117,6 +120,7 @@
     &--active {
       background-color: $fta-button-bg-color-active-primary;
       opacity: $fta-button-opacity-active-primary;
+      @include active-color($fta-button-color-primary, $fta-button-color-active-primary);
     }
   }
 
@@ -133,10 +137,11 @@
     &--active {
       background-color: $fta-button-bg-color-active-secondary;
       opacity: $fta-button-opacity-active-secondary;
+      @include active-color($fta-button-color-secondary, $fta-button-color-active-secondary);
     }
   }
 
-  // 三级次要按钮
+  // 三级按钮
   &--tertiary {
     border: $fta-button-border-width-tertiary solid $fta-button-border-color-tertiary;
     background-color: $fta-button-bg-color-tertiary;
@@ -149,6 +154,25 @@
     &--active {
       background-color: $fta-button-bg-color-active-tertiary;
       opacity: $fta-button-opacity-active-tertiary;
+      color: $fta-button-color-active-tertiary;
+      @include active-color($fta-button-color-tertiary, $fta-button-color-active-tertiary);
+    }
+  }
+
+  // 三级次要按钮
+  &--fourth {
+    border: $fta-button-border-width-fourth solid $fta-button-border-color-fourth;
+    background-color: $fta-button-bg-color-fourth;
+
+    &--disabled {
+      background-color: $fta-button-bg-color-disabled-fourth;
+      opacity: $fta-button-opacity-disabled-fourth;
+    }
+
+    &--active {
+      background-color: $fta-button-bg-color-active-fourth;
+      opacity: $fta-button-opacity-active-fourth;
+      @include active-color($fta-button-color-fourth, $fta-button-color-active-fourth);
     }
   }
 
@@ -172,6 +196,10 @@
       &--disabled {
         color: $fta-button-color-disabled-primary;
       }
+
+      &--loading {
+        @include active-color($fta-button-color-primary, $fta-button-color-loading-primary);
+      }
     }
 
     &--secondary {
@@ -180,6 +208,10 @@
       &--disabled {
         color: $fta-button-color-disabled-secondary;
       }
+
+      &--loading {
+        @include active-color($fta-button-color-secondary, $fta-button-color-loading-secondary);
+      }
     }
 
     &--tertiary {
@@ -187,6 +219,22 @@
 
       &--disabled {
         color: $fta-button-color-disabled-tertiary;
+      }
+
+      &--loading {
+        @include active-color($fta-button-color-tertiary, $fta-button-color-loading-tertiary);
+      }
+    }
+
+    &--fourth {
+      color: $fta-button-color-fourth;
+
+      &--disabled {
+        color: $fta-button-color-disabled-fourth;
+      }
+
+      &--loading {
+        @include active-color($fta-button-color-fourth, $fta-button-color-loading-fourth);
       }
     }
 
