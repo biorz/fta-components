@@ -82,6 +82,7 @@ export default class FTAModal extends React.Component<ModalProps, ModalState> {
       containerStyle,
       overlayClassName,
       overlayStyle,
+      contentAlign,
     } = this.props
     const rootClass = classNames(
       'fta-modal',
@@ -120,8 +121,12 @@ export default class FTAModal extends React.Component<ModalProps, ModalState> {
               {content && (
                 <FTAModalContent withTitle={!!title}>
                   <View
-                    className={classNames('content-simple', !title && 'cotent-simple--notitle')}>
-                    {<Text className='content-simple__text'>{content}</Text>}
+                    className={classNames(
+                      'content-simple',
+                      !title && 'cotent-simple--notitle',
+                      `content-simple--${contentAlign}`
+                    )}>
+                    {<Text className={'content-simple__text'}>{content}</Text>}
                   </View>
                 </FTAModalContent>
               )}
@@ -175,6 +180,7 @@ export default class FTAModal extends React.Component<ModalProps, ModalState> {
 FTAModal.defaultProps = {
   isOpened: false,
   closeOnClickOverlay: false,
+  contentAlign: 'center',
 }
 
 FTAModal.propTypes = {

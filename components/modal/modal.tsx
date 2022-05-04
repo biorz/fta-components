@@ -81,6 +81,7 @@ export default class Modal extends React.Component<ModalProps, ModalState> {
       containerStyle,
       overlayClassName,
       overlayStyle,
+      contentAlign,
     } = this.props
     const rootClass = classNames(
       'fta-modal',
@@ -108,7 +109,7 @@ export default class Modal extends React.Component<ModalProps, ModalState> {
             {title && <ModalHeader>{title}</ModalHeader>}
             {content && (
               <ModalContent withTitle={!!title}>
-                <View className='content-simple'>
+                <View className={classNames('content-simple', `content-simple--${contentAlign}`)}>
                   {inWeb ? (
                     <Text
                       className='content-simple__text'
@@ -160,6 +161,7 @@ export default class Modal extends React.Component<ModalProps, ModalState> {
 Modal.defaultProps = {
   isOpened: false,
   closeOnClickOverlay: false,
+  contentAlign: 'center',
 }
 
 Modal.propTypes = {

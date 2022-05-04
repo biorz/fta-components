@@ -41,6 +41,7 @@ $fta-modal-duration: 200ms;
   &__overlay,
   &__container {
     opacity: 0;
+
     // transition: opacity $fta-modal-duration ease-in;
   }
   /* modifiers */
@@ -104,6 +105,31 @@ $fta-modal-duration: 200ms;
   //     /* #endif */
   //   }
   // }
+
+  .content-simple {
+    /* #ifndef rn */
+    &--left {
+      text-align: left;
+    }
+
+    &--right {
+      text-align: right;
+    }
+    /* #endif */
+
+    /* #ifdef rn */
+    flex-direction: row;
+    justify-content: center;
+    // align-items: stretch;
+    &--left {
+      justify-content: flex-start;
+    }
+
+    &--right {
+      justify-content: flex-end;
+    }
+    /* #endif */
+  }
 
   /* #ifdef rn */
   .content-simple__text {

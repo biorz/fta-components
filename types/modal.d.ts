@@ -2,6 +2,7 @@ import { CommonEventFunction } from '@tarojs/components/types/common'
 import { ComponentClass, CSSProperties } from 'react'
 import BaseComponent from './base'
 
+export type Align = 'left' | 'center' | 'right'
 export interface ModalProps extends BaseComponent {
   /**
    * 元素的标题
@@ -16,6 +17,11 @@ export interface ModalProps extends BaseComponent {
    * 元素的内容
    */
   content?: string
+  /**
+   * 内容对齐方式
+   * @default 'center'
+   */
+  contentAlign?: Align
   /**
    * 点击浮层的时候时候自动关闭
    * @default true

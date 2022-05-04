@@ -135,7 +135,7 @@ function _ScrollArea(props: {
         scrollRef.setScrollTop(offset)
         timerRef.current = null
       }
-    }, 500)
+    }, 300)
   }
 
   return (
@@ -376,6 +376,8 @@ function DatePicker(props: Compose<PickerDateProps>): JSX.Element {
   const dateRef = useRef(nowDates).current
   const [y, m, d] = dateRef
   const years = useRef(genPeriodList(y1, y2).concat(longterm ? [9999] : [])).current
+
+  console.log('current date', value, dateRef, nowDates, [y, m, d])
 
   let MonthElement: ReactNode = null
   let DayElement: ReactNode = null
