@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { ReactNode, useState } from 'react'
 
 const ItemHeight = 30
 
@@ -83,6 +83,15 @@ export const useArray = <T extends any[]>(initialArray: T | (() => T)) => {
   }
 
   return [array, setArray, _setArray] as const
+}
+
+/** 判断children节点是否为空 */
+export const isChildrenNull = (children: ReactNode) => {
+  if (!children) return true
+  if (Array.isArray(children) && children.every((child) => child == null)) {
+    return true
+  }
+  return false
 }
 
 // export const useLatest = <T extends any>(current: T) => {

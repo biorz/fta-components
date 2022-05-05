@@ -7,6 +7,7 @@ import {
 } from '@tarojs/components/types/Picker'
 import { FC, ReactNode, Ref } from 'react'
 import { ActionSheetProps } from './action-sheet'
+import { FormRefMethods } from './form'
 
 export type Arrayable<T> = T | T[]
 
@@ -122,7 +123,9 @@ export type PickerProps = (
   | PickerTimeProps
   | PickerDateProps
 ) &
-  FloatLayoutProps
+  FloatLayoutProps & {
+    ref?: Ref<FormRefMethods>
+  }
 
 declare const Picker: FC<PickerProps>
 

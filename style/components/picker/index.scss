@@ -13,9 +13,9 @@
     flex: 1;
     // prettier-ignore
     height: 150PX;
-    @include nrn {
-      transform-style: preserve-3d;
-    }
+    // @include nrn {
+    //   transform-style: preserve-3d;
+    // }
   }
 
   &-item {
@@ -24,9 +24,9 @@
     height: 30PX;
     opacity: 0.4;
     overflow: hidden;
-    @include nrn {
-      backface-visibility: hidden;
-    }
+    // @include nrn {
+    //   backface-visibility: hidden;
+    // }
 
     &__text {
       @include nrn {

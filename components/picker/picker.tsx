@@ -34,6 +34,7 @@ import {
   getDaysCount,
   getScrollTopOverIndex,
   getSelectorDepth,
+  isChildrenNull,
   parseDate,
   parseTime,
   useArray,
@@ -98,12 +99,13 @@ function _ScrollArea(props: {
 
     const _prevIndex = activeIndexRef.current
     // FIXME: 重新渲染的时候，导致children乱序排列
-    setScrollTop(scrollTop)
+    const needChange = _prevIndex !== _activeIndex
     // setRange(range.slice())
-    if (_prevIndex !== _activeIndex) {
+    if (needChange) {
       activeIndexRef.current = _activeIndex
-      onChange?.(_activeIndex, _prevIndex)
     }
+    setScrollTop(scrollTop)
+    needChange && onChange?.(_activeIndex, _prevIndex)
     onScroll?.(e.detail)
   }
 
@@ -232,8 +234,12 @@ function BasePicker(props: FloatLayoutProps & { value?: Arrayable<number> | stri
       <View className='fta-picker'>
         {children}
         {/* 分割线 */}
-        <View className='fta-picker-line fta-picker-line--top'></View>
-        <View className='fta-picker-line fta-picker-line--bottom'></View>
+        {isChildrenNull(children) ? null : (
+          <>
+            <View className='fta-picker-line fta-picker-line--top'></View>
+            <View className='fta-picker-line fta-picker-line--bottom'></View>
+          </>
+        )}
       </View>
     </FloatLayout>
   )

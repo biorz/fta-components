@@ -6,6 +6,7 @@
   "Avatar": { "replace": "components/avatar", "default": true },
   "Badge": { "replace": "components/badge", "default": true },
   "Button": { "replace": "components/button", "default": true },
+  "Cascader": { "replace": "components/cascader", "default": true },
   "Checkbox": { "replace": "components/checkbox", "default": true },
   "Curtain": { "replace": "components/curtain", "default": true },
   "Divider": { "replace": "components/divider", "default": true },
