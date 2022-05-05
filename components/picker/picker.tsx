@@ -1,5 +1,4 @@
 import { ScrollView, Text, View } from '@tarojs/components'
-import classNames from 'classnames'
 import React, {
   FC,
   forwardRef,
@@ -157,13 +156,13 @@ function _ScrollArea(props: {
       <View className='fta-picker-item--placeholder'>
         {/* scroll items */}
         {range.map((v, i) => {
-          const itemClass = classNames(
-            'fta-picker-item',
-            activeIndexRef.current === i && 'fta-picker-item--active'
-          )
+          // const itemClass = classNames(
+          //   'fta-picker-item',
+          //   activeIndexRef.current === i && 'fta-picker-item--active'
+          // )
           const _value = format!(v)
           return (
-            <View key={`${_value}-${i}-${range[0]}-${range.length}`} className={itemClass}>
+            <View key={`${_value}-${i}-${range[0]}-${range.length}`} className='fta-picker-item'>
               <Text
                 // @ts-ignore
                 numberOfLines={1}
@@ -236,8 +235,22 @@ function BasePicker(props: FloatLayoutProps & { value?: Arrayable<number> | stri
         {/* 分割线 */}
         {isChildrenNull(children) ? null : (
           <>
-            <View className='fta-picker-line fta-picker-line--top'></View>
-            <View className='fta-picker-line fta-picker-line--bottom'></View>
+            <View
+              className='fta-picker-opacity fta-picker-opacity--top'
+              // @ts-ignore
+              pointerEvents='none'
+            />
+            <View
+              className='fta-picker-line'
+              // @ts-ignore
+              pointerEvents='none'
+            />
+            <View
+              className='fta-picker-opacity fta-picker-opacity--bottom'
+              // @ts-ignore
+              pointerEvents='none'
+            />
+            {/* <View className='fta-picker-line fta-picker-line--bottom'></View> */}
           </>
         )}
       </View>
@@ -363,9 +376,9 @@ const dDayFormat = (v: number) => `${v}日`
 function DatePicker(props: Compose<PickerDateProps>): JSX.Element {
   const { start, end, value, onChange, longterm, format, fields } = props
 
-  const depth = getSelectorDepth(fields!)
-  const [y1, m1, d1] = parseDate(start!)
-  const [y2, m2, d2] = parseDate(end!)
+  const depth = useRef(getSelectorDepth(fields!)).current
+  const [y1, m1, d1] = useRef(parseDate(start!)).current
+  const [y2, m2, d2] = useRef(parseDate(end!)).current
 
   const [indexs, _setIndexs] = useState([0, 0, 0])
   const setIndexs = (value: number, depth: number) => {
@@ -383,7 +396,21 @@ function DatePicker(props: Compose<PickerDateProps>): JSX.Element {
   const [y, m, d] = dateRef
   const years = useRef(genPeriodList(y1, y2).concat(longterm ? [9999] : [])).current
 
-  console.log('current date', value, dateRef, nowDates, [y, m, d])
+  let yTimerRef = useRef<NodeJS.Timer | null>(null)
+
+  const onYearChange = (i: number) => {
+    if (yTimerRef.current) {
+      clearTimeout(yTimerRef.current)
+      yTimerRef.current = null
+      console.log('取消定时器')
+    }
+    yTimerRef.current = setTimeout(() => {
+      dateRef[0] = years[i]
+      setIndexs(years[i] === 9999 ? indexs[0] : i, 0)
+    }, 150)
+  }
+
+  // console.log('current date', value, dateRef, nowDates, [y, m, d])
 
   let MonthElement: ReactNode = null
   let DayElement: ReactNode = null
@@ -394,10 +421,7 @@ function DatePicker(props: Compose<PickerDateProps>): JSX.Element {
       activeIndex={yIndex}
       range={years}
       format={createTimeFormat(format, 0, dYearFormat)}
-      onChange={(i) => {
-        dateRef[0] = years[i]
-        setIndexs(years[i] === 9999 ? indexs[0] : i, 0)
-      }}
+      onChange={onYearChange}
     />
   )
 

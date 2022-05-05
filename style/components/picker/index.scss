@@ -22,7 +22,7 @@
     @include flex-center();
     // prettier-ignore
     height: 30PX;
-    opacity: 0.4;
+    // opacity: 0.4;
     overflow: hidden;
     // @include nrn {
     //   backface-visibility: hidden;
@@ -83,25 +83,46 @@
   }
 
   &-line {
+    // prettier-ignore
+    top: 87PX;
     @include border-box;
     position: absolute;
     margin-left: 4.45vw;
     width: 91vw;
     // prettier-ignore
+    height: 30PX;
+    // prettier-ignore
     border-top-width: 1PX;
     border-top-color: #e9e9e9;
+    // prettier-ignore
+    border-bottom-width: 1PX;
+    border-bottom-color: #e9e9e9;
     @include nrn {
       border-top-style: solid;
+      border-bottom-style: solid;
+      pointer-events: none;
+    }
+  }
+
+  &-opacity {
+    position: absolute;
+    z-index: 10;
+    // prettier-ignore
+    height: 62PX;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.6);
+    @include nrn {
+      pointer-events: none;
     }
 
     &--top {
       // prettier-ignore
-      top: 87PX
+      top: 28PX;
     }
 
     &--bottom {
       // prettier-ignore
-      bottom: 87PX
+      bottom: 28PX
     }
   }
 }
