@@ -69,6 +69,7 @@ const Cascader = forwardRef(function Cascader(
   const [values, setValues] = useState(value)
   const [ranges, setRanges] = useState(emptys.map(() => [] as any[]))
   const [visible, toggle] = useState(false)
+  const startTimestamp = useRef(+new Date()).current
 
   const methods = {
     show() {
@@ -80,10 +81,10 @@ const Cascader = forwardRef(function Cascader(
   }
 
   useImperativeHandle(ref, () => methods)
-
+  // 将第一次排除掉, 可能会执行多次
   const _onChange = (newIndex: number, index: number) => {
+    if (+new Date() - startTimestamp < 1000) return
     const icopy = indexs.slice()
-
     if (index + 1 < _depth) {
       for (let i = index + 1; i < _depth; i++) {
         // 重置后面的索引
@@ -93,9 +94,9 @@ const Cascader = forwardRef(function Cascader(
     icopy[index] = newIndex
     // 重置后面的选项
     const { ranges, values } = getRangesAndValuesOverIndexs(icopy, options)
-    setIndexs(icopy)
-    setRanges(ranges)
     setValues(values)
+    setRanges(ranges)
+    setIndexs(icopy)
   }
 
   useEffect(() => {
@@ -108,9 +109,14 @@ const Cascader = forwardRef(function Cascader(
     setValues(collections.values)
     setRanges(collections.ranges)
     setIndexs(collections.indexs)
+    // console.log(collections.indexs, 'collections.indexs')
     // console.log('ranges', collections.ranges)
     // 处理默认值和选项
   }, [value])
+
+  // useEffect(() => {
+  //   console.log(indexs, 'indexs')
+  // }, [indexs])
 
   return (
     <BasePicker

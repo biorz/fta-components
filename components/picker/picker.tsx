@@ -402,7 +402,7 @@ function DatePicker(props: Compose<PickerDateProps>): JSX.Element {
     if (yTimerRef.current) {
       clearTimeout(yTimerRef.current)
       yTimerRef.current = null
-      console.log('取消定时器')
+      // console.log('取消定时器')
     }
     yTimerRef.current = setTimeout(() => {
       dateRef[0] = years[i]
