@@ -104,6 +104,7 @@ function _ScrollArea(props: {
       activeIndexRef.current = _activeIndex
     }
     setScrollTop(scrollTop)
+    // console.log('needchange', _prevIndex, _activeIndex, scrollTop)
     needChange && onChange?.(_activeIndex, _prevIndex)
     onScroll?.(e.detail)
   }
@@ -122,6 +123,19 @@ function _ScrollArea(props: {
     )
     onScroll?.(e.detail)
   }
+
+  /**
+   * 滑动到顶部
+   */
+  // const _onScrollToUpper = (e: ScrollEvent) => {
+  //   const _prevIndex = activeIndexRef.current
+  //   if (_prevIndex !== 0) {
+  //     activeIndexRef.current = 0
+  //   }
+  //   setScrollTop(0)
+  //   console.log('scrooupper')
+  //   onScroll?.(e.detail)
+  // }
 
   /**
    * 滑动停止后修复位置偏移
@@ -151,7 +165,9 @@ function _ScrollArea(props: {
       scrollWithAnimation={scrollWithAnimation}
       showsVerticalScrollIndicator={false}
       onScroll={_onScroll}
-      onScrollToLower={_onScrollToLower}>
+      onScrollToLower={_onScrollToLower}
+      // onScrollToUpper={_onScrollToUpper}
+    >
       {/* placeholder */}
       <View className='fta-picker-item--placeholder'>
         {/* scroll items */}
