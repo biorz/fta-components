@@ -1,14 +1,15 @@
 import { Image, Text, View } from '@tarojs/components'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
-import React, { ReactNode } from 'react'
+import React, { FC, ReactElement, ReactNode, useState } from 'react'
 import { Assets, isUndef } from '../../common'
 import '../../style/components/radio/index.scss'
-import { RadioProps } from '../../types/radio'
+import { RadioProps, SimpleRadioProps } from '../../types/radio'
 
-export default class Radio<T extends any = any> extends React.Component<RadioProps<T>> {
+class Radio<T extends any = any> extends React.Component<RadioProps<T>> {
   public static defaultProps: RadioProps<unknown>
   public static propTypes: InferProps<RadioProps<unknown>>
+  public static Simple: FC<SimpleRadioProps>
 
   constructor(props) {
     super(props)
@@ -91,6 +92,64 @@ export default class Radio<T extends any = any> extends React.Component<RadioPro
   }
 }
 
+function SimpleRadio(props: SimpleRadioProps): JSX.Element {
+  const {
+    active,
+    disabled,
+    icon,
+    disabledIcon,
+    selectedIcon,
+    selectedDidsabledIcon,
+    controlled,
+    onChange,
+    children,
+  } = props
+  const [_active, setActive] = useState(active)
+
+  const checked = controlled ? active : _active
+
+  const onClick = () => {
+    if (disabled) return
+    if (!controlled) {
+      setActive(!checked)
+    }
+    onChange!(!checked)
+  }
+
+  let presentIcon: ReactNode
+
+  if (checked) {
+    presentIcon = disabled ? selectedDidsabledIcon || selectedIcon : selectedIcon
+  } else {
+    presentIcon = disabled ? disabledIcon || icon : icon
+  }
+
+  const rootClass = classNames(
+    'fta-radio-simple-container',
+    disabled &&
+      (presentIcon === icon || presentIcon === selectedIcon) &&
+      'fta-radio-simple-container--disabled'
+  )
+
+  return (
+    <View className={rootClass} onClick={onClick}>
+      {presentIcon as ReactElement}
+      {children}
+    </View>
+  )
+  // return <View className='fta-radio-simple' />
+}
+
+const simpleRadioImage = <Image className='fta-radio-simple-image' src={Assets.check.default} />
+
+SimpleRadio.defaultProps = {
+  icon: <View className='fta-radio-simple fta-radio-simple--normal' />,
+  selectedIcon: (
+    <View className='fta-radio-simple fta-radio-simple--selected'>{simpleRadioImage}</View>
+  ),
+  onChange() {},
+}
+
 Radio.defaultProps = {
   customStyle: {},
   className: '',
@@ -107,3 +166,7 @@ Radio.propTypes = {
   options: PropTypes.array,
   onClick: PropTypes.func,
 }
+
+Radio.Simple = SimpleRadio
+
+export { Radio as default }

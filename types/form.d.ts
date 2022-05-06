@@ -114,6 +114,11 @@ export interface FormItemProps
    */
   tooltip?: string | ReactElement
   /**
+   * 是否校验错误
+   * @default false
+   */
+  error?: boolean
+  /**
    * 点击tooltip的回调
    */
   onTooltipClick?: (prop: string) => void

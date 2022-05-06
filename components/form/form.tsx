@@ -88,6 +88,7 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
     children,
     placeholder,
     arrow,
+    error,
     readonly,
     align,
     onTooltipClick,
@@ -96,7 +97,7 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
     labelStyle,
   } = props
 
-  const [error, toggleError] = useState(false)
+  // const [error, toggleError] = useState(false)
 
   useImperativeHandle(ref, () => ({
     resetField() {},
@@ -220,6 +221,7 @@ const formDefaultProps: FormProps = {
 
 const formItemDefaultProps: FormItemProps = {
   label: '',
+  error: false,
   onClick() {},
 }
 

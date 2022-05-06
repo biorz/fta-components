@@ -115,4 +115,39 @@ $component: '.fta-radio';
   &-icon {
     @include square($fta-radio-icon-size);
   }
+
+  /* 简单类型的单选框 */
+  &-simple {
+    @include square(zoom(36px));
+    @include flex-center();
+    @include circle();
+
+    &-container {
+      @include display-flex(row);
+      align-items: center;
+      @include nrn {
+        width: fit-content;
+      }
+      @include rn {
+        align-self: flex-start;
+      }
+
+      &--disabled {
+        opacity: $opacity-disabled;
+      }
+    }
+
+    &-image {
+      @include square(zoom(26px));
+    }
+
+    &--normal {
+      // prettier-ignore
+      border: 2PX solid #9a9a9a
+    }
+
+    &--selected {
+      background-color: $color-brand;
+    }
+  }
 }
