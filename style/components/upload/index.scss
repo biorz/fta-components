@@ -1,0 +1,53 @@
+@import '../../mixins/index.scss';
+@import '../../variables/default.scss';
+
+.fta-upload {
+  @include relative();
+  @include display-flex(column);
+  align-items: center;
+  overflow: hidden;
+  width: $fta-upload-width;
+  height: $fta-upload-height;
+  border-radius: $fta-upload-radius;
+
+  &-camera {
+    @include relative();
+    @include square($fta-upload-camera-size);
+    margin-top: $fta-upload-camera-margin-top;
+  }
+
+  &-placeholder {
+    @include relative();
+    @include nrn {
+      display: block;
+    }
+    margin-top: $fta-upload-placeholder-margin-top;
+    color: $fta-upload-placeholder-color;
+    font-size: $fta-upload-placeholder-size;
+  }
+
+  &-image {
+    position: absolute;
+    @include square(100%);
+  }
+
+  &--empty {
+    background-color: $fta-upload-bg-color;
+  }
+
+  &--error {
+    // prettier-ignore
+    border: 1PX solid red
+  }
+
+  &-errortip {
+    @include nrn {
+      display: block;
+    }
+    margin-top: $fta-upload-tip-margin-top;
+    text-align: center;
+    font-size: $fta-upload-tip-size;
+    color: $fta-upload-tip-color;
+    line-height: $fta-upload-tip-size * $line-height-base;
+  }
+}

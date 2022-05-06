@@ -43,6 +43,7 @@ export { default as Textarea } from './components/textarea'
 export { default as Timeline, TimelineItem } from './components/timeline'
 export { default as Toast, useToast } from './components/toast'
 export { Text } from './components/typography'
+export { default as Upload } from './components/upload'
 export {
   default as LayoutView,
   TouchableHighlight,

@@ -85,6 +85,7 @@ export interface SimpleRadioProps extends CustomIcons, PropsWithChildren {
 }
 
 declare const Radio: ComponentClass<RadioProps<any>> & {
+  /** 简易单选框按钮 */
   Simple: FC<SimpleRadioProps>
 }
 

@@ -52,6 +52,7 @@
   "Toast": { "replace": "components/toast", "default": true },
   "useToast": { "replace": "components/toast", "default": false },
   "Text": { "replace": "components/typography", "default": false },
+  "Upload": { "replace": "components/upload", "default": true },
   "LayoutView": { "replace": "components/view", "default": true },
   "TouchableHighlight": { "replace": "components/view", "default": false },
   "TouchableOpacity": { "replace": "components/view", "default": false },
