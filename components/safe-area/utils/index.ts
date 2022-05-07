@@ -30,7 +30,9 @@ export const _safeArea = {
       : inNotch
       ? 44
       : 0,
-  bottom: safeArea.bottom
+  bottom: safeArea.top
+    ? 34
+    : safeArea.bottom
     ? systemInfo.screenHeight - safeArea.bottom
     : needSafeArea
     ? // @ts-ignore

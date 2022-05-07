@@ -120,7 +120,7 @@ class ActionSheet extends React.Component<ActionSheetProps, ActionSheetState> {
                 {cancelText}
               </ActionSheetFooter>
             ) : null}
-            <SafeArea />
+            <SafeArea bottom />
           </Motion>
         </View>
       </Modal>
