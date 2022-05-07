@@ -49,13 +49,13 @@ export const resolveSafeScrollTop = (scrollTop: number, length: number) => {
 }
 
 /** item是否对齐 */
-export const getAlignedIndex = (scrollTop: number, precision = 0.08) => {
+export const getAlignedIndex = (scrollTop: number) => {
   const indexOffset = scrollTop / ItemHeight
   const indexAligned = Math.round(indexOffset)
-  const withinPrecision = Math.abs(indexOffset - indexAligned) <= precision
-  if (withinPrecision) {
-    return -1
-  }
+  // const withinPrecision = Math.abs(indexOffset - indexAligned) <= precision
+  // if (withinPrecision) {
+  //   return -1
+  // }
   return indexAligned * ItemHeight
 }
 

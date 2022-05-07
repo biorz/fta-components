@@ -10,6 +10,7 @@ import React, {
   useRef,
   useState,
 } from 'react'
+import { inRN } from '../../common'
 import '../../style/components/picker/index.scss'
 import {
   Arrayable,
@@ -62,27 +63,33 @@ const builtInModes: PickerMode[] = [
 
 function _ScrollArea(props: {
   scrollWithAnimation?: boolean
-  onScroll?: (e: any) => void
+  // onScroll?: (e: any) => void
   onChange?: (newIndex: number, oldIndex: number) => void
   activeIndex: number
   range: any[]
   format?: (value: any) => string | number
 }): JSX.Element {
-  const { onScroll, activeIndex, range, format, onChange, scrollWithAnimation } = props
+  const { activeIndex, range, format, onChange, scrollWithAnimation } = props
   const activeIndexRef = useRef(+activeIndex >= 0 ? +activeIndex : 0)
   const [scrollTop, setScrollTop] = useState(getScrollTopOverIndex(activeIndex))
   const timerRef = useRef<any>()
-  const scrollRef = useRef({ scrollTop, setScrollTop }).current
+  const [top, setTop] = useState(scrollTop)
+  const scrollRef = useRef({ scrollTop, setScrollTop, top, setTop, onChange }).current
 
   useEffect(() => {
     scrollRef.scrollTop = scrollTop
     scrollRef.setScrollTop = setScrollTop
-  }, [scrollTop, setScrollTop])
+    scrollRef.top = top
+    scrollRef.setTop = setTop
+    scrollRef.onChange = onChange
+  }, [scrollTop, top, setScrollTop, setTop, onChange])
 
   useEffect(() => {
     if (activeIndexRef.current !== activeIndex) {
       activeIndexRef.current = activeIndex
-      setScrollTop(getScrollTopOverIndex(activeIndex))
+      const top = getScrollTopOverIndex(activeIndex)
+      setScrollTop(top)
+      inRN && setTop(top)
     }
   }, [activeIndex])
 
@@ -91,38 +98,22 @@ function _ScrollArea(props: {
   }, [scrollTop])
   /** 滚动 */
   const _onScroll = (e: ScrollEvent) => {
-    // console.log('onscroll============', JSON.stringify(range))
     const scrollTop = e.detail.scrollTop
-
-    let _activeIndex = getAcitveIndex(scrollTop, range.length)
-
-    const _prevIndex = activeIndexRef.current
-    // FIXME: 重新渲染的时候，导致children乱序排列
-    const needChange = _prevIndex !== _activeIndex
-    // setRange(range.slice())
-    if (needChange) {
-      activeIndexRef.current = _activeIndex
-    }
     setScrollTop(scrollTop)
-    // console.log('needchange', _prevIndex, _activeIndex, scrollTop)
-    needChange && onChange?.(_activeIndex, _prevIndex)
-    onScroll?.(e.detail)
+    inRN && setTop(scrollTop)
+    console.log('setScrollTop', scrollTop)
+    // needChange && onChange?.(_activeIndex, _prevIndex)
   }
 
   /** 滚动到底部 */
-  const _onScrollToLower = (e: ScrollEvent) => {
-    let max = range.length - 1
-    // if (max === activeIndexRef.current) console.log('已经滚动到最后了')
-
-    activeIndexRef.current = max
-    max !== activeIndexRef.current && onChange?.(max, activeIndexRef.current)
-    setScrollTop(
-      getScrollTopOverIndex(max) +
-        // 加0.001 防止滑动过快视图不更新，强制更新视图
-        0.001
-    )
-    onScroll?.(e.detail)
+  const _onScrollToLower = () => {
+    const scrollTop = getScrollTopOverIndex(range.length - 1)
+    setScrollTop(scrollTop)
   }
+
+  useEffect(() => {
+    console.log('top改变', top)
+  }, [top])
 
   /**
    * 滑动到顶部
@@ -145,11 +136,22 @@ function _ScrollArea(props: {
       clearTimeout(timerRef.current)
     }
     timerRef.current = setTimeout(() => {
-      const offset = getAlignedIndex(scrollRef.scrollTop)
-      if (offset > -1) {
-        scrollRef.setScrollTop(offset)
-        timerRef.current = null
+      const scrollTop = scrollRef.scrollTop
+      const offset = getAlignedIndex(scrollTop)
+      // if (offset > -1) {
+      let _activeIndex = getAcitveIndex(offset, range.length)
+      console.log('currentactiveindex', _activeIndex, activeIndexRef.current, offset)
+      const _prevIndex = activeIndexRef.current
+      const needChange = _prevIndex !== _activeIndex
+      if (needChange) {
+        activeIndexRef.current = _activeIndex
+        scrollRef.onChange?.(_activeIndex, _prevIndex)
       }
+      // scrollRef.setScrollTop(offset)
+      setTop(offset + Math.random() / 10000)
+      console.log('修复位置偏移', offset + 0.001)
+      timerRef.current = null
+      // }
     }, 300)
   }
 
@@ -158,7 +160,7 @@ function _ScrollArea(props: {
       scrollY
       className='fta-picker-block'
       lowerThreshold={10}
-      scrollTop={scrollTop}
+      scrollTop={top}
       bounces={false}
       // @ts-ignore
       alwaysBounceVertical={false}
