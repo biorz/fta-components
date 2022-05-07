@@ -40,6 +40,7 @@
     }
 
     &--complex {
+      @include border-box();
       @include display-flex(row);
       @include relative();
       justify-content: center;
