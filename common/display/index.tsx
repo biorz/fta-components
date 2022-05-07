@@ -459,7 +459,7 @@ export const Layout = withCare(
               }}
             />
           )}
-          <Debugger />
+          <Debugger force />
 
           {inFTAView ? (
             <Input

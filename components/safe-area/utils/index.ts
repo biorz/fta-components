@@ -1,4 +1,4 @@
-import { inAndroid, inNotch, inRN, inWeb, systemInfo } from '../../../common'
+import { inAndroid, inIOS, inNotch, inRN, inWeb, systemInfo } from '../../../common'
 
 export const safeArea: Taro.General.SafeAreaResult = systemInfo.safeArea || {
   top: 0,
@@ -30,14 +30,15 @@ export const _safeArea = {
       : inNotch
       ? 44
       : 0,
-  bottom: safeArea.top
-    ? 34
-    : safeArea.bottom
-    ? systemInfo.screenHeight - safeArea.bottom
-    : needSafeArea
-    ? // @ts-ignore
-      (window._MBWEB_bottombarHeight || 0) / systemInfo.pixelRatio
-    : 0,
+  bottom:
+    safeArea.top && inRN && inIOS
+      ? 34
+      : safeArea.bottom
+      ? systemInfo.screenHeight - safeArea.bottom
+      : needSafeArea
+      ? // @ts-ignore
+        (window._MBWEB_bottombarHeight || 0) / systemInfo.pixelRatio
+      : 0,
   left: safeArea.left,
   right: safeArea.right ? systemInfo.screenWidth - safeArea.right : 0,
 }

@@ -29,8 +29,8 @@ const getNativeEvent = outOfRN ? (evt) => evt : (evt) => evt.nativeEvent
 /**
  * Debug面板，生产环境不显示
  */
-export const Debugger: FC = () => {
-  if (!['dev', 'development'].includes(process.env.NODE_ENV)) return null
+export const Debugger: FC<{ force?: boolean }> = (props) => {
+  if (!props.force && !['dev', 'development'].includes(process.env.NODE_ENV)) return null
   const [offset, setOffset] = useState<Coordinate>([0, 0])
   const start = useRef<Coordinate>([0, 0]).current
   const prev = useRef<Coordinate>([0, 0]).current
@@ -47,7 +47,7 @@ export const Debugger: FC = () => {
 
   const onTouchMove = (evt: ITouchEvent) => {
     // alert(evt.stopPropagation)
-    evt.stopPropagation?.()
+    // evt.stopPropagation?.()
     // console.log('evt', evt.nativeEvent)
     const { changedTouches } = getNativeEvent(evt)
     const { pageX, pageY } = changedTouches[0]
@@ -68,6 +68,7 @@ export const Debugger: FC = () => {
 
   return (
     <View
+      catchMove
       // @ts-ignore
       style={getTransformStyle(offset)}
       className={rootClass}

@@ -246,7 +246,7 @@ function BasePicker(props: FloatLayoutProps & { value?: Arrayable<number> | stri
         },
       }}
       {...extrapProps}>
-      <View className='fta-picker'>
+      <View className='fta-picker' catchMove>
         {children}
         {/* 分割线 */}
         {isChildrenNull(children) ? null : (

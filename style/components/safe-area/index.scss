@@ -1,4 +1,4 @@
-/* #ifdef h5 */
+/* #ifdef h5 weapp */
 
 @mixin safearea($position, $useMargin: false) {
   $ftatr: if($useMargin, margin, padding);

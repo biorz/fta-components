@@ -18,11 +18,15 @@ class SafeAreaView extends Component<SafeAreaViewProps> {
 
   public getInlineStyle(style: CSSProperties): CSSProperties {
     const attr = this.props.useMargin ? 'margin' : 'padding'
+    const safeAreaStyle = {}
+
+    if (_safeArea.top) safeAreaStyle[`${attr}Top`] = px(_safeArea.top)
+    if (_safeArea.right) safeAreaStyle[`${attr}Right`] = px(_safeArea.right)
+    if (_safeArea.left) safeAreaStyle[`${attr}Left`] = px(_safeArea.left)
+    if (_safeArea.bottom) safeAreaStyle[`${attr}Bottom`] = px(_safeArea.bottom)
+
     return {
-      [`${attr}Top`]: px(_safeArea.top),
-      [`${attr}Bottom`]: px(_safeArea.bottom),
-      [`${attr}Left`]: px(_safeArea.left),
-      [`${attr}Right`]: px(_safeArea.right),
+      ...safeAreaStyle,
       ...style,
     }
   }
