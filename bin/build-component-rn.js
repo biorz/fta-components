@@ -7,7 +7,7 @@ const taroRoot = path.resolve(__dirname, '../../../')
 const pkgRoot = path.resolve(__dirname, '../')
 
 const copyIndexJS = (dest) => {
-  const entryPath = path.resolve(pkgRoot, 'index.ts')
+  const entryPath = path.resolve(pkgRoot, 'types/index.d.ts')
   fs.copyFileSync(entryPath, dest)
 }
 

@@ -2,7 +2,8 @@
 @import '../../variables/default.scss';
 
 .fta-upload {
-  @include relative();
+  @include border-box;
+  @include relative;
   @include display-flex(column);
   align-items: center;
   overflow: hidden;

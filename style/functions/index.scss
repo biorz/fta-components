@@ -17,7 +17,7 @@
   @return math.round($size * $times);
 }
 
-@function zoom($size, $designWidth: 750, $curWidth: 720) {
+@function zoom($size, $designWidth: 720, $curWidth: 720) {
   @return math.round(math.div($size * $designWidth, $curWidth));
 }
 
