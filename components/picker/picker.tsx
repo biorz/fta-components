@@ -58,7 +58,7 @@ const builtInModes: PickerMode[] = [
   /** 日期选择器 */
   'date',
   /** 省市区选择器 */
-  'region',
+  // 'region',
 ]
 
 function _ScrollArea(props: {
@@ -89,7 +89,8 @@ function _ScrollArea(props: {
       activeIndexRef.current = activeIndex
       const top = getScrollTopOverIndex(activeIndex)
       setScrollTop(top)
-      inRN && setTop(top)
+      // 需要直接设置高度
+      setTop(top)
     }
   }, [activeIndex])
 
@@ -101,8 +102,6 @@ function _ScrollArea(props: {
     const scrollTop = e.detail.scrollTop
     setScrollTop(scrollTop)
     inRN && setTop(scrollTop)
-    // console.log('setScrollTop', scrollTop)
-    // needChange && onChange?.(_activeIndex, _prevIndex)
   }
 
   /** 滚动到底部 */
@@ -110,18 +109,6 @@ function _ScrollArea(props: {
     const scrollTop = getScrollTopOverIndex(range.length - 1)
     setScrollTop(scrollTop)
   }
-  /**
-   * 滑动到顶部
-   */
-  // const _onScrollToUpper = (e: ScrollEvent) => {
-  //   const _prevIndex = activeIndexRef.current
-  //   if (_prevIndex !== 0) {
-  //     activeIndexRef.current = 0
-  //   }
-  //   setScrollTop(0)
-  //   console.log('scrooupper')
-  //   onScroll?.(e.detail)
-  // }
 
   /**
    * 滑动停止后修复位置偏移
@@ -141,6 +128,7 @@ function _ScrollArea(props: {
         activeIndexRef.current = _activeIndex
         scrollRef.onChange?.(_activeIndex, _prevIndex)
       }
+      // WARNING: 滚动位置过小，使得setState生效，前后两次值必须不同
       scrollRef.setTop(offset + Math.abs(scrollTop - offset) / 1000)
       // scrollRef.setScrollTop(offset)
       //
@@ -558,9 +546,8 @@ function TimePicker(props: Compose<PickerTimeProps>): JSX.Element {
   // 存储更新之前分针的区间
   const preRef = useRef(totalMins.length)
 
-  const [times, setTimes, replaceTimes] = useArray<[number, number]>(parseTime(value))
+  const [times, setTimes, replaceTimes] = useArray<[number, number]>([h1, h2])
   const [indexs, setIndexs, replaceIndexs] = useArray<[number, number]>([0, 0])
-
   const [mins, setMins] = useState(totalMins.slice())
 
   // 根据value值来取索引
@@ -584,7 +571,7 @@ function TimePicker(props: Compose<PickerTimeProps>): JSX.Element {
       }
     }
     replaceIndexs([hIndex, mIndex])
-    replaceTimes([hours[hIndex], mins[hIndex]])
+    replaceTimes([hours[hIndex], mins[mIndex]])
   }, [value])
 
   // 根据当前选择的小时来展示分钟区间
@@ -616,16 +603,15 @@ function TimePicker(props: Compose<PickerTimeProps>): JSX.Element {
     ) {
       // console.log('更新分针列表：' + indexs[1])
       preRef.current = minsCopy.length
-      // 更新分钟列表
-      setMins(minsCopy)
 
       const mVal = mins[indexs[1]]
       let tmp: number
-      if ((tmp = minsCopy.indexOf(mVal)) > -1) {
-        setIndexs(tmp, 1)
-      } else {
-        setIndexs(0, 1)
+      if (!((tmp = minsCopy.indexOf(mVal)) > -1)) {
+        tmp = 0
       }
+      setIndexs(tmp, 1)
+      setTimes(minsCopy[tmp], 1)
+      setMins(minsCopy)
     }
   }, [indexs[0]])
 

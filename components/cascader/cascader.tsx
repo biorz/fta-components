@@ -96,8 +96,8 @@ const Cascader = forwardRef(function Cascader(
     // 重置后面的选项
     const { ranges, values } = getRangesAndValuesOverIndexs(icopy, options)
     setValues(values)
-    setIndexs(icopy)
     setRanges(ranges)
+    setIndexs(icopy)
   }
 
   useEffect(() => {

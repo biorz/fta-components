@@ -95,6 +95,8 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
     onClick,
     labelClassName,
     labelStyle,
+    contentClassName,
+    contentStyle,
   } = props
 
   // const [error, toggleError] = useState(false)
@@ -121,7 +123,21 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
           ctx.labelClassName,
           labelClassName
         )
+
+        const _contentClassName = classNames(
+          'fta-form-item-content',
+          ctx.contentClassName,
+          arrow && 'fta-form-item-content--arrow',
+          contentClassName
+        )
+
         const _labelStyle = { ...ctx.labelStyle, ...labelStyle }
+
+        const _contentStyle = {
+          ...(_align ? { justifyContent: justifyContentMap[_align] } : {}),
+          ...ctx.contentStyle,
+          ...contentStyle,
+        }
 
         const rootClass = classNames('fta-form-item', {
           'fta-form-item--border': _border,
@@ -146,11 +162,8 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
             </View>
             {/* content */}
             <View
-              style={_align ? { justifyContent: justifyContentMap[_align] } : void 0}
-              className={classNames(
-                'fta-form-item-content',
-                arrow && 'fta-form-item-content--arrow'
-              )}
+              style={_contentStyle}
+              className={_contentClassName}
               onClick={_onClick}
               hoverStyle={_readonly ? void 0 : { opacity: 0.6 }}
               hoverClass={_readonly ? void 0 : 'fta-form-item-content--hover'}>

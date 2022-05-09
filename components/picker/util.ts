@@ -37,16 +37,16 @@ export const genPeriodList = (start: number, end: number) =>
 export const getDaysCount = (year: number, month: number) => new Date(year, month, 0).getDate()
 
 /** 获取安全的scrollTop */
-export const resolveSafeScrollTop = (scrollTop: number, length: number) => {
-  // let safeScrollTop = scrollTop
-  // if (length >= 5) {
-  //   const maxScrollTop = 20 * length + 13 * 2 + 30 * 2
-  //   if (safeScrollTop > maxScrollTop) {
-  //     safeScrollTop = maxScrollTop
-  //   }
-  // }
-  return scrollTop
-}
+// export const resolveSafeScrollTop = (scrollTop: number, length: number) => {
+// let safeScrollTop = scrollTop
+// if (length >= 5) {
+//   const maxScrollTop = 20 * length + 13 * 2 + 30 * 2
+//   if (safeScrollTop > maxScrollTop) {
+//     safeScrollTop = maxScrollTop
+//   }
+// }
+// return scrollTop
+// }
 
 /** item是否对齐 */
 export const getAlignedIndex = (scrollTop: number, range: any[]) => {

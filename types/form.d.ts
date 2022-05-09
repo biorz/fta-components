@@ -69,12 +69,27 @@ export interface FormProps extends BaseComponent, PropsWithChildren {
    * 标签内联样式
    */
   labelStyle?: CSSProperties
+  /**
+   * 内容区className
+   */
+  contentClassName?: string
+  /**
+   * 内容区内联样式
+   */
+  contentStyle?: CSSProperties
 }
 
 export interface FormItemProps
   extends Pick<
       FormProps,
-      'scrollIntoView' | 'readonly' | 'border' | 'align' | 'labelClassName' | 'labelStyle'
+      | 'scrollIntoView'
+      | 'readonly'
+      | 'border'
+      | 'align'
+      | 'labelClassName'
+      | 'labelStyle'
+      | 'contentClassName'
+      | 'contentStyle'
     >,
     BaseComponent {
   /**
