@@ -101,7 +101,7 @@ function _ScrollArea(props: {
     const scrollTop = e.detail.scrollTop
     setScrollTop(scrollTop)
     inRN && setTop(scrollTop)
-    console.log('setScrollTop', scrollTop)
+    // console.log('setScrollTop', scrollTop)
     // needChange && onChange?.(_activeIndex, _prevIndex)
   }
 
@@ -110,11 +110,6 @@ function _ScrollArea(props: {
     const scrollTop = getScrollTopOverIndex(range.length - 1)
     setScrollTop(scrollTop)
   }
-
-  useEffect(() => {
-    console.log('top改变', top)
-  }, [top])
-
   /**
    * 滑动到顶部
    */
@@ -137,27 +132,27 @@ function _ScrollArea(props: {
     }
     timerRef.current = setTimeout(() => {
       const scrollTop = scrollRef.scrollTop
-      const offset = getAlignedIndex(scrollTop)
+      const offset = getAlignedIndex(scrollTop, range)
       // if (offset > -1) {
       let _activeIndex = getAcitveIndex(offset, range.length)
-      console.log('currentactiveindex', _activeIndex, activeIndexRef.current, offset)
       const _prevIndex = activeIndexRef.current
       const needChange = _prevIndex !== _activeIndex
       if (needChange) {
         activeIndexRef.current = _activeIndex
         scrollRef.onChange?.(_activeIndex, _prevIndex)
       }
+      scrollRef.setTop(offset + Math.abs(scrollTop - offset) / 1000)
       // scrollRef.setScrollTop(offset)
-      setTop(offset + Math.random() / 10000)
-      console.log('修复位置偏移', offset + 0.001)
+      //
       timerRef.current = null
       // }
-    }, 300)
+    }, 500)
   }
 
   return (
     <ScrollView
       scrollY
+      enhanced
       className='fta-picker-block'
       lowerThreshold={10}
       scrollTop={top}
@@ -414,21 +409,19 @@ function DatePicker(props: Compose<PickerDateProps>): JSX.Element {
   const [y, m, d] = dateRef
   const years = useRef(genPeriodList(y1, y2).concat(longterm ? [9999] : [])).current
 
-  let yTimerRef = useRef<NodeJS.Timer | null>(null)
+  // let yTimerRef = useRef<NodeJS.Timer | null>(null)
 
   const onYearChange = (i: number) => {
-    if (yTimerRef.current) {
-      clearTimeout(yTimerRef.current)
-      yTimerRef.current = null
-      // console.log('取消定时器')
-    }
-    yTimerRef.current = setTimeout(() => {
-      dateRef[0] = years[i]
-      setIndexs(years[i] === 9999 ? indexs[0] : i, 0)
-    }, 150)
-  }
+    dateRef[0] = years[i]
+    setIndexs(years[i] === 9999 ? indexs[0] : i, 0)
+    // if (yTimerRef.current) {
+    //   clearTimeout(yTimerRef.current)
+    //   yTimerRef.current = null
+    // }
+    // yTimerRef.current = setTimeout(() => {
 
-  // console.log('current date', value, dateRef, nowDates, [y, m, d])
+    // }, 150)
+  }
 
   let MonthElement: ReactNode = null
   let DayElement: ReactNode = null
@@ -469,7 +462,6 @@ function DatePicker(props: Compose<PickerDateProps>): JSX.Element {
           ? _months.length - 1
           : 0
         : tmp
-
     MonthElement = (
       <ScrollArea
         activeIndex={mActiveIndex}
@@ -482,9 +474,12 @@ function DatePicker(props: Compose<PickerDateProps>): JSX.Element {
         }}
       />
     )
-
+    // FIXME: 重新赋值 DONE！
+    dateRef[1] = _months[mActiveIndex]
     // 日期
     if (depth > 2) {
+      // FIXME: 引用最新的月份 DONE！
+      const m = dateRef[1]
       const count = getDaysCount(y, m)
 
       const _days = days.slice(0, count)
@@ -512,6 +507,8 @@ function DatePicker(props: Compose<PickerDateProps>): JSX.Element {
       let i: number
       let dActiveIndex =
         (i = _days.indexOf(d)) === -1 ? (d > _days[_days.length - 1] ? _days.length - 1 : 0) : i
+
+      dateRef[2] = _days[dActiveIndex]
 
       DayElement = (
         <ScrollArea
@@ -669,9 +666,4 @@ function RegionPicker(): JSX.Element {
   return <BasePicker></BasePicker>
 }
 
-export {
-  Picker as default,
-  BasePicker,
-  ScrollArea,
-  // SelectorPicker, MultiSelectorPicker, DatePicker, TimePicker
-}
+export { Picker as default, BasePicker, ScrollArea }
