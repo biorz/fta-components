@@ -149,6 +149,7 @@ function _ScrollArea(props: {
       alwaysBounceVertical={false}
       scrollWithAnimation={scrollWithAnimation}
       showsVerticalScrollIndicator={false}
+      showScrollbar={false}
       onScroll={_onScroll}
       onScrollToLower={_onScrollToLower}
       // onScrollToUpper={_onScrollToUpper}

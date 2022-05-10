@@ -3,24 +3,14 @@ import { FormProps } from '../../types/Form'
 
 type FormContext = Pick<
   FormProps,
-  | 'border'
-  | 'readonly'
-  | 'align'
-  | 'labelClassName'
-  | 'labelStyle'
-  | 'contentClassName'
-  | 'contentStyle'
+  'border' | 'align' | 'labelClassName' | 'labelStyle' | 'contentClassName' | 'contentStyle'
 > & {
-  /**
-   * 是否展示Modal
-   * @private
-   */
+  /** @private 是否展示Modal */
   _showModal?: boolean
 }
 
 const context = createContext<FormContext>({
   border: true,
-  readonly: false,
   _showModal: false,
 })
 

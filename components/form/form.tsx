@@ -9,7 +9,7 @@ import React, {
   useImperativeHandle,
   useState,
 } from 'react'
-import { isString, noop } from '../../common'
+import { Assets, isString, isUndef } from '../../common'
 import '../../style/components/form/index.scss'
 import {
   Align,
@@ -17,8 +17,10 @@ import {
   FormItemRefMethods,
   FormProps,
   FormRefMethods,
+  TipProps,
   ToolTipProps,
 } from '../../types/form'
+import { TouchableOpacity } from '../view'
 import { FormConsumer, FormProvider } from './context'
 
 const justifyContentMap: Record<Align, CSSProperties['justifyContent']> = {
@@ -30,11 +32,11 @@ const justifyContentMap: Record<Align, CSSProperties['justifyContent']> = {
 function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
   const {
     children,
-    border,
     title,
     titleAlign,
     customStyle,
     className,
+    scrollWithAnimation,
     readonly,
     align,
     // @ts-ignore
@@ -54,24 +56,14 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
     submit() {},
   }))
   return (
-    <FormProvider value={{ readonly, border, align }}>
+    <FormProvider value={{ align }}>
       <ScrollView
         scrollY
-        scrollWithAnimation
         scrollX={false}
         className={rootClass}
-        style={{ ...style, ...customStyle }}>
-        <View className='fta-form-title' style={{ textAlign: titleAlign }}>
-          {title ? (
-            isString(title) ? (
-              <Text className='fta-form-title__text' style={{ textAlign: titleAlign }}>
-                {title}
-              </Text>
-            ) : (
-              title
-            )
-          ) : null}
-        </View>
+        style={{ ...style, ...customStyle }}
+        scrollWithAnimation={scrollWithAnimation}>
+        <Title align={titleAlign}>{title}</Title>
         {children}
       </ScrollView>
     </FormProvider>
@@ -84,12 +76,12 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
     tooltip,
     renderTooltip,
     prop,
-    border,
     children,
     placeholder,
     arrow,
     error,
-    readonly,
+    errorTip,
+    // readonly,
     align,
     onTooltipClick,
     onClick,
@@ -109,14 +101,7 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
   return (
     <FormConsumer>
       {(ctx) => {
-        // 内容对其方式
         const _align = align || ctx.align
-        // 是否只读
-        const _readonly = readonly || (ctx.readonly && readonly !== false)
-        // 是否有下方边框线
-        const _border = border || (ctx.border && border !== false)
-        // 是否可点击
-        const _onClick = _readonly ? noop : onClick
 
         const _labelClassName = classNames(
           'fta-form-item-label',
@@ -127,8 +112,8 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
         const _contentClassName = classNames(
           'fta-form-item-content',
           ctx.contentClassName,
-          arrow && 'fta-form-item-content--arrow',
-          contentClassName
+          contentClassName,
+          error && 'fta-form-item-content--error'
         )
 
         const _labelStyle = { ...ctx.labelStyle, ...labelStyle }
@@ -139,52 +124,77 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
           ...contentStyle,
         }
 
-        const rootClass = classNames('fta-form-item', {
-          'fta-form-item--border': _border,
-          'fta-form-item--readonly': _readonly,
-        })
+        const rootClass = classNames('fta-form-item', {})
 
-        const labelTextClass = classNames('fta-form-item-label__text', {
-          'fta-form-item-label__text--error': error,
-        })
+        const labelTextClass = classNames('fta-form-item-label__text')
         return (
-          <View className={rootClass}>
-            {/* label */}
-            <View className={_labelClassName} style={_labelStyle}>
-              <Text className={labelTextClass}>{label}</Text>
-              {tooltip ? (
-                <ToolTip
-                  onTooltipClick={onTooltipClick}
-                  renderTooltip={renderTooltip}
-                  prop={prop}
-                />
-              ) : null}
-            </View>
-            {/* content */}
-            <View
-              style={_contentStyle}
-              className={_contentClassName}
-              onClick={_onClick}
-              hoverStyle={_readonly ? void 0 : { opacity: 0.6 }}
-              hoverClass={_readonly ? void 0 : 'fta-form-item-content--hover'}>
-              {isString(children) ? (
-                !children.length && placeholder ? (
-                  <Placeholder>{placeholder}</Placeholder>
+          <>
+            <View className={rootClass} id={props ? `form-${prop}` : void 0}>
+              {/* label */}
+              <View className={_labelClassName} style={_labelStyle}>
+                <Text className={labelTextClass}>{label}</Text>
+                {tooltip ? (
+                  <ToolTip
+                    onTooltipClick={onTooltipClick}
+                    renderTooltip={renderTooltip}
+                    prop={prop}
+                  />
+                ) : null}
+              </View>
+              {/* content */}
+              <View
+                style={_contentStyle}
+                className={_contentClassName}
+                onClick={onClick}
+                hoverStyle={{ opacity: 0.6 }}
+                hoverClass={'fta-form-item-content--hover'}>
+                {isUndef(children) ? (
+                  placeholder ? (
+                    <Placeholder>{placeholder}</Placeholder>
+                  ) : null
+                ) : isString(children) ? (
+                  !children.length && placeholder ? (
+                    <Placeholder>{placeholder}</Placeholder>
+                  ) : (
+                    <Text className='fta-form-item-content__text'>{children}</Text>
+                  )
                 ) : (
-                  <Text className='fta-form-item-content__text'>{children}</Text>
-                )
-              ) : (
-                children
-              )}
-              {arrow ? <Arrow /> : null}
+                  children
+                )}
+                {arrow ? <Arrow /> : null}
+              </View>
             </View>
-          </View>
+            {error && errorTip ? (
+              <View className='fta-form-item-error'>
+                <View className='fta-form-item-error-wrap'>
+                  <ErrorIcon /> <Text className='fta-form-item-error__text'>{errorTip}</Text>
+                </View>
+              </View>
+            ) : null}
+          </>
         )
       }}
     </FormConsumer>
   )
 }
 
+/** 标题 */
+function Title(props: { children?: ReactNode; align?: Align }): JSX.Element | null {
+  const { children: title, align: titleAlign } = props
+  return title ? (
+    <View className='fta-form-title' style={{ textAlign: titleAlign }}>
+      {isString(title) ? (
+        <Text className='fta-form-title__text' style={{ textAlign: titleAlign }}>
+          {title}
+        </Text>
+      ) : (
+        title
+      )}
+    </View>
+  ) : null
+}
+
+/** 弹出层 */
 function ToolTip(props: ToolTipProps): JSX.Element {
   const [visible, toggle] = useState(false)
   const { tooltip, onTooltipClick, prop, renderTooltip } = props
@@ -202,6 +212,7 @@ function ToolTip(props: ToolTipProps): JSX.Element {
   )
 }
 
+/** 占位文本 */
 function Placeholder(props: { children: ReactNode }): JSX.Element {
   const { children } = props
   return isString(children) ? (
@@ -211,15 +222,54 @@ function Placeholder(props: { children: ReactNode }): JSX.Element {
   )
 }
 
+/** 箭头 */
 function Arrow(): JSX.Element {
+  return <Image className='fta-form-item-arrow' src={Assets.arrow.grey}></Image>
+}
+
+/** 错误图标 */
+function ErrorIcon(): JSX.Element {
+  return <Image className='fta-form-item-error-icon' src={Assets.icon.warning}></Image>
+}
+
+/** 间隔 */
+function Gap(): JSX.Element {
+  return <View className='fta-form-item-gap' />
+}
+
+/** 重新上传Tip */
+function Tip(props: TipProps): JSX.Element {
+  const {
+    onClick,
+    button,
+    title,
+    className,
+    customStyle,
+    // @ts-ignore
+    style,
+  } = props
+
+  const rootClass = classNames('fta-form-tip', className)
+  const rootStyle = { ...style, customStyle }
+
   return (
-    <Image
-      className='fta-form-item-arrow'
-      src={'https://image.ymm56.com/boss/2019/0123/1548213446'}></Image>
+    <View className={rootClass} style={rootStyle}>
+      <View className='fta-form-tip-content'>
+        <Image className='fta-form-tip__image' src={Assets.tip.info} />
+        {isString(title) ? <Text className='fta-form-tip__text'>{title}</Text> : title}
+        {/* button */}
+      </View>
+      <TouchableOpacity className='fta-form-tip__button' onClick={onClick}>
+        <Text className='fta-form-tip__button__text'>{button}</Text>
+      </TouchableOpacity>
+    </View>
   )
 }
 
-function useForm() {}
+Tip.defaultProps = {
+  button: '重新上传',
+  title: '如需更新证件信息，请重新上传',
+}
 
 const tooltipDefaultProps: ToolTipProps = {
   tooltip: '',
@@ -229,22 +279,34 @@ const tooltipDefaultProps: ToolTipProps = {
 
 const formDefaultProps: FormProps = {
   titleAlign: 'left',
-  border: true,
 }
 
 const formItemDefaultProps: FormItemProps = {
   label: '',
   error: false,
+  errorTip: '信息填写错误',
   onClick() {},
 }
 
 ToolTip.defaultProps = tooltipDefaultProps
 
-const ForwardForm = forwardRef(Form)
+const ForwardForm = forwardRef(Form) as React.ForwardRefExoticComponent<
+  FormProps & React.RefAttributes<FormRefMethods>
+> & {
+  Item: typeof FormItem
+  Gap: typeof Gap
+  Tip: typeof Tip
+}
 
 const FowardFormItem = forwardRef(FormItem)
 
 ForwardForm.defaultProps = formDefaultProps
+
+ForwardForm.Item = FormItem
+
+ForwardForm.Gap = Gap
+
+ForwardForm.Tip = Tip
 
 FowardFormItem.defaultProps = formItemDefaultProps
 

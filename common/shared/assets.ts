@@ -19,6 +19,7 @@ const Assets = {
     down: 'https://image.ymm56.com/ymmfile/operation-biz/27653ee0-6dc6-446a-a60c-38c322e280cc.png',
     up: 'https://image.ymm56.com/ymmfile/operation-biz/4193cb2e-863f-471f-b3bf-80f49c22069a.png',
     left: 'http://image.ymm56.com/boss/2018/1212/1544598761',
+    grey: 'https://imagecdn.ymm56.com/ymmfile/static/resource/a7fa220a-80f0-422f-b447-118052752d07.png',
   },
   // 信息提示
   tip: {
@@ -43,15 +44,28 @@ const Assets = {
     default:
       'https://imagecdn.ymm56.com/ymmfile/static/resource/f1b19e18-3105-4951-8e95-f0de00b221d2.png',
   },
+  // 加载中
   loading: {
     default:
       'https://imagecdn.ymm56.com/ymmfile/static/image/short_distance/rn_sd_loding_wihite_x2_2201280.png',
     blue: 'https://imagecdn.ymm56.com/ymmfile/static/image/short_distance/rn_loading_view_2201230.png',
   },
+  // 相机📷
   camera: {
     default:
       'https://image.ymm56.com/ymmfile/operation-biz/2361a262-9f06-420b-9514-0d12e3a26d12.png',
     blue: 'https://image.ymm56.com/ymmfile/operation-biz/218ba18d-5ab4-4a83-92bb-731802693ad8.png',
+  },
+  // 小图标
+  icon: {
+    question:
+      'https://imagecdn.ymm56.com/ymmfile/static/resource/f9c00240-d826-44a4-89be-39f8284c3243.png',
+    warning:
+      'https://imagecdn.ymm56.com/ymmfile/static/resource/54eca927-239b-48f4-ab28-fa4b65da6c5f.png',
+    waiting:
+      'https://imagecdn.ymm56.com/ymmfile/static/resource/38e7d189-35ef-45e9-840c-7b39ae88c2dd.png',
+    triangle:
+      'https://imagecdn.ymm56.com/ymmfile/static/resource/83e4d14b-b386-4f9a-a320-dbd5e243b7a8.png',
   },
 }
 

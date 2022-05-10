@@ -35,10 +35,15 @@ export interface FormProps extends BaseComponent, PropsWithChildren {
    */
   titleAlign?: Align
   /**
-   * 校验出错时是否滚动到可是范围内
+   * 校验出错时是否滚动到可视范围内
    * @default true
    */
   scrollIntoView?: boolean
+  /**
+   * 在设置滚动条位置时使用动画过渡
+   * @default false
+   */
+  scrollWithAnimation?: boolean
   /**
    * 是否只读
    * @default false
@@ -134,6 +139,11 @@ export interface FormItemProps
    */
   error?: boolean
   /**
+   * 校验错误提示信息
+   * @default '信息填写错误'
+   */
+  errorTip?: string
+  /**
    * 点击tooltip的回调
    */
   onTooltipClick?: (prop: string) => void
@@ -211,15 +221,36 @@ export interface FormItemRefMethods {
   clearValidate: () => void
 }
 
+export interface TipProps extends BaseComponent {
+  /**
+   * 点击按钮时的回调
+   */
+  onClick?(): void
+  /**
+   * 按钮文本
+   */
+  button?: string
+  /**
+   *
+   */
+  title?: string
+}
+
 export type ToolTipProps = Pick<
   FormItemProps,
   'tooltip' | 'onTooltipClick' | 'renderTooltip' | 'prop'
 >
 
+declare const Tip: FC<TipProps>
+
 declare const FormItem: FC<FormItemProps>
 
 declare const Form: FC<FormProps> & {
   Item: typeof FormItem
+  /** 间隔槽 */
+  Gap: FC<{}>
+  /** 重新上传的提示 */
+  Tip: typeof Tip
 }
 
 export { Form as default, FormItem }

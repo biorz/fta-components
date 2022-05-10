@@ -21,13 +21,13 @@ export const _safeArea = {
     inRN && inAndroid
       ? 0
       : safeArea.top
-      ? safeArea.top < 44 && inNotch
+      ? safeArea.top < 44 && inNotch && inRN
         ? 44
         : safeArea.top
       : isImmersive && inWeb
       ? // @ts-ignore
         (window._MBWEB_statusbarHeight || 0) / systemInfo.pixelRatio
-      : inNotch
+      : inNotch && !inWeb
       ? 44
       : 0,
   bottom:
@@ -42,7 +42,3 @@ export const _safeArea = {
   left: safeArea.left,
   right: safeArea.right ? systemInfo.screenWidth - safeArea.right : 0,
 }
-
-// inWeb && alert(JSON.stringify(_safeArea) + inNotch)
-
-// alert(JSON.stringify(_safeArea))
