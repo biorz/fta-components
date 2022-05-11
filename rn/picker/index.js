@@ -1,7 +1,6 @@
 import ScrollView from '@fta/components-rn/dist/components/ScrollView'
 import Text from '@fta/components-rn/dist/components/Text'
 import View from '@fta/components-rn/dist/components/View'
-import classNames from 'classnames'
 import React, { useState, memo, forwardRef, useRef, useEffect, useImperativeHandle } from 'react'
 import { StyleSheet } from 'react-native'
 import { scaleVu2dp } from '@fta/runtime-rn/dist/scale2dp'
@@ -140,7 +139,6 @@ var indexScssStyleSheet = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: 30,
-    opacity: 0.4,
     overflow: 'hidden',
   },
   'fta-picker-item__text': {
@@ -158,18 +156,29 @@ var indexScssStyleSheet = StyleSheet.create({
     width: '100%',
   },
   'fta-picker-line': {
+    top: 87,
     position: 'absolute',
     marginLeft: scaleVu2dp(4.45, 'vw'),
     width: scaleVu2dp(91, 'vw'),
+    height: 30,
     borderTopWidth: 1,
     borderTopColor: '#e9e9e9',
+    borderBottomWidth: 1,
+    borderBottomColor: '#e9e9e9',
   },
   __viewportUnits: true,
-  'fta-picker-line--top': {
-    top: 87,
+  'fta-picker-opacity': {
+    position: 'absolute',
+    zIndex: 10,
+    height: 62,
+    width: '100%',
+    backgroundColor: 'rgba(255, 255, 255, 0.6)',
   },
-  'fta-picker-line--bottom': {
-    bottom: 87,
+  'fta-picker-opacity--top': {
+    top: 28,
+  },
+  'fta-picker-opacity--bottom': {
+    bottom: 28,
   },
 })
 
@@ -234,6 +243,18 @@ var useArray = function useArray(initialArray) {
   }
   return [array, setArray, _setArray]
 }
+var isChildrenNull = function isChildrenNull(children) {
+  if (!children) return true
+  if (
+    Array.isArray(children) &&
+    children.every(function (child) {
+      return child == null
+    })
+  ) {
+    return true
+  }
+  return false
+}
 
 var _excluded = [
   'isOpened',
@@ -246,35 +267,6 @@ var _excluded = [
   'onCancel',
   'value',
 ]
-function _getClassName() {
-  var className = []
-  var args = arguments[0]
-  var type = Object.prototype.toString.call(args).slice(8, -1).toLowerCase()
-  if (type === 'string') {
-    args = args.trim()
-    args && className.push(args)
-  } else if (type === 'array') {
-    args.forEach(function (cls) {
-      cls = _getClassName(cls).trim()
-      cls && className.push(cls)
-    })
-  } else if (type === 'object') {
-    for (var k in args) {
-      k = k.trim()
-      if (k && args.hasOwnProperty(k) && args[k]) {
-        className.push(k)
-      }
-    }
-  }
-  return className.join(' ').trim()
-}
-function _getStyle(classNameExpression) {
-  var className = _getClassName(classNameExpression)
-  var classNameArr = className.split(/\s+/)
-  var style = {}
-  classNameArr.reduce((sty, cls) => Object.assign(sty, _styleSheet[cls.trim()]), style)
-  return style
-}
 function _mergeEleStyles() {
   return [].concat.apply([], arguments).reduce((pre, cur) => Object.assign(pre, cur), {})
 }
@@ -320,11 +312,12 @@ function _ScrollArea(props) {
     var scrollTop = e.detail.scrollTop
     var _activeIndex = getAcitveIndex(scrollTop, range.length)
     var _prevIndex = activeIndexRef.current
-    setScrollTop(scrollTop)
-    if (_prevIndex !== _activeIndex) {
+    var needChange = _prevIndex !== _activeIndex
+    if (needChange) {
       activeIndexRef.current = _activeIndex
-      onChange == null ? void 0 : onChange(_activeIndex, _prevIndex)
     }
+    setScrollTop(scrollTop)
+    needChange && (onChange == null ? void 0 : onChange(_activeIndex, _prevIndex))
     onScroll == null ? void 0 : onScroll(e.detail)
   }
   var _onScrollToLower = function _onScrollToLower(e) {
@@ -345,7 +338,7 @@ function _ScrollArea(props) {
         scrollRef.setScrollTop(offset)
         timerRef.current = null
       }
-    }, 500)
+    }, 300)
   }
   return React.createElement(
     ScrollView,
@@ -365,16 +358,12 @@ function _ScrollArea(props) {
       View,
       { style: _styleSheet['fta-picker-item--placeholder'] },
       range.map(function (v, i) {
-        var itemClass = classNames(
-          'fta-picker-item',
-          activeIndexRef.current === i && 'fta-picker-item--active'
-        )
         var _value = format(v)
         return React.createElement(
           View,
           {
             key: _value + '-' + i + '-' + range[0] + '-' + range.length,
-            style: _getStyle(itemClass),
+            style: _styleSheet['fta-picker-item'],
           },
           React.createElement(
             Text,
@@ -439,15 +428,30 @@ function BasePicker(props) {
       View,
       { style: _styleSheet['fta-picker'] },
       children,
-      React.createElement(View, {
-        style: _mergeEleStyles(_styleSheet['fta-picker-line'], _styleSheet['fta-picker-line--top']),
-      }),
-      React.createElement(View, {
-        style: _mergeEleStyles(
-          _styleSheet['fta-picker-line'],
-          _styleSheet['fta-picker-line--bottom']
-        ),
-      })
+      isChildrenNull(children)
+        ? null
+        : React.createElement(
+            React.Fragment,
+            null,
+            React.createElement(View, {
+              pointerEvents: 'none',
+              style: _mergeEleStyles(
+                _styleSheet['fta-picker-opacity'],
+                _styleSheet['fta-picker-opacity--top']
+              ),
+            }),
+            React.createElement(View, {
+              pointerEvents: 'none',
+              style: _styleSheet['fta-picker-line'],
+            }),
+            React.createElement(View, {
+              pointerEvents: 'none',
+              style: _mergeEleStyles(
+                _styleSheet['fta-picker-opacity'],
+                _styleSheet['fta-picker-opacity--bottom']
+              ),
+            })
+          )
     )
   )
 }
@@ -569,17 +573,15 @@ function DatePicker(props) {
     longterm = props.longterm,
     format = props.format,
     fields = props.fields
-  var depth = getSelectorDepth(fields)
-  var _parseDate = parseDate(start),
-    _parseDate2 = _slicedToArray(_parseDate, 3),
-    y1 = _parseDate2[0],
-    m1 = _parseDate2[1],
-    d1 = _parseDate2[2]
-  var _parseDate3 = parseDate(end),
-    _parseDate4 = _slicedToArray(_parseDate3, 3),
-    y2 = _parseDate4[0],
-    m2 = _parseDate4[1],
-    d2 = _parseDate4[2]
+  var depth = useRef(getSelectorDepth(fields)).current
+  var _useRef$current = _slicedToArray(useRef(parseDate(start)).current, 3),
+    y1 = _useRef$current[0],
+    m1 = _useRef$current[1],
+    d1 = _useRef$current[2]
+  var _useRef$current2 = _slicedToArray(useRef(parseDate(end)).current, 3),
+    y2 = _useRef$current2[0],
+    m2 = _useRef$current2[1],
+    d2 = _useRef$current2[2]
   var _useState7 = useState([0, 0, 0]),
     _useState8 = _slicedToArray(_useState7, 2),
     indexs = _useState8[0],
@@ -597,6 +599,17 @@ function DatePicker(props) {
     m = _dateRef[1],
     d = _dateRef[2]
   var years = useRef(genPeriodList(y1, y2).concat(longterm ? [9999] : [])).current
+  var yTimerRef = useRef(null)
+  var onYearChange = function onYearChange(i) {
+    if (yTimerRef.current) {
+      clearTimeout(yTimerRef.current)
+      yTimerRef.current = null
+    }
+    yTimerRef.current = setTimeout(function () {
+      dateRef[0] = years[i]
+      setIndexs(years[i] === 9999 ? indexs[0] : i, 0)
+    }, 150)
+  }
   var MonthElement = null
   var DayElement = null
   var yIndex = years.indexOf(y)
@@ -604,10 +617,7 @@ function DatePicker(props) {
     activeIndex: yIndex,
     range: years,
     format: createTimeFormat(format, 0, dYearFormat),
-    onChange: function onChange(i) {
-      dateRef[0] = years[i]
-      setIndexs(years[i] === 9999 ? indexs[0] : i, 0)
-    },
+    onChange: onYearChange,
   })
   if (depth > 1) {
     var _months = months.slice()
@@ -678,13 +688,13 @@ function TimePicker(props) {
     end = props.end,
     _props$value = props.value,
     value = _props$value === void 0 ? getCurrentTime() : _props$value
-  var _useRef$current = _slicedToArray(useRef([parseTime(start), parseTime(end)]).current, 2),
-    _useRef$current$ = _slicedToArray(_useRef$current[0], 2),
-    h1 = _useRef$current$[0],
-    m1 = _useRef$current$[1],
-    _useRef$current$2 = _slicedToArray(_useRef$current[1], 2),
-    h2 = _useRef$current$2[0],
-    m2 = _useRef$current$2[1]
+  var _useRef$current3 = _slicedToArray(useRef([parseTime(start), parseTime(end)]).current, 2),
+    _useRef$current3$ = _slicedToArray(_useRef$current3[0], 2),
+    h1 = _useRef$current3$[0],
+    m1 = _useRef$current3$[1],
+    _useRef$current3$2 = _slicedToArray(_useRef$current3[1], 2),
+    h2 = _useRef$current3$2[0],
+    m2 = _useRef$current3$2[1]
   var hours = useRef(totalHours.slice(h1, h2 + 1)).current
   var preRef = useRef(totalMins.length)
   var _useArray = useArray(parseTime(value)),

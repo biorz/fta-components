@@ -4,7 +4,7 @@ import View from '@fta/components-rn/dist/components/View'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 import React, { Fragment } from 'react'
-import { ConfigConsumer, isNumber, inRN, scale, useClassWithCare } from '../common'
+import { isString, ConfigConsumer, isNumber, inRN, scale, useClassWithCare } from '../common'
 import { StyleSheet } from 'react-native'
 import { scalePx2dp } from '@fta/runtime-rn/dist/scale2dp'
 import Badge from '../badge'
@@ -159,39 +159,63 @@ function _getPrototypeOf(o) {
 
 var indexScssStyleSheet = StyleSheet.create({
   'fta-icon__badge': {
-    top: scalePx2dp(-12),
-    left: scalePx2dp(12),
+    top: scalePx2dp(-8.64),
+    left: scalePx2dp(14.4),
   },
   'fta-icon__dot': {
-    top: scalePx2dp(-6.24),
-    left: scalePx2dp(17.76),
+    top: scalePx2dp(-2.88),
+    left: scalePx2dp(20.16),
   },
   'fta-icon': {
     borderRadius: scalePx2dp(2.88),
   },
+  'fta-icon--small': {
+    width: scalePx2dp(11.52),
+    height: scalePx2dp(11.52),
+  },
+  'fta-icon--small--care': {
+    width: scalePx2dp(14.88),
+    height: scalePx2dp(14.88),
+  },
+  'fta-icon--small__badge': {
+    top: scalePx2dp(-5.76),
+    right: scalePx2dp(-11.52),
+  },
+  'fta-icon--small__badge--dot': {
+    top: scalePx2dp(-2.88),
+    left: scalePx2dp(8.64),
+  },
   'fta-icon--medium': {
-    width: scalePx2dp(24),
-    height: scalePx2dp(24),
+    width: scalePx2dp(23.04),
+    height: scalePx2dp(23.04),
   },
   'fta-icon--medium--care': {
-    width: scalePx2dp(31.2),
-    height: scalePx2dp(31.2),
+    width: scalePx2dp(29.76),
+    height: scalePx2dp(29.76),
+  },
+  'fta-icon--medium__badge': {
+    top: scalePx2dp(-8.64),
+    left: scalePx2dp(14.4),
+  },
+  'fta-icon--medium__badge--dot': {
+    top: scalePx2dp(-2.88),
+    left: scalePx2dp(20.16),
   },
   'fta-icon--large': {
-    width: scalePx2dp(48),
-    height: scalePx2dp(48),
+    width: scalePx2dp(46.08),
+    height: scalePx2dp(46.08),
   },
   'fta-icon--large--care': {
-    width: scalePx2dp(62.4),
-    height: scalePx2dp(62.4),
+    width: scalePx2dp(60),
+    height: scalePx2dp(60),
   },
   'fta-icon--large__badge': {
-    top: scalePx2dp(-8.16),
-    left: scalePx2dp(39.84),
+    top: scalePx2dp(-11.52),
+    left: scalePx2dp(34.56),
   },
   'fta-icon--large__badge--dot': {
-    top: scalePx2dp(-6.24),
-    left: scalePx2dp(41.76),
+    top: scalePx2dp(2.88),
+    left: scalePx2dp(43.2),
   },
 })
 
@@ -315,7 +339,7 @@ var Icon = (function (_React$Component) {
             props = _objectWithoutProperties(badge, _excluded)
           var rootClz = classNames(
             'fta-icon__' + (isDot ? 'dot' : 'badge'),
-            'fta-icon-' + size + '__badge' + (isDot ? '--dot' : ''),
+            isString(size) && 'fta-icon--' + size + '__badge' + (isDot ? '--dot' : ''),
             className
           )
           return React.createElement(

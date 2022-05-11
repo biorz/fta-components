@@ -215,52 +215,52 @@ function _extends() {
 var indexScssStyleSheet = StyleSheet.create({
   'fta-text': {},
   'fta-text--1': {
-    fontSize: scalePx2dp(22.08),
-    lineHeight: scalePx2dp(28.704),
+    fontSize: scalePx2dp(21.12),
+    lineHeight: scalePx2dp(27.456),
   },
   'fta-text--1--care': {
-    fontSize: scalePx2dp(28.8),
-    lineHeight: scalePx2dp(37.44),
+    fontSize: scalePx2dp(27.36),
+    lineHeight: scalePx2dp(35.52),
   },
   'fta-text--2': {
-    fontSize: scalePx2dp(20.16),
-    lineHeight: scalePx2dp(26.208),
+    fontSize: scalePx2dp(19.2),
+    lineHeight: scalePx2dp(24.96),
   },
   'fta-text--2--care': {
-    fontSize: scalePx2dp(26.4),
-    lineHeight: scalePx2dp(34.08),
+    fontSize: scalePx2dp(24.96),
+    lineHeight: scalePx2dp(32.64),
   },
   'fta-text--3': {
-    fontSize: scalePx2dp(18.24),
-    lineHeight: scalePx2dp(23.712),
+    fontSize: scalePx2dp(17.28),
+    lineHeight: scalePx2dp(22.464),
   },
   'fta-text--3--care': {
-    fontSize: scalePx2dp(23.52),
-    lineHeight: scalePx2dp(30.72),
+    fontSize: scalePx2dp(22.56),
+    lineHeight: scalePx2dp(29.28),
   },
   'fta-text--4': {
-    fontSize: scalePx2dp(15.84),
-    lineHeight: scalePx2dp(20.592),
+    fontSize: scalePx2dp(15.36),
+    lineHeight: scalePx2dp(19.968),
   },
   'fta-text--4--care': {
-    fontSize: scalePx2dp(20.64),
-    lineHeight: scalePx2dp(26.88),
+    fontSize: scalePx2dp(20.16),
+    lineHeight: scalePx2dp(25.92),
   },
   'fta-text--5': {
-    fontSize: scalePx2dp(13.92),
-    lineHeight: scalePx2dp(18.096),
+    fontSize: scalePx2dp(13.44),
+    lineHeight: scalePx2dp(17.472),
   },
   'fta-text--5--care': {
-    fontSize: scalePx2dp(18.24),
-    lineHeight: scalePx2dp(23.52),
+    fontSize: scalePx2dp(17.28),
+    lineHeight: scalePx2dp(22.56),
   },
   'fta-text--6': {
-    fontSize: scalePx2dp(12),
-    lineHeight: scalePx2dp(15.6),
+    fontSize: scalePx2dp(11.52),
+    lineHeight: scalePx2dp(14.976),
   },
   'fta-text--6--care': {
-    fontSize: scalePx2dp(15.84),
-    lineHeight: scalePx2dp(20.16),
+    fontSize: scalePx2dp(14.88),
+    lineHeight: scalePx2dp(19.68),
   },
 })
 
@@ -682,6 +682,11 @@ var Assets = {
     default:
       'https://imagecdn.ymm56.com/ymmfile/static/image/short_distance/rn_sd_loding_wihite_x2_2201280.png',
     blue: 'https://imagecdn.ymm56.com/ymmfile/static/image/short_distance/rn_loading_view_2201230.png',
+  },
+  camera: {
+    default:
+      'https://image.ymm56.com/ymmfile/operation-biz/2361a262-9f06-420b-9514-0d12e3a26d12.png',
+    blue: 'https://image.ymm56.com/ymmfile/operation-biz/218ba18d-5ab4-4a83-92bb-731802693ad8.png',
   },
 }
 var mergeAssets = function mergeAssets(newAssets) {

@@ -100,7 +100,7 @@ function _getPrototypeOf(o) {
 var indexScssStyleSheet = StyleSheet.create({
   button: {
     color: '#333',
-    fontSize: scalePx2dp(18.24),
+    fontSize: scalePx2dp(17.28),
     fontWeight: '400',
     marginTop: 0,
     borderWidth: 0,
@@ -110,7 +110,7 @@ var indexScssStyleSheet = StyleSheet.create({
   },
   'fta-modal__action__button': {
     color: '#333',
-    fontSize: scalePx2dp(18.24),
+    fontSize: scalePx2dp(17.28),
     fontWeight: '400',
     marginTop: 0,
     borderWidth: 0,
@@ -126,13 +126,13 @@ var indexScssStyleSheet = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    height: scalePx2dp(49.92),
+    height: scalePx2dp(48),
   },
   'content-simple__text': {
     color: '#333',
-    fontSize: scalePx2dp(15.84),
+    fontSize: scalePx2dp(15.36),
     fontWeight: '400',
-    lineHeight: scalePx2dp(20.592),
+    lineHeight: scalePx2dp(19.968),
     textAlign: 'center',
   },
   'fta-modal': {
@@ -160,8 +160,8 @@ var indexScssStyleSheet = StyleSheet.create({
     maxHeight: scaleVu2dp(80, 'vh'),
     alignItems: 'center',
     justifyContent: 'center',
-    width: scalePx2dp(295.2),
-    borderRadius: scalePx2dp(8.16),
+    width: scalePx2dp(283.2),
+    borderRadius: scalePx2dp(7.68),
     backgroundColor: '#fff',
     overflow: 'hidden',
   },
@@ -171,9 +171,21 @@ var indexScssStyleSheet = StyleSheet.create({
   __viewportUnits: true,
   'fta-modal__header-text': {
     color: '#333',
-    fontSize: scalePx2dp(18.24),
+    fontSize: scalePx2dp(17.28),
     fontWeight: '600',
     textAlign: 'center',
+  },
+  'content-simple': {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  'content-simple--left': {
+    textAlign: 'left',
+    justifyContent: 'flex-start',
+  },
+  'content-simple--right': {
+    textAlign: 'right',
+    justifyContent: 'flex-end',
   },
   'fta-modal__action': {},
   'button--border': {
@@ -296,18 +308,19 @@ ModalAction.propTypes = { isSimple: PropTypes.bool }
 var contentScssStyleSheet = StyleSheet.create({
   'fta-modal__content': {
     color: '#333',
-    fontSize: scalePx2dp(15.84),
+    fontSize: scalePx2dp(15.36),
     fontWeight: '400',
-    lineHeight: scalePx2dp(20.592),
-    paddingTop: scalePx2dp(12),
-    paddingRight: scalePx2dp(30.24),
-    paddingBottom: scalePx2dp(30.24),
-    paddingLeft: scalePx2dp(30.24),
+    lineHeight: scalePx2dp(19.968),
+    paddingTop: scalePx2dp(11.52),
+    paddingRight: scalePx2dp(28.8),
+    paddingBottom: scalePx2dp(28.8),
+    paddingLeft: scalePx2dp(28.8),
     maxHeight: scalePx2dp(403.2),
     textAlign: 'center',
+    width: '100%',
   },
   'fta-modal__content--no-title': {
-    paddingTop: scalePx2dp(30.24),
+    paddingTop: scalePx2dp(28.8),
   },
 })
 
@@ -403,14 +416,14 @@ ModalContent.defaultProps = { withTitle: true }
 
 var headerScssStyleSheet = StyleSheet.create({
   'fta-modal__header': {
-    paddingTop: scalePx2dp(30.24),
-    paddingRight: scalePx2dp(30.24),
+    paddingTop: scalePx2dp(28.8),
+    paddingRight: scalePx2dp(28.8),
     paddingBottom: 0,
-    paddingLeft: scalePx2dp(30.24),
+    paddingLeft: scalePx2dp(28.8),
   },
   'fta-modal__header-text': {
     color: '#333',
-    fontSize: scalePx2dp(18.24),
+    fontSize: scalePx2dp(17.28),
     fontWeight: 'bold',
     textAlign: 'center',
   },
@@ -625,7 +638,8 @@ var FTAModal = (function (_React$Component) {
           containerClassName = _this$props.containerClassName,
           containerStyle = _this$props.containerStyle,
           overlayClassName = _this$props.overlayClassName,
-          overlayStyle = _this$props.overlayStyle
+          overlayStyle = _this$props.overlayStyle,
+          contentAlign = _this$props.contentAlign
         var rootClass = classNames(
           'fta-modal',
           { 'fta-modal--active': _isOpened },
@@ -667,7 +681,11 @@ var FTAModal = (function (_React$Component) {
                       View,
                       {
                         style: _getStyle(
-                          classNames('content-simple', !title && 'cotent-simple--notitle')
+                          classNames(
+                            'content-simple',
+                            !title && 'cotent-simple--notitle',
+                            'content-simple--' + contentAlign
+                          )
                         ),
                       },
                       React.createElement(
@@ -756,7 +774,7 @@ var FTAModal = (function (_React$Component) {
   ])
   return FTAModal
 })(React.Component)
-FTAModal.defaultProps = { isOpened: false, closeOnClickOverlay: false }
+FTAModal.defaultProps = { isOpened: false, closeOnClickOverlay: false, contentAlign: 'center' }
 FTAModal.propTypes = {
   title: PropTypes.string,
   isOpened: PropTypes.bool,

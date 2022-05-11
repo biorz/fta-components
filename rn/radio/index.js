@@ -3,10 +3,75 @@ import Text from '@fta/components-rn/dist/components/Text'
 import View from '@fta/components-rn/dist/components/View'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { useState } from 'react'
 import { isUndef, Assets } from '../common'
 import { StyleSheet } from 'react-native'
 import { scalePx2dp } from '@fta/runtime-rn/dist/scale2dp'
+
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr
+}
+
+function _iterableToArrayLimit(arr, i) {
+  var _i =
+    arr == null
+      ? null
+      : (typeof Symbol !== 'undefined' && arr[Symbol.iterator]) || arr['@@iterator']
+  if (_i == null) return
+  var _arr = []
+  var _n = true
+  var _d = false
+  var _s, _e
+  try {
+    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value)
+      if (i && _arr.length === i) break
+    }
+  } catch (err) {
+    _d = true
+    _e = err
+  } finally {
+    try {
+      if (!_n && _i['return'] != null) _i['return']()
+    } finally {
+      if (_d) throw _e
+    }
+  }
+  return _arr
+}
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i]
+  }
+  return arr2
+}
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return
+  if (typeof o === 'string') return _arrayLikeToArray(o, minLen)
+  var n = Object.prototype.toString.call(o).slice(8, -1)
+  if (n === 'Object' && o.constructor) n = o.constructor.name
+  if (n === 'Map' || n === 'Set') return Array.from(o)
+  if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
+    return _arrayLikeToArray(o, minLen)
+}
+
+function _nonIterableRest() {
+  throw new TypeError(
+    'Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.'
+  )
+}
+
+function _slicedToArray(arr, i) {
+  return (
+    _arrayWithHoles(arr) ||
+    _iterableToArrayLimit(arr, i) ||
+    _unsupportedIterableToArray(arr, i) ||
+    _nonIterableRest()
+  )
+}
 
 function _defineProperty(obj, key, value) {
   if (key in obj) {
@@ -121,18 +186,18 @@ var indexScssStyleSheet = StyleSheet.create({
     justifyContent: 'space-between',
     flexWrap: 'wrap',
     paddingTop: 0,
-    paddingRight: scalePx2dp(15.84),
+    paddingRight: scalePx2dp(15.36),
     paddingBottom: 0,
-    paddingLeft: scalePx2dp(15.84),
+    paddingLeft: scalePx2dp(15.36),
   },
   'fta-radio__option': {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    paddingTop: scalePx2dp(15.84),
-    paddingRight: scalePx2dp(15.84),
-    paddingBottom: scalePx2dp(15.84),
-    paddingLeft: scalePx2dp(15.84),
+    paddingTop: scalePx2dp(15.36),
+    paddingRight: scalePx2dp(15.36),
+    paddingBottom: scalePx2dp(15.36),
+    paddingLeft: scalePx2dp(15.36),
     borderWidth: scalePx2dp(0.48),
     borderStyle: 'solid',
     borderColor: '#e9e9e9',
@@ -159,8 +224,8 @@ var indexScssStyleSheet = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     color: '#666',
-    fontSize: scalePx2dp(18.24),
-    lineHeight: scalePx2dp(23.712),
+    fontSize: scalePx2dp(17.28),
+    lineHeight: scalePx2dp(22.464),
   },
   'fta-radio__title--selected': {
     color: '#333',
@@ -171,8 +236,8 @@ var indexScssStyleSheet = StyleSheet.create({
   'fta-radio__desc': {
     marginTop: scalePx2dp(2.88),
     color: '#ccc',
-    fontSize: scalePx2dp(13.92),
-    lineHeight: scalePx2dp(18.096),
+    fontSize: scalePx2dp(13.44),
+    lineHeight: scalePx2dp(17.472),
   },
   'fta-radio__desc--selected': {
     color: '#999',
@@ -187,12 +252,12 @@ var indexScssStyleSheet = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: scalePx2dp(4800),
     marginTop: scalePx2dp(1.92),
-    marginRight: scalePx2dp(12),
+    marginRight: scalePx2dp(11.52),
     width: scalePx2dp(19.2),
     minWidth: scalePx2dp(19.2),
     height: scalePx2dp(19.2),
     color: 'transparent',
-    fontSize: scalePx2dp(13.92),
+    fontSize: scalePx2dp(13.44),
     backgroundColor: '#ededed',
   },
   'fta-radio__icon-cnt--selected': {
@@ -200,14 +265,44 @@ var indexScssStyleSheet = StyleSheet.create({
   },
   'fta-radio__icon-cnt--between': {
     marginRight: 0,
-    marginLeft: scalePx2dp(12),
+    marginLeft: scalePx2dp(11.52),
   },
   'fta-radio__icon-cnt--inline': {
-    marginRight: scalePx2dp(6.24),
+    marginRight: scalePx2dp(5.76),
   },
   'fta-radio-icon': {
-    width: scalePx2dp(13.92),
-    height: scalePx2dp(13.92),
+    width: scalePx2dp(13.44),
+    height: scalePx2dp(13.44),
+  },
+  'fta-radio-simple': {
+    width: scalePx2dp(17.28),
+    height: scalePx2dp(17.28),
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: scalePx2dp(4800),
+  },
+  'fta-radio-simple-container': {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'flex-start',
+  },
+  'fta-radio-simple-container--disabled': {
+    opacity: 0.3,
+  },
+  'fta-radio-simple-image': {
+    width: scalePx2dp(12.48),
+    height: scalePx2dp(12.48),
+  },
+  'fta-radio-simple--normal': {
+    borderWidth: 2,
+    borderStyle: 'solid',
+    borderColor: '#9a9a9a',
+  },
+  'fta-radio-simple--selected': {
+    backgroundColor: '#fa871e',
   },
 })
 
@@ -403,6 +498,70 @@ var Radio = (function (_React$Component) {
   ])
   return Radio
 })(React.Component)
+function SimpleRadio(props) {
+  var active = props.active,
+    disabled = props.disabled,
+    icon = props.icon,
+    disabledIcon = props.disabledIcon,
+    selectedIcon = props.selectedIcon,
+    selectedDidsabledIcon = props.selectedDidsabledIcon,
+    controlled = props.controlled,
+    onChange = props.onChange,
+    children = props.children
+  var _useState = useState(active),
+    _useState2 = _slicedToArray(_useState, 2),
+    _active = _useState2[0],
+    setActive = _useState2[1]
+  var checked = controlled ? active : _active
+  var onClick = function onClick() {
+    if (disabled) return
+    if (!controlled) {
+      setActive(!checked)
+    }
+    onChange(!checked)
+  }
+  var presentIcon
+  if (checked) {
+    presentIcon = disabled ? selectedDidsabledIcon || selectedIcon : selectedIcon
+  } else {
+    presentIcon = disabled ? disabledIcon || icon : icon
+  }
+  var rootClass = classNames(
+    'fta-radio-simple-container',
+    disabled &&
+      (presentIcon === icon || presentIcon === selectedIcon) &&
+      'fta-radio-simple-container--disabled'
+  )
+  return React.createElement(
+    View,
+    { onClick: onClick, style: _getStyle(rootClass) },
+    presentIcon,
+    children
+  )
+}
+var simpleRadioImage = React.createElement(Image, {
+  src: Assets.check.default,
+  style: _styleSheet['fta-radio-simple-image'],
+})
+SimpleRadio.defaultProps = {
+  icon: React.createElement(View, {
+    style: _mergeEleStyles(
+      _styleSheet['fta-radio-simple'],
+      _styleSheet['fta-radio-simple--normal']
+    ),
+  }),
+  selectedIcon: React.createElement(
+    View,
+    {
+      style: _mergeEleStyles(
+        _styleSheet['fta-radio-simple'],
+        _styleSheet['fta-radio-simple--selected']
+      ),
+    },
+    simpleRadioImage
+  ),
+  onChange: function onChange() {},
+}
 Radio.defaultProps = {
   customStyle: {},
   className: '',
@@ -417,5 +576,6 @@ Radio.propTypes = {
   options: PropTypes.array,
   onClick: PropTypes.func,
 }
+Radio.Simple = SimpleRadio
 
 export { Radio as default }

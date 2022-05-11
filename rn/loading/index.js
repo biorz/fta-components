@@ -67,20 +67,20 @@ function _toConsumableArray(arr) {
 var indexScssStyleSheet = StyleSheet.create({
   'fta-loading': {
     overflow: 'hidden',
-    width: scalePx2dp(15.84),
-    height: scalePx2dp(15.84),
+    width: scalePx2dp(15.36),
+    height: scalePx2dp(15.36),
   },
   'fta-loading--small': {
-    width: scalePx2dp(15.84),
-    height: scalePx2dp(15.84),
+    width: scalePx2dp(15.36),
+    height: scalePx2dp(15.36),
   },
   'fta-loading--medium': {
-    width: scalePx2dp(20.16),
-    height: scalePx2dp(20.16),
+    width: scalePx2dp(19.2),
+    height: scalePx2dp(19.2),
   },
   'fta-loading--large': {
-    width: scalePx2dp(24),
-    height: scalePx2dp(24),
+    width: scalePx2dp(23.04),
+    height: scalePx2dp(23.04),
   },
   'fta-loading__view': {
     borderRadius: scalePx2dp(4800),

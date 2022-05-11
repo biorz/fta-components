@@ -156,8 +156,8 @@ function _getPrototypeOf(o) {
 
 var indexScssStyleSheet = StyleSheet.create({
   'fta-image': {
-    width: scalePx2dp(120),
-    height: scalePx2dp(120),
+    width: scalePx2dp(115.2),
+    height: scalePx2dp(115.2),
   },
   'fta-image--circle': {
     borderRadius: scalePx2dp(4800),
