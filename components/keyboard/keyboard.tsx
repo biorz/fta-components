@@ -69,7 +69,7 @@ const InputAdapter = Text
 function Keyboard(props: KeyboardProps): JSX.Element {
   const {
     type,
-    showInputBox,
+    hideInputBox,
     value,
     controlled,
     validator,
@@ -147,14 +147,14 @@ function Keyboard(props: KeyboardProps): JSX.Element {
       onConfirm={() => onConfirm!(val, validate(val, validator!, false))}>
       <>
         {/* 显示区 */}
-        {showInputBox ? (
+        {hideInputBox ? null : (
           <View className='fta-keyboard-input'>
             <View className='fta-keyboard-input__inner'>
               {/* <Text className='fta-keyboard-input__inner-text'>{val}</Text> */}
               <InputAdapter className={inputTextClz}>{val === '' ? placeholder : val}</InputAdapter>
             </View>
           </View>
-        ) : null}
+        )}
         {/* 键盘区 */}
         <View className='fta-keyboard'>
           {fullCustom
@@ -222,7 +222,7 @@ function DeleteButton(): JSX.Element {
 const defaultProps: KeyboardProps = {
   value: '',
   controlled: false,
-  showInputBox: true,
+  hideInputBox: false,
   type: 'number',
   maxlength: 140,
   title: {

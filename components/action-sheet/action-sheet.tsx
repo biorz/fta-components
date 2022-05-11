@@ -80,6 +80,8 @@ class ActionSheet extends React.Component<ActionSheetProps, ActionSheetState> {
       customStyle,
       containerClassName,
       containerStyle,
+      overlayClassName,
+      overlayStyle,
       useNativeModal,
       catchMove,
       example,
@@ -94,6 +96,8 @@ class ActionSheet extends React.Component<ActionSheetProps, ActionSheetState> {
       className
     )
 
+    const overlayClass = classNames('fta-action-sheet__overlay', overlayClassName)
+
     const containerClz = classNames('fta-action-sheet__container', containerClassName)
 
     return (
@@ -101,7 +105,8 @@ class ActionSheet extends React.Component<ActionSheetProps, ActionSheetState> {
         <View className={rootClass} style={customStyle} catchMove={catchMove}>
           <View
             onClick={this.close}
-            className='fta-action-sheet__overlay'
+            className={overlayClass}
+            style={overlayStyle}
             onTouchMove={this.handleTouchMove}
           />
           <Motion

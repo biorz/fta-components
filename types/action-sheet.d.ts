@@ -34,6 +34,16 @@ export interface ActionSheetProps extends BaseComponent, PropsWithChildren {
    */
   containerStyle?: CSSProperties
   /**
+   * @version 1.0.0-alpha.11
+   * 遮罩层类名
+   */
+  overlayClassName?: string
+  /**
+   * @version 1.0.0-alpha.11
+   * 遮罩层内联样式
+   */
+  overlayStyle?: CSSProperties
+  /**
    * 元素被关闭触发的事件
    */
   onClose?: (event?: CommonEvent) => void

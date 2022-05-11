@@ -38,7 +38,7 @@ export interface KeyboardProps extends Partial<ActionSheetProps> {
    * 是否显示input框展示输入结果
    * @default true
    */
-  showInputBox?: boolean
+  hideInputBox?: boolean
   /**
    * 校验规则正则或函数
    */
