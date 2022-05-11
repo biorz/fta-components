@@ -70,7 +70,7 @@ function _objectWithoutProperties(source, excluded) {
 
 var indexScssStyleSheet = StyleSheet.create({
   'fta-avatar': {
-    borderRadius: scalePx2dp(6.24),
+    borderRadius: scalePx2dp(5.76),
     backgroundColor: '#ccc',
     overflow: 'hidden',
   },
@@ -84,40 +84,40 @@ var indexScssStyleSheet = StyleSheet.create({
     height: '100%',
   },
   'fta-avatar--large': {
-    width: scalePx2dp(96),
-    height: scalePx2dp(96),
-    borderRadius: scalePx2dp(8.16),
+    width: scalePx2dp(92.16),
+    height: scalePx2dp(92.16),
+    borderRadius: scalePx2dp(7.68),
   },
   'fta-avatar--large__text': {
-    fontSize: scalePx2dp(36),
-    lineHeight: scalePx2dp(96),
+    fontSize: scalePx2dp(34.56),
+    lineHeight: scalePx2dp(92.16),
   },
   'fta-avatar--medium': {
-    width: scalePx2dp(72),
-    height: scalePx2dp(72),
-    borderRadius: scalePx2dp(6.24),
+    width: scalePx2dp(69.12),
+    height: scalePx2dp(69.12),
+    borderRadius: scalePx2dp(5.76),
   },
   'fta-avatar--medium__text': {
-    fontSize: scalePx2dp(32.16),
-    lineHeight: scalePx2dp(72),
+    fontSize: scalePx2dp(30.72),
+    lineHeight: scalePx2dp(69.12),
   },
   'fta-avatar--small': {
-    width: scalePx2dp(56.16),
-    height: scalePx2dp(56.16),
+    width: scalePx2dp(53.76),
+    height: scalePx2dp(53.76),
     borderRadius: scalePx2dp(4.8),
   },
   'fta-avatar--small__text': {
-    fontSize: scalePx2dp(24),
-    lineHeight: scalePx2dp(56.16),
+    fontSize: scalePx2dp(23.04),
+    lineHeight: scalePx2dp(53.76),
   },
   'fta-avatar--mini': {
-    width: scalePx2dp(48),
-    height: scalePx2dp(48),
+    width: scalePx2dp(46.08),
+    height: scalePx2dp(46.08),
     borderRadius: scalePx2dp(3.84),
   },
   'fta-avatar--mini__text': {
-    fontSize: scalePx2dp(20.16),
-    lineHeight: scalePx2dp(48),
+    fontSize: scalePx2dp(19.2),
+    lineHeight: scalePx2dp(46.08),
   },
   'fta-avatar--circle': {
     borderRadius: scalePx2dp(4800),

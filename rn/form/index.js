@@ -94,13 +94,13 @@ var indexScssStyleSheet = StyleSheet.create({
     backgroundColor: '#fff',
   },
   'fta-form-title': {
-    marginTop: scalePx2dp(18.72),
-    marginRight: scalePx2dp(13.92),
-    marginBottom: scalePx2dp(15.36),
-    marginLeft: scalePx2dp(13.92),
+    marginTop: scalePx2dp(17.76),
+    marginRight: scalePx2dp(13.44),
+    marginBottom: scalePx2dp(14.88),
+    marginLeft: scalePx2dp(13.44),
   },
   'fta-form-title__text': {
-    fontSize: scalePx2dp(15.84),
+    fontSize: scalePx2dp(15.36),
     fontWeight: '600',
     color: '#333',
   },
@@ -109,9 +109,9 @@ var indexScssStyleSheet = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    minHeight: scalePx2dp(49.92),
-    marginLeft: scalePx2dp(13.92),
-    paddingRight: scalePx2dp(13.92),
+    minHeight: scalePx2dp(48),
+    marginLeft: scalePx2dp(13.44),
+    paddingRight: scalePx2dp(13.44),
   },
   'fta-form-item--border': {
     borderBottomWidth: 1,
@@ -124,7 +124,7 @@ var indexScssStyleSheet = StyleSheet.create({
     alignItems: 'center',
   },
   'fta-form-item-label__text': {
-    fontSize: scalePx2dp(15.84),
+    fontSize: scalePx2dp(15.36),
     fontWeight: '400',
     color: '#666',
   },
@@ -142,7 +142,7 @@ var indexScssStyleSheet = StyleSheet.create({
     alignItems: 'center',
   },
   'fta-form-item-content__text': {
-    fontSize: scalePx2dp(15.84),
+    fontSize: scalePx2dp(15.36),
     fontWeight: '400',
     color: '#333',
   },
@@ -150,16 +150,16 @@ var indexScssStyleSheet = StyleSheet.create({
     opacity: 0.6,
   },
   'fta-form-item-content--arrow': {
-    paddingRight: scalePx2dp(20.16),
+    paddingRight: scalePx2dp(16.32),
   },
   'fta-form-item-arrow': {
     position: 'absolute',
     right: 0,
-    width: scalePx2dp(8.16),
-    height: scalePx2dp(13.92),
+    width: scalePx2dp(6.72),
+    height: scalePx2dp(10.56),
   },
   'fta-form-item-placeholder': {
-    fontSize: scalePx2dp(15.84),
+    fontSize: scalePx2dp(15.36),
     fontWeight: '400',
     color: '#ccc',
   },
@@ -298,16 +298,13 @@ function FormItem(props, ref) {
     children = props.children,
     placeholder = props.placeholder,
     arrow = props.arrow,
+    error = props.error,
     readonly = props.readonly,
     align = props.align,
     onTooltipClick = props.onTooltipClick,
     onClick = props.onClick,
     labelClassName = props.labelClassName,
     labelStyle = props.labelStyle
-  var _useState = useState(false),
-    _useState2 = _slicedToArray(_useState, 2),
-    error = _useState2[0]
-  _useState2[1]
   useImperativeHandle(ref, function () {
     return { resetField: function resetField() {}, clearValidate: function clearValidate() {} }
   })
@@ -366,10 +363,10 @@ function FormItem(props, ref) {
   })
 }
 function ToolTip(props) {
-  var _useState3 = useState(false),
-    _useState4 = _slicedToArray(_useState3, 2),
-    visible = _useState4[0],
-    toggle = _useState4[1]
+  var _useState = useState(false),
+    _useState2 = _slicedToArray(_useState, 2),
+    visible = _useState2[0],
+    toggle = _useState2[1]
   var tooltip = props.tooltip,
     onTooltipClick = props.onTooltipClick,
     prop = props.prop,
@@ -405,7 +402,7 @@ var tooltipDefaultProps = {
   renderTooltip: null,
 }
 var formDefaultProps = { titleAlign: 'left', border: true }
-var formItemDefaultProps = { label: '', onClick: function onClick() {} }
+var formItemDefaultProps = { label: '', error: false, onClick: function onClick() {} }
 ToolTip.defaultProps = tooltipDefaultProps
 var ForwardForm = forwardRef(Form)
 var FowardFormItem = forwardRef(FormItem)

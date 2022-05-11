@@ -171,10 +171,10 @@ var indexScssStyleSheet = StyleSheet.create({
     backgroundColor: '#fff',
   },
   'fta-nav-bar-left-button': {
-    marginLeft: scalePx2dp(13.92),
+    marginLeft: scalePx2dp(13.44),
   },
   'fta-nav-bar-right-button': {
-    marginRight: scalePx2dp(13.92),
+    marginRight: scalePx2dp(13.44),
   },
   'fta-nav-bar-title-container': {
     display: 'flex',
@@ -202,22 +202,22 @@ var indexScssStyleSheet = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft: scalePx2dp(13.92),
+    marginLeft: scalePx2dp(13.44),
   },
   'fta-nav-bar-back__image': {
-    width: scalePx2dp(15.84),
-    height: scalePx2dp(15.84),
+    width: scalePx2dp(15.36),
+    height: scalePx2dp(15.36),
   },
   'fta-nav-bar-back__image--care': {
-    width: scalePx2dp(20.64),
-    height: scalePx2dp(20.64),
+    width: scalePx2dp(20.16),
+    height: scalePx2dp(20.16),
   },
   'fta-nav-bar-container': {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: scalePx2dp(44.16),
+    height: scalePx2dp(42.24),
   },
   'fta-status-bar': {
     height: 44,

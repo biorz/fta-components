@@ -1,6 +1,9 @@
-import TaroText from '@fta/components-rn/dist/components/Text'
+import Image from '@fta/components-rn/dist/components/Image'
+import Text from '@fta/components-rn/dist/components/Text'
+import View from '@fta/components-rn/dist/components/View'
+import classNames from 'classnames'
 import React from 'react'
-import { useCarelessClass, useCareMode, scale, px } from '../common'
+import { Assets, isString } from '../common'
 import { StyleSheet } from 'react-native'
 import { scalePx2dp } from '@fta/runtime-rn/dist/scale2dp'
 
@@ -65,58 +68,58 @@ function _objectWithoutProperties(source, excluded) {
 }
 
 var indexScssStyleSheet = StyleSheet.create({
-  'fta-text': {},
-  'fta-text--1': {
-    fontSize: scalePx2dp(21.12),
-    lineHeight: scalePx2dp(27.456),
+  'fta-upload': {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    overflow: 'hidden',
+    width: scalePx2dp(159.36),
+    height: scalePx2dp(96.96),
+    borderRadius: scalePx2dp(3.84),
   },
-  'fta-text--1--care': {
-    fontSize: scalePx2dp(27.36),
-    lineHeight: scalePx2dp(35.52),
+  'fta-upload-camera': {
+    width: scalePx2dp(36),
+    height: scalePx2dp(36),
+    marginTop: scalePx2dp(22.56),
   },
-  'fta-text--2': {
-    fontSize: scalePx2dp(19.2),
-    lineHeight: scalePx2dp(24.96),
-  },
-  'fta-text--2--care': {
-    fontSize: scalePx2dp(24.96),
-    lineHeight: scalePx2dp(32.64),
-  },
-  'fta-text--3': {
-    fontSize: scalePx2dp(17.28),
-    lineHeight: scalePx2dp(22.464),
-  },
-  'fta-text--3--care': {
-    fontSize: scalePx2dp(22.56),
-    lineHeight: scalePx2dp(29.28),
-  },
-  'fta-text--4': {
-    fontSize: scalePx2dp(15.36),
-    lineHeight: scalePx2dp(19.968),
-  },
-  'fta-text--4--care': {
-    fontSize: scalePx2dp(20.16),
-    lineHeight: scalePx2dp(25.92),
-  },
-  'fta-text--5': {
-    fontSize: scalePx2dp(13.44),
-    lineHeight: scalePx2dp(17.472),
-  },
-  'fta-text--5--care': {
-    fontSize: scalePx2dp(17.28),
-    lineHeight: scalePx2dp(22.56),
-  },
-  'fta-text--6': {
+  'fta-upload-placeholder': {
+    marginTop: scalePx2dp(6.72),
+    color: '#333',
     fontSize: scalePx2dp(11.52),
-    lineHeight: scalePx2dp(14.976),
   },
-  'fta-text--6--care': {
-    fontSize: scalePx2dp(14.88),
-    lineHeight: scalePx2dp(19.68),
+  'fta-upload-image': {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+  },
+  'fta-upload--empty': {
+    backgroundColor: '#ecf5fd',
+  },
+  'fta-upload--error': {
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: 'red',
+  },
+  'fta-upload-errortip': {
+    marginTop: scalePx2dp(4.8),
+    textAlign: 'center',
+    fontSize: scalePx2dp(11.52),
+    color: '#ff5b60',
+    lineHeight: scalePx2dp(14.976),
   },
 })
 
-var _excluded = ['className', 'style', 'level', 'children', 'size', 'color', 'scale', 'weight']
+var _excluded = [
+  'camera',
+  'placeholder',
+  'customStyle',
+  'className',
+  'error',
+  'image',
+  'src',
+  'errorTip',
+  'style',
+]
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object)
   if (Object.getOwnPropertySymbols) {
@@ -177,36 +180,70 @@ function _mergeEleStyles() {
   return [].concat.apply([], arguments).reduce((pre, cur) => Object.assign(pre, cur), {})
 }
 var _styleSheet = indexScssStyleSheet
-function Text(props) {
-  var className = props.className,
+function Upload(props) {
+  var camera = props.camera,
+    placeholder = props.placeholder,
+    customStyle = props.customStyle,
+    className = props.className,
+    error = props.error,
+    image = props.image,
+    src = props.src,
+    errorTip = props.errorTip,
     style = props.style,
-    level = props.level,
-    children = props.children,
-    size = props.size,
-    color = props.color,
-    scale$1 = props.scale,
-    weight = props.weight,
     extraProps = _objectWithoutProperties(props, _excluded)
-  var textClz = useCarelessClass(['fta-text', size ? '' : 'fta-text--' + level], [className])
-  var careMode = useCareMode()
-  var textStyle = _objectSpread({}, style)
-  if (color) {
-    textStyle.color = color
-  }
-  if (weight) {
-    textStyle.fontWeight = weight
-  }
-  if (size) {
-    var fontSize = careMode ? size * 1.3 : size
-    textStyle.fontSize = scale$1 ? scale(fontSize) : px(fontSize)
-  }
+  var rootClz = classNames('fta-upload', className, {
+    'fta-upload--error': error,
+    'fta-upload--empty': !src && !image,
+  })
   return React.createElement(
-    TaroText,
-    _extends({ style: _mergeEleStyles(_getStyle(textClz), textStyle) }, extraProps),
-    children
+    View,
+    null,
+    React.createElement(
+      View,
+      _extends(
+        {
+          style: _mergeEleStyles(
+            _getStyle(rootClz),
+            _objectSpread(_objectSpread({}, style), customStyle)
+          ),
+        },
+        extraProps
+      ),
+      src
+        ? React.createElement(Image, {
+            src: src,
+            mode: 'aspectFill',
+            style: _styleSheet['fta-upload-image'],
+          })
+        : React.createElement(
+            React.Fragment,
+            null,
+            image
+              ? React.createElement(Image, { src: image, style: _styleSheet['fta-upload-image'] })
+              : null,
+            React.createElement(Image, { src: camera, style: _styleSheet['fta-upload-camera'] }),
+            isString(placeholder)
+              ? React.createElement(
+                  Text,
+                  { style: _styleSheet['fta-upload-placeholder'] },
+                  placeholder
+                )
+              : placeholder
+          )
+    ),
+    error && errorTip
+      ? isString(errorTip)
+        ? React.createElement(Text, { style: _styleSheet['fta-upload-errortip'] }, errorTip)
+        : errorTip
+      : null
   )
 }
-var textDefaultProps = { level: 4, scale: true }
-Text.defaultProps = textDefaultProps
+var defaultProps = {
+  camera: Assets.camera.default,
+  placeholder: '上传图片',
+  error: false,
+  errorTip: '请重新上传',
+}
+Upload.defaultProps = defaultProps
 
-export { Text }
+export { Upload as default }

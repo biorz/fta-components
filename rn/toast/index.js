@@ -171,27 +171,27 @@ var indexScssStyleSheet = StyleSheet.create({
     display: 'flex',
     alignSelf: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.8)',
-    paddingTop: scalePx2dp(14.88),
-    paddingRight: scalePx2dp(13.92),
-    paddingBottom: scalePx2dp(14.88),
-    paddingLeft: scalePx2dp(13.92),
-    borderRadius: scalePx2dp(8.16),
-    maxWidth: scalePx2dp(224.16),
-    minWidth: scalePx2dp(82.08),
+    paddingTop: scalePx2dp(14.4),
+    paddingRight: scalePx2dp(13.44),
+    paddingBottom: scalePx2dp(14.4),
+    paddingLeft: scalePx2dp(13.44),
+    borderRadius: scalePx2dp(7.68),
+    maxWidth: scalePx2dp(215.04),
+    minWidth: scalePx2dp(78.72),
   },
   'fta-toast-view--loading': {
     flexDirection: 'column',
     alignItems: 'center',
-    borderRadius: scalePx2dp(6.24),
+    borderRadius: scalePx2dp(5.76),
     justifyContent: 'center',
   },
   'fta-toast-view--icon': {
     flexDirection: 'row',
   },
   'fta-toast-loading': {
-    width: scalePx2dp(27.84),
-    height: scalePx2dp(27.84),
-    marginBottom: scalePx2dp(7.68),
+    width: scalePx2dp(26.88),
+    height: scalePx2dp(26.88),
+    marginBottom: scalePx2dp(7.2),
   },
   'fta-toast__text': {
     color: '#fff',
@@ -211,11 +211,11 @@ var indexScssStyleSheet = StyleSheet.create({
   },
   'fta-toast--top': {
     alignItems: 'flex-start',
-    paddingTop: scalePx2dp(99.84),
+    paddingTop: scalePx2dp(96),
   },
   'fta-toast--bottom': {
     alignItems: 'flex-end',
-    paddingBottom: scalePx2dp(99.84),
+    paddingBottom: scalePx2dp(96),
   },
 })
 

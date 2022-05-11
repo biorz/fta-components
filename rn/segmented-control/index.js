@@ -119,7 +119,7 @@ var indexScssStyleSheet = StyleSheet.create({
     borderLeftWidth: scalePx2dp(0.48),
     borderLeftColor: '#fa871e',
     width: '100%',
-    borderRadius: scalePx2dp(6.24),
+    borderRadius: scalePx2dp(5.76),
     overflow: 'hidden',
     flexDirection: 'row',
   },
@@ -132,7 +132,7 @@ var indexScssStyleSheet = StyleSheet.create({
     paddingRight: scalePx2dp(3.84),
     paddingBottom: scalePx2dp(3.84),
     paddingLeft: scalePx2dp(3.84),
-    minWidth: scalePx2dp(60),
+    minWidth: scalePx2dp(57.6),
     backgroundColor: '#fff',
     overflow: 'hidden',
   },
@@ -143,7 +143,7 @@ var indexScssStyleSheet = StyleSheet.create({
   'fta-segmented-control__item__text': {
     textAlign: 'center',
     color: '#fa871e',
-    fontSize: scalePx2dp(15.84),
+    fontSize: scalePx2dp(15.36),
   },
   'fta-segmented-control__item--active': {
     backgroundColor: '#fa871e',

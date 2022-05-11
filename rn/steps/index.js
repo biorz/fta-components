@@ -43,13 +43,13 @@ var indexScssStyleSheet = StyleSheet.create({
     alignItems: 'center',
   },
   'fta-step-wrap--dot': {
-    marginBottom: scalePx2dp(10.08),
+    marginBottom: scalePx2dp(9.6),
   },
   'fta-step-wrap--ordered': {
-    marginBottom: scalePx2dp(12),
+    marginBottom: scalePx2dp(11.52),
   },
   'fta-step-wrap--custom': {
-    marginBottom: scalePx2dp(6.24),
+    marginBottom: scalePx2dp(5.76),
   },
   'fta-step-ball': {
     borderRadius: scalePx2dp(4800),
@@ -60,16 +60,16 @@ var indexScssStyleSheet = StyleSheet.create({
     backgroundColor: '#ccc',
   },
   'fta-step-ball--dot': {
-    width: scalePx2dp(9.12),
-    height: scalePx2dp(9.12),
+    width: scalePx2dp(8.64),
+    height: scalePx2dp(8.64),
   },
   'fta-step-ball--ordered': {
-    width: scalePx2dp(24),
-    height: scalePx2dp(24),
+    width: scalePx2dp(23.04),
+    height: scalePx2dp(23.04),
     marginTop: 0,
-    marginRight: scalePx2dp(6.24),
+    marginRight: scalePx2dp(5.76),
     marginBottom: 0,
-    marginLeft: scalePx2dp(6.24),
+    marginLeft: scalePx2dp(5.76),
   },
   'fta-step-ball--active': {
     backgroundColor: '#fa871e',
@@ -100,8 +100,8 @@ var indexScssStyleSheet = StyleSheet.create({
   },
   'fta-step-title__text': {
     color: '#ccc',
-    fontSize: scalePx2dp(13.92),
-    lineHeight: scalePx2dp(20.88),
+    fontSize: scalePx2dp(13.44),
+    lineHeight: scalePx2dp(20.16),
   },
   'fta-step-title__text--active': {
     color: '#000',
@@ -114,15 +114,15 @@ var indexScssStyleSheet = StyleSheet.create({
   },
   'fta-step-desc__text': {
     color: '#ededed',
-    fontSize: scalePx2dp(12),
-    lineHeight: scalePx2dp(18),
+    fontSize: scalePx2dp(11.52),
+    lineHeight: scalePx2dp(17.28),
   },
   'fta-step-desc__text--active': {
     color: '#ccc',
   },
   'fta-step-index': {
     color: '#fff',
-    fontSize: scalePx2dp(13.92),
+    fontSize: scalePx2dp(13.44),
   },
   'fta-step-index--active': {
     color: '#999',

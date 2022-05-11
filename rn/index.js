@@ -1,10 +1,11 @@
-export { ActionSheetItem, default as ActionSheet, default as FloatLayout } from './action-sheet'
+export * from '../common'
+export { ActionSheetItem, default as ActionSheet } from './action-sheet'
 export { default as AnimateView } from './animate-view'
 export { default as Avatar } from './avatar'
 export { default as Badge } from './badge'
 export { default as Button } from './button'
+export { default as Cascader } from './cascader'
 export { default as Checkbox } from './checkbox'
-export * from './common'
 export { default as Curtain } from './curtain'
 export { default as Divider } from './divider'
 export { default as Drawer } from './drawer'
@@ -38,6 +39,7 @@ export { default as Textarea } from './textarea'
 export { default as Timeline, TimelineItem } from './timeline'
 export { default as Toast, useToast } from './toast'
 export { Text } from './typography'
+export { default as Upload } from './upload'
 export {
   default as LayoutView,
   TouchableHighlight,

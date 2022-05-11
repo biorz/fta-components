@@ -135,13 +135,13 @@ var indexScssStyleSheet = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 0,
-    paddingRight: scalePx2dp(20.16),
+    paddingRight: scalePx2dp(19.2),
     paddingBottom: 0,
-    paddingLeft: scalePx2dp(20.16),
+    paddingLeft: scalePx2dp(19.2),
   },
   'fta-swipe-action-button__text': {
     color: '#fff',
-    fontSize: scalePx2dp(15.84),
+    fontSize: scalePx2dp(15.36),
   },
   'fta-swipe-action-follow': {
     right: 'auto',

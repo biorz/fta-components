@@ -5,7 +5,7 @@ import View from '@fta/components-rn/dist/components/View'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import { inWeapp, inWeb, inAlipay, isString } from '../common'
+import { inWeapp, inWeb, inAlipay, isString, inRN } from '../common'
 import { StyleSheet } from 'react-native'
 import { scalePx2dp } from '@fta/runtime-rn/dist/scale2dp'
 import Loading from '../loading'
@@ -123,15 +123,15 @@ var indexScssStyleSheet = StyleSheet.create({
     marginBottom: 0,
     marginLeft: 'auto',
     paddingTop: 0,
-    paddingRight: scalePx2dp(15.84),
+    paddingRight: scalePx2dp(15.36),
     paddingBottom: 0,
-    paddingLeft: scalePx2dp(15.84),
-    height: scalePx2dp(44.16),
+    paddingLeft: scalePx2dp(15.36),
+    height: scalePx2dp(42.24),
     color: '#333',
-    fontSize: scalePx2dp(18.24),
-    lineHeight: scalePx2dp(45.12),
+    fontSize: scalePx2dp(17.28),
+    lineHeight: scalePx2dp(43.2),
     textAlign: 'center',
-    borderRadius: scalePx2dp(6.24),
+    borderRadius: scalePx2dp(5.76),
     borderWidth: 1,
     borderStyle: 'solid',
     borderColor: '#e9e9e9',
@@ -157,39 +157,39 @@ var indexScssStyleSheet = StyleSheet.create({
     opacity: 0.3,
   },
   'fta-button--large': {
-    height: scalePx2dp(44.16),
+    height: scalePx2dp(42.24),
     paddingTop: 0,
-    paddingRight: scalePx2dp(12),
+    paddingRight: scalePx2dp(11.52),
     paddingBottom: 0,
-    paddingLeft: scalePx2dp(12),
-    borderRadius: scalePx2dp(8.16),
-    width: scalePx2dp(330.24),
+    paddingLeft: scalePx2dp(11.52),
+    borderRadius: scalePx2dp(7.68),
+    width: scalePx2dp(316.8),
   },
   'fta-button--large--circle': {
-    borderRadius: scalePx2dp(24.96),
+    borderRadius: scalePx2dp(24),
   },
   'fta-button--medium': {
-    height: scalePx2dp(32.16),
+    height: scalePx2dp(30.72),
     paddingTop: 0,
-    paddingRight: scalePx2dp(12),
+    paddingRight: scalePx2dp(11.52),
     paddingBottom: 0,
-    paddingLeft: scalePx2dp(12),
-    borderRadius: scalePx2dp(6.24),
-    width: scalePx2dp(159.84),
+    paddingLeft: scalePx2dp(11.52),
+    borderRadius: scalePx2dp(5.76),
+    width: scalePx2dp(153.6),
   },
   'fta-button--medium--circle': {
-    borderRadius: scalePx2dp(18.24),
+    borderRadius: scalePx2dp(17.28),
   },
   'fta-button--small': {
-    height: scalePx2dp(24),
+    height: scalePx2dp(23.04),
     paddingTop: 0,
-    paddingRight: scalePx2dp(12),
+    paddingRight: scalePx2dp(11.52),
     paddingBottom: 0,
-    paddingLeft: scalePx2dp(12),
+    paddingLeft: scalePx2dp(11.52),
     borderRadius: scalePx2dp(3.84),
   },
   'fta-button--small--circle': {
-    borderRadius: scalePx2dp(13.92),
+    borderRadius: scalePx2dp(13.44),
   },
   'fta-button--primary': {
     borderWidth: 0,
@@ -232,12 +232,27 @@ var indexScssStyleSheet = StyleSheet.create({
   'fta-button--tertiary--active': {
     backgroundColor: '#fff',
     opacity: 0.8,
+    color: '#fa871e',
+  },
+  'fta-button--fourth': {
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: '#ededed',
+    backgroundColor: '#fff',
+  },
+  'fta-button--fourth--disabled': {
+    backgroundColor: '#fff',
+    opacity: 0.4,
+  },
+  'fta-button--fourth--active': {
+    backgroundColor: '#fff',
+    opacity: 0.8,
   },
   'fta-button__text': {
-    fontSize: scalePx2dp(15.84),
+    fontSize: scalePx2dp(15.36),
   },
   'fta-button__text--loading': {
-    marginLeft: scalePx2dp(8.16),
+    marginLeft: scalePx2dp(7.68),
   },
   'fta-button__text--primary': {
     color: '#fff',
@@ -257,17 +272,23 @@ var indexScssStyleSheet = StyleSheet.create({
   'fta-button__text--tertiary--disabled': {
     color: '#fa871e',
   },
+  'fta-button__text--fourth': {
+    color: '#666',
+  },
+  'fta-button__text--fourth--disabled': {
+    color: '#ccc',
+  },
   'fta-button__text--large': {
-    fontSize: scalePx2dp(15.84),
+    fontSize: scalePx2dp(15.36),
   },
   'fta-button__text--medium': {
-    fontSize: scalePx2dp(13.92),
+    fontSize: scalePx2dp(13.44),
   },
   'fta-button__text--small': {
-    fontSize: scalePx2dp(12),
+    fontSize: scalePx2dp(11.52),
   },
   'fta-button--circle': {
-    borderRadius: scalePx2dp(23.04),
+    borderRadius: scalePx2dp(22.08),
     overflow: 'hidden',
   },
   'fta-button--full': {
@@ -364,8 +385,14 @@ function _mergeEleStyles() {
   return [].concat.apply([], arguments).reduce((pre, cur) => Object.assign(pre, cur), {})
 }
 var _styleSheet = indexScssStyleSheet
+var ButtonAdapter = inRN ? Button : View
 var SIZE_CLASS = { small: 'small', medium: 'medium', large: 'large' }
-var TYPE_CLASS = { primary: 'primary', secondary: 'secondary', tertiary: 'tertiary' }
+var TYPE_CLASS = {
+  primary: 'primary',
+  secondary: 'secondary',
+  tertiary: 'tertiary',
+  fourth: 'fourth',
+}
 var FTAButton = (function (_Component) {
   _inherits(FTAButton, _Component)
   var _super = _createSuper(FTAButton)
@@ -489,7 +516,7 @@ var FTAButton = (function (_Component) {
           'fta-button__text--' + (SIZE_CLASS[size] || 'default'),
           'fta-button__text--' + (TYPE_CLASS[type] || 'default'),
           disabled && 'fta-button__text--' + type + '--disabled',
-          loading && 'fta-button__text--loading',
+          loading && 'fta-button__text--loading fta-button__text--' + type + '--loading',
           textClassName
         )
         var loadingColor = type === 'primary' ? '#fff' : ''
@@ -528,8 +555,9 @@ var FTAButton = (function (_Component) {
           style: _styleSheet['fta-button__wxbutton'],
         })
         return React.createElement(
-          View,
+          ButtonAdapter,
           {
+            disabled: disabled,
             style: _mergeEleStyles(
               _getStyle(rootClassName),
               _objectSpread(_objectSpread({}, style), customStyle)
@@ -566,7 +594,7 @@ FTAButton.propTypes = {
   type: PropTypes.oneOf(['primary', 'secondary', 'tertiary']),
   circle: PropTypes.bool,
   full: PropTypes.bool,
-  loading: PropTypes.bool,
+  loading: PropTypes.oneOfType([PropTypes.bool, PropTypes.element]),
   disabled: PropTypes.bool,
   onClick: PropTypes.func,
   customStyle: PropTypes.object,

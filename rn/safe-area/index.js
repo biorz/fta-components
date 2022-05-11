@@ -176,7 +176,9 @@ var _safeArea = {
       : inNotch
       ? 44
       : 0,
-  bottom: safeArea.bottom
+  bottom: safeArea.top
+    ? 34
+    : safeArea.bottom
     ? systemInfo.screenHeight - safeArea.bottom
     : needSafeArea
     ? (window._MBWEB_bottombarHeight || 0) / systemInfo.pixelRatio

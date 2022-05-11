@@ -115,39 +115,63 @@ function _extends() {
 
 var indexScssStyleSheet = StyleSheet.create({
   'fta-icon__badge': {
-    top: scalePx2dp(-12),
-    left: scalePx2dp(12),
+    top: scalePx2dp(-8.64),
+    left: scalePx2dp(14.4),
   },
   'fta-icon__dot': {
-    top: scalePx2dp(-6.24),
-    left: scalePx2dp(17.76),
+    top: scalePx2dp(-2.88),
+    left: scalePx2dp(20.16),
   },
   'fta-icon': {
     borderRadius: scalePx2dp(2.88),
   },
+  'fta-icon--small': {
+    width: scalePx2dp(11.52),
+    height: scalePx2dp(11.52),
+  },
+  'fta-icon--small--care': {
+    width: scalePx2dp(14.88),
+    height: scalePx2dp(14.88),
+  },
+  'fta-icon--small__badge': {
+    top: scalePx2dp(-5.76),
+    right: scalePx2dp(-11.52),
+  },
+  'fta-icon--small__badge--dot': {
+    top: scalePx2dp(-2.88),
+    left: scalePx2dp(8.64),
+  },
   'fta-icon--medium': {
-    width: scalePx2dp(24),
-    height: scalePx2dp(24),
+    width: scalePx2dp(23.04),
+    height: scalePx2dp(23.04),
   },
   'fta-icon--medium--care': {
-    width: scalePx2dp(31.2),
-    height: scalePx2dp(31.2),
+    width: scalePx2dp(29.76),
+    height: scalePx2dp(29.76),
+  },
+  'fta-icon--medium__badge': {
+    top: scalePx2dp(-8.64),
+    left: scalePx2dp(14.4),
+  },
+  'fta-icon--medium__badge--dot': {
+    top: scalePx2dp(-2.88),
+    left: scalePx2dp(20.16),
   },
   'fta-icon--large': {
-    width: scalePx2dp(48),
-    height: scalePx2dp(48),
+    width: scalePx2dp(46.08),
+    height: scalePx2dp(46.08),
   },
   'fta-icon--large--care': {
-    width: scalePx2dp(62.4),
-    height: scalePx2dp(62.4),
+    width: scalePx2dp(60),
+    height: scalePx2dp(60),
   },
   'fta-icon--large__badge': {
-    top: scalePx2dp(-8.16),
-    left: scalePx2dp(39.84),
+    top: scalePx2dp(-11.52),
+    left: scalePx2dp(34.56),
   },
   'fta-icon--large__badge--dot': {
-    top: scalePx2dp(-6.24),
-    left: scalePx2dp(41.76),
+    top: scalePx2dp(2.88),
+    left: scalePx2dp(43.2),
   },
 })
 
@@ -229,31 +253,31 @@ var listItemScssStyleSheet = StyleSheet.create({
     alignItems: 'center',
   },
   'item-icon': {
-    marginRight: scalePx2dp(12),
+    marginRight: scalePx2dp(11.52),
   },
   'item-border-line': {
     borderBottomWidth: scalePx2dp(0.48),
     borderBottomColor: '#e9e9e9',
-    marginLeft: scalePx2dp(12),
+    marginLeft: scalePx2dp(11.52),
   },
   'fta-list__item': {
-    paddingTop: scalePx2dp(10.08),
-    paddingRight: scalePx2dp(12),
-    paddingBottom: scalePx2dp(10.08),
-    paddingLeft: scalePx2dp(12),
+    paddingTop: scalePx2dp(9.6),
+    paddingRight: scalePx2dp(11.52),
+    paddingBottom: scalePx2dp(9.6),
+    paddingLeft: scalePx2dp(11.52),
   },
   'item-thumb': {
-    marginRight: scalePx2dp(12),
-    width: scalePx2dp(20.16),
-    height: scalePx2dp(20.16),
+    marginRight: scalePx2dp(11.52),
+    width: scalePx2dp(19.2),
+    height: scalePx2dp(19.2),
   },
   'item-thumb__info': {
     width: '100%',
     height: '100%',
   },
   'item-thumb--care': {
-    width: scalePx2dp(26.4),
-    height: scalePx2dp(26.4),
+    width: scalePx2dp(24.96),
+    height: scalePx2dp(24.96),
   },
   'fta-list__item--disabled': {
     opacity: 0.3,
@@ -267,67 +291,67 @@ var listItemScssStyleSheet = StyleSheet.create({
   'item-extra__info': {
     maxWidth: '100%',
     color: '#999',
-    paddingRight: scalePx2dp(13.44),
-    fontSize: scalePx2dp(13.92),
-    lineHeight: scalePx2dp(18.096),
+    paddingRight: scalePx2dp(12.8),
+    fontSize: scalePx2dp(13.44),
+    lineHeight: scalePx2dp(17.472),
   },
   'item-extra__info--care': {
-    fontSize: scalePx2dp(18.24),
-    lineHeight: scalePx2dp(23.52),
+    fontSize: scalePx2dp(17.28),
+    lineHeight: scalePx2dp(22.56),
   },
   'item-extra__icon': {
     right: scalePx2dp(-3.84),
     position: 'absolute',
   },
   'item-extra__icon-arrow': {
-    width: scalePx2dp(13.44),
-    height: scalePx2dp(13.44),
+    width: scalePx2dp(12.8),
+    height: scalePx2dp(12.8),
   },
   'item-extra__icon-arrow--care': {
-    width: scalePx2dp(17.28),
-    height: scalePx2dp(17.28),
+    width: scalePx2dp(16.8),
+    height: scalePx2dp(16.8),
   },
   'item-extra__image': {
-    width: scalePx2dp(20.16),
-    height: scalePx2dp(20.16),
-    marginRight: scalePx2dp(13.44),
+    width: scalePx2dp(19.2),
+    height: scalePx2dp(19.2),
+    marginRight: scalePx2dp(12.8),
   },
   'item-extra__image-info': {
     width: '100%',
     height: '100%',
   },
   'item-extra__image--care': {
-    width: scalePx2dp(26.4),
-    height: scalePx2dp(26.4),
+    width: scalePx2dp(24.96),
+    height: scalePx2dp(24.96),
   },
   'fta-list__item-content': {
     flexGrow: 1,
     flexShrink: 1,
     flexBasis: 0,
     overflow: 'hidden',
-    marginRight: scalePx2dp(13.44),
+    marginRight: scalePx2dp(12.8),
   },
   'fta-list__item-extra': {
-    maxWidth: scalePx2dp(117.6),
+    maxWidth: scalePx2dp(112.8),
     textAlign: 'right',
   },
   'item-content__info-title': {
     color: '#333',
-    fontSize: scalePx2dp(18.24),
-    lineHeight: scalePx2dp(23.712),
+    fontSize: scalePx2dp(15.36),
+    lineHeight: scalePx2dp(19.968),
   },
   'item-content__info-title--care': {
-    fontSize: scalePx2dp(23.52),
-    lineHeight: scalePx2dp(30.72),
+    fontSize: scalePx2dp(20.16),
+    lineHeight: scalePx2dp(25.92),
   },
   'item-content__info-note': {
     color: '#999',
-    fontSize: scalePx2dp(12),
-    lineHeight: scalePx2dp(15.6),
+    fontSize: scalePx2dp(11.52),
+    lineHeight: scalePx2dp(14.976),
   },
   'item-content__info-note--care': {
-    fontSize: scalePx2dp(15.84),
-    lineHeight: scalePx2dp(20.16),
+    fontSize: scalePx2dp(14.88),
+    lineHeight: scalePx2dp(19.68),
   },
 })
 
