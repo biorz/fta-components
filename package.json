@@ -1,6 +1,6 @@
 {
   "name": "@fta/components",
-  "version": "1.0.0-alpha.12",
+  "version": "1.0.0-alpha.15",
   "description": "FTA View - Taro-based cross-platform development framework",
   "types": "./types/index.d.ts",
   "bin": {
@@ -13,8 +13,6 @@
     "theme:clear": "node ./bin/theme-hook.js clear",
     "theme:recover": "node ./bin/theme-hook.js recover",
     "build:rn": "rimraf rn && npm run build:map && node ./bin/build-component-rn.js",
-    "prepublishOnly": "npm run build:map && npm run theme:clear && npm run broadcast",
-    "postpublish": "npm run theme:recover",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "source": "./index.ts",
@@ -47,5 +45,6 @@
     "react-native": ">=0.6",
     "typescript": ">=4"
   },
-  "license": "ISC"
+  "license": "ISC",
+  "gitHead": "807a64b4ca31b2e3a5567cb02e8f0069825abc97"
 }
