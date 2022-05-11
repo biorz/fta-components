@@ -1,7 +1,10 @@
+import Schema from 'async-validator'
 import { CSSProperties, FC, ReactElement, ReactNode } from 'react'
 import BaseComponent, { PropsWithChildren } from './base'
 
 type AnyFn = (...args: any[]) => any
+
+export type Align = 'left' | 'center' | 'right'
 
 export type Validator = (
   rule: ValidateRule,
@@ -9,7 +12,22 @@ export type Validator = (
   callback: (message?: string) => void
 ) => void
 
-export type Align = 'left' | 'center' | 'right'
+export type ValidateCallback = () => void
+
+export interface ValidateStatus {
+  unset: -1
+  error: 0
+  success: 1
+  validating: 2
+}
+
+export interface ValidatePriority {
+  Higher: 0
+  High: 1
+  Normal: 2
+  Low: 3
+  Lower: 4
+}
 
 export interface ValidateRule {
   /**
@@ -24,6 +42,10 @@ export interface ValidateRule {
    * 自定义校验规则
    */
   validator?: Validator
+  /** 当前校验的字段中文名
+   * @deprecated
+   */
+  fieldName?: string
 }
 
 export interface FormProps extends BaseComponent, PropsWithChildren {
@@ -36,6 +58,10 @@ export interface FormProps extends BaseComponent, PropsWithChildren {
    * @default 'left'
    */
   titleAlign?: Align
+  /**
+   * 表单绑定的数据流
+   */
+  model?: Record<string, any>
   /**
    * 校验出错时是否滚动到可视范围内
    * @default true
@@ -118,6 +144,11 @@ export interface FormItemProps
    */
   value?: string
   /**
+   * 当前字段是否必填
+   * @default false
+   */
+  required?: boolean
+  /**
    * 自定义渲染右侧区域
    */
   render?: ReactNode
@@ -132,7 +163,7 @@ export interface FormItemProps
   /**
    * 校验规则
    */
-  rules?: Validator
+  rules?: ValidateRule[]
   /**
    * 值的最大长度
    */
@@ -260,14 +291,6 @@ export type ToolTipProps = Pick<
   'tooltip' | 'onTooltipClick' | 'renderTooltip' | 'prop'
 >
 
-export interface ValidatePriority {
-  Higher: 0
-  High: 1
-  Normal: 2
-  Low: 3
-  Lower: 4
-}
-
 declare const Tip: FC<TipProps>
 
 declare const FormItem: FC<FormItemProps>
@@ -280,6 +303,10 @@ declare const Form: FC<FormProps> & {
   Tip: typeof Tip
   /** 校验的优先级 */
   ValidatePriority: ValidatePriority
+  /** 校验的状态 */
+  ValidateStatus: ValidateStatus
+  /** 异步校验器 */
+  AsyncValidator: typeof Schema
 }
 
 export { Form as default, FormItem }

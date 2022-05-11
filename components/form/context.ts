@@ -3,6 +3,7 @@ import { FormProps } from '../../types/Form'
 
 type FormContext = Pick<
   FormProps,
+  | 'model'
   | 'readonly'
   | 'align'
   | 'labelClassName'
@@ -16,10 +17,9 @@ type FormContext = Pick<
   _showModal?: boolean
 }
 
-const context = createContext<FormContext>({
-  _showModal: false,
-})
+const context = createContext<FormContext>({})
 
+/** 获取form表单基础配置 */
 function useFormConfig(): FormContext {
   const config = useContext(context)
   return config
