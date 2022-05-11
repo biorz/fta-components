@@ -1,7 +1,17 @@
 import View from '@fta/components-rn/dist/components/View'
 import classNames from 'classnames'
 import React, { createContext, useContext, Fragment, Component } from 'react'
-import { systemInfo, inRN, inAndroid, inNotch, inWeb, px, inAlipay, upperCase } from '../common'
+import {
+  systemInfo,
+  inRN,
+  inAndroid,
+  inNotch,
+  inWeb,
+  inIOS,
+  px,
+  inAlipay,
+  upperCase,
+} from '../common'
 import { StyleSheet } from 'react-native'
 import '@fta/runtime-rn/dist/scale2dp'
 
@@ -168,21 +178,22 @@ var _safeArea = {
     inRN && inAndroid
       ? 0
       : safeArea.top
-      ? safeArea.top < 44 && inNotch
+      ? safeArea.top < 44 && inNotch && inRN
         ? 44
         : safeArea.top
       : isImmersive && inWeb
       ? (window._MBWEB_statusbarHeight || 0) / systemInfo.pixelRatio
-      : inNotch
+      : inNotch && !inWeb
       ? 44
       : 0,
-  bottom: safeArea.top
-    ? 34
-    : safeArea.bottom
-    ? systemInfo.screenHeight - safeArea.bottom
-    : needSafeArea
-    ? (window._MBWEB_bottombarHeight || 0) / systemInfo.pixelRatio
-    : 0,
+  bottom:
+    safeArea.top && inRN && inIOS
+      ? 34
+      : safeArea.bottom
+      ? systemInfo.screenHeight - safeArea.bottom
+      : needSafeArea
+      ? (window._MBWEB_bottombarHeight || 0) / systemInfo.pixelRatio
+      : 0,
   left: safeArea.left,
   right: safeArea.right ? systemInfo.screenWidth - safeArea.right : 0,
 }
@@ -288,17 +299,13 @@ var SafeAreaView = (function (_Component) {
     {
       key: 'getInlineStyle',
       value: function getInlineStyle(style) {
-        var _objectSpread2
         var attr = this.props.useMargin ? 'margin' : 'padding'
-        return _objectSpread(
-          ((_objectSpread2 = {}),
-          _defineProperty(_objectSpread2, attr + 'Top', px(_safeArea.top)),
-          _defineProperty(_objectSpread2, attr + 'Bottom', px(_safeArea.bottom)),
-          _defineProperty(_objectSpread2, attr + 'Left', px(_safeArea.left)),
-          _defineProperty(_objectSpread2, attr + 'Right', px(_safeArea.right)),
-          _objectSpread2),
-          style
-        )
+        var safeAreaStyle = {}
+        if (_safeArea.top) safeAreaStyle[attr + 'Top'] = px(_safeArea.top)
+        if (_safeArea.right) safeAreaStyle[attr + 'Right'] = px(_safeArea.right)
+        if (_safeArea.left) safeAreaStyle[attr + 'Left'] = px(_safeArea.left)
+        if (_safeArea.bottom) safeAreaStyle[attr + 'Bottom'] = px(_safeArea.bottom)
+        return _objectSpread(_objectSpread({}, safeAreaStyle), style)
       },
     },
     {

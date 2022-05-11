@@ -217,7 +217,7 @@ var indexScssStyleSheet = StyleSheet.create({
 
 var _excluded = [
   'type',
-  'showInputBox',
+  'hideInputBox',
   'value',
   'controlled',
   'validator',
@@ -309,7 +309,7 @@ var Validators = {
 var InputAdapter = Text
 function Keyboard(props) {
   var type = props.type,
-    showInputBox = props.showInputBox,
+    hideInputBox = props.hideInputBox,
     value = props.value,
     controlled = props.controlled,
     validator = props.validator,
@@ -389,8 +389,9 @@ function Keyboard(props) {
     React.createElement(
       React.Fragment,
       null,
-      showInputBox
-        ? React.createElement(
+      hideInputBox
+        ? null
+        : React.createElement(
             View,
             { style: _styleSheet['fta-keyboard-input'] },
             React.createElement(
@@ -402,8 +403,7 @@ function Keyboard(props) {
                 val === '' ? placeholder : val
               )
             )
-          )
-        : null,
+          ),
       React.createElement(
         View,
         { style: _styleSheet['fta-keyboard'] },
@@ -463,7 +463,7 @@ function DeleteButton() {
 var defaultProps = {
   value: '',
   controlled: false,
-  showInputBox: true,
+  hideInputBox: false,
   type: 'number',
   maxlength: 140,
   title: { title: '请输入', cancelText: '取消', confirmText: '确定' },

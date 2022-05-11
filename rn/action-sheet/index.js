@@ -996,6 +996,8 @@ var ActionSheet = (function (_React$Component) {
           customStyle = _this$props.customStyle,
           containerClassName = _this$props.containerClassName,
           containerStyle = _this$props.containerStyle,
+          overlayClassName = _this$props.overlayClassName,
+          overlayStyle = _this$props.overlayStyle,
           useNativeModal = _this$props.useNativeModal,
           catchMove = _this$props.catchMove,
           example = _this$props.example
@@ -1005,6 +1007,7 @@ var ActionSheet = (function (_React$Component) {
           { 'fta-action-sheet--active': _isOpened },
           className
         )
+        var overlayClass = classNames('fta-action-sheet__overlay', overlayClassName)
         var containerClz = classNames('fta-action-sheet__container', containerClassName)
         return React.createElement(
           Modal,
@@ -1014,8 +1017,8 @@ var ActionSheet = (function (_React$Component) {
             { style: _mergeEleStyles(_getStyle(rootClass), customStyle), catchMove: catchMove },
             React.createElement(View, {
               onClick: this.close,
+              style: _mergeEleStyles(_getStyle(overlayClass), overlayStyle),
               onTouchMove: this.handleTouchMove,
-              style: _styleSheet['fta-action-sheet__overlay'],
             }),
             React.createElement(
               Motion,

@@ -570,8 +570,8 @@ var getTransformStyle = function (offset) {
 var getNativeEvent = function (evt) {
   return evt.nativeEvent
 }
-var Debugger = function Debugger() {
-  if (!['dev', 'development'].includes('dev')) return null
+var Debugger = function Debugger(props) {
+  if (!props.force && !['dev', 'development'].includes('dev')) return null
   var _useState = useState([0, 0]),
     _useState2 = _slicedToArray(_useState, 2),
     offset = _useState2[0],
@@ -590,7 +590,6 @@ var Debugger = function Debugger() {
     start[1] = changedTouches[0].pageY
   }
   var onTouchMove = function onTouchMove(evt) {
-    evt.stopPropagation == null ? void 0 : evt.stopPropagation()
     var _getNativeEvent = getNativeEvent(evt),
       changedTouches = _getNativeEvent.changedTouches
     var _changedTouches$ = changedTouches[0],
@@ -607,6 +606,7 @@ var Debugger = function Debugger() {
   return React.createElement(
     View,
     {
+      catchMove: true,
       style: _mergeEleStyles(_getStyle(rootClass), getTransformStyle(offset)),
       onClick: function onClick() {
         return toggle('careMode', !careMode)
@@ -657,6 +657,7 @@ var Assets = {
     down: 'https://image.ymm56.com/ymmfile/operation-biz/27653ee0-6dc6-446a-a60c-38c322e280cc.png',
     up: 'https://image.ymm56.com/ymmfile/operation-biz/4193cb2e-863f-471f-b3bf-80f49c22069a.png',
     left: 'http://image.ymm56.com/boss/2018/1212/1544598761',
+    grey: 'https://imagecdn.ymm56.com/ymmfile/static/resource/a7fa220a-80f0-422f-b447-118052752d07.png',
   },
   tip: {
     success:
@@ -687,6 +688,16 @@ var Assets = {
     default:
       'https://image.ymm56.com/ymmfile/operation-biz/2361a262-9f06-420b-9514-0d12e3a26d12.png',
     blue: 'https://image.ymm56.com/ymmfile/operation-biz/218ba18d-5ab4-4a83-92bb-731802693ad8.png',
+  },
+  icon: {
+    question:
+      'https://imagecdn.ymm56.com/ymmfile/static/resource/f9c00240-d826-44a4-89be-39f8284c3243.png',
+    warning:
+      'https://imagecdn.ymm56.com/ymmfile/static/resource/54eca927-239b-48f4-ab28-fa4b65da6c5f.png',
+    waiting:
+      'https://imagecdn.ymm56.com/ymmfile/static/resource/38e7d189-35ef-45e9-840c-7b39ae88c2dd.png',
+    triangle:
+      'https://imagecdn.ymm56.com/ymmfile/static/resource/83e4d14b-b386-4f9a-a320-dbd5e243b7a8.png',
   },
 }
 var mergeAssets = function mergeAssets(newAssets) {

@@ -2,6 +2,7 @@ import ScrollView from '@fta/components-rn/dist/components/ScrollView'
 import Text from '@fta/components-rn/dist/components/Text'
 import View from '@fta/components-rn/dist/components/View'
 import React, { useState, memo, forwardRef, useRef, useEffect, useImperativeHandle } from 'react'
+import { inRN } from '../common'
 import { StyleSheet } from 'react-native'
 import { scaleVu2dp } from '@fta/runtime-rn/dist/scale2dp'
 import FloatLayout from '../action-sheet'
@@ -211,13 +212,11 @@ var genPeriodList = function genPeriodList(start, end) {
 var getDaysCount = function getDaysCount(year, month) {
   return new Date(year, month, 0).getDate()
 }
-var getAlignedIndex = function getAlignedIndex(scrollTop) {
-  var precision = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0.08
+var getAlignedIndex = function getAlignedIndex(scrollTop, range) {
   var indexOffset = scrollTop / ItemHeight
   var indexAligned = Math.round(indexOffset)
-  var withinPrecision = Math.abs(indexOffset - indexAligned) <= precision
-  if (withinPrecision) {
-    return -1
+  if (indexAligned > range.length - 1) {
+    indexAligned = range.length - 1
   }
   return indexAligned * ItemHeight
 }
@@ -271,10 +270,9 @@ function _mergeEleStyles() {
   return [].concat.apply([], arguments).reduce((pre, cur) => Object.assign(pre, cur), {})
 }
 var _styleSheet = indexScssStyleSheet
-var builtInModes = ['selector', 'multiSelector', 'time', 'date', 'region']
+var builtInModes = ['selector', 'multiSelector', 'time', 'date']
 function _ScrollArea(props) {
-  var onScroll = props.onScroll,
-    activeIndex = props.activeIndex,
+  var activeIndex = props.activeIndex,
     range = props.range,
     format = props.format,
     onChange = props.onChange,
@@ -285,19 +283,34 @@ function _ScrollArea(props) {
     scrollTop = _useState2[0],
     setScrollTop = _useState2[1]
   var timerRef = useRef()
-  var scrollRef = useRef({ scrollTop: scrollTop, setScrollTop: setScrollTop }).current
+  var _useState3 = useState(scrollTop),
+    _useState4 = _slicedToArray(_useState3, 2),
+    top = _useState4[0],
+    setTop = _useState4[1]
+  var scrollRef = useRef({
+    scrollTop: scrollTop,
+    setScrollTop: setScrollTop,
+    top: top,
+    setTop: setTop,
+    onChange: onChange,
+  }).current
   useEffect(
     function () {
       scrollRef.scrollTop = scrollTop
       scrollRef.setScrollTop = setScrollTop
+      scrollRef.top = top
+      scrollRef.setTop = setTop
+      scrollRef.onChange = onChange
     },
-    [scrollTop, setScrollTop]
+    [scrollTop, top, setScrollTop, setTop, onChange]
   )
   useEffect(
     function () {
       if (activeIndexRef.current !== activeIndex) {
         activeIndexRef.current = activeIndex
-        setScrollTop(getScrollTopOverIndex(activeIndex))
+        var _top = getScrollTopOverIndex(activeIndex)
+        setScrollTop(_top)
+        setTop(_top)
       }
     },
     [activeIndex]
@@ -310,46 +323,43 @@ function _ScrollArea(props) {
   )
   var _onScroll = function _onScroll(e) {
     var scrollTop = e.detail.scrollTop
-    var _activeIndex = getAcitveIndex(scrollTop, range.length)
-    var _prevIndex = activeIndexRef.current
-    var needChange = _prevIndex !== _activeIndex
-    if (needChange) {
-      activeIndexRef.current = _activeIndex
-    }
     setScrollTop(scrollTop)
-    needChange && (onChange == null ? void 0 : onChange(_activeIndex, _prevIndex))
-    onScroll == null ? void 0 : onScroll(e.detail)
+    inRN && setTop(scrollTop)
   }
-  var _onScrollToLower = function _onScrollToLower(e) {
-    var max = range.length - 1
-    activeIndexRef.current = max
-    max !== activeIndexRef.current &&
-      (onChange == null ? void 0 : onChange(max, activeIndexRef.current))
-    setScrollTop(getScrollTopOverIndex(max) + 0.001)
-    onScroll == null ? void 0 : onScroll(e.detail)
+  var _onScrollToLower = function _onScrollToLower() {
+    var scrollTop = getScrollTopOverIndex(range.length - 1)
+    setScrollTop(scrollTop)
   }
   var fixOffset = function fixOffset() {
     if (timerRef.current) {
       clearTimeout(timerRef.current)
     }
     timerRef.current = setTimeout(function () {
-      var offset = getAlignedIndex(scrollRef.scrollTop)
-      if (offset > -1) {
-        scrollRef.setScrollTop(offset)
-        timerRef.current = null
+      var scrollTop = scrollRef.scrollTop
+      var offset = getAlignedIndex(scrollTop, range)
+      var _activeIndex = getAcitveIndex(offset, range.length)
+      var _prevIndex = activeIndexRef.current
+      var needChange = _prevIndex !== _activeIndex
+      if (needChange) {
+        activeIndexRef.current = _activeIndex
+        scrollRef.onChange == null ? void 0 : scrollRef.onChange(_activeIndex, _prevIndex)
       }
-    }, 300)
+      scrollRef.setTop(offset + Math.abs(scrollTop - offset) / 1000)
+      timerRef.current = null
+    }, 500)
   }
   return React.createElement(
     ScrollView,
     {
       scrollY: true,
+      enhanced: true,
       lowerThreshold: 10,
-      scrollTop: scrollTop,
+      scrollTop: top,
       bounces: false,
       alwaysBounceVertical: false,
       scrollWithAnimation: scrollWithAnimation,
       showsVerticalScrollIndicator: false,
+      showScrollbar: false,
       onScroll: _onScroll,
       onScrollToLower: _onScrollToLower,
       style: _styleSheet['fta-picker-block'],
@@ -426,7 +436,7 @@ function BasePicker(props) {
     ),
     React.createElement(
       View,
-      { style: _styleSheet['fta-picker'] },
+      { catchMove: true, style: _styleSheet['fta-picker'] },
       children,
       isChildrenNull(children)
         ? null
@@ -457,10 +467,10 @@ function BasePicker(props) {
 }
 BasePicker.defaultProps = { title: ' ', cancelText: '取消', confirmText: '确认' }
 function _Picker(props, ref) {
-  var _useState3 = useState(false),
-    _useState4 = _slicedToArray(_useState3, 2),
-    visible = _useState4[0],
-    toggle = _useState4[1]
+  var _useState5 = useState(false),
+    _useState6 = _slicedToArray(_useState5, 2),
+    visible = _useState6[0],
+    toggle = _useState6[1]
   var methods = {
     show: function show() {
       toggle(true)
@@ -519,12 +529,12 @@ function MultiSelectorPicker(props) {
     value = props.value,
     onChange = props.onChange,
     format = props.format
-  var _useState5 = useState(
+  var _useState7 = useState(
       value != null && value.length ? value : new Array(range.length).fill(0)
     ),
-    _useState6 = _slicedToArray(_useState5, 2),
-    _value = _useState6[0],
-    setValue = _useState6[1]
+    _useState8 = _slicedToArray(_useState7, 2),
+    _value = _useState8[0],
+    setValue = _useState8[1]
   var ref = useRef(_value)
   var _onChange = function _onChange(newIndex, index) {
     var copy = _value.slice()
@@ -582,10 +592,10 @@ function DatePicker(props) {
     y2 = _useRef$current2[0],
     m2 = _useRef$current2[1],
     d2 = _useRef$current2[2]
-  var _useState7 = useState([0, 0, 0]),
-    _useState8 = _slicedToArray(_useState7, 2),
-    indexs = _useState8[0],
-    _setIndexs = _useState8[1]
+  var _useState9 = useState([0, 0, 0]),
+    _useState10 = _slicedToArray(_useState9, 2),
+    indexs = _useState10[0],
+    _setIndexs = _useState10[1]
   var setIndexs = function setIndexs(value, depth) {
     var copy = indexs.slice()
     copy[depth] = value
@@ -599,16 +609,9 @@ function DatePicker(props) {
     m = _dateRef[1],
     d = _dateRef[2]
   var years = useRef(genPeriodList(y1, y2).concat(longterm ? [9999] : [])).current
-  var yTimerRef = useRef(null)
   var onYearChange = function onYearChange(i) {
-    if (yTimerRef.current) {
-      clearTimeout(yTimerRef.current)
-      yTimerRef.current = null
-    }
-    yTimerRef.current = setTimeout(function () {
-      dateRef[0] = years[i]
-      setIndexs(years[i] === 9999 ? indexs[0] : i, 0)
-    }, 150)
+    dateRef[0] = years[i]
+    setIndexs(years[i] === 9999 ? indexs[0] : i, 0)
   }
   var MonthElement = null
   var DayElement = null
@@ -643,8 +646,10 @@ function DatePicker(props) {
         setIndexs(i, 1)
       },
     })
+    dateRef[1] = _months[mActiveIndex]
     if (depth > 2) {
-      var count = getDaysCount(y, m)
+      var _m = dateRef[1]
+      var count = getDaysCount(y, _m)
       var _days = days.slice(0, count)
       if (d2 !== count && dateRef[0] === y2 && dateRef[1] === m2) {
         _days.splice(d2, count - d2)
@@ -655,6 +660,7 @@ function DatePicker(props) {
       var i
       var dActiveIndex =
         (i = _days.indexOf(d)) === -1 ? (d > _days[_days.length - 1] ? _days.length - 1 : 0) : i
+      dateRef[2] = _days[dActiveIndex]
       DayElement = React.createElement(ScrollArea, {
         activeIndex: dActiveIndex,
         range: _days,
@@ -697,7 +703,7 @@ function TimePicker(props) {
     m2 = _useRef$current3$2[1]
   var hours = useRef(totalHours.slice(h1, h2 + 1)).current
   var preRef = useRef(totalMins.length)
-  var _useArray = useArray(parseTime(value)),
+  var _useArray = useArray([h1, h2]),
     _useArray2 = _slicedToArray(_useArray, 3),
     times = _useArray2[0],
     setTimes = _useArray2[1],
@@ -707,10 +713,10 @@ function TimePicker(props) {
     indexs = _useArray4[0],
     setIndexs = _useArray4[1],
     replaceIndexs = _useArray4[2]
-  var _useState9 = useState(totalMins.slice()),
-    _useState10 = _slicedToArray(_useState9, 2),
-    mins = _useState10[0],
-    setMins = _useState10[1]
+  var _useState11 = useState(totalMins.slice()),
+    _useState12 = _slicedToArray(_useState11, 2),
+    mins = _useState12[0],
+    setMins = _useState12[1]
   useEffect(
     function () {
       var _parseTime = parseTime(value),
@@ -734,7 +740,7 @@ function TimePicker(props) {
         }
       }
       replaceIndexs([hIndex, mIndex])
-      replaceTimes([hours[hIndex], mins[hIndex]])
+      replaceTimes([hours[hIndex], mins[mIndex]])
     },
     [value]
   )
@@ -753,14 +759,14 @@ function TimePicker(props) {
       }
       if (shortened || preRef.current !== minsCopy.length || preRef.current !== 60) {
         preRef.current = minsCopy.length
-        setMins(minsCopy)
         var mVal = mins[indexs[1]]
         var tmp
-        if ((tmp = minsCopy.indexOf(mVal)) > -1) {
-          setIndexs(tmp, 1)
-        } else {
-          setIndexs(0, 1)
+        if (!((tmp = minsCopy.indexOf(mVal)) > -1)) {
+          tmp = 0
         }
+        setIndexs(tmp, 1)
+        setTimes(minsCopy[tmp], 1)
+        setMins(minsCopy)
       }
     },
     [indexs[0]]

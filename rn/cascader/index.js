@@ -223,8 +223,8 @@ var Cascader = forwardRef(function Cascader(props, ref) {
       ranges = _getRangesAndValuesOv.ranges,
       values = _getRangesAndValuesOv.values
     setValues(values)
-    setIndexs(icopy)
     setRanges(ranges)
+    setIndexs(icopy)
   }
   useEffect(
     function () {

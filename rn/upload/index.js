@@ -98,7 +98,7 @@ var indexScssStyleSheet = StyleSheet.create({
   'fta-upload--error': {
     borderWidth: 1,
     borderStyle: 'solid',
-    borderColor: 'red',
+    borderColor: '#ff5b60',
   },
   'fta-upload-errortip': {
     marginTop: scalePx2dp(4.8),
