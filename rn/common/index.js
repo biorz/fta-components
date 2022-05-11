@@ -12,7 +12,7 @@ import { scalePx2dp } from '@fta/runtime-rn/dist/scale2dp'
 import classNames from 'classnames'
 export { default as classNames } from 'classnames'
 import { getSystemInfoSync } from '@fta/taro-rn/dist/lib/getSystemInfoSync'
-import Taro from '@fta/taro-rn'
+import { createSelectorQuery } from '@fta/taro-rn/dist/lib/createSelectorQuery'
 import { getEnv } from '@fta/taro-rn/dist/lib/getEnv'
 import { ENV_TYPE } from '@fta/taro-rn/dist/lib/ENV_TYPE'
 
@@ -742,7 +742,7 @@ var callbackAdaptor = function callbackAdaptor(callback) {
 }
 function PolyCreateSelectorQuery(selector, callback) {
   var cb = callbackAdaptor(callback)
-  var query = Taro.createSelectorQuery == null ? void 0 : Taro.createSelectorQuery()
+  var query = createSelectorQuery == null ? void 0 : createSelectorQuery()
   if (!query) return
   var el = query.select(selector)
   el.boundingClientRect(cb)

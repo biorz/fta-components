@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import React, { useState, useRef, useEffect, Fragment } from 'react'
 import { StyleSheet } from 'react-native'
 import { scalePx2dp } from '@fta/runtime-rn/dist/scale2dp'
-import '@fta/taro-rn'
+import '@fta/taro-rn/dist/lib/createSelectorQuery'
 
 function _defineProperty(obj, key, value) {
   if (key in obj) {

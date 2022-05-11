@@ -1,6 +1,7 @@
 import Text from '@fta/components-rn/dist/components/Text'
 import View from '@fta/components-rn/dist/components/View'
-import Taro from '@fta/taro-rn'
+import { createSelectorQuery } from '@fta/taro-rn/dist/lib/createSelectorQuery'
+import { createAnimation } from '@fta/taro-rn/dist/lib/createAnimation'
 import classNames from 'classnames'
 import React, { useRef, useEffect, Component } from 'react'
 import {
@@ -431,7 +432,7 @@ var NoticeBar = (function (_Component) {
             var dura = width / +speed
             _this2.setState({ dura: dura })
           } else if (inWeapp || inAlipay) {
-            var query = Taro.createSelectorQuery()
+            var query = createSelectorQuery()
             var queryCb = function queryCb(res) {
               var queryRes = res[0]
               if (!queryRes) return
@@ -439,15 +440,9 @@ var NoticeBar = (function (_Component) {
               var _this2$props$speed2 = _this2.props.speed,
                 speed = _this2$props$speed2 === void 0 ? 100 : _this2$props$speed2
               var dura = width / +speed
-              var animation = Taro.createAnimation({
-                duration: dura * 1000,
-                timingFunction: 'linear',
-              })
-              var resetAnimation = Taro.createAnimation({ duration: 0, timingFunction: 'linear' })
-              var resetOpacityAnimation = Taro.createAnimation({
-                duration: 0,
-                timingFunction: 'linear',
-              })
+              var animation = createAnimation({ duration: dura * 1000, timingFunction: 'linear' })
+              var resetAnimation = createAnimation({ duration: 0, timingFunction: 'linear' })
+              var resetOpacityAnimation = createAnimation({ duration: 0, timingFunction: 'linear' })
               var animBody = function animBody() {
                 resetOpacityAnimation.opacity(0).step()
                 _this2.setState({ animationData: resetOpacityAnimation.export() })
