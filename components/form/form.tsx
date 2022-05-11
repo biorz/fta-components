@@ -1,4 +1,4 @@
-import { Image, ScrollView, Text, View } from '@tarojs/components'
+import { Image, Text, View } from '@tarojs/components'
 import classNames from 'classnames'
 import React, {
   CSSProperties,
@@ -6,6 +6,7 @@ import React, {
   ReactElement,
   ReactNode,
   Ref,
+  useEffect,
   useImperativeHandle,
   useState,
 } from 'react'
@@ -19,14 +20,27 @@ import {
   FormRefMethods,
   TipProps,
   ToolTipProps,
+  ValidatePriority,
 } from '../../types/form'
 import { TouchableOpacity } from '../view'
-import { FormConsumer, FormProvider } from './context'
+import { FormProvider, useFormConfig } from './context'
+import { ScrollIntoView, ScrollView } from './scroll-into-view'
 
 const justifyContentMap: Record<Align, CSSProperties['justifyContent']> = {
   left: 'flex-start',
   center: 'center',
   right: 'flex-end',
+}
+
+/**
+ * 校验优先级
+ */
+const validatePriority: ValidatePriority = {
+  Higher: 0,
+  High: 1,
+  Normal: 2,
+  Low: 3,
+  Lower: 4,
 }
 
 function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
@@ -36,9 +50,14 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
     titleAlign,
     customStyle,
     className,
-    scrollWithAnimation,
+    labelStyle,
+    labelClassName,
+    contentClassName,
+    contentStyle,
     readonly,
     align,
+    onMount,
+    onDestroy,
     // @ts-ignore
     style,
   } = props
@@ -56,13 +75,23 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
     submit() {},
   }))
   return (
-    <FormProvider value={{ align }}>
+    <FormProvider
+      value={{
+        align,
+        labelClassName,
+        labelStyle,
+        contentClassName,
+        contentStyle,
+        readonly,
+        onMount,
+        onDestroy,
+      }}>
       <ScrollView
         scrollY
+        scrollWithAnimation
         scrollX={false}
         className={rootClass}
-        style={{ ...style, ...customStyle }}
-        scrollWithAnimation={scrollWithAnimation}>
+        style={{ ...style, ...customStyle }}>
         <Title align={titleAlign}>{title}</Title>
         {children}
       </ScrollView>
@@ -73,6 +102,7 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
 function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Element {
   const {
     label,
+    value,
     tooltip,
     renderTooltip,
     prop,
@@ -89,92 +119,114 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
     labelStyle,
     contentClassName,
     contentStyle,
+    readonly,
+    rules,
+    onMount,
+    onDestroy,
   } = props
 
   // const [error, toggleError] = useState(false)
 
-  useImperativeHandle(ref, () => ({
-    resetField() {},
+  const ctx = useFormConfig()
+
+  console.log('formConfig', ctx)
+
+  const refMethods = {
+    getRules: () => rules,
+    getValue() {
+      if (value == null) {
+      }
+      return value
+    },
     clearValidate() {},
-  }))
+    /** 新加的属性列表 */
+    resetField() {},
+    // 测试函数
+    __test__() {
+      console.log(`__test__ executed - label: ${label}`)
+    },
+  }
+
+  /**
+   * 监听FormItem的生命周期
+   */
+  useEffect(() => {
+    ctx.onMount?.(refMethods)
+    onMount?.(refMethods)
+    return () => {
+      ctx.onDestroy?.(refMethods)
+      onDestroy?.(refMethods)
+    }
+  }, [])
+
+  useImperativeHandle(ref, () => refMethods)
+
+  const _align = align || ctx.align
+  // TODO: 是否标记为只读
+  const _readonly = readonly === false ? false : readonly || ctx.readonly
+
+  const _labelClassName = classNames('fta-form-item-label', ctx.labelClassName, labelClassName)
+
+  const _contentClassName = classNames(
+    'fta-form-item-content',
+    ctx.contentClassName,
+    contentClassName,
+    error && 'fta-form-item-content--error'
+  )
+
+  const _labelStyle = { ...ctx.labelStyle, ...labelStyle }
+
+  const _contentStyle = {
+    ...(_align ? { justifyContent: justifyContentMap[_align] } : {}),
+    ...ctx.contentStyle,
+    ...contentStyle,
+  }
+
+  const rootClass = classNames('fta-form-item')
+
+  const labelTextClass = classNames('fta-form-item-label__text')
 
   return (
-    <FormConsumer>
-      {(ctx) => {
-        const _align = align || ctx.align
-
-        const _labelClassName = classNames(
-          'fta-form-item-label',
-          ctx.labelClassName,
-          labelClassName
-        )
-
-        const _contentClassName = classNames(
-          'fta-form-item-content',
-          ctx.contentClassName,
-          contentClassName,
-          error && 'fta-form-item-content--error'
-        )
-
-        const _labelStyle = { ...ctx.labelStyle, ...labelStyle }
-
-        const _contentStyle = {
-          ...(_align ? { justifyContent: justifyContentMap[_align] } : {}),
-          ...ctx.contentStyle,
-          ...contentStyle,
-        }
-
-        const rootClass = classNames('fta-form-item', {})
-
-        const labelTextClass = classNames('fta-form-item-label__text')
-        return (
-          <>
-            <View className={rootClass} id={props ? `form-${prop}` : void 0}>
-              {/* label */}
-              <View className={_labelClassName} style={_labelStyle}>
-                <Text className={labelTextClass}>{label}</Text>
-                {tooltip ? (
-                  <ToolTip
-                    onTooltipClick={onTooltipClick}
-                    renderTooltip={renderTooltip}
-                    prop={prop}
-                  />
-                ) : null}
-              </View>
-              {/* content */}
-              <View
-                style={_contentStyle}
-                className={_contentClassName}
-                onClick={onClick}
-                hoverStyle={{ opacity: 0.6 }}
-                hoverClass={'fta-form-item-content--hover'}>
-                {isUndef(children) ? (
-                  placeholder ? (
-                    <Placeholder>{placeholder}</Placeholder>
-                  ) : null
-                ) : isString(children) ? (
-                  !children.length && placeholder ? (
-                    <Placeholder>{placeholder}</Placeholder>
-                  ) : (
-                    <Text className='fta-form-item-content__text'>{children}</Text>
-                  )
-                ) : (
-                  children
-                )}
-                {arrow ? <Arrow /> : null}
-              </View>
-            </View>
-            {error && errorTip ? (
-              <View className='fta-form-item-error'>
-                <View className='fta-form-item-error-wrap'>
-                  <ErrorIcon /> <Text className='fta-form-item-error__text'>{errorTip}</Text>
-                </View>
-              </View>
-            ) : null}
-          </>
-        )
-      }}
-    </FormConsumer>
+    <ScrollIntoView>
+      <View className={rootClass} id={props ? `form-${prop}` : void 0}>
+        {/* label */}
+        <View className={_labelClassName} style={_labelStyle}>
+          <Text className={labelTextClass}>{label}</Text>
+          {tooltip ? (
+            <ToolTip onTooltipClick={onTooltipClick} renderTooltip={renderTooltip} prop={prop} />
+          ) : null}
+        </View>
+        {/* content */}
+        <View
+          style={_contentStyle}
+          className={_contentClassName}
+          onClick={onClick}
+          hoverStyle={{ opacity: 0.6 }}
+          hoverClass={'fta-form-item-content--hover'}>
+          {isUndef(children) ? (
+            placeholder ? (
+              <Placeholder>{placeholder}</Placeholder>
+            ) : null
+          ) : isString(children) ? (
+            !children.length && placeholder ? (
+              <Placeholder>{placeholder}</Placeholder>
+            ) : (
+              <Text className='fta-form-item-content__text'>{children}</Text>
+            )
+          ) : (
+            children
+          )}
+          {arrow ? <Arrow /> : null}
+        </View>
+      </View>
+      {error && errorTip ? (
+        <View className='fta-form-item-error'>
+          <View className='fta-form-item-error-wrap'>
+            <ErrorIcon /> <Text className='fta-form-item-error__text'>{errorTip}</Text>
+          </View>
+        </View>
+      ) : null}
+    </ScrollIntoView>
   )
 }
 
@@ -285,6 +337,7 @@ const formItemDefaultProps: FormItemProps = {
   label: '',
   error: false,
   errorTip: '信息填写错误',
+  validatePriority: validatePriority.Normal,
   onClick() {},
 }
 
@@ -293,20 +346,23 @@ ToolTip.defaultProps = tooltipDefaultProps
 const ForwardForm = forwardRef(Form) as React.ForwardRefExoticComponent<
   FormProps & React.RefAttributes<FormRefMethods>
 > & {
-  Item: typeof FormItem
+  Item: typeof FowardFormItem
   Gap: typeof Gap
   Tip: typeof Tip
+  ValidatePriority: ValidatePriority
 }
 
 const FowardFormItem = forwardRef(FormItem)
 
 ForwardForm.defaultProps = formDefaultProps
 
-ForwardForm.Item = FormItem
+ForwardForm.Item = FowardFormItem
 
 ForwardForm.Gap = Gap
 
 ForwardForm.Tip = Tip
+
+ForwardForm.ValidatePriority = validatePriority
 
 FowardFormItem.defaultProps = formItemDefaultProps
 

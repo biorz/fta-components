@@ -1,19 +1,30 @@
-import { createContext } from 'react'
+import { createContext, useContext } from 'react'
 import { FormProps } from '../../types/Form'
 
 type FormContext = Pick<
   FormProps,
-  'border' | 'align' | 'labelClassName' | 'labelStyle' | 'contentClassName' | 'contentStyle'
+  | 'readonly'
+  | 'align'
+  | 'labelClassName'
+  | 'labelStyle'
+  | 'contentClassName'
+  | 'contentStyle'
+  | 'onMount'
+  | 'onDestroy'
 > & {
   /** @private 是否展示Modal */
   _showModal?: boolean
 }
 
 const context = createContext<FormContext>({
-  border: true,
   _showModal: false,
 })
 
+function useFormConfig(): FormContext {
+  const config = useContext(context)
+  return config
+}
+
 const { Provider: FormProvider, Consumer: FormConsumer } = context
 
-export { context, FormProvider, FormConsumer }
+export { context, useFormConfig, FormProvider, FormConsumer }

@@ -1,6 +1,8 @@
 import { CSSProperties, FC, ReactElement, ReactNode } from 'react'
 import BaseComponent, { PropsWithChildren } from './base'
 
+type AnyFn = (...args: any[]) => any
+
 export type Validator = (
   rule: ValidateRule,
   value: any,
@@ -43,7 +45,7 @@ export interface FormProps extends BaseComponent, PropsWithChildren {
    * 在设置滚动条位置时使用动画过渡
    * @default false
    */
-  scrollWithAnimation?: boolean
+  // scrollWithAnimation?: boolean
   /**
    * 是否只读
    * @default false
@@ -53,7 +55,7 @@ export interface FormProps extends BaseComponent, PropsWithChildren {
    * 是否显示下方边框线
    * @default true
    */
-  border?: boolean
+  // border?: boolean
   /**
    * 右侧内容区域对其方式
    */
@@ -82,19 +84,29 @@ export interface FormProps extends BaseComponent, PropsWithChildren {
    * 内容区内联样式
    */
   contentStyle?: CSSProperties
+  /**
+   * FormItem挂载
+   */
+  onMount?: (ref: FormItemRefMethods) => void
+  /**
+   * FormItem卸载
+   */
+  onDestroy?: (ref: FormItemRefMethods) => void
 }
 
 export interface FormItemProps
   extends Pick<
       FormProps,
-      | 'scrollIntoView'
+      // | 'scrollIntoView'
       | 'readonly'
-      | 'border'
+      // | 'border'
       | 'align'
       | 'labelClassName'
       | 'labelStyle'
       | 'contentClassName'
       | 'contentStyle'
+      | 'onMount'
+      | 'onDestroy'
     >,
     BaseComponent {
   /**
@@ -120,7 +132,7 @@ export interface FormItemProps
   /**
    * 校验规则
    */
-  rule?: Validator
+  rules?: Validator
   /**
    * 值的最大长度
    */
@@ -160,6 +172,11 @@ export interface FormItemProps
    * 自定义右侧显示
    */
   children?: ReactNode
+  /**
+   * 校验优先级
+   * @default 2
+   */
+  validatePriority?: ValidatePriority[keyof ValidatePriority]
   /**
    * 校验回调
    */
@@ -219,6 +236,8 @@ export interface FormItemRefMethods {
    * 移除该表单项的校验结果
    */
   clearValidate: () => void
+
+  [key: string]: AnyFn
 }
 
 export interface TipProps extends BaseComponent {
@@ -241,6 +260,14 @@ export type ToolTipProps = Pick<
   'tooltip' | 'onTooltipClick' | 'renderTooltip' | 'prop'
 >
 
+export interface ValidatePriority {
+  Higher: 0
+  High: 1
+  Normal: 2
+  Low: 3
+  Lower: 4
+}
+
 declare const Tip: FC<TipProps>
 
 declare const FormItem: FC<FormItemProps>
@@ -251,6 +278,8 @@ declare const Form: FC<FormProps> & {
   Gap: FC<{}>
   /** 重新上传的提示 */
   Tip: typeof Tip
+  /** 校验的优先级 */
+  ValidatePriority: ValidatePriority
 }
 
 export { Form as default, FormItem }
