@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.12](https://code.amh-group.com/h5developer/basebuild/views/fta-view/compare/@fta/components@1.0.0-alpha.11...@fta/components@1.0.0-alpha.12) (2022-05-11)
+
+### Bug Fixes
+
+- **picker:** picker 兼容微信小程序滚动逻辑 ([460211c](https://code.amh-group.com/h5developer/basebuild/views/fta-view/commits/460211cfde2aaf5ef25babd9d51b03e2ae24da5b))
+
+### Features
+
+- **action-sheet:** 动作面板遮罩层样式支持自定义 ([27fcadb](https://code.amh-group.com/h5developer/basebuild/views/fta-view/commits/27fcadb42cab89d57b93ad96f1d53ca61b2b3930))
+
 # [1.0.0-alpha.9](https://code.amh-group.com/h5developer/basebuild/views/fta-view/compare/@fta/components@1.0.0-alpha.8...@fta/components@1.0.0-alpha.9) (2022-04-13)
 
 **Note:** Version bump only for package @fta/components
