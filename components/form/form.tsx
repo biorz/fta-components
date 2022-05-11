@@ -1,4 +1,5 @@
 import { Image, Text, View } from '@tarojs/components'
+import AsyncValidator from 'async-validator'
 import classNames from 'classnames'
 import React, {
   CSSProperties,
@@ -21,6 +22,7 @@ import {
   TipProps,
   ToolTipProps,
   ValidatePriority,
+  ValidateStatus,
 } from '../../types/form'
 import { TouchableOpacity } from '../view'
 import { FormProvider, useFormConfig } from './context'
@@ -43,6 +45,16 @@ const validatePriority: ValidatePriority = {
   Lower: 4,
 }
 
+const validateStatus: ValidateStatus = {
+  unset: -1,
+  error: 0,
+  success: 1,
+  validating: 2,
+}
+
+/**
+ * @component
+ */
 function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
   const {
     children,
@@ -99,6 +111,9 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
   )
 }
 
+/**
+ * @component
+ */
 function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Element {
   const {
     label,
@@ -125,19 +140,23 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
     onDestroy,
   } = props
 
-  // const [error, toggleError] = useState(false)
+  const [status, toggleStatus] = useState()
 
   const ctx = useFormConfig()
 
-  console.log('formConfig', ctx)
+  const model = { ctx }
 
   const refMethods = {
+    /** 获取校验规则 */
     getRules: () => rules,
+    /** 获取表单项实际绑定的值 */
     getValue() {
-      if (value == null) {
+      if (value == null && prop && model) {
+        return model[prop]
       }
       return value
     },
+    /** 清除校验错误提示 */
     clearValidate() {},
     /** 新加的属性列表 */
     resetField() {},
@@ -330,12 +349,14 @@ const tooltipDefaultProps: ToolTipProps = {
 }
 
 const formDefaultProps: FormProps = {
+  model: {},
   titleAlign: 'left',
 }
 
 const formItemDefaultProps: FormItemProps = {
   label: '',
   error: false,
+  rules: [],
   errorTip: '信息填写错误',
   validatePriority: validatePriority.Normal,
   onClick() {},
@@ -350,11 +371,17 @@ const ForwardForm = forwardRef(Form) as React.ForwardRefExoticComponent<
   Gap: typeof Gap
   Tip: typeof Tip
   ValidatePriority: ValidatePriority
+  ValidateStatus: ValidateStatus
+  AsyncValidator: typeof AsyncValidator
 }
 
 const FowardFormItem = forwardRef(FormItem)
 
 ForwardForm.defaultProps = formDefaultProps
+
+FowardFormItem.defaultProps = formItemDefaultProps
+
+/** Extend Form */
 
 ForwardForm.Item = FowardFormItem
 
@@ -364,6 +391,8 @@ ForwardForm.Tip = Tip
 
 ForwardForm.ValidatePriority = validatePriority
 
-FowardFormItem.defaultProps = formItemDefaultProps
+ForwardForm.ValidateStatus = validateStatus
+
+ForwardForm.AsyncValidator = AsyncValidator
 
 export { ForwardForm as default, FowardFormItem as FormItem }
