@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.15](https://code.amh-group.com/h5developer/basebuild/views/fta-view/compare/@fta/components@1.0.0-alpha.12...@fta/components@1.0.0-alpha.15) (2022-05-11)
+
+### Features
+
+- placepicker 支持 rn 混合模式 ([d8baca0](https://code.amh-group.com/h5developer/basebuild/views/fta-view/commits/d8baca08a02bfbbb19831b3207eb260ce577243b))
+- 升级 fta-components ([452652e](https://code.amh-group.com/h5developer/basebuild/views/fta-view/commits/452652ee0804e6c3894fbfe1b1e9eec6c00eef64))
+
 # [1.0.0-alpha.12](https://code.amh-group.com/h5developer/basebuild/views/fta-view/compare/@fta/components@1.0.0-alpha.11...@fta/components@1.0.0-alpha.12) (2022-05-11)
 
 ### Bug Fixes
