@@ -368,7 +368,9 @@ export const Layout = withCare(
     style?: CSSProperties
     showLeft?: boolean
     safeArea?: boolean
+    useScrollView?: boolean
   }): JSX.Element {
+    const ScrollViewAdapter = props.useScrollView === false ? View : ScrollView
     const { careMode, toggle } = useConfig()
     const [showQR, toggleQR] = useState(false)
     useEffect(() => {
@@ -473,10 +475,9 @@ export const Layout = withCare(
               onInput={changeThemeColor}
             />
           ) : null}
-          <ScrollView scrollY className='fta-demo-container'>
-            {/* <Debugger /> */}
+          <ScrollViewAdapter scrollY className='fta-demo-container'>
             {props.children}
-          </ScrollView>
+          </ScrollViewAdapter>
           {inAlipay || props.safeArea === false ? null : <SafeArea bottom />}
         </View>
         {showQR && props.qrcode && !inWeapp ? (

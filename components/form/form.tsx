@@ -9,9 +9,10 @@ import React, {
   Ref,
   useEffect,
   useImperativeHandle,
+  useRef,
   useState,
 } from 'react'
-import { Assets, isString, isUndef } from '../../common'
+import { Assets, inRN, isString, isUndef, useEnhancedState } from '../../common'
 import '../../style/components/form/index.scss'
 import {
   Align,
@@ -27,6 +28,7 @@ import {
 import { TouchableOpacity } from '../view'
 import { FormProvider, useFormConfig } from './context'
 import { ScrollIntoView, ScrollView } from './scroll-into-view'
+import { isEmptyRules, uniqueId } from './util'
 
 const justifyContentMap: Record<Align, CSSProperties['justifyContent']> = {
   left: 'flex-start',
@@ -76,6 +78,11 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
     // @ts-ignore
     style,
   } = props
+
+  // const keysFn = useRef(cache(uniqueId, {})).current
+
+  const [nodeId, scrollIntoView] = useState<string>()
+
   const rootClass = classNames('fta-form', className)
 
   useImperativeHandle(ref, () => ({
@@ -89,6 +96,11 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
     resetFields() {},
     submit() {},
   }))
+
+  useEffect(() => {
+    !inRN && nodeId && setTimeout(scrollIntoView, 50)
+  }, [nodeId])
+
   return (
     <FormProvider
       value={{
@@ -100,12 +112,16 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
         readonly,
         onMount,
         onDestroy,
+        scrollIntoView,
+        // _keys: keysFn,
       }}>
       <ScrollView
         scrollY
         scrollWithAnimation
         scrollX={false}
         className={rootClass}
+        scrollIntoView={nodeId}
+        // onScroll={onScroll}
         style={{ ...style, ...customStyle }}>
         <Title align={titleAlign}>{title}</Title>
         {children}
@@ -121,6 +137,7 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
   const {
     label,
     value,
+    required,
     tooltip,
     renderTooltip,
     prop,
@@ -143,17 +160,22 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
     onDestroy,
   } = props
 
-  const [state, setState] = useState<{
-    status: ValidateStatus[keyof ValidateStatus]
-    tip: string | undefined
-  }>({
-    status: validateStatus.unset,
-    tip: '',
-  })
+  const scrollRef = useRef<any>()
+  const formItemId = useRef(
+    inRN ? void 0 : prop ? `fta-form-item-${prop}` : uniqueId('fta-form-item-')
+  ).current
 
   const ctx = useFormConfig()
 
   const model = { ctx }
+
+  const [state, setState] = useEnhancedState<{
+    status: ValidateStatus[keyof ValidateStatus]
+    message: string | undefined
+  }>({
+    status: validateStatus.unset,
+    message: '',
+  })
 
   const refMethods: FormItemRefMethods = {
     getRules: (_rules) => _rules || rules!,
@@ -163,17 +185,38 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
       }
       return value
     },
-
-    scrollIntoView() {},
+    scrollIntoView() {
+      inRN ? scrollRef.current.scrollIntoView() : ctx.scrollIntoView!(formItemId!)
+    },
     highlight(message?: string) {
       refMethods.scrollIntoView()
       setState({
         status: validateStatus.error,
-        tip: message || errorTip,
+        message: message || errorTip,
       })
     },
     validate(callback, rules) {
-      refMethods.getRules(rules)
+      rules = refMethods.getRules(rules)
+      if (isEmptyRules(rules) && isUndef(required)) {
+        callback()
+        return
+      }
+      setState('status', validateStatus.validating)
+      const key = prop || 'value'
+      const descriptor = {
+        [key]: rules,
+      }
+      const model = {
+        [key]: refMethods.getValue(),
+      }
+      const validator = new AsyncValidator(descriptor)
+
+      validator.validate(model, { firstFields: true }, (errors) => {
+        const status = errors ? validateStatus.error : validateStatus.success
+        const message = errors?.[0]?.message || ''
+        setState({ status, message })
+        callback(message)
+      })
     },
     validateAsync() {
       return new Promise((resolve) => refMethods.validate((message) => resolve(message)))
@@ -181,7 +224,7 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
     clearValidate() {
       setState({
         status: validateStatus.unset,
-        tip: '',
+        message: '',
       })
     },
     // 测试函数
@@ -230,8 +273,8 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
   const labelTextClass = classNames('fta-form-item-label__text')
 
   return (
-    <ScrollIntoView>
-      <View className={rootClass} id={props ? `form-${prop}` : void 0}>
+    <ScrollIntoView ref={inRN ? scrollRef : void 0}>
+      <View className={rootClass} id={formItemId}>
         {/* label */}
         <View className={_labelClassName} style={_labelStyle}>
           <Text className={labelTextClass}>{label}</Text>

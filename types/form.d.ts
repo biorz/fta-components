@@ -1,5 +1,12 @@
 import Schema from 'async-validator'
-import { CSSProperties, FC, ReactElement, ReactNode } from 'react'
+import {
+  CSSProperties,
+  FC,
+  ForwardRefExoticComponent,
+  ReactElement,
+  ReactNode,
+  RefAttributes,
+} from 'react'
 import BaseComponent, { PropsWithChildren } from './base'
 
 type AnyFn = (...args: any[]) => any
@@ -262,6 +269,10 @@ export interface FormItemRefMethods {
    */
   getRules: (rules?: ValidateRule[]) => ValidateRule[]
   /**
+   * 获取当前表单绑定的值
+   */
+  getValue: () => unknown
+  /**
    * 滚动到可视区域
    */
   scrollIntoView: () => void
@@ -307,7 +318,7 @@ export type ToolTipProps = Pick<
 
 declare const Tip: FC<TipProps>
 
-declare const FormItem: FC<FormItemProps>
+declare const FormItem: ForwardRefExoticComponent<FormItemProps & RefAttributes<FormItemRefMethods>>
 
 declare const Form: FC<FormProps> & {
   Item: typeof FormItem

@@ -1,28 +1,28 @@
 import Image from '@fta/components-rn/dist/components/Image'
 import Text from '@fta/components-rn/dist/components/Text'
 import View$1 from '@fta/components-rn/dist/components/View'
+import { scalePx2dp } from '@fta/runtime-rn/dist/scale2dp'
 import classNames from 'classnames'
+import PropTypes from 'prop-types'
 import React, {
   createContext,
-  useContext,
   forwardRef,
-  useImperativeHandle,
+  useContext,
   useEffect,
+  useImperativeHandle,
   useState,
 } from 'react'
-import { isUndef, isString, Assets } from '../common'
 import {
-  StyleSheet,
-  findNodeHandle,
-  UIManager,
-  Platform,
   Animated,
-  View,
+  findNodeHandle,
+  Platform,
   ScrollView as ScrollView$1,
+  StyleSheet,
+  UIManager,
+  View,
 } from 'react-native'
-import { scalePx2dp } from '@fta/runtime-rn/dist/scale2dp'
+import { Assets, isString, isUndef } from '../common'
 import { TouchableOpacity } from '../view'
-import PropTypes from 'prop-types'
 
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr
@@ -1628,7 +1628,6 @@ function FormItem(props, ref) {
     onMount = props.onMount,
     onDestroy = props.onDestroy
   var ctx = useFormConfig()
-  console.log('formConfig', ctx)
   var refMethods = {
     getRules: function getRules() {
       return rules

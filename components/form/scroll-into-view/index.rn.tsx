@@ -1,5 +1,9 @@
 import { ScrollView as RNScrollView } from 'react-native'
-import { ScrollIntoView, wrapScrollViewConfigured } from 'react-native-scroll-into-view'
+import {
+  ScrollIntoView,
+  useScrollIntoView,
+  wrapScrollViewConfigured,
+} from 'react-native-scroll-into-view'
 
 const ScrollView = wrapScrollViewConfigured({
   // ScrollIntoView default/fallback options
@@ -12,4 +16,4 @@ const ScrollView = wrapScrollViewConfigured({
   scrollEventThrottle: 16,
 })(RNScrollView)
 
-export { ScrollIntoView, ScrollView }
+export { ScrollIntoView, ScrollView, useScrollIntoView }

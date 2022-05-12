@@ -1,6 +1,7 @@
 import { ScrollView } from '@tarojs/components'
-import React, { ReactNode } from 'react'
+import React, { FC, ReactNode } from 'react'
 
-const ScrollIntoView = (props: { children: ReactNode }) => <>{props.children}</>
+const ScrollIntoView: FC<{ children: ReactNode; ref: any }> = (props) => <>{props.children}</>
+const useScrollIntoView = () => false as unknown as any
 
-export { ScrollIntoView, ScrollView }
+export { ScrollIntoView, ScrollView, useScrollIntoView }

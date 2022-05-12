@@ -7,13 +7,17 @@ $color-error: #f33131;
 .fta-form {
   @include display-flex(column);
   background-color: $fta-form-bg-color;
+  flex: 1;
+  height: 100%;
 
   &-container {
     height: 100%;
   }
 
   &-title {
-    margin: zoom(36px) zoom(32px) zoom(31px);
+    // Fix: 微信小程序margin塌陷
+    padding-top: zoom(36px);
+    margin: 0 zoom(32px) zoom(31px);
 
     &__text {
       font-size: $font-size-md;

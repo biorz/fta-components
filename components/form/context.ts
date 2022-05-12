@@ -13,8 +13,16 @@ type FormContext = Pick<
   | 'onMount'
   | 'onDestroy'
 > & {
+  /**
+   * @private
+   * @supported weapp, h5
+   * 滚动到指定id元素
+   */
+  scrollIntoView?: (id: string) => void
   /** @private 是否展示Modal */
   _showModal?: boolean
+  /** @private */
+  // _keys?: (key: string) => string
 }
 
 const context = createContext<FormContext>({})
