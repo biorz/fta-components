@@ -4,14 +4,18 @@ const oldPath = resolve('./style/variables/custom.scss')
 const tempPath = resolve('./bin/.temp/custom.scss')
 
 function recoverCustomTheme() {
-  const data = fs.readFileSync(tempPath).toString()
-  fs.writeFileSync(oldPath, data)
+  try {
+    const data = fs.readFileSync(tempPath).toString()
+    fs.writeFileSync(oldPath, data)
+  } catch (error) {}
 }
 
 function clearCustomTheme() {
-  const data = fs.readFileSync(oldPath).toString()
-  fs.writeFileSync(oldPath, '')
-  fs.writeFileSync(tempPath, data)
+  try {
+    const data = fs.readFileSync(oldPath).toString()
+    fs.writeFileSync(oldPath, '')
+    fs.writeFileSync(tempPath, data)
+  } catch (error) {}
 }
 
 function main() {
