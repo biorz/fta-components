@@ -1,6 +1,6 @@
 {
   "name": "@fta/components",
-  "version": "1.0.0-alpha.15",
+  "version": "1.0.1",
   "description": "FTA View - Taro-based cross-platform development framework",
   "types": "./types/index.d.ts",
   "bin": {
@@ -25,8 +25,8 @@
   ],
   "author": "FTA View DEV Group",
   "dependencies": {
-    "lodash.tostring": "^4.1.4",
-    "async-validator": "^4.1.1"
+    "async-validator": "^4.1.1",
+    "lodash.tostring": "^4.1.4"
   },
   "devDependencies": {
     "@tarojs/components": "3.3.3",
