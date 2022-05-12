@@ -6,11 +6,9 @@ type AnyFn = (...args: any[]) => any
 
 export type Align = 'left' | 'center' | 'right'
 
-export type Validator = (
-  rule: ValidateRule,
-  value: any,
-  callback: (message?: string) => void
-) => void
+export type Callback = (message?: string) => void
+
+export type Validator = (rule: ValidateRule, value: any, callback: Callback) => void
 
 export type ValidateCallback = () => void
 
@@ -260,9 +258,25 @@ export interface FormRefMethods {
 
 export interface FormItemRefMethods {
   /**
-   * 对该表单项进行重置，将其值重置为初始值并移除校验结果
+   * 获取校验规则
    */
-  resetField: () => void
+  getRules: (rules?: ValidateRule[]) => ValidateRule[]
+  /**
+   * 滚动到可视区域
+   */
+  scrollIntoView: () => void
+  /**
+   * 滚动到可视区域并标记为错误
+   */
+  highlight: () => void
+  /**
+   * 校验该表单项
+   */
+  validate: (callback: Callback, rules?: Validarule[]) => void
+  /**
+   * 异步校验表单项
+   */
+  validateAsync: () => Promise<string | void>
   /**
    * 移除该表单项的校验结果
    */

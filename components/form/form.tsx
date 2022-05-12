@@ -45,6 +45,9 @@ const validatePriority: ValidatePriority = {
   Lower: 4,
 }
 
+/**
+ * 校验状态
+ */
 const validateStatus: ValidateStatus = {
   unset: -1,
   error: 0,
@@ -140,26 +143,47 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
     onDestroy,
   } = props
 
-  const [status, toggleStatus] = useState()
+  const [state, setState] = useState<{
+    status: ValidateStatus[keyof ValidateStatus]
+    tip: string | undefined
+  }>({
+    status: validateStatus.unset,
+    tip: '',
+  })
 
   const ctx = useFormConfig()
 
   const model = { ctx }
 
-  const refMethods = {
-    /** 获取校验规则 */
-    getRules: () => rules,
-    /** 获取表单项实际绑定的值 */
+  const refMethods: FormItemRefMethods = {
+    getRules: (_rules) => _rules || rules!,
     getValue() {
       if (value == null && prop && model) {
         return model[prop]
       }
       return value
     },
-    /** 清除校验错误提示 */
-    clearValidate() {},
-    /** 新加的属性列表 */
-    resetField() {},
+
+    scrollIntoView() {},
+    highlight(message?: string) {
+      refMethods.scrollIntoView()
+      setState({
+        status: validateStatus.error,
+        tip: message || errorTip,
+      })
+    },
+    validate(callback, rules) {
+      refMethods.getRules(rules)
+    },
+    validateAsync() {
+      return new Promise((resolve) => refMethods.validate((message) => resolve(message)))
+    },
+    clearValidate() {
+      setState({
+        status: validateStatus.unset,
+        tip: '',
+      })
+    },
     // 测试函数
     __test__() {
       console.log(`__test__ executed - label: ${label}`)
