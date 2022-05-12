@@ -26,7 +26,8 @@
   "author": "FTA View DEV Group",
   "dependencies": {
     "async-validator": "^4.1.1",
-    "lodash.tostring": "^4.1.4"
+    "lodash.tostring": "^4.1.4",
+    "react-native-scroll-into-view": "^2.0.2"
   },
   "devDependencies": {
     "@tarojs/components": "3.3.3",

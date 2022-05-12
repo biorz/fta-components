@@ -26,7 +26,7 @@ import {
   ValidateStatus,
 } from '../../types/form'
 import { TouchableOpacity } from '../view'
-import { FormProvider, useFormConfig } from './context'
+import { FormProvider, Store, useFormConfig } from './context'
 import { ScrollIntoView, ScrollView } from './scroll-into-view'
 import { isEmptyRules, uniqueId } from './util'
 
@@ -56,6 +56,8 @@ const validateStatus: ValidateStatus = {
   success: 1,
   validating: 2,
 }
+/** 是否校验出错 */
+const inError = (status: number) => validateStatus.error === status
 
 /**
  * @component
@@ -75,6 +77,7 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
     align,
     onMount,
     onDestroy,
+    suspendOnFirstError,
     // @ts-ignore
     style,
   } = props
@@ -83,19 +86,51 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
 
   const [nodeId, scrollIntoView] = useState<string>()
 
+  const store = useRef<Store>({ __anonymous__: [] as FormItemRefMethods[] }).current
+
   const rootClass = classNames('fta-form', className)
 
-  useImperativeHandle(ref, () => ({
-    validate(callback: (valid: boolean, failedProps: string[]) => void) {
-      return Promise.resolve()
+  const refMethods: FormRefMethods = {
+    async validate(callback) {
+      const { __anonymous__, ...named } = store
+      // 获取所有的FormItemMethods
+      const itemRefs = __anonymous__.concat(Object.values(named as FormItemRefMethods))
+      // 根据优先级排序
+      itemRefs.sort((a, b) => a.priority - b.priority)
+
+      const erroredProps = [] as string[]
+      let invalid = false
+      for (const ref of itemRefs) {
+        const errMsg = await ref.validateAsync()
+        if (errMsg) {
+          invalid = true
+          ref.prop && erroredProps.push(ref.prop)
+          // 校验出错，停止校验
+          if (suspendOnFirstError) {
+            callback?.(invalid, erroredProps)
+            return true
+          }
+        }
+      }
+      callback?.(invalid, erroredProps)
+      return false
     },
-    validateField(props: string[], callback: (valid: boolean, failedProps: string[]) => void) {
-      return Promise.resolve()
+    highlight(prop: string) {
+      const ref = refMethods.obtain(prop)
+      ref?.highlight()
+    },
+    obtain(prop) {
+      return store[prop] as FormItemRefMethods | undefined
     },
     clearValidate() {},
     resetFields() {},
+    validateField(props: string[], callback: (valid: boolean, failedProps: string[]) => void) {
+      return Promise.resolve()
+    },
     submit() {},
-  }))
+  }
+
+  useImperativeHandle(ref, () => refMethods)
 
   useEffect(() => {
     !inRN && nodeId && setTimeout(scrollIntoView, 50)
@@ -104,6 +139,7 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
   return (
     <FormProvider
       value={{
+        store,
         align,
         labelClassName,
         labelStyle,
@@ -146,6 +182,7 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
     arrow,
     error,
     errorTip,
+    validatePriority,
     // readonly,
     align,
     onTooltipClick,
@@ -161,13 +198,12 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
   } = props
 
   const scrollRef = useRef<any>()
+  const ctx = useFormConfig()
+  const model = { ctx }
+
   const formItemId = useRef(
     inRN ? void 0 : prop ? `fta-form-item-${prop}` : uniqueId('fta-form-item-')
   ).current
-
-  const ctx = useFormConfig()
-
-  const model = { ctx }
 
   const [state, setState] = useEnhancedState<{
     status: ValidateStatus[keyof ValidateStatus]
@@ -178,6 +214,8 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
   })
 
   const refMethods: FormItemRefMethods = {
+    prop: prop!,
+    priority: validatePriority!,
     getRules: (_rules) => _rules || rules!,
     getValue() {
       if (value == null && prop && model) {
@@ -189,11 +227,13 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
       inRN ? scrollRef.current.scrollIntoView() : ctx.scrollIntoView!(formItemId!)
     },
     highlight(message?: string) {
-      refMethods.scrollIntoView()
       setState({
         status: validateStatus.error,
         message: message || errorTip,
       })
+      setTimeout(() => {
+        methodsRef.current.scrollIntoView()
+      }, 200)
     },
     validate(callback, rules) {
       rules = refMethods.getRules(rules)
@@ -233,13 +273,31 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
     },
   }
 
+  const methodsRef = useRef(refMethods)
+
+  useEffect(() => {
+    methodsRef.current = refMethods
+  })
+
   /**
    * 监听FormItem的生命周期
    */
   useEffect(() => {
+    if (prop) {
+      ctx.store[prop] = refMethods
+    } else {
+      ctx.store.__anonymous__.push(refMethods)
+    }
     ctx.onMount?.(refMethods)
     onMount?.(refMethods)
+
     return () => {
+      if (prop) {
+        delete ctx.store[prop]
+      } else {
+        const i = ctx.store.__anonymous__.indexOf(refMethods)
+        if (i > -1) ctx.store.__anonymous__.splice(i, 1)
+      }
       ctx.onDestroy?.(refMethods)
       onDestroy?.(refMethods)
     }
@@ -257,7 +315,7 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
     'fta-form-item-content',
     ctx.contentClassName,
     contentClassName,
-    error && 'fta-form-item-content--error'
+    inError(state.status) && 'fta-form-item-content--error'
   )
 
   const _labelStyle = { ...ctx.labelStyle, ...labelStyle }
@@ -273,8 +331,8 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
   const labelTextClass = classNames('fta-form-item-label__text')
 
   return (
-    <ScrollIntoView ref={inRN ? scrollRef : void 0}>
-      <View className={rootClass} id={formItemId}>
+    <ScrollIntoView ref={inRN ? scrollRef : void 0} id={formItemId}>
+      <View className={rootClass}>
         {/* label */}
         <View className={_labelClassName} style={_labelStyle}>
           <Text className={labelTextClass}>{label}</Text>
@@ -302,13 +360,13 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
           ) : (
             children
           )}
-          {arrow ? <Arrow /> : null}
+          {arrow && !_readonly ? <Arrow /> : null}
         </View>
       </View>
-      {error && errorTip ? (
+      {inError(state.status) && state.message ? (
         <View className='fta-form-item-error'>
           <View className='fta-form-item-error-wrap'>
-            <ErrorIcon /> <Text className='fta-form-item-error__text'>{errorTip}</Text>
+            <ErrorIcon /> <Text className='fta-form-item-error__text'>{state.message}</Text>
           </View>
         </View>
       ) : null}

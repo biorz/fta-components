@@ -97,6 +97,7 @@ export interface FormProps extends BaseComponent, PropsWithChildren {
   rules?: Record<string, ValidateRule>
   /**
    * 提交表单时的回调
+   * @todo
    */
   onSubmit?: (form: Record<string, any>) => void
   /**
@@ -123,6 +124,12 @@ export interface FormProps extends BaseComponent, PropsWithChildren {
    * FormItem卸载
    */
   onDestroy?: (ref: FormItemRefMethods) => void
+  /**
+   * 校验时，遇到错误时停止校验后面的选项
+   * 默认 校验所有Item
+   * @default false
+   */
+  suspendOnFirstError?: boolean
 }
 
 export interface FormItemProps
@@ -239,9 +246,18 @@ export interface FormRefMethods {
   /**
    * 手动验证所有表单项，返回一个Promise对象
    */
-  validate: (callback: (valid: boolean, failedProps: string[]) => void) => Promise<void>
+  validate: (callback?: (isValid: boolean, erroredProps?: string[]) => void) => Promise<boolean>
+  /**
+   * 根据prop手动高亮FormItem
+   */
+  highlight: (prop: string) => void
+  /**
+   * 根据prop获取FormItem
+   */
+  obtain: (prop: string) => FormItemRefMethods | undefined
   /**
    * 手动验证部分表单项，返回一个Promise对象
+   * @todo
    */
   validateField: (
     props: string[],
@@ -255,15 +271,24 @@ export interface FormRefMethods {
   clearValidate: (props?: string[]) => void
   /**
    * 对整个表单进行重置，将所有字段值重置为初始值并移除校验结果
+   * @todo
    */
   resetFields: () => void
   /**
    * 手动提交表单
+   * @todo
    */
   submit: () => void
+  /**
+   *
+   */
 }
 
 export interface FormItemRefMethods {
+  /** @private 表单项绑定的key */
+  prop: string
+  /** @private 表单校验的优先级 */
+  priority: ValidatePriority[keyof ValidatePriority]
   /**
    * 获取校验规则
    */
@@ -293,7 +318,7 @@ export interface FormItemRefMethods {
    */
   clearValidate: () => void
 
-  [key: string]: AnyFn
+  [key: string]: any
 }
 
 export interface TipProps extends BaseComponent {
@@ -320,7 +345,7 @@ declare const Tip: FC<TipProps>
 
 declare const FormItem: ForwardRefExoticComponent<FormItemProps & RefAttributes<FormItemRefMethods>>
 
-declare const Form: FC<FormProps> & {
+declare const Form: ForwardRefExoticComponent<FormProps & RefAttributes<FormRefMethods>> & {
   Item: typeof FormItem
   /** 间隔槽 */
   Gap: FC<{}>
