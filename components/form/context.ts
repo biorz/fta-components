@@ -1,4 +1,4 @@
-import { createContext, MutableRefObject, useContext } from 'react'
+import { createContext, MutableRefObject, ReactNode, useContext } from 'react'
 import { FormItemRefMethods, FormProps } from '../../types/Form'
 
 export type Store = {
@@ -30,12 +30,12 @@ type FormContext = Pick<
    */
   scrollIntoView?: (id: string) => void
 
-  /** @private 是否展示Modal */
-  _showModal?: boolean
+  /** @private 展示提示modal */
+  _showModal?: (example: ReactNode) => void
 }
 
 const context = createContext<FormContext>({
-  store: { __anonymous__: [] as FormItemRefMethods[] },
+  store: { __anonymous__: [] as MutableRefObject<FormItemRefMethods>[] },
 })
 
 /** 获取form表单基础配置 */

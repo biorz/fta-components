@@ -28,6 +28,7 @@ import {
 } from '../../types/form'
 import { TouchableOpacity } from '../view'
 import { FormProvider, Store, useFormConfig } from './context'
+import { FullScreen as Modal } from './full-screen'
 import { ScrollIntoView, ScrollView } from './scroll-into-view'
 import { isEmptyRules, uniqueId } from './util'
 
@@ -86,6 +87,13 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
   // const keysFn = useRef(cache(uniqueId, {})).current
 
   const [nodeId, scrollIntoView] = useState<string>()
+  const [visible, toggleVisible] = useState(false)
+  const exampleRef = useRef<ReactNode>()
+
+  const _showModal = (example: ReactNode) => {
+    exampleRef.current = example
+    toggleVisible(true)
+  }
 
   const store = useRef<Store>({
     __anonymous__: [] as MutableRefObject<FormItemRefMethods>[],
@@ -154,6 +162,7 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
         onMount,
         onDestroy,
         scrollIntoView,
+        _showModal,
         // _keys: keysFn,
       }}>
       <ScrollView
@@ -167,9 +176,22 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
         <Title align={titleAlign}>{title}</Title>
         {children}
       </ScrollView>
+      {visible ? (
+        <Modal className='fta-form-modal' onClick={() => toggleVisible(false)}>
+          <Text className='fta-form-modal__text'>点击任意区域关闭</Text>
+          {isString(exampleRef.current) ? (
+            <Image src={exampleRef.current} className='fta-form-modal__image' />
+          ) : (
+            exampleRef.current
+          )}
+        </Modal>
+      ) : null}
     </FormProvider>
   )
 }
+
+// FIXME: iOS RN 中 tooltip 图标溢出父容器
+const rnLabelClz = inRN ? 'fta-form-item-label--hack' : null
 
 /**
  * @component
@@ -180,7 +202,7 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
     value,
     required,
     tooltip,
-    renderTooltip,
+    tooltipIcon,
     prop,
     children,
     placeholder,
@@ -313,7 +335,12 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
   // TODO: 是否标记为只读
   const _readonly = readonly === false ? false : readonly || ctx.readonly
 
-  const _labelClassName = classNames('fta-form-item-label', ctx.labelClassName, labelClassName)
+  const _labelClassName = classNames(
+    'fta-form-item-label',
+    tooltip && rnLabelClz,
+    ctx.labelClassName,
+    labelClassName
+  )
 
   const _contentClassName = classNames(
     'fta-form-item-content',
@@ -335,16 +362,24 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
   const labelTextClass = classNames('fta-form-item-label__text')
 
   const _onLabelCick = () => {
-    onLabelClick?.()
+    if (onLabelClick?.() !== false) {
+      ctx._showModal!(tooltip)
+    }
   }
 
   return (
     <ScrollIntoView ref={inRN ? scrollRef : void 0} id={formItemId}>
       <View className={rootClass}>
         {/* label */}
-        <View className={_labelClassName} style={_labelStyle} onClick={_onLabelCick}>
+        <View
+          className={_labelClassName}
+          style={_labelStyle}
+          onClick={_onLabelCick}
+          hoverClass={tooltip || onLabelClick ? 'fta-form-item-content--hover' : void 0}
+          // @ts-ignore
+          hoverClassName={tooltip || onLabelClick ? 'fta-form-item-content--hover' : void 0}>
           <Text className={labelTextClass}>{label}</Text>
-          {tooltip ? <ToolTip renderTooltip={renderTooltip} prop={prop} /> : null}
+          {tooltip && !_readonly ? <ToolTip tooltipIcon={tooltipIcon} /> : null}
         </View>
         {/* content */}
         <View
@@ -400,21 +435,13 @@ function Title(props: { children?: ReactNode; align?: Align }): JSX.Element | nu
   ) : null
 }
 
-/** 弹出层 */
+/** 提示图标 */
 function ToolTip(props: ToolTipProps): JSX.Element {
-  const [visible, toggle] = useState(false)
-  const { tooltip, onTooltipClick, prop, renderTooltip } = props
-  return (
-    <View
-      className='fta-form-item-tooltip'
-      onClick={() => {
-        onTooltipClick!(prop!)
-        toggle(!visible)
-      }}>
-      {isString(tooltip) ? <Image src={tooltip} /> : tooltip}
-      {/* TODO: 全屏modal支持 */}
-      {visible ? renderTooltip : null}
-    </View>
+  const { tooltipIcon } = props
+  return isString(tooltipIcon) ? (
+    <Image className='fta-form-item-tooltip' src={tooltipIcon} />
+  ) : (
+    tooltipIcon!
   )
 }
 
@@ -478,9 +505,7 @@ Tip.defaultProps = {
 }
 
 const tooltipDefaultProps: ToolTipProps = {
-  tooltip: '',
-  onTooltipClick() {},
-  renderTooltip: null,
+  tooltipIcon: Assets.icon.question,
 }
 
 const formDefaultProps: FormProps = {

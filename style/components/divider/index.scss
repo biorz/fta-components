@@ -1,9 +1,9 @@
 @import '../../mixins/index.scss';
 @import '../../variables/default.scss';
 
-@mixin flex-center {
+@mixin flex-center($direction: row) {
   display: flex;
-  flex-direction: row;
+  flex-direction: $direction;
   justify-content: center;
   align-items: center;
 }

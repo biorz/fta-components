@@ -28,15 +28,19 @@ $color-error: #f33131;
 
   &-tip {
     @include space-between(center);
+    // width: 100%;
     margin: zoom(28px) zoom(20px);
 
     &-content {
       @include display-flex(row);
       align-items: center;
+      width: zoom(480px);
+      // overflow: hidden;
     }
 
     &__image {
       @include square(zoom(28px));
+      flex: 0 0 zoom(28px);
       margin-right: zoom(12px);
     }
 
@@ -58,6 +62,46 @@ $color-error: #f33131;
       }
     }
   }
+
+  &-full-screen {
+    @include rn {
+      flex: 1;
+    }
+
+    @include nrn {
+      position: fixed;
+      z-index: 999;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+  }
+
+  &-modal {
+    @include rn {
+      flex: 1;
+    }
+
+    background-color: rgba(0, 0, 0, 0.4);
+    @include flex-center(column);
+
+    &__text {
+      @include nrn {
+        display: block;
+      }
+      text-align: center;
+      color: #f6f6f6;
+      margin-bottom: zoom(24px);
+      font-size: $font-size-md;
+      line-height: 1.5 * $font-size-md;
+    }
+
+    &__image {
+      width: zoom(560px);
+      height: zoom(552px);
+    }
+  }
 }
 
 .fta-form-item {
@@ -66,9 +110,19 @@ $color-error: #f33131;
   margin: zoom(20px) zoom(32px) 0;
 
   &-label {
+    // overflow: hidden;
+    width: zoom(220px);
+    // background-color: red;
+    // max-width: 200px;
     height: 100%;
     @include display-flex(row);
     align-items: center;
+
+    &--hack {
+      width: zoom(188px);
+      // background-color: green;
+    }
+
     &__text {
       font-size: $font-size-sm;
       font-weight: $font-weight-normal;
@@ -84,7 +138,7 @@ $color-error: #f33131;
     align-items: center;
     min-height: zoom(88px);
     width: zoom(422px);
-    padding-right: zoom(32px);
+    padding: zoom(32px);
     flex: 0 0 zoom(422px);
     border-radius: $border-radius-lg;
     background-color: #f9f9f9;
@@ -145,6 +199,12 @@ $color-error: #f33131;
     width: 100%;
     height: zoom(20px);
     background-color: #f5f5f5;
+  }
+
+  &-tooltip {
+    flex: 0 0 zoom(30px);
+    @include square(zoom(30px));
+    margin-left: zoom(11px);
   }
 
   /* Modifiers */

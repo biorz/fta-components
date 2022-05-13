@@ -186,9 +186,13 @@ export interface FormItemProps
    */
   arrow?: boolean | ReactElement
   /**
+   * 点击label弹出的提示，设置为true，则显示icon图标
+   */
+  tooltip?: ReactNode
+  /**
    * 标签文字右侧提示, 传入图片URL或自定义渲染
    */
-  tooltip?: string | ReactElement
+  tooltipIcon?: string | ReactElement
   /**
    * 是否校验错误
    * @default false
@@ -202,7 +206,7 @@ export interface FormItemProps
   /**
    * 点击label的回调
    */
-  onLabelClick?: () => void
+  onLabelClick?: () => any
   /**
    * 点击tooltip的全屏提示
    */
@@ -337,10 +341,7 @@ export interface TipProps extends BaseComponent {
   title?: string
 }
 
-export type ToolTipProps = Pick<
-  FormItemProps,
-  'tooltip' | 'onTooltipClick' | 'renderTooltip' | 'prop'
->
+export type ToolTipProps = Pick<FormItemProps, 'tooltipIcon'>
 
 declare const Tip: FC<TipProps>
 
