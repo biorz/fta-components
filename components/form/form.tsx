@@ -180,7 +180,7 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
         <Modal className='fta-form-modal' onClick={() => toggleVisible(false)}>
           <Text className='fta-form-modal__text'>点击任意区域关闭</Text>
           {isString(exampleRef.current) ? (
-            <Image src={exampleRef.current} className='fta-form-modal__image' />
+            <Image src={exampleRef.current} mode='aspectFit' className='fta-form-modal__image' />
           ) : (
             exampleRef.current
           )}
@@ -331,6 +331,10 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
 
   useImperativeHandle(ref, () => refMethods)
 
+  if (isUndef(label)) {
+    return <View>{children} </View>
+  }
+
   const _align = align || ctx.align
   // TODO: 是否标记为只读
   const _readonly = readonly === false ? false : readonly || ctx.readonly
@@ -362,39 +366,43 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
   const labelTextClass = classNames('fta-form-item-label__text')
 
   const _onLabelCick = () => {
-    if (onLabelClick?.() !== false) {
+    if (!_readonly && tooltip && onLabelClick?.() !== false) {
       ctx._showModal!(tooltip)
     }
   }
 
+  const labelHoverClass =
+    !readonly && (tooltip || onLabelClick) ? 'fta-form-item-content--hover' : void 0
+
+  const contentHoverClass = _readonly ? void 0 : 'fta-form-item-content--hover'
   return (
     <ScrollIntoView ref={inRN ? scrollRef : void 0} id={formItemId}>
       <View className={rootClass}>
-        {/* label */}
+        {/* ========== label area==========*/}
         <View
           className={_labelClassName}
           style={_labelStyle}
           onClick={_onLabelCick}
-          hoverClass={tooltip || onLabelClick ? 'fta-form-item-content--hover' : void 0}
+          hoverClass={labelHoverClass}
           // @ts-ignore
-          hoverClassName={tooltip || onLabelClick ? 'fta-form-item-content--hover' : void 0}>
+          hoverClassName={labelHoverClass}>
           <Text className={labelTextClass}>{label}</Text>
           {tooltip && !_readonly ? <ToolTip tooltipIcon={tooltipIcon} /> : null}
         </View>
-        {/* content */}
+        {/* ========== content area =========== */}
         <View
           style={_contentStyle}
           className={_contentClassName}
           onClick={onClick}
           //@ts-ignore
-          hoverClassName={_readonly ? void 0 : 'fta-form-item-content--hover'}
-          hoverClass={_readonly ? void 0 : 'fta-form-item-content--hover'}>
+          hoverClassName={contentHoverClass}
+          hoverClass={contentHoverClass}>
           {isUndef(children) ? (
-            placeholder ? (
+            placeholder && !_readonly ? (
               <Placeholder>{placeholder}</Placeholder>
             ) : null
           ) : isString(children) ? (
-            !children.length && placeholder ? (
+            !children.length && placeholder && !_readonly ? (
               <Placeholder>{placeholder}</Placeholder>
             ) : (
               <Text className='fta-form-item-content__text'>{children}</Text>
@@ -514,7 +522,7 @@ const formDefaultProps: FormProps = {
 }
 
 const formItemDefaultProps: FormItemProps = {
-  label: '',
+  // label: '',
   error: false,
   rules: [],
   errorTip: '信息填写错误',

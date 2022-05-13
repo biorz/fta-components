@@ -151,7 +151,7 @@ export interface FormItemProps
   /**
    * 左侧标题
    */
-  label: string
+  label?: string
   /**
    * 右侧默认值
    */

@@ -51,6 +51,7 @@ const defaultContext: GlobalContext = {
   careMode: false,
   platform: 'ymm',
   debugger: true,
+  toggle() {},
 }
 
 const Context = createContext<GlobalContext>(defaultContext)
