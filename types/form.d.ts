@@ -3,6 +3,7 @@ import {
   CSSProperties,
   FC,
   ForwardRefExoticComponent,
+  MutableRefObject,
   ReactElement,
   ReactNode,
   RefAttributes,
@@ -119,11 +120,11 @@ export interface FormProps extends BaseComponent, PropsWithChildren {
   /**
    * FormItem挂载
    */
-  onMount?: (ref: FormItemRefMethods) => void
+  onMount?: (ref: MutableRefObject<FormItemRefMethods>) => void
   /**
    * FormItem卸载
    */
-  onDestroy?: (ref: FormItemRefMethods) => void
+  onDestroy?: (ref: MutableRefObject<FormItemRefMethods>) => void
   /**
    * 校验时，遇到错误时停止校验后面的选项
    * 默认 校验所有Item
@@ -199,13 +200,13 @@ export interface FormItemProps
    */
   errorTip?: string
   /**
-   * 点击tooltip的回调
+   * 点击label的回调
    */
-  onTooltipClick?: (prop: string) => void
+  onLabelClick?: () => void
   /**
    * 点击tooltip的全屏提示
    */
-  renderTooltip?: ReactNode
+  tooltip?: ReactNode
   /**
    * input框自动聚焦
    * @default false
@@ -254,7 +255,7 @@ export interface FormRefMethods {
   /**
    * 根据prop获取FormItem
    */
-  obtain: (prop: string) => FormItemRefMethods | undefined
+  obtain: (prop: string) => MutableRefObject<FormItemRefMethods> | undefined
   /**
    * 手动验证部分表单项，返回一个Promise对象
    * @todo

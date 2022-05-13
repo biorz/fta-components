@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import React, {
   CSSProperties,
   forwardRef,
+  MutableRefObject,
   ReactElement,
   ReactNode,
   Ref,
@@ -86,7 +87,9 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
 
   const [nodeId, scrollIntoView] = useState<string>()
 
-  const store = useRef<Store>({ __anonymous__: [] as FormItemRefMethods[] }).current
+  const store = useRef<Store>({
+    __anonymous__: [] as MutableRefObject<FormItemRefMethods>[],
+  }).current
 
   const rootClass = classNames('fta-form', className)
 
@@ -94,13 +97,15 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
     async validate(callback) {
       const { __anonymous__, ...named } = store
       // 获取所有的FormItemMethods
-      const itemRefs = __anonymous__.concat(Object.values(named as FormItemRefMethods))
+      const itemRefs = __anonymous__.concat(
+        Object.values(named as Record<string, MutableRefObject<FormItemRefMethods>>)
+      )
       // 根据优先级排序
-      itemRefs.sort((a, b) => a.priority - b.priority)
+      itemRefs.sort((a, b) => a.current.priority - b.current.priority)
 
       const erroredProps = [] as string[]
       let invalid = false
-      for (const ref of itemRefs) {
+      for (const { current: ref } of itemRefs) {
         const errMsg = await ref.validateAsync()
         if (errMsg) {
           invalid = true
@@ -117,10 +122,10 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
     },
     highlight(prop: string) {
       const ref = refMethods.obtain(prop)
-      ref?.highlight()
+      ref?.current.highlight()
     },
     obtain(prop) {
-      return store[prop] as FormItemRefMethods | undefined
+      return store[prop] as MutableRefObject<FormItemRefMethods> | undefined
     },
     clearValidate() {},
     resetFields() {},
@@ -185,7 +190,7 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
     validatePriority,
     // readonly,
     align,
-    onTooltipClick,
+    onLabelClick,
     onClick,
     labelClassName,
     labelStyle,
@@ -231,9 +236,7 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
         status: validateStatus.error,
         message: message || errorTip,
       })
-      setTimeout(() => {
-        methodsRef.current.scrollIntoView()
-      }, 200)
+      setTimeout(methodsRef.current.scrollIntoView, 200)
     },
     validate(callback, rules) {
       rules = refMethods.getRules(rules)
@@ -275,6 +278,7 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
 
   const methodsRef = useRef(refMethods)
 
+  // 保证能取到最新的refMethods
   useEffect(() => {
     methodsRef.current = refMethods
   })
@@ -284,22 +288,22 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
    */
   useEffect(() => {
     if (prop) {
-      ctx.store[prop] = refMethods
+      ctx.store[prop] = methodsRef
     } else {
-      ctx.store.__anonymous__.push(refMethods)
+      ctx.store.__anonymous__.push(methodsRef)
     }
-    ctx.onMount?.(refMethods)
-    onMount?.(refMethods)
+    ctx.onMount?.(methodsRef)
+    onMount?.(methodsRef)
 
     return () => {
       if (prop) {
         delete ctx.store[prop]
       } else {
-        const i = ctx.store.__anonymous__.indexOf(refMethods)
+        const i = ctx.store.__anonymous__.indexOf(methodsRef)
         if (i > -1) ctx.store.__anonymous__.splice(i, 1)
       }
-      ctx.onDestroy?.(refMethods)
-      onDestroy?.(refMethods)
+      ctx.onDestroy?.(methodsRef)
+      onDestroy?.(methodsRef)
     }
   }, [])
 
@@ -330,23 +334,26 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
 
   const labelTextClass = classNames('fta-form-item-label__text')
 
+  const _onLabelCick = () => {
+    onLabelClick?.()
+  }
+
   return (
     <ScrollIntoView ref={inRN ? scrollRef : void 0} id={formItemId}>
       <View className={rootClass}>
         {/* label */}
-        <View className={_labelClassName} style={_labelStyle}>
+        <View className={_labelClassName} style={_labelStyle} onClick={_onLabelCick}>
           <Text className={labelTextClass}>{label}</Text>
-          {tooltip ? (
-            <ToolTip onTooltipClick={onTooltipClick} renderTooltip={renderTooltip} prop={prop} />
-          ) : null}
+          {tooltip ? <ToolTip renderTooltip={renderTooltip} prop={prop} /> : null}
         </View>
         {/* content */}
         <View
           style={_contentStyle}
           className={_contentClassName}
           onClick={onClick}
-          hoverStyle={{ opacity: 0.6 }}
-          hoverClass={'fta-form-item-content--hover'}>
+          //@ts-ignore
+          hoverClassName={_readonly ? void 0 : 'fta-form-item-content--hover'}
+          hoverClass={_readonly ? void 0 : 'fta-form-item-content--hover'}>
           {isUndef(children) ? (
             placeholder ? (
               <Placeholder>{placeholder}</Placeholder>
@@ -363,13 +370,16 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
           {arrow && !_readonly ? <Arrow /> : null}
         </View>
       </View>
-      {inError(state.status) && state.message ? (
-        <View className='fta-form-item-error'>
-          <View className='fta-form-item-error-wrap'>
-            <ErrorIcon /> <Text className='fta-form-item-error__text'>{state.message}</Text>
+      {/* 套了一个View标签，解决Taro H5 顺序颠倒 */}
+      <View>
+        {inError(state.status) && state.message ? (
+          <View className='fta-form-item-error'>
+            <View className='fta-form-item-error-wrap'>
+              <ErrorIcon /> <Text className='fta-form-item-error__text'>{state.message}</Text>
+            </View>
           </View>
-        </View>
-      ) : null}
+        ) : null}
+      </View>
     </ScrollIntoView>
   )
 }

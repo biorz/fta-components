@@ -1,9 +1,12 @@
-import { createContext, useContext } from 'react'
+import { createContext, MutableRefObject, useContext } from 'react'
 import { FormItemRefMethods, FormProps } from '../../types/Form'
 
 export type Store = {
-  __anonymous__: FormItemRefMethods[]
-  [key: string]: FormItemRefMethods | FormItemRefMethods[] | undefined
+  __anonymous__: MutableRefObject<FormItemRefMethods>[]
+  [key: string]:
+    | MutableRefObject<FormItemRefMethods>
+    | MutableRefObject<FormItemRefMethods>[]
+    | undefined
 }
 
 type FormContext = Pick<
