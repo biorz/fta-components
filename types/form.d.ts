@@ -95,7 +95,7 @@ export interface FormProps extends BaseComponent, PropsWithChildren {
   /**
    * 校验规则
    */
-  rules?: Record<string, ValidateRule>
+  rules?: Record<string, ValidateRule[]>
   /**
    * 提交表单时的回调
    * @todo

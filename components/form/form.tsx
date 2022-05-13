@@ -77,6 +77,7 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
     contentStyle,
     readonly,
     align,
+    rules,
     onMount,
     onDestroy,
     suspendOnFirstError,
@@ -152,6 +153,7 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
   return (
     <FormProvider
       value={{
+        rules,
         store,
         align,
         labelClassName,
@@ -243,7 +245,7 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
   const refMethods: FormItemRefMethods = {
     prop: prop!,
     priority: validatePriority!,
-    getRules: (_rules) => _rules || rules!,
+    getRules: (_rules) => _rules || rules || (prop && ctx.rules![prop]) || [],
     getValue() {
       if (value == null && prop && model) {
         return model[prop]
@@ -372,7 +374,7 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
   }
 
   const labelHoverClass =
-    !readonly && (tooltip || onLabelClick) ? 'fta-form-item-content--hover' : void 0
+    !_readonly && (tooltip || onLabelClick) ? 'fta-form-item-content--hover' : void 0
 
   const contentHoverClass = _readonly ? void 0 : 'fta-form-item-content--hover'
   return (
@@ -517,6 +519,7 @@ const tooltipDefaultProps: ToolTipProps = {
 }
 
 const formDefaultProps: FormProps = {
+  rules: {},
   model: {},
   titleAlign: 'left',
 }
@@ -524,7 +527,7 @@ const formDefaultProps: FormProps = {
 const formItemDefaultProps: FormItemProps = {
   // label: '',
   error: false,
-  rules: [],
+  // rules: [],
   errorTip: '信息填写错误',
   validatePriority: validatePriority.Normal,
   onClick() {},

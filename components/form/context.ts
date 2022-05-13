@@ -20,6 +20,7 @@ type FormContext = Pick<
   | 'contentStyle'
   | 'onMount'
   | 'onDestroy'
+  | 'rules'
 > & {
   /** @private */
   store: Store
@@ -35,6 +36,7 @@ type FormContext = Pick<
 }
 
 const context = createContext<FormContext>({
+  rules: {},
   store: { __anonymous__: [] as MutableRefObject<FormItemRefMethods>[] },
 })
 
