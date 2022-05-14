@@ -1,15 +1,40 @@
-import { CSSProperties, FC, ReactElement, ReactNode } from 'react'
+import { InputProps } from '@tarojs/components/types/Input'
+import Schema from 'async-validator'
+import {
+  CSSProperties,
+  FC,
+  ForwardRefExoticComponent,
+  MutableRefObject,
+  ReactElement,
+  ReactNode,
+  RefAttributes,
+} from 'react'
 import BaseComponent, { PropsWithChildren } from './base'
 
 type AnyFn = (...args: any[]) => any
 
-export type Validator = (
-  rule: ValidateRule,
-  value: any,
-  callback: (message?: string) => void
-) => void
-
 export type Align = 'left' | 'center' | 'right'
+
+export type Callback = (message?: string) => void
+
+export type Validator = (rule: ValidateRule, value: any, callback: Callback) => void
+
+export type ValidateCallback = () => void
+
+export interface ValidateStatus {
+  unset: -1
+  error: 0
+  success: 1
+  validating: 2
+}
+
+export interface ValidatePriority {
+  Higher: 0
+  High: 1
+  Normal: 2
+  Low: 3
+  Lower: 4
+}
 
 export interface ValidateRule {
   /**
@@ -24,6 +49,10 @@ export interface ValidateRule {
    * 自定义校验规则
    */
   validator?: Validator
+  /** 当前校验的字段中文名
+   * @deprecated
+   */
+  fieldName?: string
 }
 
 export interface FormProps extends BaseComponent, PropsWithChildren {
@@ -36,6 +65,10 @@ export interface FormProps extends BaseComponent, PropsWithChildren {
    * @default 'left'
    */
   titleAlign?: Align
+  /**
+   * 表单绑定的数据流
+   */
+  model?: Record<string, any>
   /**
    * 校验出错时是否滚动到可视范围内
    * @default true
@@ -63,9 +96,10 @@ export interface FormProps extends BaseComponent, PropsWithChildren {
   /**
    * 校验规则
    */
-  rules?: Record<string, ValidateRule>
+  rules?: Record<string, ValidateRule[]>
   /**
    * 提交表单时的回调
+   * @todo
    */
   onSubmit?: (form: Record<string, any>) => void
   /**
@@ -87,11 +121,17 @@ export interface FormProps extends BaseComponent, PropsWithChildren {
   /**
    * FormItem挂载
    */
-  onMount?: (ref: FormItemRefMethods) => void
+  onMount?: (ref: MutableRefObject<FormItemRefMethods>) => void
   /**
    * FormItem卸载
    */
-  onDestroy?: (ref: FormItemRefMethods) => void
+  onDestroy?: (ref: MutableRefObject<FormItemRefMethods>) => void
+  /**
+   * 校验时，遇到错误时停止校验后面的选项
+   * 默认 校验所有Item
+   * @default false
+   */
+  suspendOnFirstError?: boolean
 }
 
 export interface FormItemProps
@@ -112,15 +152,16 @@ export interface FormItemProps
   /**
    * 左侧标题
    */
-  label: string
+  label?: string
   /**
    * 右侧默认值
    */
   value?: string
   /**
-   * 自定义渲染右侧区域
+   * 当前字段是否必填
+   * @default false
    */
-  render?: ReactNode
+  required?: boolean
   /**
    * 空值时的占位文本
    */
@@ -132,80 +173,127 @@ export interface FormItemProps
   /**
    * 校验规则
    */
-  rules?: Validator
-  /**
-   * 值的最大长度
-   */
-  maxlength?: number
+  rules?: ValidateRule[]
   /**
    * 是否显示右箭头（可传入自定义节点）
    */
   arrow?: boolean | ReactElement
   /**
+   * 点击label弹出的提示，设置为true，则显示icon图标
+   */
+  tooltip?: ReactNode
+  /**
    * 标签文字右侧提示, 传入图片URL或自定义渲染
    */
-  tooltip?: string | ReactElement
+  tooltipIcon?: string | ReactElement
   /**
    * 是否校验错误
    * @default false
    */
-  error?: boolean
+  // error?: boolean
   /**
    * 校验错误提示信息
    * @default '信息填写错误'
    */
   errorTip?: string
   /**
-   * 点击tooltip的回调
+   * 整个表单项的点击事件回调
    */
-  onTooltipClick?: (prop: string) => void
+  onItemClick?: () => void
+  /**
+   * label存在时，点击content区域的回调
+   */
+  onClick?: () => void
+  /**
+   * 点击label的回调
+   */
+  onLabelClick?: () => any
   /**
    * 点击tooltip的全屏提示
    */
-  renderTooltip?: ReactNode
+  tooltip?: ReactNode
   /**
-   * input框自动聚焦
-   * @default false
+   * label存在时，自定义右侧内容显示
+   * label不存在时，自定义FormItem全部样式
    */
-  autofocus?: boolean
+  children?: ReactNode | ((props: FormItemChildrenProps) => ReactNode)
   /**
-   * 自定义右侧显示
+   * 优先级高于children
+   * label存在时，自定义右侧内容显示
+   * label不存在时，自定义FormItem全部样式
    */
-  children?: ReactNode
+  render?: (props: FormItemChildrenProps) => ReactNode
   /**
    * 校验优先级
    * @default 2
    */
   validatePriority?: ValidatePriority[keyof ValidatePriority]
   /**
-   * 校验回调
+   *  内置输入框的props,自定义组件无效
    */
-  validator?: (rule: ValidateRule, value?: any, callback?: (val: ?any) => void) => void
-  /**
-   * 点击内容区域的回调
-   */
-  onClick?: () => void
-  /**
-   * 值变化时的回调
-   */
-  onChange?: (newVal: boolean, oldVal: boolean) => void
-  /**
-   * 输入框聚焦时的回调
-   */
-  onFoucs?: () => void
-  /**
-   * 输入框失焦时的回调
-   */
-  onBlur?: () => void
+  inputProps?: BuiltinInputProps
 }
+
+export interface StatelessProps {
+  /**
+   * 当前是否校验出错
+   */
+  error: boolean
+  /**
+   * FormItem本身的ref
+   */
+  itemRef: MutableRefObject<FormItemRefMethods>
+}
+
+export interface FormItemAppearanceProps
+  extends Omit<
+      FormItemProps,
+      'prop' | 'value' | 'required' | 'rules' | 'onMount' | 'onDestroy' | 'validatePriority'
+    >,
+    StatelessProps {
+  render?: ReactNode
+  children?: ReactNode
+}
+export interface FormItemChildrenProps
+  extends Omit<
+      FormItemProps,
+      | 'className'
+      | 'customStyle'
+      | 'render'
+      | 'children'
+      | 'onLabelClick'
+      | 'inputProps'
+      | 'labelClassName'
+      | 'labelStyle'
+      | 'containerClassName'
+      | 'containerStyle'
+      | 'tooltip'
+      | 'tooltipIcon'
+      | 'arrow'
+      | 'onClick'
+      | 'onLabelClick'
+      | 'onItemClick'
+      | 'onMount'
+      | 'onDestroy'
+    >,
+    StatelessProps {}
 
 export interface FormRefMethods {
   /**
-   * 手动验证所有表单项，返回一个Promise对象
+   * 手动验证所有表单项，返回一个Promise对象, true为校验失败
    */
-  validate: (callback: (valid: boolean, failedProps: string[]) => void) => Promise<void>
+  validate: (callback?: (isValid: boolean, erroredProps: string[]) => void) => Promise<boolean>
+  /**
+   * 根据prop手动高亮FormItem
+   */
+  highlight: (prop: string, message?: string, scrollIntoView?: boolean) => void
+  /**
+   * 根据prop获取FormItem
+   */
+  obtain: (prop: string) => MutableRefObject<FormItemRefMethods> | undefined
   /**
    * 手动验证部分表单项，返回一个Promise对象
+   * @todo
    */
   validateField: (
     props: string[],
@@ -216,28 +304,62 @@ export interface FormRefMethods {
    * 传入待移除的表单项的 prop 属性或者 prop 组成的数组
    * 如不传则移除整个表单的校验结果
    */
-  clearValidate: (props?: string[]) => void
+  clearValidate: (prop?: string | string[]) => void
   /**
    * 对整个表单进行重置，将所有字段值重置为初始值并移除校验结果
+   * @todo
    */
   resetFields: () => void
   /**
    * 手动提交表单
+   * @todo
    */
   submit: () => void
+  /**
+   *
+   */
 }
 
 export interface FormItemRefMethods {
+  /** @private 表单项绑定的key */
+  prop: string
+  /** @private 表单校验的优先级 */
+  priority: ValidatePriority[keyof ValidatePriority]
   /**
-   * 对该表单项进行重置，将其值重置为初始值并移除校验结果
+   * 获取校验规则
    */
-  resetField: () => void
+  getRules: (rules?: ValidateRule[]) => ValidateRule[]
+  /**
+   * 获取当前表单绑定的值
+   */
+  getValue: () => string | undefined
+  /**
+   * 滚动到可视区域
+   */
+  scrollIntoView: () => void
+  /**
+   * 滚动到可视区域并标记为错误
+   */
+  highlight: (message?: string, scrollIntoView?: boolean) => void
+  /**
+   * 校验该表单项
+   */
+  validate: (callback: Callback, rules?: Validarule[]) => void
+  /**
+   * 异步校验表单项
+   */
+  validateAsync: () => Promise<string | void>
   /**
    * 移除该表单项的校验结果
    */
   clearValidate: () => void
 
-  [key: string]: AnyFn
+  [key: string]: any
+}
+
+export interface BuiltinInputProps extends InputProps {
+  className?: string
+  style?: CSSProperties
 }
 
 export interface TipProps extends BaseComponent {
@@ -255,31 +377,28 @@ export interface TipProps extends BaseComponent {
   title?: string
 }
 
-export type ToolTipProps = Pick<
-  FormItemProps,
-  'tooltip' | 'onTooltipClick' | 'renderTooltip' | 'prop'
->
-
-export interface ValidatePriority {
-  Higher: 0
-  High: 1
-  Normal: 2
-  Low: 3
-  Lower: 4
-}
+export type ToolTipProps = Pick<FormItemProps, 'tooltipIcon'>
 
 declare const Tip: FC<TipProps>
 
-declare const FormItem: FC<FormItemProps>
+declare const FormItem: ForwardRefExoticComponent<FormItemProps & RefAttributes<FormItemRefMethods>>
 
-declare const Form: FC<FormProps> & {
+declare const Form: ForwardRefExoticComponent<FormProps & RefAttributes<FormRefMethods>> & {
   Item: typeof FormItem
+  /** FormItem UI组件 */
+  ItemView: FC<FormItemAppearanceProps>
+  /** 内置输入框 */
+  Input: FC<BuiltinInputProps>
   /** 间隔槽 */
   Gap: FC<{}>
   /** 重新上传的提示 */
   Tip: typeof Tip
   /** 校验的优先级 */
   ValidatePriority: ValidatePriority
+  /** 校验的状态 */
+  ValidateStatus: ValidateStatus
+  /** 异步校验器 */
+  AsyncValidator: typeof Schema
 }
 
 export { Form as default, FormItem }

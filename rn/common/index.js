@@ -152,7 +152,12 @@ function _objectSpread$2(target) {
   }
   return target
 }
-var defaultContext = { careMode: false, platform: 'ymm', debugger: true }
+var defaultContext = {
+  careMode: false,
+  platform: 'ymm',
+  debugger: true,
+  toggle: function toggle() {},
+}
 var Context = createContext(defaultContext)
 Context.displayName = 'GlobalConfigContext'
 function ConfigProvider(props) {

@@ -1,28 +1,91 @@
 import Image from '@fta/components-rn/dist/components/Image'
+import Input from '@fta/components-rn/dist/components/Input'
 import Text from '@fta/components-rn/dist/components/Text'
-import View$1 from '@fta/components-rn/dist/components/View'
-import { scalePx2dp } from '@fta/runtime-rn/dist/scale2dp'
+import View from '@fta/components-rn/dist/components/View'
 import classNames from 'classnames'
-import PropTypes from 'prop-types'
 import React, {
   createContext,
-  forwardRef,
   useContext,
-  useEffect,
-  useImperativeHandle,
+  forwardRef,
   useState,
+  useRef,
+  useImperativeHandle,
+  useEffect,
 } from 'react'
+import { Assets, inRN, isString, useEnhancedState, isUndef, isArray } from '../common'
 import {
-  Animated,
-  findNodeHandle,
-  Platform,
-  ScrollView as ScrollView$1,
   StyleSheet,
+  Modal,
+  findNodeHandle,
   UIManager,
-  View,
+  Platform,
+  Animated,
+  View as View$1,
+  ScrollView as ScrollView$1,
 } from 'react-native'
-import { Assets, isString, isUndef } from '../common'
+import { scalePx2dp } from '@fta/runtime-rn/dist/scale2dp'
 import { TouchableOpacity } from '../view'
+import PropTypes from 'prop-types'
+
+function _extends$1() {
+  _extends$1 =
+    Object.assign ||
+    function (target) {
+      for (var i = 1; i < arguments.length; i++) {
+        var source = arguments[i]
+        for (var key in source) {
+          if (Object.prototype.hasOwnProperty.call(source, key)) {
+            target[key] = source[key]
+          }
+        }
+      }
+      return target
+    }
+  return _extends$1.apply(this, arguments)
+}
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true,
+    })
+  } else {
+    obj[key] = value
+  }
+  return obj
+}
+
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {}
+  var target = {}
+  var sourceKeys = Object.keys(source)
+  var key, i
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i]
+    if (excluded.indexOf(key) >= 0) continue
+    target[key] = source[key]
+  }
+  return target
+}
+
+function _objectWithoutProperties(source, excluded) {
+  if (source == null) return {}
+  var target = _objectWithoutPropertiesLoose(source, excluded)
+  var key, i
+  if (Object.getOwnPropertySymbols) {
+    var sourceSymbolKeys = Object.getOwnPropertySymbols(source)
+    for (i = 0; i < sourceSymbolKeys.length; i++) {
+      key = sourceSymbolKeys[i]
+      if (excluded.indexOf(key) >= 0) continue
+      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue
+      target[key] = source[key]
+    }
+  }
+  return target
+}
 
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr
@@ -56,7 +119,7 @@ function _iterableToArrayLimit(arr, i) {
   return _arr
 }
 
-function _arrayLikeToArray(arr, len) {
+function _arrayLikeToArray$1(arr, len) {
   if (len == null || len > arr.length) len = arr.length
   for (var i = 0, arr2 = new Array(len); i < len; i++) {
     arr2[i] = arr[i]
@@ -64,14 +127,14 @@ function _arrayLikeToArray(arr, len) {
   return arr2
 }
 
-function _unsupportedIterableToArray(o, minLen) {
+function _unsupportedIterableToArray$1(o, minLen) {
   if (!o) return
-  if (typeof o === 'string') return _arrayLikeToArray(o, minLen)
+  if (typeof o === 'string') return _arrayLikeToArray$1(o, minLen)
   var n = Object.prototype.toString.call(o).slice(8, -1)
   if (n === 'Object' && o.constructor) n = o.constructor.name
   if (n === 'Map' || n === 'Set') return Array.from(o)
   if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
-    return _arrayLikeToArray(o, minLen)
+    return _arrayLikeToArray$1(o, minLen)
 }
 
 function _nonIterableRest() {
@@ -84,283 +147,9 @@ function _slicedToArray(arr, i) {
   return (
     _arrayWithHoles(arr) ||
     _iterableToArrayLimit(arr, i) ||
-    _unsupportedIterableToArray(arr, i) ||
+    _unsupportedIterableToArray$1(arr, i) ||
     _nonIterableRest()
   )
-}
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true,
-    })
-  } else {
-    obj[key] = value
-  }
-  return obj
-}
-
-var indexScssStyleSheet = StyleSheet.create({
-  'fta-form': {
-    display: 'flex',
-    flexDirection: 'column',
-    backgroundColor: '#fff',
-  },
-  'fta-form-container': {
-    height: '100%',
-  },
-  'fta-form-title': {
-    marginTop: scalePx2dp(17.28),
-    marginRight: scalePx2dp(15.36),
-    marginBottom: scalePx2dp(14.88),
-    marginLeft: scalePx2dp(15.36),
-  },
-  'fta-form-title__text': {
-    fontSize: scalePx2dp(15.36),
-    fontWeight: '600',
-    color: '#333',
-  },
-  'fta-form-tip': {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: scalePx2dp(13.44),
-    marginRight: scalePx2dp(9.6),
-    marginBottom: scalePx2dp(13.44),
-    marginLeft: scalePx2dp(9.6),
-  },
-  'fta-form-tip-content': {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  'fta-form-tip__image': {
-    width: scalePx2dp(13.44),
-    height: scalePx2dp(13.44),
-    marginRight: scalePx2dp(5.76),
-  },
-  'fta-form-tip__text': {
-    fontSize: scalePx2dp(13.44),
-    color: '#666',
-  },
-  'fta-form-tip__button': {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: scalePx2dp(67.2),
-    height: scalePx2dp(24.96),
-    borderRadius: scalePx2dp(3.84),
-    backgroundColor: '#fa871e',
-  },
-  'fta-form-tip__button__text': {
-    fontSize: scalePx2dp(13.44),
-    color: '#fff',
-  },
-  'fta-form-item': {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: scalePx2dp(9.6),
-    marginRight: scalePx2dp(15.36),
-    marginBottom: 0,
-    marginLeft: scalePx2dp(15.36),
-  },
-  'fta-form-item-label': {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  'fta-form-item-label__text': {
-    fontSize: scalePx2dp(13.44),
-    fontWeight: '400',
-    color: '#333',
-  },
-  'fta-form-item-content': {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    minHeight: scalePx2dp(42.24),
-    width: scalePx2dp(202.56),
-    paddingRight: scalePx2dp(15.36),
-    flexGrow: 0,
-    flexShrink: 0,
-    flexBasis: scalePx2dp(202.56),
-    borderRadius: scalePx2dp(7.68),
-    backgroundColor: '#f9f9f9',
-  },
-  'fta-form-item-content__text': {
-    fontSize: scalePx2dp(15.36),
-    fontWeight: '500',
-    color: '#333',
-  },
-  'fta-form-item-content--hover': {
-    opacity: 0.6,
-  },
-  'fta-form-item-content--error': {
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: '#f33131',
-  },
-  'fta-form-item-arrow': {
-    marginLeft: scalePx2dp(0.96),
-    width: scalePx2dp(15.36),
-    height: scalePx2dp(15.36),
-  },
-  'fta-form-item-error': {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    marginTop: scalePx2dp(9.6),
-    paddingBottom: scalePx2dp(4.8),
-  },
-  'fta-form-item-error-icon': {
-    width: scalePx2dp(15.36),
-    height: scalePx2dp(15.36),
-    marginRight: scalePx2dp(2.4),
-  },
-  'fta-form-item-error-wrap': {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: scalePx2dp(217.92),
-  },
-  'fta-form-item-error__text': {
-    color: '#f33131',
-    fontSize: scalePx2dp(13.44),
-    lineHeight: scalePx2dp(15.36),
-  },
-  'fta-form-item-placeholder': {
-    fontSize: scalePx2dp(15.36),
-    fontWeight: '400',
-    color: '#ccc',
-  },
-  'fta-form-item-gap': {
-    width: '100%',
-    height: scalePx2dp(9.6),
-    backgroundColor: '#f5f5f5',
-  },
-  'fta-form-item--readonly': {},
-})
-
-var context = createContext({ _showModal: false })
-function useFormConfig() {
-  var config = useContext(context)
-  return config
-}
-var FormProvider = context.Provider
-context.Consumer
-
-function _extends() {
-  _extends =
-    Object.assign ||
-    function (target) {
-      for (var i = 1; i < arguments.length; i++) {
-        var source = arguments[i]
-        for (var key in source) {
-          if (Object.prototype.hasOwnProperty.call(source, key)) {
-            target[key] = source[key]
-          }
-        }
-      }
-      return target
-    }
-  return _extends.apply(this, arguments)
-}
-
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError('Cannot call a class as a function')
-  }
-}
-
-function _defineProperties(target, props) {
-  for (var i = 0; i < props.length; i++) {
-    var descriptor = props[i]
-    descriptor.enumerable = descriptor.enumerable || false
-    descriptor.configurable = true
-    if ('value' in descriptor) descriptor.writable = true
-    Object.defineProperty(target, descriptor.key, descriptor)
-  }
-}
-function _createClass(Constructor, protoProps, staticProps) {
-  if (protoProps) _defineProperties(Constructor.prototype, protoProps)
-  if (staticProps) _defineProperties(Constructor, staticProps)
-  Object.defineProperty(Constructor, 'prototype', { writable: false })
-  return Constructor
-}
-
-function _setPrototypeOf(o, p) {
-  _setPrototypeOf =
-    Object.setPrototypeOf ||
-    function _setPrototypeOf(o, p) {
-      o.__proto__ = p
-      return o
-    }
-  return _setPrototypeOf(o, p)
-}
-
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== 'function' && superClass !== null) {
-    throw new TypeError('Super expression must either be null or a function')
-  }
-  subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: { value: subClass, writable: true, configurable: true },
-  })
-  Object.defineProperty(subClass, 'prototype', { writable: false })
-  if (superClass) _setPrototypeOf(subClass, superClass)
-}
-
-function _typeof(obj) {
-  '@babel/helpers - typeof'
-  return (
-    (_typeof =
-      'function' == typeof Symbol && 'symbol' == typeof Symbol.iterator
-        ? function (obj) {
-            return typeof obj
-          }
-        : function (obj) {
-            return obj &&
-              'function' == typeof Symbol &&
-              obj.constructor === Symbol &&
-              obj !== Symbol.prototype
-              ? 'symbol'
-              : typeof obj
-          }),
-    _typeof(obj)
-  )
-}
-
-function _assertThisInitialized(self) {
-  if (self === void 0) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called")
-  }
-  return self
-}
-
-function _possibleConstructorReturn(self, call) {
-  if (call && (_typeof(call) === 'object' || typeof call === 'function')) {
-    return call
-  } else if (call !== void 0) {
-    throw new TypeError('Derived constructors may only return object or undefined')
-  }
-  return _assertThisInitialized(self)
-}
-
-function _getPrototypeOf(o) {
-  _getPrototypeOf = Object.setPrototypeOf
-    ? Object.getPrototypeOf
-    : function _getPrototypeOf(o) {
-        return o.__proto__ || Object.getPrototypeOf(o)
-      }
-  return _getPrototypeOf(o)
 }
 
 var runtime = { exports: {} }
@@ -860,6 +649,1426 @@ var runtime = { exports: {} }
 
 var regenerator = runtime.exports
 
+function _extends() {
+  _extends =
+    Object.assign ||
+    function (target) {
+      for (var i = 1; i < arguments.length; i++) {
+        var source = arguments[i]
+        for (var key in source) {
+          if (Object.prototype.hasOwnProperty.call(source, key)) {
+            target[key] = source[key]
+          }
+        }
+      }
+      return target
+    }
+  return _extends.apply(this, arguments)
+}
+function _inheritsLoose(subClass, superClass) {
+  subClass.prototype = Object.create(superClass.prototype)
+  subClass.prototype.constructor = subClass
+  _setPrototypeOf$1(subClass, superClass)
+}
+function _getPrototypeOf$1(o) {
+  _getPrototypeOf$1 = Object.setPrototypeOf
+    ? Object.getPrototypeOf
+    : function _getPrototypeOf(o) {
+        return o.__proto__ || Object.getPrototypeOf(o)
+      }
+  return _getPrototypeOf$1(o)
+}
+function _setPrototypeOf$1(o, p) {
+  _setPrototypeOf$1 =
+    Object.setPrototypeOf ||
+    function _setPrototypeOf(o, p) {
+      o.__proto__ = p
+      return o
+    }
+  return _setPrototypeOf$1(o, p)
+}
+function _isNativeReflectConstruct$3() {
+  if (typeof Reflect === 'undefined' || !Reflect.construct) return false
+  if (Reflect.construct.sham) return false
+  if (typeof Proxy === 'function') return true
+  try {
+    Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}))
+    return true
+  } catch (e) {
+    return false
+  }
+}
+function _construct(Parent, args, Class) {
+  if (_isNativeReflectConstruct$3()) {
+    _construct = Reflect.construct
+  } else {
+    _construct = function _construct(Parent, args, Class) {
+      var a = [null]
+      a.push.apply(a, args)
+      var Constructor = Function.bind.apply(Parent, a)
+      var instance = new Constructor()
+      if (Class) _setPrototypeOf$1(instance, Class.prototype)
+      return instance
+    }
+  }
+  return _construct.apply(null, arguments)
+}
+function _isNativeFunction(fn) {
+  return Function.toString.call(fn).indexOf('[native code]') !== -1
+}
+function _wrapNativeSuper(Class) {
+  var _cache = typeof Map === 'function' ? new Map() : undefined
+  _wrapNativeSuper = function _wrapNativeSuper(Class) {
+    if (Class === null || !_isNativeFunction(Class)) return Class
+    if (typeof Class !== 'function') {
+      throw new TypeError('Super expression must either be null or a function')
+    }
+    if (typeof _cache !== 'undefined') {
+      if (_cache.has(Class)) return _cache.get(Class)
+      _cache.set(Class, Wrapper)
+    }
+    function Wrapper() {
+      return _construct(Class, arguments, _getPrototypeOf$1(this).constructor)
+    }
+    Wrapper.prototype = Object.create(Class.prototype, {
+      constructor: { value: Wrapper, enumerable: false, writable: true, configurable: true },
+    })
+    return _setPrototypeOf$1(Wrapper, Class)
+  }
+  return _wrapNativeSuper(Class)
+}
+var formatRegExp = /%[sdj%]/g
+var warning = function warning() {}
+if (
+  typeof process !== 'undefined' &&
+  process.env &&
+  true &&
+  typeof window !== 'undefined' &&
+  typeof document !== 'undefined'
+) {
+  warning = function warning(type, errors) {
+    if (
+      typeof console !== 'undefined' &&
+      console.warn &&
+      typeof ASYNC_VALIDATOR_NO_WARNING === 'undefined'
+    ) {
+      if (
+        errors.every(function (e) {
+          return typeof e === 'string'
+        })
+      ) {
+        console.warn(type, errors)
+      }
+    }
+  }
+}
+function convertFieldsError(errors) {
+  if (!errors || !errors.length) return null
+  var fields = {}
+  errors.forEach(function (error) {
+    var field = error.field
+    fields[field] = fields[field] || []
+    fields[field].push(error)
+  })
+  return fields
+}
+function format(template) {
+  for (
+    var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1;
+    _key < _len;
+    _key++
+  ) {
+    args[_key - 1] = arguments[_key]
+  }
+  var i = 0
+  var len = args.length
+  if (typeof template === 'function') {
+    return template.apply(null, args)
+  }
+  if (typeof template === 'string') {
+    var str = template.replace(formatRegExp, function (x) {
+      if (x === '%%') {
+        return '%'
+      }
+      if (i >= len) {
+        return x
+      }
+      switch (x) {
+        case '%s':
+          return String(args[i++])
+        case '%d':
+          return Number(args[i++])
+        case '%j':
+          try {
+            return JSON.stringify(args[i++])
+          } catch (_) {
+            return '[Circular]'
+          }
+          break
+        default:
+          return x
+      }
+    })
+    return str
+  }
+  return template
+}
+function isNativeStringType(type) {
+  return (
+    type === 'string' ||
+    type === 'url' ||
+    type === 'hex' ||
+    type === 'email' ||
+    type === 'date' ||
+    type === 'pattern'
+  )
+}
+function isEmptyValue(value, type) {
+  if (value === undefined || value === null) {
+    return true
+  }
+  if (type === 'array' && Array.isArray(value) && !value.length) {
+    return true
+  }
+  if (isNativeStringType(type) && typeof value === 'string' && !value) {
+    return true
+  }
+  return false
+}
+function asyncParallelArray(arr, func, callback) {
+  var results = []
+  var total = 0
+  var arrLength = arr.length
+  function count(errors) {
+    results.push.apply(results, errors || [])
+    total++
+    if (total === arrLength) {
+      callback(results)
+    }
+  }
+  arr.forEach(function (a) {
+    func(a, count)
+  })
+}
+function asyncSerialArray(arr, func, callback) {
+  var index = 0
+  var arrLength = arr.length
+  function next(errors) {
+    if (errors && errors.length) {
+      callback(errors)
+      return
+    }
+    var original = index
+    index = index + 1
+    if (original < arrLength) {
+      func(arr[original], next)
+    } else {
+      callback([])
+    }
+  }
+  next([])
+}
+function flattenObjArr(objArr) {
+  var ret = []
+  Object.keys(objArr).forEach(function (k) {
+    ret.push.apply(ret, objArr[k] || [])
+  })
+  return ret
+}
+var AsyncValidationError = (function (_Error) {
+  _inheritsLoose(AsyncValidationError, _Error)
+  function AsyncValidationError(errors, fields) {
+    var _this
+    _this = _Error.call(this, 'Async Validation Error') || this
+    _this.errors = errors
+    _this.fields = fields
+    return _this
+  }
+  return AsyncValidationError
+})(_wrapNativeSuper(Error))
+function asyncMap(objArr, option, func, callback, source) {
+  if (option.first) {
+    var _pending = new Promise(function (resolve, reject) {
+      var next = function next(errors) {
+        callback(errors)
+        return errors.length
+          ? reject(new AsyncValidationError(errors, convertFieldsError(errors)))
+          : resolve(source)
+      }
+      var flattenArr = flattenObjArr(objArr)
+      asyncSerialArray(flattenArr, func, next)
+    })
+    _pending['catch'](function (e) {
+      return e
+    })
+    return _pending
+  }
+  var firstFields = option.firstFields === true ? Object.keys(objArr) : option.firstFields || []
+  var objArrKeys = Object.keys(objArr)
+  var objArrLength = objArrKeys.length
+  var total = 0
+  var results = []
+  var pending = new Promise(function (resolve, reject) {
+    var next = function next(errors) {
+      results.push.apply(results, errors)
+      total++
+      if (total === objArrLength) {
+        callback(results)
+        return results.length
+          ? reject(new AsyncValidationError(results, convertFieldsError(results)))
+          : resolve(source)
+      }
+    }
+    if (!objArrKeys.length) {
+      callback(results)
+      resolve(source)
+    }
+    objArrKeys.forEach(function (key) {
+      var arr = objArr[key]
+      if (firstFields.indexOf(key) !== -1) {
+        asyncSerialArray(arr, func, next)
+      } else {
+        asyncParallelArray(arr, func, next)
+      }
+    })
+  })
+  pending['catch'](function (e) {
+    return e
+  })
+  return pending
+}
+function isErrorObj(obj) {
+  return !!(obj && obj.message !== undefined)
+}
+function getValue(value, path) {
+  var v = value
+  for (var i = 0; i < path.length; i++) {
+    if (v == undefined) {
+      return v
+    }
+    v = v[path[i]]
+  }
+  return v
+}
+function complementError(rule, source) {
+  return function (oe) {
+    var fieldValue
+    if (rule.fullFields) {
+      fieldValue = getValue(source, rule.fullFields)
+    } else {
+      fieldValue = source[oe.field || rule.fullField]
+    }
+    if (isErrorObj(oe)) {
+      oe.field = oe.field || rule.fullField
+      oe.fieldValue = fieldValue
+      return oe
+    }
+    return {
+      message: typeof oe === 'function' ? oe() : oe,
+      fieldValue: fieldValue,
+      field: oe.field || rule.fullField,
+    }
+  }
+}
+function deepMerge(target, source) {
+  if (source) {
+    for (var s in source) {
+      if (source.hasOwnProperty(s)) {
+        var value = source[s]
+        if (typeof value === 'object' && typeof target[s] === 'object') {
+          target[s] = _extends({}, target[s], value)
+        } else {
+          target[s] = value
+        }
+      }
+    }
+  }
+  return target
+}
+var required$1 = function required(rule, value, source, errors, options, type) {
+  if (
+    rule.required &&
+    (!source.hasOwnProperty(rule.field) || isEmptyValue(value, type || rule.type))
+  ) {
+    errors.push(format(options.messages.required, rule.fullField))
+  }
+}
+var whitespace = function whitespace(rule, value, source, errors, options) {
+  if (/^\s+$/.test(value) || value === '') {
+    errors.push(format(options.messages.whitespace, rule.fullField))
+  }
+}
+var pattern$2 = {
+  email:
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+\.)+[a-zA-Z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]{2,}))$/,
+  url: new RegExp(
+    '^(?!mailto:)(?:(?:http|https|ftp)://|//)(?:\\S+(?::\\S*)?@)?(?:(?:(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[0-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\u00a1-\\uffff0-9]+-*)*[a-z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-z\\u00a1-\\uffff0-9]+-*)*[a-z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-z\\u00a1-\\uffff]{2,})))|localhost)(?::\\d{2,5})?(?:(/|\\?|#)[^\\s]*)?$',
+    'i'
+  ),
+  hex: /^#?([a-f0-9]{6}|[a-f0-9]{3})$/i,
+}
+var types = {
+  integer: function integer(value) {
+    return types.number(value) && parseInt(value, 10) === value
+  },
+  float: function float(value) {
+    return types.number(value) && !types.integer(value)
+  },
+  array: function array(value) {
+    return Array.isArray(value)
+  },
+  regexp: function regexp(value) {
+    if (value instanceof RegExp) {
+      return true
+    }
+    try {
+      return !!new RegExp(value)
+    } catch (e) {
+      return false
+    }
+  },
+  date: function date(value) {
+    return (
+      typeof value.getTime === 'function' &&
+      typeof value.getMonth === 'function' &&
+      typeof value.getYear === 'function' &&
+      !isNaN(value.getTime())
+    )
+  },
+  number: function number(value) {
+    if (isNaN(value)) {
+      return false
+    }
+    return typeof value === 'number'
+  },
+  object: function object(value) {
+    return typeof value === 'object' && !types.array(value)
+  },
+  method: function method(value) {
+    return typeof value === 'function'
+  },
+  email: function email(value) {
+    return typeof value === 'string' && value.length <= 320 && !!value.match(pattern$2.email)
+  },
+  url: function url(value) {
+    return typeof value === 'string' && value.length <= 2048 && !!value.match(pattern$2.url)
+  },
+  hex: function hex(value) {
+    return typeof value === 'string' && !!value.match(pattern$2.hex)
+  },
+}
+var type$1 = function type(rule, value, source, errors, options) {
+  if (rule.required && value === undefined) {
+    required$1(rule, value, source, errors, options)
+    return
+  }
+  var custom = [
+    'integer',
+    'float',
+    'array',
+    'regexp',
+    'object',
+    'method',
+    'email',
+    'number',
+    'date',
+    'url',
+    'hex',
+  ]
+  var ruleType = rule.type
+  if (custom.indexOf(ruleType) > -1) {
+    if (!types[ruleType](value)) {
+      errors.push(format(options.messages.types[ruleType], rule.fullField, rule.type))
+    }
+  } else if (ruleType && typeof value !== rule.type) {
+    errors.push(format(options.messages.types[ruleType], rule.fullField, rule.type))
+  }
+}
+var range = function range(rule, value, source, errors, options) {
+  var len = typeof rule.len === 'number'
+  var min = typeof rule.min === 'number'
+  var max = typeof rule.max === 'number'
+  var spRegexp = /[\uD800-\uDBFF][\uDC00-\uDFFF]/g
+  var val = value
+  var key = null
+  var num = typeof value === 'number'
+  var str = typeof value === 'string'
+  var arr = Array.isArray(value)
+  if (num) {
+    key = 'number'
+  } else if (str) {
+    key = 'string'
+  } else if (arr) {
+    key = 'array'
+  }
+  if (!key) {
+    return false
+  }
+  if (arr) {
+    val = value.length
+  }
+  if (str) {
+    val = value.replace(spRegexp, '_').length
+  }
+  if (len) {
+    if (val !== rule.len) {
+      errors.push(format(options.messages[key].len, rule.fullField, rule.len))
+    }
+  } else if (min && !max && val < rule.min) {
+    errors.push(format(options.messages[key].min, rule.fullField, rule.min))
+  } else if (max && !min && val > rule.max) {
+    errors.push(format(options.messages[key].max, rule.fullField, rule.max))
+  } else if (min && max && (val < rule.min || val > rule.max)) {
+    errors.push(format(options.messages[key].range, rule.fullField, rule.min, rule.max))
+  }
+}
+var ENUM$1 = 'enum'
+var enumerable$1 = function enumerable(rule, value, source, errors, options) {
+  rule[ENUM$1] = Array.isArray(rule[ENUM$1]) ? rule[ENUM$1] : []
+  if (rule[ENUM$1].indexOf(value) === -1) {
+    errors.push(format(options.messages[ENUM$1], rule.fullField, rule[ENUM$1].join(', ')))
+  }
+}
+var pattern$1 = function pattern(rule, value, source, errors, options) {
+  if (rule.pattern) {
+    if (rule.pattern instanceof RegExp) {
+      rule.pattern.lastIndex = 0
+      if (!rule.pattern.test(value)) {
+        errors.push(format(options.messages.pattern.mismatch, rule.fullField, value, rule.pattern))
+      }
+    } else if (typeof rule.pattern === 'string') {
+      var _pattern = new RegExp(rule.pattern)
+      if (!_pattern.test(value)) {
+        errors.push(format(options.messages.pattern.mismatch, rule.fullField, value, rule.pattern))
+      }
+    }
+  }
+}
+var rules = {
+  required: required$1,
+  whitespace: whitespace,
+  type: type$1,
+  range: range,
+  enum: enumerable$1,
+  pattern: pattern$1,
+}
+var string = function string(rule, value, callback, source, options) {
+  var errors = []
+  var validate = rule.required || (!rule.required && source.hasOwnProperty(rule.field))
+  if (validate) {
+    if (isEmptyValue(value, 'string') && !rule.required) {
+      return callback()
+    }
+    rules.required(rule, value, source, errors, options, 'string')
+    if (!isEmptyValue(value, 'string')) {
+      rules.type(rule, value, source, errors, options)
+      rules.range(rule, value, source, errors, options)
+      rules.pattern(rule, value, source, errors, options)
+      if (rule.whitespace === true) {
+        rules.whitespace(rule, value, source, errors, options)
+      }
+    }
+  }
+  callback(errors)
+}
+var method = function method(rule, value, callback, source, options) {
+  var errors = []
+  var validate = rule.required || (!rule.required && source.hasOwnProperty(rule.field))
+  if (validate) {
+    if (isEmptyValue(value) && !rule.required) {
+      return callback()
+    }
+    rules.required(rule, value, source, errors, options)
+    if (value !== undefined) {
+      rules.type(rule, value, source, errors, options)
+    }
+  }
+  callback(errors)
+}
+var number = function number(rule, value, callback, source, options) {
+  var errors = []
+  var validate = rule.required || (!rule.required && source.hasOwnProperty(rule.field))
+  if (validate) {
+    if (value === '') {
+      value = undefined
+    }
+    if (isEmptyValue(value) && !rule.required) {
+      return callback()
+    }
+    rules.required(rule, value, source, errors, options)
+    if (value !== undefined) {
+      rules.type(rule, value, source, errors, options)
+      rules.range(rule, value, source, errors, options)
+    }
+  }
+  callback(errors)
+}
+var _boolean = function _boolean(rule, value, callback, source, options) {
+  var errors = []
+  var validate = rule.required || (!rule.required && source.hasOwnProperty(rule.field))
+  if (validate) {
+    if (isEmptyValue(value) && !rule.required) {
+      return callback()
+    }
+    rules.required(rule, value, source, errors, options)
+    if (value !== undefined) {
+      rules.type(rule, value, source, errors, options)
+    }
+  }
+  callback(errors)
+}
+var regexp = function regexp(rule, value, callback, source, options) {
+  var errors = []
+  var validate = rule.required || (!rule.required && source.hasOwnProperty(rule.field))
+  if (validate) {
+    if (isEmptyValue(value) && !rule.required) {
+      return callback()
+    }
+    rules.required(rule, value, source, errors, options)
+    if (!isEmptyValue(value)) {
+      rules.type(rule, value, source, errors, options)
+    }
+  }
+  callback(errors)
+}
+var integer = function integer(rule, value, callback, source, options) {
+  var errors = []
+  var validate = rule.required || (!rule.required && source.hasOwnProperty(rule.field))
+  if (validate) {
+    if (isEmptyValue(value) && !rule.required) {
+      return callback()
+    }
+    rules.required(rule, value, source, errors, options)
+    if (value !== undefined) {
+      rules.type(rule, value, source, errors, options)
+      rules.range(rule, value, source, errors, options)
+    }
+  }
+  callback(errors)
+}
+var floatFn = function floatFn(rule, value, callback, source, options) {
+  var errors = []
+  var validate = rule.required || (!rule.required && source.hasOwnProperty(rule.field))
+  if (validate) {
+    if (isEmptyValue(value) && !rule.required) {
+      return callback()
+    }
+    rules.required(rule, value, source, errors, options)
+    if (value !== undefined) {
+      rules.type(rule, value, source, errors, options)
+      rules.range(rule, value, source, errors, options)
+    }
+  }
+  callback(errors)
+}
+var array = function array(rule, value, callback, source, options) {
+  var errors = []
+  var validate = rule.required || (!rule.required && source.hasOwnProperty(rule.field))
+  if (validate) {
+    if ((value === undefined || value === null) && !rule.required) {
+      return callback()
+    }
+    rules.required(rule, value, source, errors, options, 'array')
+    if (value !== undefined && value !== null) {
+      rules.type(rule, value, source, errors, options)
+      rules.range(rule, value, source, errors, options)
+    }
+  }
+  callback(errors)
+}
+var object = function object(rule, value, callback, source, options) {
+  var errors = []
+  var validate = rule.required || (!rule.required && source.hasOwnProperty(rule.field))
+  if (validate) {
+    if (isEmptyValue(value) && !rule.required) {
+      return callback()
+    }
+    rules.required(rule, value, source, errors, options)
+    if (value !== undefined) {
+      rules.type(rule, value, source, errors, options)
+    }
+  }
+  callback(errors)
+}
+var ENUM = 'enum'
+var enumerable = function enumerable(rule, value, callback, source, options) {
+  var errors = []
+  var validate = rule.required || (!rule.required && source.hasOwnProperty(rule.field))
+  if (validate) {
+    if (isEmptyValue(value) && !rule.required) {
+      return callback()
+    }
+    rules.required(rule, value, source, errors, options)
+    if (value !== undefined) {
+      rules[ENUM](rule, value, source, errors, options)
+    }
+  }
+  callback(errors)
+}
+var pattern = function pattern(rule, value, callback, source, options) {
+  var errors = []
+  var validate = rule.required || (!rule.required && source.hasOwnProperty(rule.field))
+  if (validate) {
+    if (isEmptyValue(value, 'string') && !rule.required) {
+      return callback()
+    }
+    rules.required(rule, value, source, errors, options)
+    if (!isEmptyValue(value, 'string')) {
+      rules.pattern(rule, value, source, errors, options)
+    }
+  }
+  callback(errors)
+}
+var date = function date(rule, value, callback, source, options) {
+  var errors = []
+  var validate = rule.required || (!rule.required && source.hasOwnProperty(rule.field))
+  if (validate) {
+    if (isEmptyValue(value, 'date') && !rule.required) {
+      return callback()
+    }
+    rules.required(rule, value, source, errors, options)
+    if (!isEmptyValue(value, 'date')) {
+      var dateObject
+      if (value instanceof Date) {
+        dateObject = value
+      } else {
+        dateObject = new Date(value)
+      }
+      rules.type(rule, dateObject, source, errors, options)
+      if (dateObject) {
+        rules.range(rule, dateObject.getTime(), source, errors, options)
+      }
+    }
+  }
+  callback(errors)
+}
+var required = function required(rule, value, callback, source, options) {
+  var errors = []
+  var type = Array.isArray(value) ? 'array' : typeof value
+  rules.required(rule, value, source, errors, options, type)
+  callback(errors)
+}
+var type = function type(rule, value, callback, source, options) {
+  var ruleType = rule.type
+  var errors = []
+  var validate = rule.required || (!rule.required && source.hasOwnProperty(rule.field))
+  if (validate) {
+    if (isEmptyValue(value, ruleType) && !rule.required) {
+      return callback()
+    }
+    rules.required(rule, value, source, errors, options, ruleType)
+    if (!isEmptyValue(value, ruleType)) {
+      rules.type(rule, value, source, errors, options)
+    }
+  }
+  callback(errors)
+}
+var any = function any(rule, value, callback, source, options) {
+  var errors = []
+  var validate = rule.required || (!rule.required && source.hasOwnProperty(rule.field))
+  if (validate) {
+    if (isEmptyValue(value) && !rule.required) {
+      return callback()
+    }
+    rules.required(rule, value, source, errors, options)
+  }
+  callback(errors)
+}
+var validators = {
+  string: string,
+  method: method,
+  number: number,
+  boolean: _boolean,
+  regexp: regexp,
+  integer: integer,
+  float: floatFn,
+  array: array,
+  object: object,
+  enum: enumerable,
+  pattern: pattern,
+  date: date,
+  url: type,
+  hex: type,
+  email: type,
+  required: required,
+  any: any,
+}
+function newMessages() {
+  return {
+    default: 'Validation error on field %s',
+    required: '%s is required',
+    enum: '%s must be one of %s',
+    whitespace: '%s cannot be empty',
+    date: {
+      format: '%s date %s is invalid for format %s',
+      parse: '%s date could not be parsed, %s is invalid ',
+      invalid: '%s date %s is invalid',
+    },
+    types: {
+      string: '%s is not a %s',
+      method: '%s is not a %s (function)',
+      array: '%s is not an %s',
+      object: '%s is not an %s',
+      number: '%s is not a %s',
+      date: '%s is not a %s',
+      boolean: '%s is not a %s',
+      integer: '%s is not an %s',
+      float: '%s is not a %s',
+      regexp: '%s is not a valid %s',
+      email: '%s is not a valid %s',
+      url: '%s is not a valid %s',
+      hex: '%s is not a valid %s',
+    },
+    string: {
+      len: '%s must be exactly %s characters',
+      min: '%s must be at least %s characters',
+      max: '%s cannot be longer than %s characters',
+      range: '%s must be between %s and %s characters',
+    },
+    number: {
+      len: '%s must equal %s',
+      min: '%s cannot be less than %s',
+      max: '%s cannot be greater than %s',
+      range: '%s must be between %s and %s',
+    },
+    array: {
+      len: '%s must be exactly %s in length',
+      min: '%s cannot be less than %s in length',
+      max: '%s cannot be greater than %s in length',
+      range: '%s must be between %s and %s in length',
+    },
+    pattern: { mismatch: '%s value %s does not match pattern %s' },
+    clone: function clone() {
+      var cloned = JSON.parse(JSON.stringify(this))
+      cloned.clone = this.clone
+      return cloned
+    },
+  }
+}
+var messages = newMessages()
+var Schema = (function () {
+  function Schema(descriptor) {
+    this.rules = null
+    this._messages = messages
+    this.define(descriptor)
+  }
+  var _proto = Schema.prototype
+  _proto.define = function define(rules) {
+    var _this = this
+    if (!rules) {
+      throw new Error('Cannot configure a schema with no rules')
+    }
+    if (typeof rules !== 'object' || Array.isArray(rules)) {
+      throw new Error('Rules must be an object')
+    }
+    this.rules = {}
+    Object.keys(rules).forEach(function (name) {
+      var item = rules[name]
+      _this.rules[name] = Array.isArray(item) ? item : [item]
+    })
+  }
+  _proto.messages = function messages(_messages) {
+    if (_messages) {
+      this._messages = deepMerge(newMessages(), _messages)
+    }
+    return this._messages
+  }
+  _proto.validate = function validate(source_, o, oc) {
+    var _this2 = this
+    if (o === void 0) {
+      o = {}
+    }
+    if (oc === void 0) {
+      oc = function oc() {}
+    }
+    var source = source_
+    var options = o
+    var callback = oc
+    if (typeof options === 'function') {
+      callback = options
+      options = {}
+    }
+    if (!this.rules || Object.keys(this.rules).length === 0) {
+      if (callback) {
+        callback(null, source)
+      }
+      return Promise.resolve(source)
+    }
+    function complete(results) {
+      var errors = []
+      var fields = {}
+      function add(e) {
+        if (Array.isArray(e)) {
+          var _errors
+          errors = (_errors = errors).concat.apply(_errors, e)
+        } else {
+          errors.push(e)
+        }
+      }
+      for (var i = 0; i < results.length; i++) {
+        add(results[i])
+      }
+      if (!errors.length) {
+        callback(null, source)
+      } else {
+        fields = convertFieldsError(errors)
+        callback(errors, fields)
+      }
+    }
+    if (options.messages) {
+      var messages$1 = this.messages()
+      if (messages$1 === messages) {
+        messages$1 = newMessages()
+      }
+      deepMerge(messages$1, options.messages)
+      options.messages = messages$1
+    } else {
+      options.messages = this.messages()
+    }
+    var series = {}
+    var keys = options.keys || Object.keys(this.rules)
+    keys.forEach(function (z) {
+      var arr = _this2.rules[z]
+      var value = source[z]
+      arr.forEach(function (r) {
+        var rule = r
+        if (typeof rule.transform === 'function') {
+          if (source === source_) {
+            source = _extends({}, source)
+          }
+          value = source[z] = rule.transform(value)
+        }
+        if (typeof rule === 'function') {
+          rule = { validator: rule }
+        } else {
+          rule = _extends({}, rule)
+        }
+        rule.validator = _this2.getValidationMethod(rule)
+        if (!rule.validator) {
+          return
+        }
+        rule.field = z
+        rule.fullField = rule.fullField || z
+        rule.type = _this2.getType(rule)
+        series[z] = series[z] || []
+        series[z].push({ rule: rule, value: value, source: source, field: z })
+      })
+    })
+    var errorFields = {}
+    return asyncMap(
+      series,
+      options,
+      function (data, doIt) {
+        var rule = data.rule
+        var deep =
+          (rule.type === 'object' || rule.type === 'array') &&
+          (typeof rule.fields === 'object' || typeof rule.defaultField === 'object')
+        deep = deep && (rule.required || (!rule.required && data.value))
+        rule.field = data.field
+        function addFullField(key, schema) {
+          return _extends({}, schema, {
+            fullField: rule.fullField + '.' + key,
+            fullFields: rule.fullFields ? [].concat(rule.fullFields, [key]) : [key],
+          })
+        }
+        function cb(e) {
+          if (e === void 0) {
+            e = []
+          }
+          var errorList = Array.isArray(e) ? e : [e]
+          if (!options.suppressWarning && errorList.length) {
+            Schema.warning('async-validator:', errorList)
+          }
+          if (errorList.length && rule.message !== undefined) {
+            errorList = [].concat(rule.message)
+          }
+          var filledErrors = errorList.map(complementError(rule, source))
+          if (options.first && filledErrors.length) {
+            errorFields[rule.field] = 1
+            return doIt(filledErrors)
+          }
+          if (!deep) {
+            doIt(filledErrors)
+          } else {
+            if (rule.required && !data.value) {
+              if (rule.message !== undefined) {
+                filledErrors = [].concat(rule.message).map(complementError(rule, source))
+              } else if (options.error) {
+                filledErrors = [options.error(rule, format(options.messages.required, rule.field))]
+              }
+              return doIt(filledErrors)
+            }
+            var fieldsSchema = {}
+            if (rule.defaultField) {
+              Object.keys(data.value).map(function (key) {
+                fieldsSchema[key] = rule.defaultField
+              })
+            }
+            fieldsSchema = _extends({}, fieldsSchema, data.rule.fields)
+            var paredFieldsSchema = {}
+            Object.keys(fieldsSchema).forEach(function (field) {
+              var fieldSchema = fieldsSchema[field]
+              var fieldSchemaList = Array.isArray(fieldSchema) ? fieldSchema : [fieldSchema]
+              paredFieldsSchema[field] = fieldSchemaList.map(addFullField.bind(null, field))
+            })
+            var schema = new Schema(paredFieldsSchema)
+            schema.messages(options.messages)
+            if (data.rule.options) {
+              data.rule.options.messages = options.messages
+              data.rule.options.error = options.error
+            }
+            schema.validate(data.value, data.rule.options || options, function (errs) {
+              var finalErrors = []
+              if (filledErrors && filledErrors.length) {
+                finalErrors.push.apply(finalErrors, filledErrors)
+              }
+              if (errs && errs.length) {
+                finalErrors.push.apply(finalErrors, errs)
+              }
+              doIt(finalErrors.length ? finalErrors : null)
+            })
+          }
+        }
+        var res
+        if (rule.asyncValidator) {
+          res = rule.asyncValidator(rule, data.value, cb, data.source, options)
+        } else if (rule.validator) {
+          try {
+            res = rule.validator(rule, data.value, cb, data.source, options)
+          } catch (error) {
+            console.error == null ? void 0 : console.error(error)
+            setTimeout(function () {
+              throw error
+            }, 0)
+            cb(error.message)
+          }
+          if (res === true) {
+            cb()
+          } else if (res === false) {
+            cb(
+              typeof rule.message === 'function'
+                ? rule.message(rule.fullField || rule.field)
+                : rule.message || (rule.fullField || rule.field) + ' fails'
+            )
+          } else if (res instanceof Array) {
+            cb(res)
+          } else if (res instanceof Error) {
+            cb(res.message)
+          }
+        }
+        if (res && res.then) {
+          res.then(
+            function () {
+              return cb()
+            },
+            function (e) {
+              return cb(e)
+            }
+          )
+        }
+      },
+      function (results) {
+        complete(results)
+      },
+      source
+    )
+  }
+  _proto.getType = function getType(rule) {
+    if (rule.type === undefined && rule.pattern instanceof RegExp) {
+      rule.type = 'pattern'
+    }
+    if (
+      typeof rule.validator !== 'function' &&
+      rule.type &&
+      !validators.hasOwnProperty(rule.type)
+    ) {
+      throw new Error(format('Unknown rule type %s', rule.type))
+    }
+    return rule.type || 'string'
+  }
+  _proto.getValidationMethod = function getValidationMethod(rule) {
+    if (typeof rule.validator === 'function') {
+      return rule.validator
+    }
+    var keys = Object.keys(rule)
+    var messageIndex = keys.indexOf('message')
+    if (messageIndex !== -1) {
+      keys.splice(messageIndex, 1)
+    }
+    if (keys.length === 1 && keys[0] === 'required') {
+      return validators.required
+    }
+    return validators[this.getType(rule)] || undefined
+  }
+  return Schema
+})()
+Schema.register = function register(type, validator) {
+  if (typeof validator !== 'function') {
+    throw new Error('Cannot register a validator by type, validator is not a function')
+  }
+  validators[type] = validator
+}
+Schema.warning = warning
+Schema.messages = messages
+Schema.validators = validators
+
+var indexScssStyleSheet = StyleSheet.create({
+  'fta-form': {
+    display: 'flex',
+    flexDirection: 'column',
+    backgroundColor: '#fff',
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: 0,
+    height: '100%',
+  },
+  'fta-form-container': {
+    height: '100%',
+  },
+  'fta-form-title': {
+    paddingTop: scalePx2dp(17.28),
+    marginTop: 0,
+    marginRight: scalePx2dp(15.36),
+    marginBottom: scalePx2dp(14.88),
+    marginLeft: scalePx2dp(15.36),
+  },
+  'fta-form-title__text': {
+    fontSize: scalePx2dp(15.36),
+    fontWeight: '600',
+    color: '#333',
+  },
+  'fta-form-tip': {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: scalePx2dp(13.44),
+    marginRight: scalePx2dp(9.6),
+    marginBottom: scalePx2dp(13.44),
+    marginLeft: scalePx2dp(9.6),
+  },
+  'fta-form-tip-content': {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: scalePx2dp(230.4),
+  },
+  'fta-form-tip__image': {
+    width: scalePx2dp(13.44),
+    height: scalePx2dp(13.44),
+    flexGrow: 0,
+    flexShrink: 0,
+    flexBasis: scalePx2dp(13.44),
+    marginRight: scalePx2dp(5.76),
+  },
+  'fta-form-tip__text': {
+    fontSize: scalePx2dp(13.44),
+    color: '#666',
+  },
+  'fta-form-tip__button': {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: scalePx2dp(67.2),
+    height: scalePx2dp(24.96),
+    borderRadius: scalePx2dp(3.84),
+    backgroundColor: '#fa871e',
+  },
+  'fta-form-tip__button__text': {
+    fontSize: scalePx2dp(13.44),
+    color: '#fff',
+  },
+  'fta-form-full-screen': {
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: 0,
+  },
+  'fta-form-modal': {
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  'fta-form-modal__text': {
+    textAlign: 'center',
+    color: '#f6f6f6',
+    marginBottom: scalePx2dp(11.52),
+    fontSize: scalePx2dp(15.36),
+    lineHeight: scalePx2dp(23.04),
+  },
+  'fta-form-modal__image': {
+    width: scalePx2dp(268.8),
+    height: scalePx2dp(264.96),
+  },
+  'fta-form-item': {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: scalePx2dp(9.6),
+    marginRight: scalePx2dp(15.36),
+    marginBottom: 0,
+    marginLeft: scalePx2dp(15.36),
+  },
+  'fta-form-item-label': {
+    width: scalePx2dp(105.6),
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  'fta-form-item-label--hack': {
+    width: scalePx2dp(90.24),
+  },
+  'fta-form-item-label__text': {
+    fontSize: scalePx2dp(13.44),
+    fontWeight: '400',
+    color: '#333',
+  },
+  'fta-form-item-content': {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    minHeight: scalePx2dp(42.24),
+    width: scalePx2dp(202.56),
+    paddingTop: 0,
+    paddingRight: scalePx2dp(15.36),
+    paddingBottom: 0,
+    paddingLeft: scalePx2dp(15.36),
+    flexGrow: 0,
+    flexShrink: 0,
+    flexBasis: scalePx2dp(202.56),
+    borderRadius: scalePx2dp(7.68),
+    backgroundColor: '#f9f9f9',
+  },
+  'fta-form-item-content__text': {
+    fontSize: scalePx2dp(15.36),
+    fontWeight: '500',
+    color: '#333',
+  },
+  input: {
+    fontWeight: '500',
+    height: scalePx2dp(42.24),
+    lineHeight: scalePx2dp(42.24),
+  },
+  'fta-form-item-content--hover': {
+    opacity: 0.6,
+  },
+  'fta-form-item-content--error': {
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: '#f33131',
+  },
+  'fta-form-item-arrow': {
+    marginLeft: scalePx2dp(0.96),
+    width: scalePx2dp(15.36),
+    height: scalePx2dp(15.36),
+    flexGrow: 0,
+    flexShrink: 0,
+    flexBasis: scalePx2dp(15.36),
+  },
+  'fta-form-item-error': {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    marginTop: scalePx2dp(9.6),
+    paddingBottom: scalePx2dp(4.8),
+  },
+  'fta-form-item-error-icon': {
+    width: scalePx2dp(15.36),
+    height: scalePx2dp(15.36),
+    marginRight: scalePx2dp(2.4),
+  },
+  'fta-form-item-error-wrap': {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: scalePx2dp(217.92),
+  },
+  'fta-form-item-error__text': {
+    color: '#f33131',
+    fontSize: scalePx2dp(13.44),
+    lineHeight: scalePx2dp(15.36),
+  },
+  'fta-form-item-placeholder': {
+    fontSize: scalePx2dp(15.36),
+    fontWeight: '400',
+    color: '#ccc',
+  },
+  'fta-form-item-gap': {
+    width: '100%',
+    height: scalePx2dp(9.6),
+    backgroundColor: '#f5f5f5',
+  },
+  'fta-form-item-tooltip': {
+    flexGrow: 0,
+    flexShrink: 0,
+    flexBasis: scalePx2dp(14.4),
+    width: scalePx2dp(14.4),
+    height: scalePx2dp(14.4),
+    marginLeft: scalePx2dp(5.28),
+  },
+  'fta-form-item-input': {
+    backgroundColor: 'transparent',
+    height: scalePx2dp(42.24),
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: 0,
+  },
+  'fta-form-item--readonly': {},
+})
+
+var context = createContext({ rules: {}, store: { __anonymous__: [] } })
+function useFormConfig() {
+  var config = useContext(context)
+  return config
+}
+var FormProvider = context.Provider
+context.Consumer
+
+function ownKeys$1(object, enumerableOnly) {
+  var keys = Object.keys(object)
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object)
+    enumerableOnly &&
+      (symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable
+      })),
+      keys.push.apply(keys, symbols)
+  }
+  return keys
+}
+function _objectSpread$1(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = null != arguments[i] ? arguments[i] : {}
+    i % 2
+      ? ownKeys$1(Object(source), !0).forEach(function (key) {
+          _defineProperty(target, key, source[key])
+        })
+      : Object.getOwnPropertyDescriptors
+      ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source))
+      : ownKeys$1(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key))
+        })
+  }
+  return target
+}
+function FullScreen(props) {
+  var className = props.className,
+    customStyle = props.customStyle,
+    style = props.style,
+    children = props.children,
+    onClick = props.onClick
+  var rootClass = classNames('fta-form-full-screen', className)
+  return React.createElement(
+    Modal,
+    { visible: true, transparent: true },
+    React.createElement(
+      View,
+      {
+        className: rootClass,
+        style: _objectSpread$1(_objectSpread$1({}, style), customStyle),
+        onClick: onClick,
+      },
+      children
+    )
+  )
+}
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError('Cannot call a class as a function')
+  }
+}
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i]
+    descriptor.enumerable = descriptor.enumerable || false
+    descriptor.configurable = true
+    if ('value' in descriptor) descriptor.writable = true
+    Object.defineProperty(target, descriptor.key, descriptor)
+  }
+}
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps)
+  if (staticProps) _defineProperties(Constructor, staticProps)
+  Object.defineProperty(Constructor, 'prototype', { writable: false })
+  return Constructor
+}
+
+function _setPrototypeOf(o, p) {
+  _setPrototypeOf =
+    Object.setPrototypeOf ||
+    function _setPrototypeOf(o, p) {
+      o.__proto__ = p
+      return o
+    }
+  return _setPrototypeOf(o, p)
+}
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== 'function' && superClass !== null) {
+    throw new TypeError('Super expression must either be null or a function')
+  }
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: { value: subClass, writable: true, configurable: true },
+  })
+  Object.defineProperty(subClass, 'prototype', { writable: false })
+  if (superClass) _setPrototypeOf(subClass, superClass)
+}
+
+function _typeof(obj) {
+  '@babel/helpers - typeof'
+  return (
+    (_typeof =
+      'function' == typeof Symbol && 'symbol' == typeof Symbol.iterator
+        ? function (obj) {
+            return typeof obj
+          }
+        : function (obj) {
+            return obj &&
+              'function' == typeof Symbol &&
+              obj.constructor === Symbol &&
+              obj !== Symbol.prototype
+              ? 'symbol'
+              : typeof obj
+          }),
+    _typeof(obj)
+  )
+}
+
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called")
+  }
+  return self
+}
+
+function _possibleConstructorReturn(self, call) {
+  if (call && (_typeof(call) === 'object' || typeof call === 'function')) {
+    return call
+  } else if (call !== void 0) {
+    throw new TypeError('Derived constructors may only return object or undefined')
+  }
+  return _assertThisInitialized(self)
+}
+
+function _getPrototypeOf(o) {
+  _getPrototypeOf = Object.setPrototypeOf
+    ? Object.getPrototypeOf
+    : function _getPrototypeOf(o) {
+        return o.__proto__ || Object.getPrototypeOf(o)
+      }
+  return _getPrototypeOf(o)
+}
+
 var __awaiter$1 =
   (undefined && undefined.__awaiter) ||
   function (thisArg, _arguments, P, generator) {
@@ -947,6 +2156,7 @@ var computeScrollY = function computeScrollY(scrollViewLayout, viewLayout, scrol
     viewBottomY: viewBottomY,
     insets: insets,
   }
+  console.log('computationData', computationData, align)
   switch (align) {
     case 'auto':
       return computeScrollYAuto(computationData)
@@ -970,6 +2180,7 @@ var computeScrollYAuto = function computeScrollYAuto(data) {
   if (scrollY < scrollYBottom) {
     return scrollYBottom
   }
+  console.log('执行了锤子', scrollYTop, scrollYBottom)
   return scrollY
 }
 var computeScrollYTop = function computeScrollYTop(_ref) {
@@ -1004,8 +2215,8 @@ var normalizeOptions = function normalizeOptions() {
   var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}
   var fallbackOptions =
     arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : DefaultOptions
-  return _extends(_extends(_extends({}, fallbackOptions), options), {
-    insets: _extends(_extends({}, fallbackOptions.insets), options.insets),
+  return _extends$1(_extends$1(_extends$1({}, fallbackOptions), options), {
+    insets: _extends$1(_extends$1({}, fallbackOptions.insets), options.insets),
   })
 }
 var DefaultHOCConfig = {
@@ -1026,7 +2237,7 @@ var DefaultHOCConfig = {
 }
 var normalizeHOCConfig = function normalizeHOCConfig() {
   var config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}
-  return _extends(_extends(_extends({}, DefaultHOCConfig), config), {
+  return _extends$1(_extends$1(_extends$1({}, DefaultHOCConfig), config), {
     options: normalizeOptions(config.options, DefaultOptions),
   })
 }
@@ -1100,6 +2311,7 @@ var scrollIntoView = function scrollIntoView(scrollView, view, scrollY, options)
               newScrollY = computeScrollY(scrollViewLayout, viewLayout, scrollY, insets, align)
               scrollResponder = scrollView.getScrollResponder()
               if (scrollResponder.scrollResponderScrollTo != null) {
+                console.log('new ScrollY', newScrollY)
                 scrollResponder.scrollResponderScrollTo({ x: 0, y: newScrollY, animated: animated })
               } else {
                 scrollView.scrollTo({ x: 0, y: newScrollY, animated: animated })
@@ -1296,8 +2508,8 @@ var wrapScrollViewHOC = function wrapScrollViewHOC(ScrollViewComp) {
           var _a = this.props,
             children = _a.children,
             props = __rest(_a, ['children'])
-          var scrollViewProps = _extends(
-            _extends({}, props),
+          var scrollViewProps = _extends$1(
+            _extends$1({}, props),
             ((_extends2 = {}),
             _defineProperty(_extends2, refPropName, this.handleRef),
             _defineProperty(
@@ -1314,7 +2526,7 @@ var wrapScrollViewHOC = function wrapScrollViewHOC(ScrollViewComp) {
           )
           return React.createElement(
             ScrollViewComp,
-            _extends({}, scrollViewProps),
+            _extends$1({}, scrollViewProps),
             React.createElement(ProvideAPI, { dependencies: this.dependencies }, children)
           )
         },
@@ -1327,7 +2539,7 @@ var wrapScrollViewHOC = function wrapScrollViewHOC(ScrollViewComp) {
     (ScrollViewComp.displayName || ScrollViewComp.name || 'Component') +
     ')'
   return React.forwardRef(function (props, ref) {
-    return React.createElement(ScrollViewWrapper, _extends({ innerRef: ref }, props))
+    return React.createElement(ScrollViewWrapper, _extends$1({ innerRef: ref }, props))
   })
 }
 
@@ -1379,7 +2591,7 @@ var ContainerBase = (function (_React$Component) {
       }
     }
     _this.getPropsOptions = function () {
-      var options = _extends({}, _this.props.scrollIntoViewOptions)
+      var options = _extends$1({}, _this.props.scrollIntoViewOptions)
       OptionKeys.forEach(function (optionKey) {
         var optionValue = _this.props[optionKey]
         if (typeof optionValue !== 'undefined') {
@@ -1394,7 +2606,7 @@ var ContainerBase = (function (_React$Component) {
         return
       }
       if (_this.ensureApiProvided()) {
-        var options = _extends(_extends({}, _this.getPropsOptions()), providedOptions)
+        var options = _extends$1(_extends$1({}, _this.getPropsOptions()), providedOptions)
         _this.props.scrollIntoViewAPI.scrollIntoView(_this.container.current, options)
       }
     }
@@ -1435,8 +2647,8 @@ var ContainerBase = (function (_React$Component) {
       key: 'render',
       value: function render() {
         return React.createElement(
-          View,
-          _extends({}, this.props, { ref: this.container, collapsable: false }),
+          View$1,
+          _extends$1({}, this.props, { ref: this.container, collapsable: false }),
           this.props.children
         )
       },
@@ -1463,7 +2675,7 @@ var Container = React.forwardRef(function (props, ref) {
   return React.createElement(APIConsumer, null, function (scrollIntoViewAPI) {
     return React.createElement(
       ContainerBase,
-      _extends({ ref: ref }, props, { scrollIntoViewAPI: scrollIntoViewAPI })
+      _extends$1({ ref: ref }, props, { scrollIntoViewAPI: scrollIntoViewAPI })
     )
   })
 })
@@ -1484,6 +2696,30 @@ var ScrollView = wrapScrollViewConfigured({
   scrollEventThrottle: 16,
 })(ScrollView$1)
 
+var isEmptyRules = function isEmptyRules(rules) {
+  return !rules || !rules.length
+}
+var uniqueId = (function () {
+  var count = 0
+  return function () {
+    var prefix = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ''
+    return '' + prefix + ++count
+  }
+})()
+var parseChildren = function parseChildren(children, props) {
+  return typeof children === 'function' ? children(props) : children
+}
+var omit = function omit(target) {
+  var omitProps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : []
+  omitProps.forEach(function (key) {
+    return delete target[key]
+  })
+  return target
+}
+
+var _excluded = ['__anonymous__'],
+  _excluded2 = ['__anonymous__'],
+  _excluded3 = ['className', 'style', 'placeholderClass']
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object)
   if (Object.getOwnPropertySymbols) {
@@ -1510,6 +2746,41 @@ function _objectSpread(target) {
         })
   }
   return target
+}
+function _createForOfIteratorHelperLoose(o, allowArrayLike) {
+  var it = (typeof Symbol !== 'undefined' && o[Symbol.iterator]) || o['@@iterator']
+  if (it) return (it = it.call(o)).next.bind(it)
+  if (
+    Array.isArray(o) ||
+    (it = _unsupportedIterableToArray(o)) ||
+    (allowArrayLike && o && typeof o.length === 'number')
+  ) {
+    if (it) o = it
+    var i = 0
+    return function () {
+      if (i >= o.length) return { done: true }
+      return { done: false, value: o[i++] }
+    }
+  }
+  throw new TypeError(
+    'Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.'
+  )
+}
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return
+  if (typeof o === 'string') return _arrayLikeToArray(o, minLen)
+  var n = Object.prototype.toString.call(o).slice(8, -1)
+  if (n === 'Object' && o.constructor) n = o.constructor.name
+  if (n === 'Map' || n === 'Set') return Array.from(o)
+  if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
+    return _arrayLikeToArray(o, minLen)
+}
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i]
+  }
+  return arr2
 }
 function _getClassName() {
   var className = []
@@ -1546,6 +2817,10 @@ function _mergeEleStyles() {
 var _styleSheet = indexScssStyleSheet
 var justifyContentMap = { left: 'flex-start', center: 'center', right: 'flex-end' }
 var validatePriority = { Higher: 0, High: 1, Normal: 2, Low: 3, Lower: 4 }
+var validateStatus = { unset: -1, error: 0, success: 1, validating: 2 }
+var inError = function inError(status) {
+  return validateStatus.error === status
+}
 function Form(props, ref) {
   var children = props.children,
     title = props.title,
@@ -1558,27 +2833,141 @@ function Form(props, ref) {
     contentStyle = props.contentStyle,
     readonly = props.readonly,
     align = props.align,
+    rules = props.rules,
     onMount = props.onMount,
     onDestroy = props.onDestroy,
+    suspendOnFirstError = props.suspendOnFirstError,
     style = props.style
+  var _useState = useState(),
+    _useState2 = _slicedToArray(_useState, 2),
+    nodeId = _useState2[0],
+    scrollIntoView = _useState2[1]
+  var _useState3 = useState(false),
+    _useState4 = _slicedToArray(_useState3, 2),
+    visible = _useState4[0],
+    toggleVisible = _useState4[1]
+  var exampleRef = useRef()
+  var _showModal = function _showModal(example) {
+    exampleRef.current = example
+    toggleVisible(true)
+  }
+  var store = useRef({ __anonymous__: [] }).current
   var rootClass = classNames('fta-form', className)
+  var refMethods = {
+    validate: function validate(callback) {
+      var __anonymous__,
+        named,
+        itemRefs,
+        erroredProps,
+        invalid,
+        _iterator,
+        _step,
+        _ref2,
+        _ref,
+        errMsg
+      return regenerator.async(
+        function validate$(_context) {
+          while (1) {
+            switch ((_context.prev = _context.next)) {
+              case 0:
+                ;(__anonymous__ = store.__anonymous__),
+                  (named = _objectWithoutProperties(store, _excluded))
+                itemRefs = __anonymous__.concat(Object.values(named))
+                itemRefs.sort(function (a, b) {
+                  return a.current.priority - b.current.priority
+                })
+                erroredProps = []
+                invalid = false
+                _iterator = _createForOfIteratorHelperLoose(itemRefs)
+              case 6:
+                if ((_step = _iterator()).done) {
+                  _context.next = 20
+                  break
+                }
+                _ref2 = _step.value
+                _ref = _ref2.current
+                _context.next = 11
+                return regenerator.awrap(_ref.validateAsync())
+              case 11:
+                errMsg = _context.sent
+                if (!errMsg) {
+                  _context.next = 18
+                  break
+                }
+                invalid = true
+                _ref.prop && erroredProps.push(_ref.prop)
+                if (!suspendOnFirstError) {
+                  _context.next = 18
+                  break
+                }
+                callback == null ? void 0 : callback(!invalid, erroredProps)
+                return _context.abrupt('return', true)
+              case 18:
+                _context.next = 6
+                break
+              case 20:
+                callback == null ? void 0 : callback(!invalid, erroredProps)
+                return _context.abrupt('return', false)
+              case 22:
+              case 'end':
+                return _context.stop()
+            }
+          }
+        },
+        null,
+        null,
+        null,
+        Promise
+      )
+    },
+    highlight: function highlight(prop, message, scrollIntoView) {
+      var ref = refMethods.obtain(prop)
+      ref == null ? void 0 : ref.current.highlight(message, scrollIntoView)
+    },
+    obtain: function obtain(prop) {
+      return store[prop]
+    },
+    clearValidate: function clearValidate(props) {
+      if (props === void 0) {
+        console.log('store', store)
+        var __anonymous__ = store.__anonymous__,
+          refs = _objectWithoutProperties(store, _excluded2)
+        __anonymous__.forEach(function (ref) {
+          return ref.current.clearValidate()
+        })
+        Object.values(refs).forEach(function (ref) {
+          return ref.current.clearValidate()
+        })
+      }
+      if (!isArray(props)) {
+        props = [props]
+      }
+      props.forEach(function (prop) {
+        var ref = refMethods.obtain(prop)
+        ref == null ? void 0 : ref.current.clearValidate()
+      })
+    },
+    resetFields: function resetFields() {},
+    validateField: function validateField(props, callback) {
+      return Promise.resolve()
+    },
+    submit: function submit() {},
+  }
   useImperativeHandle(ref, function () {
-    return {
-      validate: function validate(callback) {
-        return Promise.resolve()
-      },
-      validateField: function validateField(props, callback) {
-        return Promise.resolve()
-      },
-      clearValidate: function clearValidate() {},
-      resetFields: function resetFields() {},
-      submit: function submit() {},
-    }
+    return refMethods
   })
+  useEffect(
+    function () {
+      !inRN && nodeId && setTimeout(scrollIntoView, 50)
+    },
+    [nodeId]
+  )
   return React.createElement(
     FormProvider,
     {
       value: {
+        rules: rules,
+        store: store,
         align: align,
         labelClassName: labelClassName,
         labelStyle: labelStyle,
@@ -1587,6 +2976,8 @@ function Form(props, ref) {
         readonly: readonly,
         onMount: onMount,
         onDestroy: onDestroy,
+        scrollIntoView: scrollIntoView,
+        _showModal: _showModal,
       },
     },
     React.createElement(
@@ -1595,6 +2986,7 @@ function Form(props, ref) {
         scrollY: true,
         scrollWithAnimation: true,
         scrollX: false,
+        scrollIntoView: nodeId,
         style: _mergeEleStyles(
           _getStyle(rootClass),
           _objectSpread(_objectSpread({}, style), customStyle)
@@ -1602,59 +2994,226 @@ function Form(props, ref) {
       },
       React.createElement(Title, { align: titleAlign }, title),
       children
-    )
+    ),
+    visible
+      ? React.createElement(
+          FullScreen,
+          {
+            onClick: function onClick() {
+              return toggleVisible(false)
+            },
+            style: _styleSheet['fta-form-modal'],
+          },
+          React.createElement(
+            Text,
+            { style: _styleSheet['fta-form-modal__text'] },
+            '\u70B9\u51FB\u4EFB\u610F\u533A\u57DF\u5173\u95ED'
+          ),
+          isString(exampleRef.current)
+            ? React.createElement(Image, {
+                src: exampleRef.current,
+                mode: 'aspectFit',
+                style: _styleSheet['fta-form-modal__image'],
+              })
+            : exampleRef.current
+        )
+      : null
   )
 }
+var rnLabelClz = inRN ? 'fta-form-item-label--hack' : null
+var initialFormItemState = { status: validateStatus.unset, message: '' }
 function FormItem(props, ref) {
   var label = props.label,
     value = props.value,
-    tooltip = props.tooltip,
-    renderTooltip = props.renderTooltip,
+    required = props.required,
     prop = props.prop,
     children = props.children,
-    placeholder = props.placeholder,
-    arrow = props.arrow,
-    error = props.error,
-    errorTip = props.errorTip,
+    render = props.render,
+    errorTip = props.errorTip
+  props.style
+  var validatePriority = props.validatePriority,
     align = props.align,
-    onTooltipClick = props.onTooltipClick,
-    onClick = props.onClick,
-    labelClassName = props.labelClassName,
-    labelStyle = props.labelStyle,
-    contentClassName = props.contentClassName,
-    contentStyle = props.contentStyle,
     readonly = props.readonly,
     rules = props.rules,
     onMount = props.onMount,
-    onDestroy = props.onDestroy
+    onDestroy = props.onDestroy,
+    onItemClick = props.onItemClick
+  var _children = render || children
+  var scrollRef = useRef()
   var ctx = useFormConfig()
+  var model = { ctx: ctx }
+  var formItemId = useRef(
+    inRN ? void 0 : prop ? 'fta-form-item-' + prop : uniqueId('fta-form-item-')
+  ).current
+  var _useEnhancedState = useEnhancedState(initialFormItemState),
+    _useEnhancedState2 = _slicedToArray(_useEnhancedState, 2),
+    state = _useEnhancedState2[0],
+    setState = _useEnhancedState2[1]
   var refMethods = {
-    getRules: function getRules() {
-      return rules
+    prop: prop,
+    priority: validatePriority,
+    getRules: function getRules(_rules) {
+      return _rules || rules || (prop && ctx.rules[prop]) || []
     },
     getValue: function getValue() {
+      if (value == null && prop && model) {
+        return model[prop]
+      }
       return value
     },
-    clearValidate: function clearValidate() {},
-    resetField: function resetField() {},
+    scrollIntoView: function scrollIntoView() {
+      inRN ? scrollRef.current.scrollIntoView() : ctx.scrollIntoView(formItemId)
+    },
+    highlight: function highlight(message) {
+      var scrollIntoView = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true
+      setState({ status: validateStatus.error, message: message || errorTip })
+      scrollIntoView && setTimeout(methodsRef.current.scrollIntoView, 200)
+    },
+    validate: function validate(callback, rules) {
+      rules = refMethods.getRules(rules)
+      if (isEmptyRules(rules) && isUndef(required)) {
+        callback()
+        return
+      }
+      setState('status', validateStatus.validating)
+      var key = prop || 'value'
+      var descriptor = _defineProperty({}, key, rules)
+      var model = _defineProperty({}, key, refMethods.getValue())
+      var validator = new Schema(descriptor)
+      validator.validate(model, { firstFields: true }, function (errors) {
+        var _errors$
+        var status = errors ? validateStatus.error : validateStatus.success
+        var message =
+          (errors == null ? void 0 : (_errors$ = errors[0]) == null ? void 0 : _errors$.message) ||
+          ''
+        setState({ status: status, message: message })
+        callback(message)
+      })
+    },
+    validateAsync: function validateAsync() {
+      return new Promise(function (resolve) {
+        return refMethods.validate(function (message) {
+          return resolve(message)
+        })
+      })
+    },
+    clearValidate: function clearValidate() {
+      setState(initialFormItemState)
+    },
     __test__: function __test__() {
       console.log('__test__ executed - label: ' + label)
     },
   }
+  var methodsRef = useRef(refMethods)
+  var errored = inError(state.status)
   useEffect(function () {
-    ctx.onMount == null ? void 0 : ctx.onMount(refMethods)
-    onMount == null ? void 0 : onMount(refMethods)
+    methodsRef.current = refMethods
+  })
+  useEffect(function () {
+    if (prop) {
+      ctx.store[prop] = methodsRef
+    } else {
+      ctx.store.__anonymous__.push(methodsRef)
+    }
+    ctx.onMount == null ? void 0 : ctx.onMount(methodsRef)
+    onMount == null ? void 0 : onMount(methodsRef)
     return function () {
-      ctx.onDestroy == null ? void 0 : ctx.onDestroy(refMethods)
-      onDestroy == null ? void 0 : onDestroy(refMethods)
+      if (prop) {
+        delete ctx.store[prop]
+      } else {
+        var i = ctx.store.__anonymous__.indexOf(methodsRef)
+        if (i > -1) ctx.store.__anonymous__.splice(i, 1)
+      }
+      ctx.onDestroy == null ? void 0 : ctx.onDestroy(methodsRef)
+      onDestroy == null ? void 0 : onDestroy(methodsRef)
     }
   }, [])
   useImperativeHandle(ref, function () {
     return refMethods
   })
   var _align = align || ctx.align
-  readonly === false ? false : readonly || ctx.readonly
-  var _labelClassName = classNames('fta-form-item-label', ctx.labelClassName, labelClassName)
+  var _readonly = readonly === false ? false : readonly || ctx.readonly
+  var getParsedChildren = function getParsedChildren() {
+    return parseChildren(
+      _children,
+      omit(
+        _objectSpread(
+          _objectSpread({}, props),
+          {},
+          { align: _align, readonly: _readonly, error: errored, itemRef: methodsRef }
+        ),
+        [
+          'className',
+          'customStyle',
+          'onClick',
+          'onMount',
+          'onDestroy',
+          'inputProps',
+          'render',
+          'children',
+        ]
+      )
+    )
+  }
+  if (isUndef(label)) {
+    return React.createElement(
+      ScrollIntoView,
+      { ref: inRN ? scrollRef : void 0, id: formItemId },
+      React.createElement(View, { onClick: onItemClick }, getParsedChildren())
+    )
+  }
+  return React.createElement(
+    ScrollIntoView,
+    { ref: inRN ? scrollRef : void 0, id: formItemId },
+    React.createElement(
+      FormItemAppearance,
+      omit(
+        _objectSpread(
+          _objectSpread({}, props),
+          {},
+          { error: errored, errorTip: state.message, itemRef: methodsRef }
+        ),
+        ['prop', 'value', 'required', 'rules', 'onMount', 'onDestroy', 'validatePriority']
+      ),
+      getParsedChildren()
+    )
+  )
+}
+function FormItemAppearance(props) {
+  var ctx = useFormConfig()
+  var label = props.label,
+    className = props.className,
+    customStyle = props.customStyle,
+    tooltip = props.tooltip,
+    tooltipIcon = props.tooltipIcon,
+    itemRef = props.itemRef,
+    children = props.children,
+    render = props.render,
+    readonly = props.readonly,
+    placeholder = props.placeholder,
+    arrow = props.arrow,
+    style = props.style,
+    error = props.error,
+    errorTip = props.errorTip,
+    align = props.align,
+    onLabelClick = props.onLabelClick,
+    onClick = props.onClick,
+    onItemClick = props.onItemClick,
+    labelClassName = props.labelClassName,
+    labelStyle = props.labelStyle,
+    contentClassName = props.contentClassName,
+    contentStyle = props.contentStyle
+  var _children = render || children
+  var _align = align || ctx.align
+  var _readonly = readonly === false ? false : readonly || ctx.readonly
+  var rootClass = classNames('fta-form-item', className)
+  var rootStyle = _objectSpread(_objectSpread({}, style), customStyle)
+  var _labelClassName = classNames(
+    'fta-form-item-label',
+    tooltip && rnLabelClz,
+    ctx.labelClassName,
+    labelClassName
+  )
   var _contentClassName = classNames(
     'fta-form-item-content',
     ctx.contentClassName,
@@ -1669,63 +3228,91 @@ function FormItem(props, ref) {
     ),
     contentStyle
   )
-  var rootClass = classNames('fta-form-item')
   var labelTextClass = classNames('fta-form-item-label__text')
+  var _onLabelCick = function _onLabelCick() {
+    if (!_readonly && tooltip && (onLabelClick == null ? void 0 : onLabelClick()) !== false) {
+      ctx._showModal(tooltip)
+    }
+  }
+  var labelHoverClass =
+    !_readonly && (tooltip || onLabelClick) ? 'fta-form-item-content--hover' : void 0
+  var contentHoverClass = _readonly ? void 0 : 'fta-form-item-content--hover'
   return React.createElement(
-    ScrollIntoView,
+    React.Fragment,
     null,
     React.createElement(
-      View$1,
-      { id: props ? 'form-' + prop : void 0, style: _getStyle(rootClass) },
+      View,
+      { style: _mergeEleStyles(_getStyle(rootClass), rootStyle), onClick: onItemClick },
       React.createElement(
-        View$1,
-        { style: _mergeEleStyles(_getStyle(_labelClassName), _labelStyle) },
+        View,
+        {
+          style: _mergeEleStyles(_getStyle(_labelClassName), _labelStyle),
+          onClick: _onLabelCick,
+          hoverClass: labelHoverClass,
+          hoverStyle: _getStyle(labelHoverClass),
+        },
         React.createElement(Text, { style: _getStyle(labelTextClass) }, label),
-        tooltip
-          ? React.createElement(ToolTip, {
-              onTooltipClick: onTooltipClick,
-              renderTooltip: renderTooltip,
-              prop: prop,
-            })
-          : null
+        tooltip && !_readonly ? React.createElement(ToolTip, { tooltipIcon: tooltipIcon }) : null
       ),
       React.createElement(
-        View$1,
+        View,
         {
           style: _mergeEleStyles(_getStyle(_contentClassName), _contentStyle),
           onClick: onClick,
-          hoverStyle: { opacity: 0.6 },
-          hoverClass: 'fta-form-item-content--hover',
+          hoverClass: contentHoverClass,
+          hoverStyle: _getStyle(contentHoverClass),
         },
-        isUndef(children)
-          ? placeholder
+        _children != null && !isUndef(itemRef.current.getValue())
+          ? _readonly
+            ? React.createElement(
+                Text,
+                { style: _styleSheet['fta-form-item-content__text'] },
+                itemRef.current.getValue()
+              )
+            : React.createElement(
+                BuiltinInput,
+                _extends$1(
+                  { placeholder: placeholder, style: { textAlign: _align || 'right' } },
+                  props.inputProps
+                )
+              )
+          : isUndef(_children)
+          ? placeholder && !_readonly
             ? React.createElement(Placeholder, null, placeholder)
             : null
-          : isString(children)
-          ? !children.length && placeholder
+          : isString(_children)
+          ? !_children.length && placeholder && !_readonly
             ? React.createElement(Placeholder, null, placeholder)
             : React.createElement(
                 Text,
                 { style: _styleSheet['fta-form-item-content__text'] },
-                children
+                _children
               )
-          : children,
-        arrow ? React.createElement(Arrow, null) : null
+          : _children,
+        arrow && !_readonly ? React.createElement(Arrow, null) : null
       )
     ),
-    error && errorTip
-      ? React.createElement(
-          View$1,
-          { style: _styleSheet['fta-form-item-error'] },
-          React.createElement(
-            View$1,
-            { style: _styleSheet['fta-form-item-error-wrap'] },
-            React.createElement(ErrorIcon, null),
-            ' ',
-            React.createElement(Text, { style: _styleSheet['fta-form-item-error__text'] }, errorTip)
+    React.createElement(
+      View,
+      null,
+      error && errorTip
+        ? React.createElement(
+            View,
+            { style: _styleSheet['fta-form-item-error'] },
+            React.createElement(
+              View,
+              { style: _styleSheet['fta-form-item-error-wrap'] },
+              React.createElement(ErrorIcon, null),
+              ' ',
+              React.createElement(
+                Text,
+                { style: _styleSheet['fta-form-item-error__text'] },
+                errorTip
+              )
+            )
           )
-        )
-      : null
+        : null
+    )
   )
 }
 function Title(props) {
@@ -1733,7 +3320,7 @@ function Title(props) {
     titleAlign = props.align
   return title
     ? React.createElement(
-        View$1,
+        View,
         { style: _mergeEleStyles(_styleSheet['fta-form-title'], { textAlign: titleAlign }) },
         isString(title)
           ? React.createElement(
@@ -1750,25 +3337,24 @@ function Title(props) {
     : null
 }
 function ToolTip(props) {
-  var _useState = useState(false),
-    _useState2 = _slicedToArray(_useState, 2),
-    visible = _useState2[0],
-    toggle = _useState2[1]
-  var tooltip = props.tooltip,
-    onTooltipClick = props.onTooltipClick,
-    prop = props.prop,
-    renderTooltip = props.renderTooltip
+  var tooltipIcon = props.tooltipIcon
+  return isString(tooltipIcon)
+    ? React.createElement(Image, { src: tooltipIcon, style: _styleSheet['fta-form-item-tooltip'] })
+    : tooltipIcon
+}
+function BuiltinInput(props) {
+  var className = props.className,
+    style = props.style,
+    placeholderClass = props.placeholderClass,
+    extraProps = _objectWithoutProperties(props, _excluded3)
+  var rootClass = classNames('fta-form-item-input', 'fta-form-item-content__text', className)
+  var placeClass = classNames('fta-form-item-placeholder', placeholderClass)
   return React.createElement(
-    View$1,
-    {
-      onClick: function onClick() {
-        onTooltipClick(prop)
-        toggle(!visible)
-      },
-      style: _styleSheet['fta-form-item-tooltip'],
-    },
-    isString(tooltip) ? React.createElement(Image, { src: tooltip }) : tooltip,
-    visible ? renderTooltip : null
+    Input,
+    _extends$1(
+      { style: _mergeEleStyles(_getStyle(rootClass), style), placeholderClass: placeClass },
+      extraProps
+    )
   )
 }
 function Placeholder(props) {
@@ -1790,7 +3376,7 @@ function ErrorIcon() {
   })
 }
 function Gap() {
-  return React.createElement(View$1, { style: _styleSheet['fta-form-item-gap'] })
+  return React.createElement(View, { style: _styleSheet['fta-form-item-gap'] })
 }
 function Tip(props) {
   var onClick = props.onClick,
@@ -1802,10 +3388,10 @@ function Tip(props) {
   var rootClass = classNames('fta-form-tip', className)
   var rootStyle = _objectSpread(_objectSpread({}, style), {}, { customStyle: customStyle })
   return React.createElement(
-    View$1,
+    View,
     { style: _mergeEleStyles(_getStyle(rootClass), rootStyle) },
     React.createElement(
-      View$1,
+      View,
       { style: _styleSheet['fta-form-tip-content'] },
       React.createElement(Image, {
         src: Assets.tip.info,
@@ -1823,15 +3409,9 @@ function Tip(props) {
   )
 }
 Tip.defaultProps = { button: '重新上传', title: '如需更新证件信息，请重新上传' }
-var tooltipDefaultProps = {
-  tooltip: '',
-  onTooltipClick: function onTooltipClick() {},
-  renderTooltip: null,
-}
-var formDefaultProps = { titleAlign: 'left' }
+var tooltipDefaultProps = { tooltipIcon: Assets.icon.question }
+var formDefaultProps = { rules: {}, model: {}, titleAlign: 'left' }
 var formItemDefaultProps = {
-  label: '',
-  error: false,
   errorTip: '信息填写错误',
   validatePriority: validatePriority.Normal,
   onClick: function onClick() {},
@@ -1840,10 +3420,14 @@ ToolTip.defaultProps = tooltipDefaultProps
 var ForwardForm = forwardRef(Form)
 var FowardFormItem = forwardRef(FormItem)
 ForwardForm.defaultProps = formDefaultProps
+FowardFormItem.defaultProps = formItemDefaultProps
 ForwardForm.Item = FowardFormItem
+ForwardForm.ItemView = FormItemAppearance
+ForwardForm.Input = BuiltinInput
 ForwardForm.Gap = Gap
 ForwardForm.Tip = Tip
 ForwardForm.ValidatePriority = validatePriority
-FowardFormItem.defaultProps = formItemDefaultProps
+ForwardForm.ValidateStatus = validateStatus
+ForwardForm.AsyncValidator = Schema
 
 export { FowardFormItem as FormItem, ForwardForm as default }
