@@ -1,3 +1,4 @@
+import { InputProps } from '@tarojs/components/types/Input'
 import Schema from 'async-validator'
 import {
   CSSProperties,
@@ -162,10 +163,6 @@ export interface FormItemProps
    */
   required?: boolean
   /**
-   * 自定义渲染右侧区域
-   */
-  render?: ReactNode
-  /**
    * 空值时的占位文本
    */
   placeholder?: string
@@ -177,10 +174,6 @@ export interface FormItemProps
    * 校验规则
    */
   rules?: ValidateRule[]
-  /**
-   * 值的最大长度
-   */
-  maxlength?: number
   /**
    * 是否显示右箭头（可传入自定义节点）
    */
@@ -197,12 +190,20 @@ export interface FormItemProps
    * 是否校验错误
    * @default false
    */
-  error?: boolean
+  // error?: boolean
   /**
    * 校验错误提示信息
    * @default '信息填写错误'
    */
   errorTip?: string
+  /**
+   * 整个表单项的点击事件回调
+   */
+  onItemClick?: () => void
+  /**
+   * label存在时，点击content区域的回调
+   */
+  onClick?: () => void
   /**
    * 点击label的回调
    */
@@ -212,50 +213,64 @@ export interface FormItemProps
    */
   tooltip?: ReactNode
   /**
-   * input框自动聚焦
-   * @default false
+   * label存在时，自定义右侧内容显示
+   * label不存在时，自定义FormItem全部样式
    */
-  autofocus?: boolean
+  children?: ReactNode | ((props: FormItemChildrenProps) => ReactNode)
   /**
-   * 自定义右侧显示
+   * 优先级高于children
+   * label存在时，自定义右侧内容显示
+   * label不存在时，自定义FormItem全部样式
    */
-  children?: ReactNode
+  render?: (props: FormItemChildrenProps) => ReactNode
   /**
    * 校验优先级
    * @default 2
    */
   validatePriority?: ValidatePriority[keyof ValidatePriority]
   /**
-   * 校验回调
+   *  内置输入框的props,自定义组件无效
    */
-  validator?: (rule: ValidateRule, value?: any, callback?: (val: ?any) => void) => void
+  inputProps?: BuiltinInputProps
+}
+export interface FormItemChildrenProps
+  extends Omit<
+    FormItemProps,
+    | 'className'
+    | 'customStyle'
+    | 'render'
+    | 'children'
+    | 'onLabelClick'
+    | 'inputProps'
+    | 'labelClassName'
+    | 'labelStyle'
+    | 'containerClassName'
+    | 'containerStyle'
+    | 'tooltip'
+    | 'tooltipIcon'
+    | 'arrow'
+    | 'onClick'
+    | 'onLabelClick'
+    | 'onItemClick'
+    | 'onMount'
+    | 'onDestroy'
+  > {
   /**
-   * 点击内容区域的回调
+   * 当前是否校验出错
    */
-  onClick?: () => void
-  /**
-   * 值变化时的回调
-   */
-  onChange?: (newVal: boolean, oldVal: boolean) => void
-  /**
-   * 输入框聚焦时的回调
-   */
-  onFoucs?: () => void
-  /**
-   * 输入框失焦时的回调
-   */
-  onBlur?: () => void
+  error: boolean
+  itemRef: MutableRefObject<FormItemRefMethods>
 }
 
 export interface FormRefMethods {
   /**
-   * 手动验证所有表单项，返回一个Promise对象
+   * 手动验证所有表单项，返回一个Promise对象, true为校验失败
    */
-  validate: (callback?: (isValid: boolean, erroredProps?: string[]) => void) => Promise<boolean>
+  validate: (callback?: (isValid: boolean, erroredProps: string[]) => void) => Promise<boolean>
   /**
    * 根据prop手动高亮FormItem
    */
-  highlight: (prop: string) => void
+  highlight: (prop: string, message?: string, scrollIntoView?: boolean) => void
   /**
    * 根据prop获取FormItem
    */
@@ -273,7 +288,7 @@ export interface FormRefMethods {
    * 传入待移除的表单项的 prop 属性或者 prop 组成的数组
    * 如不传则移除整个表单的校验结果
    */
-  clearValidate: (props?: string[]) => void
+  clearValidate: (prop?: string | string[]) => void
   /**
    * 对整个表单进行重置，将所有字段值重置为初始值并移除校验结果
    * @todo
@@ -301,7 +316,7 @@ export interface FormItemRefMethods {
   /**
    * 获取当前表单绑定的值
    */
-  getValue: () => unknown
+  getValue: () => string | undefined
   /**
    * 滚动到可视区域
    */
@@ -309,7 +324,7 @@ export interface FormItemRefMethods {
   /**
    * 滚动到可视区域并标记为错误
    */
-  highlight: () => void
+  highlight: (message?: string, scrollIntoView?: boolean) => void
   /**
    * 校验该表单项
    */
@@ -324,6 +339,11 @@ export interface FormItemRefMethods {
   clearValidate: () => void
 
   [key: string]: any
+}
+
+export interface BuiltinInputProps extends InputProps {
+  className?: string
+  style?: CSSProperties
 }
 
 export interface TipProps extends BaseComponent {
@@ -349,6 +369,8 @@ declare const FormItem: ForwardRefExoticComponent<FormItemProps & RefAttributes<
 
 declare const Form: ForwardRefExoticComponent<FormProps & RefAttributes<FormRefMethods>> & {
   Item: typeof FormItem
+  /** 内置输入框 */
+  Input: FC<BuiltinInputProps>
   /** 间隔槽 */
   Gap: FC<{}>
   /** 重新上传的提示 */

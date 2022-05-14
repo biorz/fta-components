@@ -1,4 +1,4 @@
-import { Image, Text, View } from '@tarojs/components'
+import { Image, Input, Text, View } from '@tarojs/components'
 import AsyncValidator from 'async-validator'
 import classNames from 'classnames'
 import React, {
@@ -13,10 +13,11 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import { Assets, inRN, isString, isUndef, useEnhancedState } from '../../common'
+import { Assets, inRN, isArray, isString, isUndef, useEnhancedState } from '../../common'
 import '../../style/components/form/index.scss'
 import {
   Align,
+  BuiltinInputProps,
   FormItemProps,
   FormItemRefMethods,
   FormProps,
@@ -30,7 +31,7 @@ import { TouchableOpacity } from '../view'
 import { FormProvider, Store, useFormConfig } from './context'
 import { FullScreen as Modal } from './full-screen'
 import { ScrollIntoView, ScrollView } from './scroll-into-view'
-import { isEmptyRules, uniqueId } from './util'
+import { isEmptyRules, omit, parseChildren, uniqueId } from './util'
 
 const justifyContentMap: Record<Align, CSSProperties['justifyContent']> = {
   left: 'flex-start',
@@ -85,8 +86,6 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
     style,
   } = props
 
-  // const keysFn = useRef(cache(uniqueId, {})).current
-
   const [nodeId, scrollIntoView] = useState<string>()
   const [visible, toggleVisible] = useState(false)
   const exampleRef = useRef<ReactNode>()
@@ -121,26 +120,45 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
           ref.prop && erroredProps.push(ref.prop)
           // 校验出错，停止校验
           if (suspendOnFirstError) {
-            callback?.(invalid, erroredProps)
+            callback?.(!invalid, erroredProps)
             return true
           }
         }
       }
-      callback?.(invalid, erroredProps)
+      callback?.(!invalid, erroredProps)
       return false
     },
-    highlight(prop: string) {
+    highlight(prop: string, message?: string, scrollIntoView?: boolean) {
       const ref = refMethods.obtain(prop)
-      ref?.current.highlight()
+      ref?.current.highlight(message, scrollIntoView)
     },
     obtain(prop) {
       return store[prop] as MutableRefObject<FormItemRefMethods> | undefined
     },
-    clearValidate() {},
+    clearValidate(props: string | string[]) {
+      if (props === void 0) {
+        console.log('store', store)
+        const { __anonymous__, ...refs } = store
+        __anonymous__.forEach((ref) => ref.current.clearValidate())
+        Object.values(refs).forEach((ref: MutableRefObject<FormItemRefMethods>) =>
+          ref.current.clearValidate()
+        )
+      }
+      if (!isArray(props)) {
+        props = [props]
+      }
+      props.forEach((prop) => {
+        const ref = refMethods.obtain(prop)
+        ref?.current.clearValidate()
+      })
+    },
+    // TODO:
     resetFields() {},
+    // TODO:
     validateField(props: string[], callback: (valid: boolean, failedProps: string[]) => void) {
       return Promise.resolve()
     },
+    // TODO:
     submit() {},
   }
 
@@ -195,6 +213,11 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
 // FIXME: iOS RN 中 tooltip 图标溢出父容器
 const rnLabelClz = inRN ? 'fta-form-item-label--hack' : null
 
+const initialFormItemState = {
+  status: validateStatus.unset,
+  message: '',
+}
+
 /**
  * @component
  */
@@ -208,8 +231,8 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
     prop,
     children,
     placeholder,
+    render,
     arrow,
-    error,
     errorTip,
     validatePriority,
     // readonly,
@@ -224,7 +247,10 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
     rules,
     onMount,
     onDestroy,
+    onItemClick,
   } = props
+
+  const _children = render || children
 
   const scrollRef = useRef<any>()
   const ctx = useFormConfig()
@@ -237,10 +263,7 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
   const [state, setState] = useEnhancedState<{
     status: ValidateStatus[keyof ValidateStatus]
     message: string | undefined
-  }>({
-    status: validateStatus.unset,
-    message: '',
-  })
+  }>(initialFormItemState)
 
   const refMethods: FormItemRefMethods = {
     prop: prop!,
@@ -255,12 +278,12 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
     scrollIntoView() {
       inRN ? scrollRef.current.scrollIntoView() : ctx.scrollIntoView!(formItemId!)
     },
-    highlight(message?: string) {
+    highlight(message?: string, scrollIntoView = true) {
       setState({
         status: validateStatus.error,
         message: message || errorTip,
       })
-      setTimeout(methodsRef.current.scrollIntoView, 200)
+      scrollIntoView && setTimeout(methodsRef.current.scrollIntoView, 200)
     },
     validate(callback, rules) {
       rules = refMethods.getRules(rules)
@@ -289,10 +312,7 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
       return new Promise((resolve) => refMethods.validate((message) => resolve(message)))
     },
     clearValidate() {
-      setState({
-        status: validateStatus.unset,
-        message: '',
-      })
+      setState(initialFormItemState)
     },
     // 测试函数
     __test__() {
@@ -301,6 +321,8 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
   }
 
   const methodsRef = useRef(refMethods)
+
+  const errored = inError(state.status)
 
   // 保证能取到最新的refMethods
   useEffect(() => {
@@ -333,13 +355,35 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
 
   useImperativeHandle(ref, () => refMethods)
 
-  if (isUndef(label)) {
-    return <View>{children} </View>
-  }
-
   const _align = align || ctx.align
   // TODO: 是否标记为只读
   const _readonly = readonly === false ? false : readonly || ctx.readonly
+
+  if (isUndef(label)) {
+    return (
+      <ScrollIntoView ref={inRN ? scrollRef : void 0} id={formItemId}>
+        <View onClick={onItemClick}>
+          {parseChildren(
+            _children,
+            omit(
+              { ...props, align: _align, readonly: _readonly, error: errored, itemRef: refMethods },
+              [
+                // 删除一些常用的属性，提升性能
+                'className',
+                'customStyle',
+                'onClick',
+                'onMount',
+                'onDestroy',
+                'inputProps',
+                'render',
+                'children',
+              ]
+            )
+          )}
+        </View>
+      </ScrollIntoView>
+    )
+  }
 
   const _labelClassName = classNames(
     'fta-form-item-label',
@@ -352,7 +396,7 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
     'fta-form-item-content',
     ctx.contentClassName,
     contentClassName,
-    inError(state.status) && 'fta-form-item-content--error'
+    errored && 'fta-form-item-content--error'
   )
 
   const _labelStyle = { ...ctx.labelStyle, ...labelStyle }
@@ -377,9 +421,10 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
     !_readonly && (tooltip || onLabelClick) ? 'fta-form-item-content--hover' : void 0
 
   const contentHoverClass = _readonly ? void 0 : 'fta-form-item-content--hover'
+
   return (
     <ScrollIntoView ref={inRN ? scrollRef : void 0} id={formItemId}>
-      <View className={rootClass}>
+      <View className={rootClass} onClick={onItemClick}>
         {/* ========== label area==========*/}
         <View
           className={_labelClassName}
@@ -399,25 +444,57 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
           //@ts-ignore
           hoverClassName={contentHoverClass}
           hoverClass={contentHoverClass}>
-          {isUndef(children) ? (
+          {_children != null && !isUndef(refMethods.getValue()) ? (
+            _readonly ? (
+              <Text className='fta-form-item-content__text'>{refMethods.getValue()}</Text>
+            ) : (
+              <BuiltinInput
+                placeholder={placeholder}
+                style={{ textAlign: _align || 'right' }}
+                {...props.inputProps}
+              />
+            )
+          ) : isUndef(_children) ? (
             placeholder && !_readonly ? (
               <Placeholder>{placeholder}</Placeholder>
             ) : null
-          ) : isString(children) ? (
-            !children.length && placeholder && !_readonly ? (
+          ) : isString(_children) ? (
+            !_children.length && placeholder && !_readonly ? (
               <Placeholder>{placeholder}</Placeholder>
             ) : (
-              <Text className='fta-form-item-content__text'>{children}</Text>
+              <Text className='fta-form-item-content__text'>{_children}</Text>
             )
           ) : (
-            children
+            parseChildren(
+              _children,
+              omit(
+                {
+                  ...props,
+                  align: _align,
+                  readonly: _readonly,
+                  error: errored,
+                  itemRef: refMethods,
+                },
+                [
+                  // 删除一些常用的属性，提升性能
+                  'className',
+                  'customStyle',
+                  'onClick',
+                  'onMount',
+                  'onDestroy',
+                  'inputProps',
+                  'render',
+                  'children',
+                ]
+              )
+            )
           )}
           {arrow && !_readonly ? <Arrow /> : null}
         </View>
       </View>
       {/* 套了一个View标签，解决Taro H5 顺序颠倒 */}
       <View>
-        {inError(state.status) && state.message ? (
+        {errored && state.message ? (
           <View className='fta-form-item-error'>
             <View className='fta-form-item-error-wrap'>
               <ErrorIcon /> <Text className='fta-form-item-error__text'>{state.message}</Text>
@@ -453,6 +530,14 @@ function ToolTip(props: ToolTipProps): JSX.Element {
   ) : (
     tooltipIcon!
   )
+}
+
+/** 内置输入框 */
+function BuiltinInput(props: BuiltinInputProps) {
+  const { className, style, placeholderClass, ...extraProps } = props
+  const rootClass = classNames('fta-form-item-input', 'fta-form-item-content__text', className)
+  const placeClass = classNames('fta-form-item-placeholder', placeholderClass)
+  return <Input className={rootClass} style={style} placeholderClass={placeClass} {...extraProps} />
 }
 
 /** 占位文本 */
@@ -539,6 +624,7 @@ const ForwardForm = forwardRef(Form) as React.ForwardRefExoticComponent<
   FormProps & React.RefAttributes<FormRefMethods>
 > & {
   Item: typeof FowardFormItem
+  Input: typeof BuiltinInput
   Gap: typeof Gap
   Tip: typeof Tip
   ValidatePriority: ValidatePriority
@@ -555,6 +641,8 @@ FowardFormItem.defaultProps = formItemDefaultProps
 /** Extend Form */
 
 ForwardForm.Item = FowardFormItem
+
+ForwardForm.Input = BuiltinInput
 
 ForwardForm.Gap = Gap
 

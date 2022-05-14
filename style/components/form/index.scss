@@ -141,7 +141,7 @@ $color-error: #f33131;
     align-items: center;
     min-height: zoom(88px);
     width: zoom(422px);
-    padding: zoom(32px);
+    padding: 0 zoom(32px);
     flex: 0 0 zoom(422px);
     border-radius: $border-radius-lg;
     background-color: #f9f9f9;
@@ -150,6 +150,19 @@ $color-error: #f33131;
       font-size: $font-size-md;
       font-weight: $font-weight-bold;
       color: $color-grey-0;
+      @include h5 {
+        input {
+          font-weight: $font-weight-bold;
+          height: zoom(88px);
+          line-height: zoom(88px);
+
+          &::placeholder {
+            font-size: $font-size-md;
+            font-weight: $font-weight-normal;
+            color: $color-grey-3;
+          }
+        }
+      }
     }
 
     &--hover {
@@ -165,6 +178,7 @@ $color-error: #f33131;
   &-arrow {
     margin-left: zoom(2px);
     @include square(zoom(32px));
+    flex: 0 0 zoom(32px);
   }
 
   &-error {
@@ -208,6 +222,14 @@ $color-error: #f33131;
     flex: 0 0 zoom(30px);
     @include square(zoom(30px));
     margin-left: zoom(11px);
+  }
+
+  &-input {
+    background-color: transparent;
+    height: zoom(88px);
+    // line-height: zoom(88px);
+    flex: 1;
+    // text-align: right;
   }
 
   /* Modifiers */
