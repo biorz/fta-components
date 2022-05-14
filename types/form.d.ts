@@ -233,28 +233,8 @@ export interface FormItemProps
    */
   inputProps?: BuiltinInputProps
 }
-export interface FormItemChildrenProps
-  extends Omit<
-    FormItemProps,
-    | 'className'
-    | 'customStyle'
-    | 'render'
-    | 'children'
-    | 'onLabelClick'
-    | 'inputProps'
-    | 'labelClassName'
-    | 'labelStyle'
-    | 'containerClassName'
-    | 'containerStyle'
-    | 'tooltip'
-    | 'tooltipIcon'
-    | 'arrow'
-    | 'onClick'
-    | 'onLabelClick'
-    | 'onItemClick'
-    | 'onMount'
-    | 'onDestroy'
-  > {
+
+export interface StatelessProps {
   /**
    * 当前是否校验出错
    */
@@ -264,6 +244,39 @@ export interface FormItemChildrenProps
    */
   itemRef: MutableRefObject<FormItemRefMethods>
 }
+
+export interface FormItemAppearanceProps
+  extends Omit<
+      FormItemProps,
+      'prop' | 'value' | 'required' | 'rules' | 'onMount' | 'onDestroy' | 'validatePriority'
+    >,
+    StatelessProps {
+  render?: ReactNode
+  children?: ReactNode
+}
+export interface FormItemChildrenProps
+  extends Omit<
+      FormItemProps,
+      | 'className'
+      | 'customStyle'
+      | 'render'
+      | 'children'
+      | 'onLabelClick'
+      | 'inputProps'
+      | 'labelClassName'
+      | 'labelStyle'
+      | 'containerClassName'
+      | 'containerStyle'
+      | 'tooltip'
+      | 'tooltipIcon'
+      | 'arrow'
+      | 'onClick'
+      | 'onLabelClick'
+      | 'onItemClick'
+      | 'onMount'
+      | 'onDestroy'
+    >,
+    StatelessProps {}
 
 export interface FormRefMethods {
   /**
@@ -372,6 +385,8 @@ declare const FormItem: ForwardRefExoticComponent<FormItemProps & RefAttributes<
 
 declare const Form: ForwardRefExoticComponent<FormProps & RefAttributes<FormRefMethods>> & {
   Item: typeof FormItem
+  /** FormItem UI组件 */
+  ItemView: FC<FormItemAppearanceProps>
   /** 内置输入框 */
   Input: FC<BuiltinInputProps>
   /** 间隔槽 */

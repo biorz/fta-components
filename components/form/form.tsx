@@ -18,6 +18,7 @@ import '../../style/components/form/index.scss'
 import {
   Align,
   BuiltinInputProps,
+  FormItemAppearanceProps,
   FormItemProps,
   FormItemRefMethods,
   FormProps,
@@ -226,28 +227,46 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
     label,
     value,
     required,
-    tooltip,
-    tooltipIcon,
+
     prop,
     children,
-    placeholder,
     render,
-    arrow,
     errorTip,
+    // @ts-ignore
+    style,
     validatePriority,
-    // readonly,
     align,
-    onLabelClick,
-    onClick,
-    labelClassName,
-    labelStyle,
-    contentClassName,
-    contentStyle,
+
     readonly,
     rules,
     onMount,
     onDestroy,
     onItemClick,
+
+    /* exclude props */
+
+    // prop,
+    // value,
+    // required,
+    // rules,
+    // onMount,
+    // onDestroy,
+    // validatePriority,
+
+    /* unused props */
+
+    // tooltip,
+    // tooltipIcon,
+    // onLabelClick,
+    // onClick,
+    // labelClassName,
+    // labelStyle,
+    // contentClassName,
+    // contentStyle,
+    // placeholder,
+    // arrow,
+    // className,
+    // customStyle,
   } = props
 
   const _children = render || children
@@ -359,31 +378,92 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
   // TODO: 是否标记为只读
   const _readonly = readonly === false ? false : readonly || ctx.readonly
 
+  const getParsedChildren = () =>
+    parseChildren(
+      _children,
+      omit({ ...props, align: _align, readonly: _readonly, error: errored, itemRef: methodsRef }, [
+        // 删除一些常用的属性，提升性能
+        'className',
+        'customStyle',
+        'onClick',
+        'onMount',
+        'onDestroy',
+        'inputProps',
+        'render',
+        'children',
+      ])
+    )
+
   if (isUndef(label)) {
     return (
       <ScrollIntoView ref={inRN ? scrollRef : void 0} id={formItemId}>
-        <View onClick={onItemClick}>
-          {parseChildren(
-            _children,
-            omit(
-              { ...props, align: _align, readonly: _readonly, error: errored, itemRef: refMethods },
-              [
-                // 删除一些常用的属性，提升性能
-                'className',
-                'customStyle',
-                'onClick',
-                'onMount',
-                'onDestroy',
-                'inputProps',
-                'render',
-                'children',
-              ]
-            )
-          )}
-        </View>
+        <View onClick={onItemClick}>{getParsedChildren()}</View>
       </ScrollIntoView>
     )
   }
+
+  return (
+    <ScrollIntoView ref={inRN ? scrollRef : void 0} id={formItemId}>
+      <FormItemAppearance
+        {...omit({ ...props, error: errored, errorTip: state.message, itemRef: methodsRef }, [
+          'prop',
+          'value',
+          'required',
+          'rules',
+          'onMount',
+          'onDestroy',
+          'validatePriority',
+        ])}>
+        {getParsedChildren()}
+      </FormItemAppearance>
+    </ScrollIntoView>
+  )
+}
+
+/** FormItem UI容器 */
+function FormItemAppearance(props: FormItemAppearanceProps) {
+  const ctx = useFormConfig()
+  const {
+    label,
+    className,
+    customStyle,
+    tooltip,
+    tooltipIcon,
+    itemRef,
+    children,
+    render,
+    // prop,
+    // value,
+    // required,
+    // rules,
+    // onMount,
+    // onDestroy,
+    // validatePriority,
+    readonly,
+    placeholder,
+    arrow,
+    // @ts-ignore
+    style,
+    error,
+    errorTip,
+    align,
+    onLabelClick,
+    onClick,
+    onItemClick,
+    labelClassName,
+    labelStyle,
+    contentClassName,
+    contentStyle,
+  } = props
+
+  const _children = render || children
+
+  const _align = align || ctx.align
+  // TODO: 是否标记为只读
+  const _readonly = readonly === false ? false : readonly || ctx.readonly
+
+  const rootClass = classNames('fta-form-item', className)
+  const rootStyle = { ...style, ...customStyle }
 
   const _labelClassName = classNames(
     'fta-form-item-label',
@@ -396,7 +476,7 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
     'fta-form-item-content',
     ctx.contentClassName,
     contentClassName,
-    errored && 'fta-form-item-content--error'
+    error && 'fta-form-item-content--error'
   )
 
   const _labelStyle = { ...ctx.labelStyle, ...labelStyle }
@@ -406,8 +486,6 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
     ...ctx.contentStyle,
     ...contentStyle,
   }
-
-  const rootClass = classNames('fta-form-item')
 
   const labelTextClass = classNames('fta-form-item-label__text')
 
@@ -423,8 +501,8 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
   const contentHoverClass = _readonly ? void 0 : 'fta-form-item-content--hover'
 
   return (
-    <ScrollIntoView ref={inRN ? scrollRef : void 0} id={formItemId}>
-      <View className={rootClass} onClick={onItemClick}>
+    <>
+      <View className={rootClass} style={rootStyle} onClick={onItemClick}>
         {/* ========== label area==========*/}
         <View
           className={_labelClassName}
@@ -444,9 +522,9 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
           //@ts-ignore
           hoverClassName={contentHoverClass}
           hoverClass={contentHoverClass}>
-          {_children != null && !isUndef(refMethods.getValue()) ? (
+          {_children != null && !isUndef(itemRef.current.getValue()) ? (
             _readonly ? (
-              <Text className='fta-form-item-content__text'>{refMethods.getValue()}</Text>
+              <Text className='fta-form-item-content__text'>{itemRef.current.getValue()}</Text>
             ) : (
               <BuiltinInput
                 placeholder={placeholder}
@@ -465,44 +543,22 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
               <Text className='fta-form-item-content__text'>{_children}</Text>
             )
           ) : (
-            parseChildren(
-              _children,
-              omit(
-                {
-                  ...props,
-                  align: _align,
-                  readonly: _readonly,
-                  error: errored,
-                  itemRef: refMethods,
-                },
-                [
-                  // 删除一些常用的属性，提升性能
-                  'className',
-                  'customStyle',
-                  'onClick',
-                  'onMount',
-                  'onDestroy',
-                  'inputProps',
-                  'render',
-                  'children',
-                ]
-              )
-            )
+            _children
           )}
           {arrow && !_readonly ? <Arrow /> : null}
         </View>
       </View>
       {/* 套了一个View标签，解决Taro H5 顺序颠倒 */}
       <View>
-        {errored && state.message ? (
+        {error && errorTip ? (
           <View className='fta-form-item-error'>
             <View className='fta-form-item-error-wrap'>
-              <ErrorIcon /> <Text className='fta-form-item-error__text'>{state.message}</Text>
+              <ErrorIcon /> <Text className='fta-form-item-error__text'>{errorTip}</Text>
             </View>
           </View>
         ) : null}
       </View>
-    </ScrollIntoView>
+    </>
   )
 }
 
@@ -624,6 +680,7 @@ const ForwardForm = forwardRef(Form) as React.ForwardRefExoticComponent<
   FormProps & React.RefAttributes<FormRefMethods>
 > & {
   Item: typeof FowardFormItem
+  ItemView: typeof FormItemAppearance
   Input: typeof BuiltinInput
   Gap: typeof Gap
   Tip: typeof Tip
@@ -641,6 +698,8 @@ FowardFormItem.defaultProps = formItemDefaultProps
 /** Extend Form */
 
 ForwardForm.Item = FowardFormItem
+
+ForwardForm.ItemView = FormItemAppearance
 
 ForwardForm.Input = BuiltinInput
 
