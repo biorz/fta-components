@@ -611,7 +611,7 @@ const formDefaultProps: FormProps = {
 
 const formItemDefaultProps: FormItemProps = {
   // label: '',
-  error: false,
+  // error: false,
   // rules: [],
   errorTip: '信息填写错误',
   validatePriority: validatePriority.Normal,

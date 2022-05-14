@@ -259,6 +259,9 @@ export interface FormItemChildrenProps
    * 当前是否校验出错
    */
   error: boolean
+  /**
+   * FormItem本身的ref
+   */
   itemRef: MutableRefObject<FormItemRefMethods>
 }
 
