@@ -209,6 +209,10 @@ export interface FormItemProps
    */
   onLabelClick?: () => any
   /**
+   * 透传onChange事件
+   */
+  onChange?: (val: any) => any
+  /**
    * 点击tooltip的全屏提示
    */
   tooltip?: ReactNode

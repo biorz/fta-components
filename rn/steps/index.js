@@ -43,16 +43,16 @@ var indexScssStyleSheet = StyleSheet.create({
     alignItems: 'center',
   },
   'fta-step-wrap--dot': {
-    marginBottom: scalePx2dp(9.6),
+    marginBottom: scalePx2dp(10.41667),
   },
   'fta-step-wrap--ordered': {
-    marginBottom: scalePx2dp(11.52),
+    marginBottom: scalePx2dp(12.5),
   },
   'fta-step-wrap--custom': {
-    marginBottom: scalePx2dp(5.76),
+    marginBottom: scalePx2dp(6.25),
   },
   'fta-step-ball': {
-    borderRadius: scalePx2dp(4800),
+    borderRadius: scalePx2dp(5208.33333),
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
@@ -60,16 +60,16 @@ var indexScssStyleSheet = StyleSheet.create({
     backgroundColor: '#ccc',
   },
   'fta-step-ball--dot': {
-    width: scalePx2dp(8.64),
-    height: scalePx2dp(8.64),
+    width: scalePx2dp(9.375),
+    height: scalePx2dp(9.375),
   },
   'fta-step-ball--ordered': {
-    width: scalePx2dp(23.04),
-    height: scalePx2dp(23.04),
+    width: scalePx2dp(25),
+    height: scalePx2dp(25),
     marginTop: 0,
-    marginRight: scalePx2dp(5.76),
+    marginRight: scalePx2dp(6.25),
     marginBottom: 0,
-    marginLeft: scalePx2dp(5.76),
+    marginLeft: scalePx2dp(6.25),
   },
   'fta-step-ball--active': {
     backgroundColor: '#fa871e',
@@ -78,7 +78,7 @@ var indexScssStyleSheet = StyleSheet.create({
     flexGrow: 1,
     flexShrink: 1,
     flexBasis: 0,
-    height: scalePx2dp(1.92),
+    height: scalePx2dp(2.08333),
     backgroundColor: '#ccc',
   },
   'fta-step-line--active': {
@@ -100,8 +100,8 @@ var indexScssStyleSheet = StyleSheet.create({
   },
   'fta-step-title__text': {
     color: '#ccc',
-    fontSize: scalePx2dp(13.44),
-    lineHeight: scalePx2dp(20.16),
+    fontSize: scalePx2dp(14.58333),
+    lineHeight: scalePx2dp(21.875),
   },
   'fta-step-title__text--active': {
     color: '#000',
@@ -114,15 +114,15 @@ var indexScssStyleSheet = StyleSheet.create({
   },
   'fta-step-desc__text': {
     color: '#ededed',
-    fontSize: scalePx2dp(11.52),
-    lineHeight: scalePx2dp(17.28),
+    fontSize: scalePx2dp(12.5),
+    lineHeight: scalePx2dp(18.75),
   },
   'fta-step-desc__text--active': {
     color: '#ccc',
   },
   'fta-step-index': {
     color: '#fff',
-    fontSize: scalePx2dp(13.44),
+    fontSize: scalePx2dp(14.58333),
   },
   'fta-step-index--active': {
     color: '#999',

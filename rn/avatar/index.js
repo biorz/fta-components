@@ -70,7 +70,7 @@ function _objectWithoutProperties(source, excluded) {
 
 var indexScssStyleSheet = StyleSheet.create({
   'fta-avatar': {
-    borderRadius: scalePx2dp(5.76),
+    borderRadius: scalePx2dp(6.25),
     backgroundColor: '#ccc',
     overflow: 'hidden',
   },
@@ -84,43 +84,43 @@ var indexScssStyleSheet = StyleSheet.create({
     height: '100%',
   },
   'fta-avatar--large': {
-    width: scalePx2dp(92.16),
-    height: scalePx2dp(92.16),
-    borderRadius: scalePx2dp(7.68),
+    width: scalePx2dp(100),
+    height: scalePx2dp(100),
+    borderRadius: scalePx2dp(8.33333),
   },
   'fta-avatar--large__text': {
-    fontSize: scalePx2dp(34.56),
-    lineHeight: scalePx2dp(92.16),
+    fontSize: scalePx2dp(37.5),
+    lineHeight: scalePx2dp(100),
   },
   'fta-avatar--medium': {
-    width: scalePx2dp(69.12),
-    height: scalePx2dp(69.12),
-    borderRadius: scalePx2dp(5.76),
+    width: scalePx2dp(75),
+    height: scalePx2dp(75),
+    borderRadius: scalePx2dp(6.25),
   },
   'fta-avatar--medium__text': {
-    fontSize: scalePx2dp(30.72),
-    lineHeight: scalePx2dp(69.12),
+    fontSize: scalePx2dp(33.33333),
+    lineHeight: scalePx2dp(75),
   },
   'fta-avatar--small': {
-    width: scalePx2dp(53.76),
-    height: scalePx2dp(53.76),
-    borderRadius: scalePx2dp(4.8),
+    width: scalePx2dp(58.33333),
+    height: scalePx2dp(58.33333),
+    borderRadius: scalePx2dp(5.20833),
   },
   'fta-avatar--small__text': {
-    fontSize: scalePx2dp(23.04),
-    lineHeight: scalePx2dp(53.76),
+    fontSize: scalePx2dp(25),
+    lineHeight: scalePx2dp(58.33333),
   },
   'fta-avatar--mini': {
-    width: scalePx2dp(46.08),
-    height: scalePx2dp(46.08),
-    borderRadius: scalePx2dp(3.84),
+    width: scalePx2dp(50),
+    height: scalePx2dp(50),
+    borderRadius: scalePx2dp(4.16667),
   },
   'fta-avatar--mini__text': {
-    fontSize: scalePx2dp(19.2),
-    lineHeight: scalePx2dp(46.08),
+    fontSize: scalePx2dp(20.83333),
+    lineHeight: scalePx2dp(50),
   },
   'fta-avatar--circle': {
-    borderRadius: scalePx2dp(4800),
+    borderRadius: scalePx2dp(5208.33333),
     overflow: 'hidden',
   },
 })

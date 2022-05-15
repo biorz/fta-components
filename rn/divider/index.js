@@ -115,7 +115,7 @@ var indexScssStyleSheet = StyleSheet.create({
     borderBottomWidth: 1,
   },
   'fta-divider-line--offset': {
-    width: scalePx2dp(57.6),
+    width: scalePx2dp(62.5),
     flexGrow: 0,
     flexShrink: 0,
     flexBasis: 'auto',
@@ -127,14 +127,14 @@ var indexScssStyleSheet = StyleSheet.create({
     borderBottomWidth: 2,
   },
   'fta-divider-dot': {
-    width: scalePx2dp(7.68),
-    height: scalePx2dp(7.68),
-    borderRadius: scalePx2dp(4800),
+    width: scalePx2dp(8.33333),
+    height: scalePx2dp(8.33333),
+    borderRadius: scalePx2dp(5208.33333),
     backgroundColor: '#999',
   },
   'fta-divider-dot--care': {
-    width: scalePx2dp(10.08),
-    height: scalePx2dp(10.08),
+    width: scalePx2dp(10.9375),
+    height: scalePx2dp(10.9375),
   },
   'fta-divider-line--dashed': {
     borderStyle: 'dashed',
@@ -142,16 +142,16 @@ var indexScssStyleSheet = StyleSheet.create({
   },
   'fta-divider-text': {
     marginTop: 0,
-    marginRight: scalePx2dp(13.44),
+    marginRight: scalePx2dp(14.58333),
     marginBottom: 0,
-    marginLeft: scalePx2dp(13.44),
+    marginLeft: scalePx2dp(14.58333),
   },
   'fta-divider-text__label': {
-    fontSize: scalePx2dp(15.36),
+    fontSize: scalePx2dp(16.66667),
     color: '#666',
   },
   'fta-divider-text__label--care': {
-    fontSize: scalePx2dp(20.16),
+    fontSize: scalePx2dp(21.875),
   },
 })
 

@@ -95,14 +95,14 @@ function _getPrototypeOf(o) {
 
 var indexScssStyleSheet = StyleSheet.create({
   'fta-timeline': {
-    marginLeft: scalePx2dp(6.72),
+    marginLeft: scalePx2dp(7.29167),
   },
   'fta-timeline-item': {
     position: 'relative',
   },
   'fta-timeline-item-view': {
-    marginLeft: scalePx2dp(15.36),
-    paddingBottom: scalePx2dp(11.52),
+    marginLeft: scalePx2dp(16.66667),
+    paddingBottom: scalePx2dp(12.5),
   },
   'fta-timeline-item-node': {
     display: 'flex',
@@ -110,22 +110,22 @@ var indexScssStyleSheet = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    top: scalePx2dp(4.8),
-    bottom: scalePx2dp(-4.8),
+    top: scalePx2dp(5.20833),
+    bottom: scalePx2dp(-5.20833),
     height: '100%',
   },
   'fta-timeline-item-dot': {
-    borderRadius: scalePx2dp(4800),
-    width: scalePx2dp(7.68),
-    height: scalePx2dp(7.68),
+    borderRadius: scalePx2dp(5208.33333),
+    width: scalePx2dp(8.33333),
+    height: scalePx2dp(8.33333),
     backgroundColor: '#ddd',
   },
   'fta-timeline-item-dot--care': {
-    width: scalePx2dp(10.08),
-    height: scalePx2dp(10.08),
+    width: scalePx2dp(10.9375),
+    height: scalePx2dp(10.9375),
   },
   'fta-timeline-item-dot--hollow': {
-    borderWidth: scalePx2dp(1.92),
+    borderWidth: scalePx2dp(2.08333),
     backgroundColor: 'transparent',
   },
   'fta-timeline-item-line': {
