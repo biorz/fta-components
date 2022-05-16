@@ -179,19 +179,19 @@ var indexScssStyleSheet = StyleSheet.create({
     borderBottomWidth: 2,
     borderBottomColor: 'transparent',
     marginTop: 0,
-    marginRight: scalePx2dp(11.52),
+    marginRight: scalePx2dp(12.5),
     marginBottom: 0,
-    marginLeft: scalePx2dp(11.52),
+    marginLeft: scalePx2dp(12.5),
     justifyContent: 'center',
     alignItems: 'center',
-    height: scalePx2dp(38.4),
+    height: scalePx2dp(41.66667),
   },
   'fta-tab__text': {
-    fontSize: scalePx2dp(17.28),
+    fontSize: scalePx2dp(18.75),
     color: '#333',
   },
   'fta-tab__text--care': {
-    fontSize: scalePx2dp(22.56),
+    fontSize: scalePx2dp(24.47917),
   },
   'taro-text-core': {},
   'fta-tab--vertical': {
@@ -200,9 +200,9 @@ var indexScssStyleSheet = StyleSheet.create({
     marginBottom: 0,
     marginLeft: 0,
     paddingTop: 0,
-    paddingRight: scalePx2dp(9.6),
+    paddingRight: scalePx2dp(10.41667),
     paddingBottom: 0,
-    paddingLeft: scalePx2dp(9.6),
+    paddingLeft: scalePx2dp(10.41667),
   },
   'fta-tab--active': {
     borderBottomColor: '#fa871e',
@@ -211,7 +211,7 @@ var indexScssStyleSheet = StyleSheet.create({
     color: '#fa871e',
   },
   'fta-tab--active--care': {
-    borderBottomWidth: scalePx2dp(1.92),
+    borderBottomWidth: scalePx2dp(2.08333),
   },
 })
 

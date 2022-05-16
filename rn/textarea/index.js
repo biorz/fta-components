@@ -99,20 +99,20 @@ function _getPrototypeOf(o) {
 
 var indexScssStyleSheet = StyleSheet.create({
   'fta-textarea': {
-    paddingTop: scalePx2dp(7.68),
-    paddingRight: scalePx2dp(7.68),
-    paddingBottom: scalePx2dp(7.68),
-    paddingLeft: scalePx2dp(7.68),
+    paddingTop: scalePx2dp(8.33333),
+    paddingRight: scalePx2dp(8.33333),
+    paddingBottom: scalePx2dp(8.33333),
+    paddingLeft: scalePx2dp(8.33333),
     width: '100%',
-    fontSize: scalePx2dp(17.28),
-    lineHeight: scalePx2dp(22.464),
-    borderRadius: scalePx2dp(5.76),
+    fontSize: scalePx2dp(18.75),
+    lineHeight: scalePx2dp(24.375),
+    borderRadius: scalePx2dp(6.25),
     backgroundColor: '#fff',
   },
   'fta-textarea__textarea': {
     width: '100%',
-    height: scalePx2dp(69.12),
-    fontSize: scalePx2dp(17.28),
+    height: scalePx2dp(75),
+    fontSize: scalePx2dp(18.75),
     borderRadius: 0,
     paddingTop: 0,
     paddingRight: 0,
@@ -131,20 +131,20 @@ var indexScssStyleSheet = StyleSheet.create({
   },
   textarea: {},
   'fta-textarea__counter': {
-    paddingTop: scalePx2dp(5.76),
+    paddingTop: scalePx2dp(6.25),
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'flex-end',
   },
   'fta-textarea__counter-current': {
-    lineHeight: scalePx2dp(19.968),
+    lineHeight: scalePx2dp(21.66667),
     color: '#c9c9c9',
   },
   'fta-textarea__counter-full': {
     color: '#ff5b60',
   },
   'fta-textarea__counter-limit': {
-    lineHeight: scalePx2dp(19.968),
+    lineHeight: scalePx2dp(21.66667),
     color: '#c9c9c9',
   },
 })

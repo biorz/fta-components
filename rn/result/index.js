@@ -118,25 +118,25 @@ var indexScssStyleSheet = StyleSheet.create({
     justifyContent: 'center',
   },
   'fta-result-image': {
-    marginTop: scalePx2dp(96),
-    width: scalePx2dp(115.2),
-    height: scalePx2dp(115.2),
+    marginTop: scalePx2dp(104.16667),
+    width: scalePx2dp(125),
+    height: scalePx2dp(125),
   },
   'fta-result-title': {
-    marginTop: scalePx2dp(6.72),
+    marginTop: scalePx2dp(7.29167),
   },
   'fta-result-title__text': {
     color: '#666',
     fontWeight: '600',
   },
   'fta-result-desc': {
-    marginTop: scalePx2dp(6.72),
+    marginTop: scalePx2dp(7.29167),
   },
   'fta-result-desc__text': {
     color: '#999',
   },
   'fta-result-button': {
-    marginTop: scalePx2dp(19.2),
+    marginTop: scalePx2dp(20.83333),
   },
 })
 

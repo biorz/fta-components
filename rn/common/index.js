@@ -220,52 +220,52 @@ function _extends() {
 var indexScssStyleSheet = StyleSheet.create({
   'fta-text': {},
   'fta-text--1': {
-    fontSize: scalePx2dp(21.12),
-    lineHeight: scalePx2dp(27.456),
+    fontSize: scalePx2dp(22.91667),
+    lineHeight: scalePx2dp(29.79167),
   },
   'fta-text--1--care': {
-    fontSize: scalePx2dp(27.36),
-    lineHeight: scalePx2dp(35.52),
+    fontSize: scalePx2dp(29.6875),
+    lineHeight: scalePx2dp(38.54167),
   },
   'fta-text--2': {
-    fontSize: scalePx2dp(19.2),
-    lineHeight: scalePx2dp(24.96),
+    fontSize: scalePx2dp(20.83333),
+    lineHeight: scalePx2dp(27.08333),
   },
   'fta-text--2--care': {
-    fontSize: scalePx2dp(24.96),
-    lineHeight: scalePx2dp(32.64),
+    fontSize: scalePx2dp(27.08333),
+    lineHeight: scalePx2dp(35.41667),
   },
   'fta-text--3': {
-    fontSize: scalePx2dp(17.28),
-    lineHeight: scalePx2dp(22.464),
+    fontSize: scalePx2dp(18.75),
+    lineHeight: scalePx2dp(24.375),
   },
   'fta-text--3--care': {
-    fontSize: scalePx2dp(22.56),
-    lineHeight: scalePx2dp(29.28),
+    fontSize: scalePx2dp(24.47917),
+    lineHeight: scalePx2dp(31.77083),
   },
   'fta-text--4': {
-    fontSize: scalePx2dp(15.36),
-    lineHeight: scalePx2dp(19.968),
+    fontSize: scalePx2dp(16.66667),
+    lineHeight: scalePx2dp(21.66667),
   },
   'fta-text--4--care': {
-    fontSize: scalePx2dp(20.16),
-    lineHeight: scalePx2dp(25.92),
+    fontSize: scalePx2dp(21.875),
+    lineHeight: scalePx2dp(28.125),
   },
   'fta-text--5': {
-    fontSize: scalePx2dp(13.44),
-    lineHeight: scalePx2dp(17.472),
+    fontSize: scalePx2dp(14.58333),
+    lineHeight: scalePx2dp(18.95833),
   },
   'fta-text--5--care': {
-    fontSize: scalePx2dp(17.28),
-    lineHeight: scalePx2dp(22.56),
+    fontSize: scalePx2dp(18.75),
+    lineHeight: scalePx2dp(24.47917),
   },
   'fta-text--6': {
-    fontSize: scalePx2dp(11.52),
-    lineHeight: scalePx2dp(14.976),
+    fontSize: scalePx2dp(12.5),
+    lineHeight: scalePx2dp(16.25),
   },
   'fta-text--6--care': {
-    fontSize: scalePx2dp(14.88),
-    lineHeight: scalePx2dp(19.68),
+    fontSize: scalePx2dp(16.14583),
+    lineHeight: scalePx2dp(21.35417),
   },
 })
 
@@ -514,12 +514,12 @@ useClassesWithCare.single = function (careMode) {
 var debuggerScssStyleSheet = StyleSheet.create({
   'fta-debugger': {
     position: 'absolute',
-    bottom: scalePx2dp(48),
-    right: scalePx2dp(19.2),
-    width: scalePx2dp(38.4),
-    height: scalePx2dp(38.4),
+    bottom: scalePx2dp(52.08333),
+    right: scalePx2dp(20.83333),
+    width: scalePx2dp(41.66667),
+    height: scalePx2dp(41.66667),
     backgroundColor: '#fff',
-    borderRadius: scalePx2dp(144),
+    borderRadius: scalePx2dp(156.25),
     borderWidth: 1,
     borderStyle: 'solid',
     borderColor: '#fa871e',
@@ -531,8 +531,8 @@ var debuggerScssStyleSheet = StyleSheet.create({
     color: '#fa871e',
   },
   'fta-debugger--care': {
-    width: scalePx2dp(48),
-    height: scalePx2dp(48),
+    width: scalePx2dp(52.08333),
+    height: scalePx2dp(52.08333),
   },
 })
 

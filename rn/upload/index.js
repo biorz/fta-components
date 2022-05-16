@@ -73,19 +73,19 @@ var indexScssStyleSheet = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     overflow: 'hidden',
-    width: scalePx2dp(159.36),
-    height: scalePx2dp(96.96),
-    borderRadius: scalePx2dp(3.84),
+    width: scalePx2dp(172.91667),
+    height: scalePx2dp(105.20833),
+    borderRadius: scalePx2dp(4.16667),
   },
   'fta-upload-camera': {
-    width: scalePx2dp(36),
-    height: scalePx2dp(36),
-    marginTop: scalePx2dp(22.56),
+    width: scalePx2dp(39.0625),
+    height: scalePx2dp(39.0625),
+    marginTop: scalePx2dp(24.47917),
   },
   'fta-upload-placeholder': {
-    marginTop: scalePx2dp(6.72),
+    marginTop: scalePx2dp(7.29167),
     color: '#333',
-    fontSize: scalePx2dp(11.52),
+    fontSize: scalePx2dp(12.5),
   },
   'fta-upload-image': {
     position: 'absolute',
@@ -101,11 +101,11 @@ var indexScssStyleSheet = StyleSheet.create({
     borderColor: '#ff5b60',
   },
   'fta-upload-errortip': {
-    marginTop: scalePx2dp(4.8),
+    marginTop: scalePx2dp(5.20833),
     textAlign: 'center',
-    fontSize: scalePx2dp(11.52),
+    fontSize: scalePx2dp(12.5),
     color: '#ff5b60',
-    lineHeight: scalePx2dp(14.976),
+    lineHeight: scalePx2dp(16.25),
   },
 })
 

@@ -190,17 +190,17 @@ function _getPrototypeOf(o) {
 var indexScssStyleSheet = StyleSheet.create({
   'fta-noticebar': {
     display: 'flex',
-    paddingTop: scalePx2dp(8.64),
-    paddingRight: scalePx2dp(13.44),
-    paddingBottom: scalePx2dp(8.64),
-    paddingLeft: scalePx2dp(13.44),
+    paddingTop: scalePx2dp(9.375),
+    paddingRight: scalePx2dp(14.58333),
+    paddingBottom: scalePx2dp(9.375),
+    paddingLeft: scalePx2dp(14.58333),
     backgroundColor: '#fff3e8',
     flexDirection: 'row',
     alignItems: 'center',
     flexWrap: 'nowrap',
   },
   'fta-noticebar-icon': {
-    marginRight: scalePx2dp(9.6),
+    marginRight: scalePx2dp(10.41667),
   },
   'fta-noticebar__content': {
     flexGrow: 1,
@@ -218,18 +218,18 @@ var indexScssStyleSheet = StyleSheet.create({
   },
   'fta-noticebar__content-text': {
     color: '#ff5b00',
-    fontSize: scalePx2dp(15.36),
+    fontSize: scalePx2dp(16.66667),
   },
   'fta-noticebar__content-inner--marquee': {
     paddingLeft: '100%',
   },
   'fta-noticebar__content-text--care': {
-    fontSize: scalePx2dp(20.16),
+    fontSize: scalePx2dp(21.875),
   },
   'fta-noticebar__close': {
-    width: scalePx2dp(15.36),
-    height: scalePx2dp(15.36),
-    marginLeft: scalePx2dp(9.6),
+    width: scalePx2dp(16.66667),
+    height: scalePx2dp(16.66667),
+    marginLeft: scalePx2dp(10.41667),
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
@@ -237,18 +237,18 @@ var indexScssStyleSheet = StyleSheet.create({
   },
   'fta-icon-close': {
     color: '#ff5b00',
-    fontSize: scalePx2dp(15.36),
-    width: scalePx2dp(15.36),
-    height: scalePx2dp(15.36),
+    fontSize: scalePx2dp(16.66667),
+    width: scalePx2dp(16.66667),
+    height: scalePx2dp(16.66667),
   },
   'fta-icon-close--care': {
-    fontSize: scalePx2dp(20.16),
-    width: scalePx2dp(20.16),
-    height: scalePx2dp(20.16),
+    fontSize: scalePx2dp(21.875),
+    width: scalePx2dp(21.875),
+    height: scalePx2dp(21.875),
   },
   'fta-noticebar__close--care': {
-    width: scalePx2dp(20.16),
-    height: scalePx2dp(20.16),
+    width: scalePx2dp(21.875),
+    height: scalePx2dp(21.875),
   },
   'fta-noticebar--single': {},
   'fta-noticebar__content-inner': {},
