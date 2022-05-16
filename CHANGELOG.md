@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.2-alpha.0](https://code.amh-group.com/h5developer/basebuild/views/fta-view/compare/@fta/components@1.0.1...@fta/components@1.0.2-alpha.0) (2022-05-16)
+
+### Bug Fixes
+
+- **form:** form 表单校验 error message 透传 ([b2878f0](https://code.amh-group.com/h5developer/basebuild/views/fta-view/commits/b2878f04f2dd7b9287d33c1751fd1496e075fb96))
+- rn 独立包缩放比 ([725cf27](https://code.amh-group.com/h5developer/basebuild/views/fta-view/commits/725cf27117cfa0be8a402e75531b9cd5629f3a83))
+
 # [1.0.0-alpha.15](https://code.amh-group.com/h5developer/basebuild/views/fta-view/compare/@fta/components@1.0.0-alpha.12...@fta/components@1.0.0-alpha.15) (2022-05-11)
 
 ### Features
