@@ -4,7 +4,6 @@ import classNames from 'classnames'
 import React, {
   CSSProperties,
   forwardRef,
-  MutableRefObject,
   ReactElement,
   ReactNode,
   Ref,
@@ -20,6 +19,7 @@ import {
   BuiltinInputProps,
   FormItemAppearanceProps,
   FormItemProps,
+  FormItemRef,
   FormItemRefMethods,
   FormProps,
   FormRefMethods,
@@ -97,36 +97,41 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
   }
 
   const store = useRef<Store>({
-    __anonymous__: [] as MutableRefObject<FormItemRefMethods>[],
+    __named__: [] as FormItemRef[],
+    __anonymous__: [] as FormItemRef[],
   }).current
 
   const rootClass = classNames('fta-form', className)
 
   const refMethods: FormRefMethods = {
     async validate(callback) {
-      const { __anonymous__, ...named } = store
+      const { __anonymous__, __named__ } = store
       // 获取所有的FormItemMethods
-      const itemRefs = __anonymous__.concat(
-        Object.values(named as Record<string, MutableRefObject<FormItemRefMethods>>)
-      )
+      const itemRefs = __named__.concat(__anonymous__)
       // 根据优先级排序
       itemRefs.sort((a, b) => a.current.priority - b.current.priority)
 
-      const erroredProps = [] as string[]
+      const erroredPropMsgPairs = [] as any[]
+      const erroredAnonymousPairs = [] as any[]
       let invalid = false
-      for (const { current: ref } of itemRefs) {
+      for (const item of itemRefs) {
+        const { current: ref } = item
         const errMsg = await ref.validateAsync()
-        if (errMsg) {
+        if (errMsg != null) {
           invalid = true
-          ref.prop && erroredProps.push(ref.prop)
+          if (ref.prop) {
+            erroredPropMsgPairs.push([errMsg, ref.prop, item])
+          } else {
+            erroredAnonymousPairs.push([errMsg, item])
+          }
           // 校验出错，停止校验
           if (suspendOnFirstError) {
-            callback?.(!invalid, erroredProps)
+            callback?.(!invalid, erroredPropMsgPairs, erroredAnonymousPairs)
             return true
           }
         }
       }
-      callback?.(!invalid, erroredProps)
+      callback?.(!invalid, erroredPropMsgPairs, erroredAnonymousPairs)
       return false
     },
     highlight(prop: string, message?: string, scrollIntoView?: boolean) {
@@ -134,16 +139,12 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
       ref?.current.highlight(message, scrollIntoView)
     },
     obtain(prop) {
-      return store[prop] as MutableRefObject<FormItemRefMethods> | undefined
+      return store.__named__.find((ref) => ref.current.prop === prop)
     },
     clearValidate(props: string | string[]) {
-      if (props === void 0) {
-        console.log('store', store)
-        const { __anonymous__, ...refs } = store
-        __anonymous__.forEach((ref) => ref.current.clearValidate())
-        Object.values(refs).forEach((ref: MutableRefObject<FormItemRefMethods>) =>
-          ref.current.clearValidate()
-        )
+      if (isUndef(props)) {
+        const { __named__, __anonymous__ } = store
+        __named__.concat(__anonymous__).forEach((ref) => ref.current.clearValidate())
       }
       if (!isArray(props)) {
         props = [props]
@@ -184,7 +185,6 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
         onDestroy,
         scrollIntoView,
         _showModal,
-        // _keys: keysFn,
       }}>
       <ScrollView
         scrollY
@@ -216,7 +216,7 @@ const rnLabelClz = inRN ? 'fta-form-item-label--hack' : null
 
 const initialFormItemState = {
   status: validateStatus.unset,
-  message: '',
+  message: null,
 }
 
 /**
@@ -281,7 +281,7 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
 
   const [state, setState] = useEnhancedState<{
     status: ValidateStatus[keyof ValidateStatus]
-    message: string | undefined
+    message: string | null
   }>(initialFormItemState)
 
   const refMethods: FormItemRefMethods = {
@@ -322,7 +322,7 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
 
       validator.validate(model, { firstFields: true }, (errors) => {
         const status = errors ? validateStatus.error : validateStatus.success
-        const message = errors?.[0]?.message || ''
+        const message = errors?.[0]?.message || null
         setState({ status, message })
         callback(message)
       })
@@ -334,9 +334,6 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
       setState(initialFormItemState)
     },
     // 测试函数
-    __test__() {
-      console.log(`__test__ executed - label: ${label}`)
-    },
   }
 
   const methodsRef = useRef(refMethods)
@@ -352,21 +349,15 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
    * 监听FormItem的生命周期
    */
   useEffect(() => {
-    if (prop) {
-      ctx.store[prop] = methodsRef
-    } else {
-      ctx.store.__anonymous__.push(methodsRef)
-    }
+    const key = prop ? '__named__' : '__anonymous__'
+    ctx.store[key].push(methodsRef)
     ctx.onMount?.(methodsRef)
     onMount?.(methodsRef)
 
     return () => {
-      if (prop) {
-        delete ctx.store[prop]
-      } else {
-        const i = ctx.store.__anonymous__.indexOf(methodsRef)
-        if (i > -1) ctx.store.__anonymous__.splice(i, 1)
-      }
+      const i = ctx.store[key].indexOf(methodsRef)
+      if (i > -1) ctx.store[key].splice(i, 1)
+
       ctx.onDestroy?.(methodsRef)
       onDestroy?.(methodsRef)
     }
@@ -375,23 +366,33 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
   useImperativeHandle(ref, () => refMethods)
 
   const _align = align || ctx.align
-  // TODO: 是否标记为只读
+  // 是否标记为只读
   const _readonly = readonly === false ? false : readonly || ctx.readonly
 
   const getParsedChildren = () =>
     parseChildren(
       _children,
-      omit({ ...props, align: _align, readonly: _readonly, error: errored, itemRef: methodsRef }, [
-        // 删除一些常用的属性，提升性能
-        'className',
-        'customStyle',
-        'onClick',
-        'onMount',
-        'onDestroy',
-        'inputProps',
-        'render',
-        'children',
-      ])
+      omit(
+        {
+          ...props,
+          align: _align,
+          readonly: _readonly,
+          error: errored,
+          errorTip: state.message,
+          itemRef: methodsRef,
+        },
+        [
+          // 删除一些常用的属性，提升性能
+          'className',
+          'customStyle',
+          'onClick',
+          'onMount',
+          'onDestroy',
+          'inputProps',
+          'render',
+          'children',
+        ]
+      )
     )
 
   if (isUndef(label)) {
@@ -401,7 +402,6 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
       </ScrollIntoView>
     )
   }
-
   return (
     <ScrollIntoView ref={inRN ? scrollRef : void 0} id={formItemId}>
       <FormItemAppearance
@@ -465,6 +465,8 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
   // TODO: 是否标记为只读
   const _readonly = readonly === false ? false : readonly || ctx.readonly
 
+  const readonlyFn = (fn: ((...args: any) => any) | undefined) => (_readonly ? void 0 : fn)
+
   const rootClass = classNames('fta-form-item', className)
   const rootStyle = { ...style, ...customStyle }
 
@@ -493,7 +495,7 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
   const labelTextClass = classNames('fta-form-item-label__text')
 
   const _onLabelCick = () => {
-    if (!_readonly && tooltip && onLabelClick?.() !== false) {
+    if (tooltip && onLabelClick?.() !== false) {
       ctx._showModal!(tooltip)
     }
   }
@@ -507,12 +509,12 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
 
   return (
     <>
-      <View className={rootClass} style={rootStyle} onClick={onItemClick}>
+      <View className={rootClass} style={rootStyle} onClick={readonlyFn(onItemClick)}>
         {/* ========== label area==========*/}
         <View
           className={_labelClassName}
           style={_labelStyle}
-          onClick={_onLabelCick}
+          onClick={readonlyFn(_onLabelCick)}
           hoverClass={labelHoverClass}
           // @ts-ignore
           hoverClassName={labelHoverClass}>
@@ -523,7 +525,7 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
         <View
           style={_contentStyle}
           className={_contentClassName}
-          onClick={onClick}
+          onClick={readonlyFn(onClick)}
           //@ts-ignore
           hoverClassName={contentHoverClass}
           hoverClass={contentHoverClass}>
@@ -681,10 +683,6 @@ const formDefaultProps: FormProps = {
 }
 
 const formItemDefaultProps: FormItemProps = {
-  // label: '',
-  // error: false,
-  // rules: [],
-  errorTip: '信息填写错误',
   validatePriority: validatePriority.Normal,
   onClick() {},
 }
@@ -709,6 +707,10 @@ const FowardFormItem = forwardRef(FormItem)
 ForwardForm.defaultProps = formDefaultProps
 
 FowardFormItem.defaultProps = formItemDefaultProps
+
+FormItemAppearance.defaultProps = {
+  errorTip: '信息填写错误',
+}
 
 /** Extend Form */
 

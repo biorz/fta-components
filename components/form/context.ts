@@ -3,10 +3,7 @@ import { FormItemRefMethods, FormProps } from '../../types/Form'
 
 export type Store = {
   __anonymous__: MutableRefObject<FormItemRefMethods>[]
-  [key: string]:
-    | MutableRefObject<FormItemRefMethods>
-    | MutableRefObject<FormItemRefMethods>[]
-    | undefined
+  __named__: MutableRefObject<FormItemRefMethods>[]
 }
 
 type FormContext = Pick<
@@ -41,7 +38,10 @@ type FormContext = Pick<
 
 const context = createContext<FormContext>({
   rules: {},
-  store: { __anonymous__: [] as MutableRefObject<FormItemRefMethods>[] },
+  store: {
+    __named__: [] as MutableRefObject<FormItemRefMethods>[],
+    __anonymous__: [] as MutableRefObject<FormItemRefMethods>[],
+  },
 })
 
 // const itemContext = createContext<>

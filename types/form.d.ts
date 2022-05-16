@@ -15,7 +15,7 @@ type AnyFn = (...args: any[]) => any
 
 export type Align = 'left' | 'center' | 'right'
 
-export type Callback = (message?: string) => void
+export type Callback = (message?: string | null) => void
 
 export type Validator = (rule: ValidateRule, value: any, callback: Callback) => void
 
@@ -121,11 +121,11 @@ export interface FormProps extends BaseComponent, PropsWithChildren {
   /**
    * FormItem挂载
    */
-  onMount?: (ref: MutableRefObject<FormItemRefMethods>) => void
+  onMount?: (ref: FormItemRef) => void
   /**
    * FormItem卸载
    */
-  onDestroy?: (ref: MutableRefObject<FormItemRefMethods>) => void
+  onDestroy?: (ref: FormItemRef) => void
   /**
    * 校验时，遇到错误时停止校验后面的选项
    * 默认 校验所有Item
@@ -195,7 +195,7 @@ export interface FormItemProps
    * 校验错误提示信息
    * @default '信息填写错误'
    */
-  errorTip?: string
+  errorTip?: string | null
   /**
    * 整个表单项的点击事件回调
    */
@@ -251,7 +251,7 @@ export interface StatelessProps {
   /**
    * FormItem本身的ref
    */
-  itemRef?: MutableRefObject<FormItemRefMethods>
+  itemRef?: FormItemRef
 }
 
 export interface FormItemAppearanceProps
@@ -291,7 +291,13 @@ export interface FormRefMethods {
   /**
    * 手动验证所有表单项，返回一个Promise对象, true为校验失败
    */
-  validate: (callback?: (isValid: boolean, erroredProps: string[]) => void) => Promise<boolean>
+  validate: (
+    callback?: (
+      isValid: boolean,
+      erroredPropMsgPair: Array<[string, string, FormItemRef]>,
+      erroredAnonymous: Array<[string, FormItemRef]>
+    ) => void
+  ) => Promise<boolean>
   /**
    * 根据prop手动高亮FormItem
    */
@@ -299,7 +305,7 @@ export interface FormRefMethods {
   /**
    * 根据prop获取FormItem
    */
-  obtain: (prop: string) => MutableRefObject<FormItemRefMethods> | undefined
+  obtain: (prop: string) => FormItemRef | undefined
   /**
    * 手动验证部分表单项，返回一个Promise对象
    * @todo
@@ -357,7 +363,7 @@ export interface FormItemRefMethods {
   /**
    * 异步校验表单项
    */
-  validateAsync: () => Promise<string | void>
+  validateAsync: () => Promise<string | null>
   /**
    * 移除该表单项的校验结果
    */
@@ -365,6 +371,10 @@ export interface FormItemRefMethods {
 
   [key: string]: any
 }
+
+export type FormRef = MutableRefObject<FormRefMethods>
+
+export type FormItemRef = MutableRefObject<FormItemRefMethods>
 
 export interface BuiltinInputProps extends InputProps {
   className?: string
