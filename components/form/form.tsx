@@ -407,7 +407,7 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
       <FormItemAppearance
         {...omit({ ...props, error: errored, errorTip: state.message, itemRef: methodsRef }, [
           'prop',
-          'value',
+          // 'value',
           'required',
           'rules',
           'onMount',
@@ -433,7 +433,8 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
     children,
     render,
     // prop,
-    // value,
+    value,
+
     // required,
     // rules,
     // onMount,
@@ -454,6 +455,8 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
     labelStyle,
     contentClassName,
     contentStyle,
+    inputRef,
+    inputProps,
   } = props
 
   const _children = render || children
@@ -500,6 +503,8 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
 
   const contentHoverClass = _readonly ? void 0 : 'fta-form-item-content--hover'
 
+  const _value = itemRef?.current.getValue() || value
+
   return (
     <>
       <View className={rootClass} style={rootStyle} onClick={onItemClick}>
@@ -522,14 +527,17 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
           //@ts-ignore
           hoverClassName={contentHoverClass}
           hoverClass={contentHoverClass}>
-          {_children != null && !isUndef(itemRef.current.getValue()) ? (
+          {/* && !isUndef(itemRef?.current.getValue() || value) */}
+          {_children == null ? (
             _readonly ? (
-              <Text className='fta-form-item-content__text'>{itemRef.current.getValue()}</Text>
+              <Text className='fta-form-item-content__text'>{_value}</Text>
             ) : (
               <BuiltinInput
+                ref={inputRef}
                 placeholder={placeholder}
                 style={{ textAlign: _align || 'right' }}
-                {...props.inputProps}
+                value={_value}
+                {...inputProps}
               />
             )
           ) : isUndef(_children) ? (
@@ -589,13 +597,20 @@ function ToolTip(props: ToolTipProps): JSX.Element {
 }
 
 /** 内置输入框 */
-function BuiltinInput(props: BuiltinInputProps) {
+const BuiltinInput = forwardRef(function _BuiltinInput(props: BuiltinInputProps, ref: Ref<any>) {
   const { className, style, placeholderClass, ...extraProps } = props
   const rootClass = classNames('fta-form-item-input', 'fta-form-item-content__text', className)
   const placeClass = classNames('fta-form-item-placeholder', placeholderClass)
-  return <Input className={rootClass} style={style} placeholderClass={placeClass} {...extraProps} />
-}
-
+  return (
+    <Input
+      className={rootClass}
+      style={style}
+      placeholderClass={placeClass}
+      ref={ref}
+      {...extraProps}
+    />
+  )
+})
 /** 占位文本 */
 function Placeholder(props: { children: ReactNode }): JSX.Element {
   const { children } = props

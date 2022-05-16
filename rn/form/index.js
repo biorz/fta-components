@@ -1726,14 +1726,14 @@ var indexScssStyleSheet = StyleSheet.create({
     height: '100%',
   },
   'fta-form-title': {
-    paddingTop: scalePx2dp(17.28),
+    paddingTop: scalePx2dp(18.75),
     marginTop: 0,
-    marginRight: scalePx2dp(15.36),
-    marginBottom: scalePx2dp(14.88),
-    marginLeft: scalePx2dp(15.36),
+    marginRight: scalePx2dp(16.66667),
+    marginBottom: scalePx2dp(16.14583),
+    marginLeft: scalePx2dp(16.66667),
   },
   'fta-form-title__text': {
-    fontSize: scalePx2dp(15.36),
+    fontSize: scalePx2dp(16.66667),
     fontWeight: '600',
     color: '#333',
   },
@@ -1742,27 +1742,27 @@ var indexScssStyleSheet = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: scalePx2dp(13.44),
-    marginRight: scalePx2dp(9.6),
-    marginBottom: scalePx2dp(13.44),
-    marginLeft: scalePx2dp(9.6),
+    marginTop: scalePx2dp(14.58333),
+    marginRight: scalePx2dp(10.41667),
+    marginBottom: scalePx2dp(14.58333),
+    marginLeft: scalePx2dp(10.41667),
   },
   'fta-form-tip-content': {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    width: scalePx2dp(230.4),
+    width: scalePx2dp(250),
   },
   'fta-form-tip__image': {
-    width: scalePx2dp(13.44),
-    height: scalePx2dp(13.44),
+    width: scalePx2dp(14.58333),
+    height: scalePx2dp(14.58333),
     flexGrow: 0,
     flexShrink: 0,
-    flexBasis: scalePx2dp(13.44),
-    marginRight: scalePx2dp(5.76),
+    flexBasis: scalePx2dp(14.58333),
+    marginRight: scalePx2dp(6.25),
   },
   'fta-form-tip__text': {
-    fontSize: scalePx2dp(13.44),
+    fontSize: scalePx2dp(14.58333),
     color: '#666',
   },
   'fta-form-tip__button': {
@@ -1770,13 +1770,13 @@ var indexScssStyleSheet = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    width: scalePx2dp(67.2),
-    height: scalePx2dp(24.96),
-    borderRadius: scalePx2dp(3.84),
+    width: scalePx2dp(72.91667),
+    height: scalePx2dp(27.08333),
+    borderRadius: scalePx2dp(4.16667),
     backgroundColor: '#fa871e',
   },
   'fta-form-tip__button__text': {
-    fontSize: scalePx2dp(13.44),
+    fontSize: scalePx2dp(14.58333),
     color: '#fff',
   },
   'fta-form-full-screen': {
@@ -1797,36 +1797,36 @@ var indexScssStyleSheet = StyleSheet.create({
   'fta-form-modal__text': {
     textAlign: 'center',
     color: '#f6f6f6',
-    marginBottom: scalePx2dp(11.52),
-    fontSize: scalePx2dp(15.36),
-    lineHeight: scalePx2dp(23.04),
+    marginBottom: scalePx2dp(12.5),
+    fontSize: scalePx2dp(16.66667),
+    lineHeight: scalePx2dp(25),
   },
   'fta-form-modal__image': {
-    width: scalePx2dp(268.8),
-    height: scalePx2dp(264.96),
+    width: scalePx2dp(291.66667),
+    height: scalePx2dp(287.5),
   },
   'fta-form-item': {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: scalePx2dp(9.6),
-    marginRight: scalePx2dp(15.36),
+    marginTop: scalePx2dp(10.41667),
+    marginRight: scalePx2dp(16.66667),
     marginBottom: 0,
-    marginLeft: scalePx2dp(15.36),
+    marginLeft: scalePx2dp(16.66667),
   },
   'fta-form-item-label': {
-    width: scalePx2dp(105.6),
+    width: scalePx2dp(114.58333),
     height: '100%',
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
   },
   'fta-form-item-label--hack': {
-    width: scalePx2dp(90.24),
+    width: scalePx2dp(97.91667),
   },
   'fta-form-item-label__text': {
-    fontSize: scalePx2dp(13.44),
+    fontSize: scalePx2dp(14.58333),
     fontWeight: '400',
     color: '#333',
   },
@@ -1835,27 +1835,27 @@ var indexScssStyleSheet = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    minHeight: scalePx2dp(42.24),
-    width: scalePx2dp(202.56),
+    minHeight: scalePx2dp(45.83333),
+    width: scalePx2dp(219.79167),
     paddingTop: 0,
-    paddingRight: scalePx2dp(15.36),
+    paddingRight: scalePx2dp(16.66667),
     paddingBottom: 0,
-    paddingLeft: scalePx2dp(15.36),
+    paddingLeft: scalePx2dp(16.66667),
     flexGrow: 0,
     flexShrink: 0,
-    flexBasis: scalePx2dp(202.56),
-    borderRadius: scalePx2dp(7.68),
+    flexBasis: scalePx2dp(219.79167),
+    borderRadius: scalePx2dp(8.33333),
     backgroundColor: '#f9f9f9',
   },
   'fta-form-item-content__text': {
-    fontSize: scalePx2dp(15.36),
+    fontSize: scalePx2dp(16.66667),
     fontWeight: '500',
     color: '#333',
   },
   input: {
     fontWeight: '500',
-    height: scalePx2dp(42.24),
-    lineHeight: scalePx2dp(42.24),
+    height: scalePx2dp(45.83333),
+    lineHeight: scalePx2dp(45.83333),
   },
   'fta-form-item-content--hover': {
     opacity: 0.6,
@@ -1866,57 +1866,57 @@ var indexScssStyleSheet = StyleSheet.create({
     borderColor: '#f33131',
   },
   'fta-form-item-arrow': {
-    marginLeft: scalePx2dp(0.96),
-    width: scalePx2dp(15.36),
-    height: scalePx2dp(15.36),
+    marginLeft: scalePx2dp(1.04167),
+    width: scalePx2dp(16.66667),
+    height: scalePx2dp(16.66667),
     flexGrow: 0,
     flexShrink: 0,
-    flexBasis: scalePx2dp(15.36),
+    flexBasis: scalePx2dp(16.66667),
   },
   'fta-form-item-error': {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    marginTop: scalePx2dp(9.6),
-    paddingBottom: scalePx2dp(4.8),
+    marginTop: scalePx2dp(10.41667),
+    paddingBottom: scalePx2dp(5.20833),
   },
   'fta-form-item-error-icon': {
-    width: scalePx2dp(15.36),
-    height: scalePx2dp(15.36),
-    marginRight: scalePx2dp(2.4),
+    width: scalePx2dp(16.66667),
+    height: scalePx2dp(16.66667),
+    marginRight: scalePx2dp(2.60417),
   },
   'fta-form-item-error-wrap': {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    width: scalePx2dp(217.92),
+    width: scalePx2dp(236.45833),
   },
   'fta-form-item-error__text': {
     color: '#f33131',
-    fontSize: scalePx2dp(13.44),
-    lineHeight: scalePx2dp(15.36),
+    fontSize: scalePx2dp(14.58333),
+    lineHeight: scalePx2dp(16.66667),
   },
   'fta-form-item-placeholder': {
-    fontSize: scalePx2dp(15.36),
+    fontSize: scalePx2dp(16.66667),
     fontWeight: '400',
     color: '#ccc',
   },
   'fta-form-item-gap': {
     width: '100%',
-    height: scalePx2dp(9.6),
+    height: scalePx2dp(10.41667),
     backgroundColor: '#f5f5f5',
   },
   'fta-form-item-tooltip': {
     flexGrow: 0,
     flexShrink: 0,
-    flexBasis: scalePx2dp(14.4),
-    width: scalePx2dp(14.4),
-    height: scalePx2dp(14.4),
-    marginLeft: scalePx2dp(5.28),
+    flexBasis: scalePx2dp(15.625),
+    width: scalePx2dp(15.625),
+    height: scalePx2dp(15.625),
+    marginLeft: scalePx2dp(5.72917),
   },
   'fta-form-item-input': {
     backgroundColor: 'transparent',
-    height: scalePx2dp(42.24),
+    height: scalePx2dp(45.83333),
     flexGrow: 1,
     flexShrink: 1,
     flexBasis: 0,
@@ -2156,7 +2156,6 @@ var computeScrollY = function computeScrollY(scrollViewLayout, viewLayout, scrol
     viewBottomY: viewBottomY,
     insets: insets,
   }
-  console.log('computationData', computationData, align)
   switch (align) {
     case 'auto':
       return computeScrollYAuto(computationData)
@@ -2180,7 +2179,6 @@ var computeScrollYAuto = function computeScrollYAuto(data) {
   if (scrollY < scrollYBottom) {
     return scrollYBottom
   }
-  console.log('执行了锤子', scrollYTop, scrollYBottom)
   return scrollY
 }
 var computeScrollYTop = function computeScrollYTop(_ref) {
@@ -2311,7 +2309,6 @@ var scrollIntoView = function scrollIntoView(scrollView, view, scrollY, options)
               newScrollY = computeScrollY(scrollViewLayout, viewLayout, scrollY, insets, align)
               scrollResponder = scrollView.getScrollResponder()
               if (scrollResponder.scrollResponderScrollTo != null) {
-                console.log('new ScrollY', newScrollY)
                 scrollResponder.scrollResponderScrollTo({ x: 0, y: newScrollY, animated: animated })
               } else {
                 scrollView.scrollTo({ x: 0, y: newScrollY, animated: animated })
@@ -3173,7 +3170,7 @@ function FormItem(props, ref) {
           {},
           { error: errored, errorTip: state.message, itemRef: methodsRef }
         ),
-        ['prop', 'value', 'required', 'rules', 'onMount', 'onDestroy', 'validatePriority']
+        ['prop', 'required', 'rules', 'onMount', 'onDestroy', 'validatePriority']
       ),
       getParsedChildren()
     )
@@ -3189,6 +3186,7 @@ function FormItemAppearance(props) {
     itemRef = props.itemRef,
     children = props.children,
     render = props.render,
+    value = props.value,
     readonly = props.readonly,
     placeholder = props.placeholder,
     arrow = props.arrow,
@@ -3202,7 +3200,9 @@ function FormItemAppearance(props) {
     labelClassName = props.labelClassName,
     labelStyle = props.labelStyle,
     contentClassName = props.contentClassName,
-    contentStyle = props.contentStyle
+    contentStyle = props.contentStyle,
+    inputRef = props.inputRef,
+    inputProps = props.inputProps
   var _children = render || children
   var _align = align || ctx.align
   var _readonly = readonly === false ? false : readonly || ctx.readonly
@@ -3237,6 +3237,7 @@ function FormItemAppearance(props) {
   var labelHoverClass =
     !_readonly && (tooltip || onLabelClick) ? 'fta-form-item-content--hover' : void 0
   var contentHoverClass = _readonly ? void 0 : 'fta-form-item-content--hover'
+  var _value = (itemRef == null ? void 0 : itemRef.current.getValue()) || value
   return React.createElement(
     React.Fragment,
     null,
@@ -3262,18 +3263,23 @@ function FormItemAppearance(props) {
           hoverClass: contentHoverClass,
           hoverStyle: _getStyle(contentHoverClass),
         },
-        _children != null && !isUndef(itemRef.current.getValue())
+        _children == null
           ? _readonly
             ? React.createElement(
                 Text,
                 { style: _styleSheet['fta-form-item-content__text'] },
-                itemRef.current.getValue()
+                _value
               )
             : React.createElement(
                 BuiltinInput,
                 _extends$1(
-                  { placeholder: placeholder, style: { textAlign: _align || 'right' } },
-                  props.inputProps
+                  {
+                    ref: inputRef,
+                    placeholder: placeholder,
+                    style: { textAlign: _align || 'right' },
+                    value: _value,
+                  },
+                  inputProps
                 )
               )
           : isUndef(_children)
@@ -3342,7 +3348,7 @@ function ToolTip(props) {
     ? React.createElement(Image, { src: tooltipIcon, style: _styleSheet['fta-form-item-tooltip'] })
     : tooltipIcon
 }
-function BuiltinInput(props) {
+var BuiltinInput = forwardRef(function _BuiltinInput(props, ref) {
   var className = props.className,
     style = props.style,
     placeholderClass = props.placeholderClass,
@@ -3352,11 +3358,15 @@ function BuiltinInput(props) {
   return React.createElement(
     Input,
     _extends$1(
-      { style: _mergeEleStyles(_getStyle(rootClass), style), placeholderClass: placeClass },
+      {
+        style: _mergeEleStyles(_getStyle(rootClass), style),
+        placeholderClass: placeClass,
+        ref: ref,
+      },
       extraProps
     )
   )
-}
+})
 function Placeholder(props) {
   var children = props.children
   return isString(children)

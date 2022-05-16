@@ -236,23 +236,28 @@ export interface FormItemProps
    *  内置输入框的props,自定义组件无效
    */
   inputProps?: BuiltinInputProps
+  /**
+   * 内置输入框的input ref
+   */
+  inputRef?: Ref<any>
 }
 
 export interface StatelessProps {
   /**
    * 当前是否校验出错
+   * @default false
    */
-  error: boolean
+  error?: boolean
   /**
    * FormItem本身的ref
    */
-  itemRef: MutableRefObject<FormItemRefMethods>
+  itemRef?: MutableRefObject<FormItemRefMethods>
 }
 
 export interface FormItemAppearanceProps
   extends Omit<
       FormItemProps,
-      'prop' | 'value' | 'required' | 'rules' | 'onMount' | 'onDestroy' | 'validatePriority'
+      'prop' | 'required' | 'rules' | 'onMount' | 'onDestroy' | 'validatePriority'
     >,
     StatelessProps {
   render?: ReactNode
