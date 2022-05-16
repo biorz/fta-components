@@ -27,6 +27,35 @@ import { scalePx2dp } from '@fta/runtime-rn/dist/scale2dp'
 import { TouchableOpacity } from '../view'
 import PropTypes from 'prop-types'
 
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {}
+  var target = {}
+  var sourceKeys = Object.keys(source)
+  var key, i
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i]
+    if (excluded.indexOf(key) >= 0) continue
+    target[key] = source[key]
+  }
+  return target
+}
+
+function _objectWithoutProperties(source, excluded) {
+  if (source == null) return {}
+  var target = _objectWithoutPropertiesLoose(source, excluded)
+  var key, i
+  if (Object.getOwnPropertySymbols) {
+    var sourceSymbolKeys = Object.getOwnPropertySymbols(source)
+    for (i = 0; i < sourceSymbolKeys.length; i++) {
+      key = sourceSymbolKeys[i]
+      if (excluded.indexOf(key) >= 0) continue
+      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue
+      target[key] = source[key]
+    }
+  }
+  return target
+}
+
 function _extends$1() {
   _extends$1 =
     Object.assign ||
@@ -56,35 +85,6 @@ function _defineProperty(obj, key, value) {
     obj[key] = value
   }
   return obj
-}
-
-function _objectWithoutPropertiesLoose(source, excluded) {
-  if (source == null) return {}
-  var target = {}
-  var sourceKeys = Object.keys(source)
-  var key, i
-  for (i = 0; i < sourceKeys.length; i++) {
-    key = sourceKeys[i]
-    if (excluded.indexOf(key) >= 0) continue
-    target[key] = source[key]
-  }
-  return target
-}
-
-function _objectWithoutProperties(source, excluded) {
-  if (source == null) return {}
-  var target = _objectWithoutPropertiesLoose(source, excluded)
-  var key, i
-  if (Object.getOwnPropertySymbols) {
-    var sourceSymbolKeys = Object.getOwnPropertySymbols(source)
-    for (i = 0; i < sourceSymbolKeys.length; i++) {
-      key = sourceSymbolKeys[i]
-      if (excluded.indexOf(key) >= 0) continue
-      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue
-      target[key] = source[key]
-    }
-  }
-  return target
 }
 
 function _arrayWithHoles(arr) {
@@ -1924,7 +1924,7 @@ var indexScssStyleSheet = StyleSheet.create({
   'fta-form-item--readonly': {},
 })
 
-var context = createContext({ rules: {}, store: { __anonymous__: [] } })
+var context = createContext({ rules: {}, store: { __named__: [], __anonymous__: [] } })
 function useFormConfig() {
   var config = useContext(context)
   return config
@@ -2714,9 +2714,7 @@ var omit = function omit(target) {
   return target
 }
 
-var _excluded = ['__anonymous__'],
-  _excluded2 = ['__anonymous__'],
-  _excluded3 = ['className', 'style', 'placeholderClass']
+var _excluded = ['className', 'style', 'placeholderClass']
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object)
   if (Object.getOwnPropertySymbols) {
@@ -2848,18 +2846,19 @@ function Form(props, ref) {
     exampleRef.current = example
     toggleVisible(true)
   }
-  var store = useRef({ __anonymous__: [] }).current
+  var store = useRef({ __named__: [], __anonymous__: [] }).current
   var rootClass = classNames('fta-form', className)
   var refMethods = {
     validate: function validate(callback) {
       var __anonymous__,
-        named,
+        __named__,
         itemRefs,
-        erroredProps,
+        erroredPropMsgPairs,
+        erroredAnonymousPairs,
         invalid,
         _iterator,
         _step,
-        _ref2,
+        item,
         _ref,
         errMsg
       return regenerator.async(
@@ -2867,45 +2866,53 @@ function Form(props, ref) {
           while (1) {
             switch ((_context.prev = _context.next)) {
               case 0:
-                ;(__anonymous__ = store.__anonymous__),
-                  (named = _objectWithoutProperties(store, _excluded))
-                itemRefs = __anonymous__.concat(Object.values(named))
+                ;(__anonymous__ = store.__anonymous__), (__named__ = store.__named__)
+                itemRefs = __named__.concat(__anonymous__)
                 itemRefs.sort(function (a, b) {
                   return a.current.priority - b.current.priority
                 })
-                erroredProps = []
+                erroredPropMsgPairs = []
+                erroredAnonymousPairs = []
                 invalid = false
                 _iterator = _createForOfIteratorHelperLoose(itemRefs)
-              case 6:
+              case 7:
                 if ((_step = _iterator()).done) {
-                  _context.next = 20
+                  _context.next = 21
                   break
                 }
-                _ref2 = _step.value
-                _ref = _ref2.current
-                _context.next = 11
+                item = _step.value
+                _ref = item.current
+                _context.next = 12
                 return regenerator.awrap(_ref.validateAsync())
-              case 11:
+              case 12:
                 errMsg = _context.sent
-                if (!errMsg) {
-                  _context.next = 18
+                if (!(errMsg != null)) {
+                  _context.next = 19
                   break
                 }
                 invalid = true
-                _ref.prop && erroredProps.push(_ref.prop)
+                if (_ref.prop) {
+                  erroredPropMsgPairs.push([errMsg, _ref.prop, item])
+                } else {
+                  erroredAnonymousPairs.push([errMsg, item])
+                }
                 if (!suspendOnFirstError) {
-                  _context.next = 18
+                  _context.next = 19
                   break
                 }
-                callback == null ? void 0 : callback(!invalid, erroredProps)
+                callback == null
+                  ? void 0
+                  : callback(!invalid, erroredPropMsgPairs, erroredAnonymousPairs)
                 return _context.abrupt('return', true)
-              case 18:
-                _context.next = 6
+              case 19:
+                _context.next = 7
                 break
-              case 20:
-                callback == null ? void 0 : callback(!invalid, erroredProps)
+              case 21:
+                callback == null
+                  ? void 0
+                  : callback(!invalid, erroredPropMsgPairs, erroredAnonymousPairs)
                 return _context.abrupt('return', false)
-              case 22:
+              case 23:
               case 'end':
                 return _context.stop()
             }
@@ -2922,17 +2929,15 @@ function Form(props, ref) {
       ref == null ? void 0 : ref.current.highlight(message, scrollIntoView)
     },
     obtain: function obtain(prop) {
-      return store[prop]
+      return store.__named__.find(function (ref) {
+        return ref.current.prop === prop
+      })
     },
     clearValidate: function clearValidate(props) {
-      if (props === void 0) {
-        console.log('store', store)
-        var __anonymous__ = store.__anonymous__,
-          refs = _objectWithoutProperties(store, _excluded2)
-        __anonymous__.forEach(function (ref) {
-          return ref.current.clearValidate()
-        })
-        Object.values(refs).forEach(function (ref) {
+      if (isUndef(props)) {
+        var __named__ = store.__named__,
+          __anonymous__ = store.__anonymous__
+        __named__.concat(__anonymous__).forEach(function (ref) {
           return ref.current.clearValidate()
         })
       }
@@ -3018,7 +3023,7 @@ function Form(props, ref) {
   )
 }
 var rnLabelClz = inRN ? 'fta-form-item-label--hack' : null
-var initialFormItemState = { status: validateStatus.unset, message: '' }
+var initialFormItemState = { status: validateStatus.unset, message: null }
 function FormItem(props, ref) {
   var label = props.label,
     value = props.value,
@@ -3082,7 +3087,7 @@ function FormItem(props, ref) {
         var status = errors ? validateStatus.error : validateStatus.success
         var message =
           (errors == null ? void 0 : (_errors$ = errors[0]) == null ? void 0 : _errors$.message) ||
-          ''
+          null
         setState({ status: status, message: message })
         callback(message)
       })
@@ -3097,9 +3102,6 @@ function FormItem(props, ref) {
     clearValidate: function clearValidate() {
       setState(initialFormItemState)
     },
-    __test__: function __test__() {
-      console.log('__test__ executed - label: ' + label)
-    },
   }
   var methodsRef = useRef(refMethods)
   var errored = inError(state.status)
@@ -3107,20 +3109,13 @@ function FormItem(props, ref) {
     methodsRef.current = refMethods
   })
   useEffect(function () {
-    if (prop) {
-      ctx.store[prop] = methodsRef
-    } else {
-      ctx.store.__anonymous__.push(methodsRef)
-    }
+    var key = prop ? '__named__' : '__anonymous__'
+    ctx.store[key].push(methodsRef)
     ctx.onMount == null ? void 0 : ctx.onMount(methodsRef)
     onMount == null ? void 0 : onMount(methodsRef)
     return function () {
-      if (prop) {
-        delete ctx.store[prop]
-      } else {
-        var i = ctx.store.__anonymous__.indexOf(methodsRef)
-        if (i > -1) ctx.store.__anonymous__.splice(i, 1)
-      }
+      var i = ctx.store[key].indexOf(methodsRef)
+      if (i > -1) ctx.store[key].splice(i, 1)
       ctx.onDestroy == null ? void 0 : ctx.onDestroy(methodsRef)
       onDestroy == null ? void 0 : onDestroy(methodsRef)
     }
@@ -3137,7 +3132,13 @@ function FormItem(props, ref) {
         _objectSpread(
           _objectSpread({}, props),
           {},
-          { align: _align, readonly: _readonly, error: errored, itemRef: methodsRef }
+          {
+            align: _align,
+            readonly: _readonly,
+            error: errored,
+            errorTip: state.message,
+            itemRef: methodsRef,
+          }
         ),
         [
           'className',
@@ -3206,6 +3207,9 @@ function FormItemAppearance(props) {
   var _children = render || children
   var _align = align || ctx.align
   var _readonly = readonly === false ? false : readonly || ctx.readonly
+  var readonlyFn = function readonlyFn(fn) {
+    return _readonly ? void 0 : fn
+  }
   var rootClass = classNames('fta-form-item', className)
   var rootStyle = _objectSpread(_objectSpread({}, style), customStyle)
   var _labelClassName = classNames(
@@ -3230,7 +3234,7 @@ function FormItemAppearance(props) {
   )
   var labelTextClass = classNames('fta-form-item-label__text')
   var _onLabelCick = function _onLabelCick() {
-    if (!_readonly && tooltip && (onLabelClick == null ? void 0 : onLabelClick()) !== false) {
+    if (tooltip && (onLabelClick == null ? void 0 : onLabelClick()) !== false) {
       ctx._showModal(tooltip)
     }
   }
@@ -3243,12 +3247,12 @@ function FormItemAppearance(props) {
     null,
     React.createElement(
       View,
-      { style: _mergeEleStyles(_getStyle(rootClass), rootStyle), onClick: onItemClick },
+      { style: _mergeEleStyles(_getStyle(rootClass), rootStyle), onClick: readonlyFn(onItemClick) },
       React.createElement(
         View,
         {
           style: _mergeEleStyles(_getStyle(_labelClassName), _labelStyle),
-          onClick: _onLabelCick,
+          onClick: readonlyFn(_onLabelCick),
           hoverClass: labelHoverClass,
           hoverStyle: _getStyle(labelHoverClass),
         },
@@ -3259,7 +3263,7 @@ function FormItemAppearance(props) {
         View,
         {
           style: _mergeEleStyles(_getStyle(_contentClassName), _contentStyle),
-          onClick: onClick,
+          onClick: readonlyFn(onClick),
           hoverClass: contentHoverClass,
           hoverStyle: _getStyle(contentHoverClass),
         },
@@ -3352,7 +3356,7 @@ var BuiltinInput = forwardRef(function _BuiltinInput(props, ref) {
   var className = props.className,
     style = props.style,
     placeholderClass = props.placeholderClass,
-    extraProps = _objectWithoutProperties(props, _excluded3)
+    extraProps = _objectWithoutProperties(props, _excluded)
   var rootClass = classNames('fta-form-item-input', 'fta-form-item-content__text', className)
   var placeClass = classNames('fta-form-item-placeholder', placeholderClass)
   return React.createElement(
@@ -3422,7 +3426,6 @@ Tip.defaultProps = { button: '重新上传', title: '如需更新证件信息，
 var tooltipDefaultProps = { tooltipIcon: Assets.icon.question }
 var formDefaultProps = { rules: {}, model: {}, titleAlign: 'left' }
 var formItemDefaultProps = {
-  errorTip: '信息填写错误',
   validatePriority: validatePriority.Normal,
   onClick: function onClick() {},
 }
@@ -3431,6 +3434,7 @@ var ForwardForm = forwardRef(Form)
 var FowardFormItem = forwardRef(FormItem)
 ForwardForm.defaultProps = formDefaultProps
 FowardFormItem.defaultProps = formItemDefaultProps
+FormItemAppearance.defaultProps = { errorTip: '信息填写错误' }
 ForwardForm.Item = FowardFormItem
 ForwardForm.ItemView = FormItemAppearance
 ForwardForm.Input = BuiltinInput
