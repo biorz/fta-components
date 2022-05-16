@@ -12,7 +12,7 @@ import React, {
   useImperativeHandle,
   useEffect,
 } from 'react'
-import { Assets, inRN, isString, useEnhancedState, isUndef, isArray } from '../common'
+import { Assets, inRN, isString, useEnhancedState, inDev, isUndef, isArray } from '../common'
 import {
   StyleSheet,
   Modal,
@@ -1924,7 +1924,12 @@ var indexScssStyleSheet = StyleSheet.create({
   'fta-form-item--readonly': {},
 })
 
-var context = createContext({ rules: {}, store: { __named__: [], __anonymous__: [] } })
+var context = createContext({
+  rules: {},
+  __root__: false,
+  _showModal: function _showModal() {},
+  store: { __named__: [], __anonymous__: [] },
+})
 function useFormConfig() {
   var config = useContext(context)
   return config
@@ -2969,7 +2974,6 @@ function Form(props, ref) {
     {
       value: {
         rules: rules,
-        store: store,
         align: align,
         labelClassName: labelClassName,
         labelStyle: labelStyle,
@@ -2979,7 +2983,9 @@ function Form(props, ref) {
         onMount: onMount,
         onDestroy: onDestroy,
         scrollIntoView: scrollIntoView,
+        store: store,
         _showModal: _showModal,
+        __root__: true,
       },
     },
     React.createElement(
@@ -3109,6 +3115,13 @@ function FormItem(props, ref) {
     methodsRef.current = refMethods
   })
   useEffect(function () {
+    if (inDev) {
+      console.log(
+        '[FTA View Warning]: FormItem ' +
+          (label ? label : prop ? prop : '') +
+          ' \u6CA1\u6709\u88ABForm\u5305\u88F9\uFF0C\u8BF7\u68C0\u67E5'
+      )
+    }
     var key = prop ? '__named__' : '__anonymous__'
     ctx.store[key].push(methodsRef)
     ctx.onMount == null ? void 0 : ctx.onMount(methodsRef)
