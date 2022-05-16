@@ -35,10 +35,16 @@ type FormContext = Pick<
   _showModal?: (example: ReactNode) => void
 }
 
+// type FormItemContext = {
+//   itemRef?.
+// }
+
 const context = createContext<FormContext>({
   rules: {},
   store: { __anonymous__: [] as MutableRefObject<FormItemRefMethods>[] },
 })
+
+// const itemContext = createContext<>
 
 /** 获取form表单基础配置 */
 function useFormConfig(): FormContext {

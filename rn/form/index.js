@@ -3170,7 +3170,7 @@ function FormItem(props, ref) {
           {},
           { error: errored, errorTip: state.message, itemRef: methodsRef }
         ),
-        ['prop', 'value', 'required', 'rules', 'onMount', 'onDestroy', 'validatePriority']
+        ['prop', 'required', 'rules', 'onMount', 'onDestroy', 'validatePriority']
       ),
       getParsedChildren()
     )
@@ -3186,6 +3186,7 @@ function FormItemAppearance(props) {
     itemRef = props.itemRef,
     children = props.children,
     render = props.render,
+    value = props.value,
     readonly = props.readonly,
     placeholder = props.placeholder,
     arrow = props.arrow,
@@ -3199,7 +3200,9 @@ function FormItemAppearance(props) {
     labelClassName = props.labelClassName,
     labelStyle = props.labelStyle,
     contentClassName = props.contentClassName,
-    contentStyle = props.contentStyle
+    contentStyle = props.contentStyle,
+    inputRef = props.inputRef,
+    inputProps = props.inputProps
   var _children = render || children
   var _align = align || ctx.align
   var _readonly = readonly === false ? false : readonly || ctx.readonly
@@ -3234,6 +3237,7 @@ function FormItemAppearance(props) {
   var labelHoverClass =
     !_readonly && (tooltip || onLabelClick) ? 'fta-form-item-content--hover' : void 0
   var contentHoverClass = _readonly ? void 0 : 'fta-form-item-content--hover'
+  var _value = (itemRef == null ? void 0 : itemRef.current.getValue()) || value
   return React.createElement(
     React.Fragment,
     null,
@@ -3259,18 +3263,23 @@ function FormItemAppearance(props) {
           hoverClass: contentHoverClass,
           hoverStyle: _getStyle(contentHoverClass),
         },
-        _children != null && !isUndef(itemRef.current.getValue())
+        _children == null
           ? _readonly
             ? React.createElement(
                 Text,
                 { style: _styleSheet['fta-form-item-content__text'] },
-                itemRef.current.getValue()
+                _value
               )
             : React.createElement(
                 BuiltinInput,
                 _extends$1(
-                  { placeholder: placeholder, style: { textAlign: _align || 'right' } },
-                  props.inputProps
+                  {
+                    ref: inputRef,
+                    placeholder: placeholder,
+                    style: { textAlign: _align || 'right' },
+                    value: _value,
+                  },
+                  inputProps
                 )
               )
           : isUndef(_children)
@@ -3339,7 +3348,7 @@ function ToolTip(props) {
     ? React.createElement(Image, { src: tooltipIcon, style: _styleSheet['fta-form-item-tooltip'] })
     : tooltipIcon
 }
-function BuiltinInput(props) {
+var BuiltinInput = forwardRef(function _BuiltinInput(props, ref) {
   var className = props.className,
     style = props.style,
     placeholderClass = props.placeholderClass,
@@ -3349,11 +3358,15 @@ function BuiltinInput(props) {
   return React.createElement(
     Input,
     _extends$1(
-      { style: _mergeEleStyles(_getStyle(rootClass), style), placeholderClass: placeClass },
+      {
+        style: _mergeEleStyles(_getStyle(rootClass), style),
+        placeholderClass: placeClass,
+        ref: ref,
+      },
       extraProps
     )
   )
-}
+})
 function Placeholder(props) {
   var children = props.children
   return isString(children)
