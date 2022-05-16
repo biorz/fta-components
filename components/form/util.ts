@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 import { ValidateRule } from '../../types/form'
 
 /** 是否未设置校验规则 */
-export const isEmptyRules = (rules?: ValidateRule[]) => !rules || !rules.length
+export const isEmptyRules = (rules?: ValidateRule) => !rules || !(rules as ValidateRule[]).length
 /** 生成唯一的key */
 export const uniqueId = (() => {
   let count = 0

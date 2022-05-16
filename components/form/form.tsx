@@ -12,7 +12,7 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import { Assets, inRN, isArray, isString, isUndef, useEnhancedState } from '../../common'
+import { Assets, inDev, inRN, isArray, isString, isUndef, useEnhancedState } from '../../common'
 import '../../style/components/form/index.scss'
 import {
   Align,
@@ -174,7 +174,6 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
     <FormProvider
       value={{
         rules,
-        store,
         align,
         labelClassName,
         labelStyle,
@@ -184,7 +183,12 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
         onMount,
         onDestroy,
         scrollIntoView,
+        /** @private */
+        store,
+        /** @private */
         _showModal,
+        /** @private */
+        __root__: true,
       }}>
       <ScrollView
         scrollY
@@ -328,12 +332,11 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
       })
     },
     validateAsync() {
-      return new Promise((resolve) => refMethods.validate((message) => resolve(message)))
+      return new Promise((resolve) => refMethods.validate((message) => resolve(message!)))
     },
     clearValidate() {
       setState(initialFormItemState)
     },
-    // 测试函数
   }
 
   const methodsRef = useRef(refMethods)
@@ -349,12 +352,20 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
    * 监听FormItem的生命周期
    */
   useEffect(() => {
+    if (inDev) {
+      console.log(
+        `[FTA View Warning]: FormItem ${label ? label : prop ? prop : ''} 没有被Form包裹，请检查`
+      )
+    }
+    // collect dep
     const key = prop ? '__named__' : '__anonymous__'
     ctx.store[key].push(methodsRef)
+
     ctx.onMount?.(methodsRef)
     onMount?.(methodsRef)
 
     return () => {
+      // remove dep
       const i = ctx.store[key].indexOf(methodsRef)
       if (i > -1) ctx.store[key].splice(i, 1)
 

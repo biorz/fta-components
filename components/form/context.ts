@@ -30,14 +30,15 @@ type FormContext = Pick<
 
   /** @private 展示提示modal */
   _showModal?: (example: ReactNode) => void
-}
 
-// type FormItemContext = {
-//   itemRef?.
-// }
+  /** @private  判断FormItem是否被Form包裹 */
+  __root__?: boolean
+}
 
 const context = createContext<FormContext>({
   rules: {},
+  __root__: false,
+  _showModal() {},
   store: {
     __named__: [] as MutableRefObject<FormItemRefMethods>[],
     __anonymous__: [] as MutableRefObject<FormItemRefMethods>[],

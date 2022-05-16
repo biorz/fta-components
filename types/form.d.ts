@@ -1,5 +1,5 @@
 import { InputProps } from '@tarojs/components/types/Input'
-import Schema from 'async-validator'
+import Schema, { Rule, RuleItem } from 'async-validator'
 import {
   CSSProperties,
   FC,
@@ -17,9 +17,11 @@ export type Align = 'left' | 'center' | 'right'
 
 export type Callback = (message?: string | null) => void
 
-export type Validator = (rule: ValidateRule, value: any, callback: Callback) => void
-
-export type ValidateCallback = () => void
+export type Validator = (
+  rule: ValidateRule,
+  value: any,
+  callback: Callback
+) => RuleItem['validator']
 
 export interface ValidateStatus {
   unset: -1
@@ -36,24 +38,25 @@ export interface ValidatePriority {
   Lower: 4
 }
 
-export interface ValidateRule {
-  /**
-   * 是否必填项
-   */
-  required?: boolean
-  /**
-   * 错误提示信息
-   */
-  message?: string
-  /**
-   * 自定义校验规则
-   */
-  validator?: Validator
-  /** 当前校验的字段中文名
-   * @deprecated
-   */
-  fieldName?: string
-}
+export type ValidateRule = Rule
+// {
+// /**
+//  * 是否必填项
+//  */
+// required?: boolean
+// /**
+//  * 错误提示信息
+//  */
+// message?: string
+// /**
+//  * 自定义校验规则
+//  */
+// validator?: Validator
+// /** 当前校验的字段中文名
+//  * @deprecated
+//  */
+// fieldName?: string
+// }
 
 export interface FormProps extends BaseComponent, PropsWithChildren {
   /**
@@ -96,7 +99,7 @@ export interface FormProps extends BaseComponent, PropsWithChildren {
   /**
    * 校验规则
    */
-  rules?: Record<string, ValidateRule[]>
+  rules?: Record<string, ValidateRule>
   /**
    * 提交表单时的回调
    * @todo
@@ -173,7 +176,7 @@ export interface FormItemProps
   /**
    * 校验规则
    */
-  rules?: ValidateRule[]
+  rules?: ValidateRule
   /**
    * 是否显示右箭头（可传入自定义节点）
    */
@@ -343,7 +346,7 @@ export interface FormItemRefMethods {
   /**
    * 获取校验规则
    */
-  getRules: (rules?: ValidateRule[]) => ValidateRule[]
+  getRules: (rules?: ValidateRule) => ValidateRule
   /**
    * 获取当前表单绑定的值
    */
@@ -359,7 +362,7 @@ export interface FormItemRefMethods {
   /**
    * 校验该表单项
    */
-  validate: (callback: Callback, rules?: Validarule[]) => void
+  validate: (callback: Callback, rules?: ValidateRule) => void
   /**
    * 异步校验表单项
    */
