@@ -3263,7 +3263,7 @@ function FormItemAppearance(props) {
           hoverClass: contentHoverClass,
           hoverStyle: _getStyle(contentHoverClass),
         },
-        _children == null
+        _children == null && !arrow
           ? _readonly
             ? React.createElement(
                 Text,

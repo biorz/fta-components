@@ -528,7 +528,7 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
           hoverClassName={contentHoverClass}
           hoverClass={contentHoverClass}>
           {/* && !isUndef(itemRef?.current.getValue() || value) */}
-          {_children == null ? (
+          {_children == null && !arrow ? (
             _readonly ? (
               <Text className='fta-form-item-content__text'>{_value}</Text>
             ) : (
