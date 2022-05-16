@@ -3263,8 +3263,8 @@ function FormItemAppearance(props) {
           hoverClass: contentHoverClass,
           hoverStyle: _getStyle(contentHoverClass),
         },
-        _children == null && !arrow
-          ? _readonly
+        _children == null
+          ? _readonly || arrow
             ? React.createElement(
                 Text,
                 { style: _styleSheet['fta-form-item-content__text'] },
