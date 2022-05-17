@@ -230,6 +230,10 @@ $color-error: #f33131;
     // line-height: zoom(88px);
     flex: 1;
     // text-align: right;
+
+    &--empty {
+      font-weight: $font-weight-normal;
+    }
   }
 
   /* Modifiers */

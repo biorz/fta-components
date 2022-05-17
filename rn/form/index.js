@@ -12,7 +12,7 @@ import React, {
   useImperativeHandle,
   useEffect,
 } from 'react'
-import { Assets, inRN, isString, useEnhancedState, inDev, isUndef, isArray } from '../common'
+import { isString, Assets, inRN, useEnhancedState, inDev, isUndef, isArray } from '../common'
 import {
   StyleSheet,
   Modal,
@@ -1921,6 +1921,9 @@ var indexScssStyleSheet = StyleSheet.create({
     flexShrink: 1,
     flexBasis: 0,
   },
+  'fta-form-item-input--empty': {
+    fontWeight: '400',
+  },
   'fta-form-item--readonly': {},
 })
 
@@ -2719,7 +2722,7 @@ var omit = function omit(target) {
   return target
 }
 
-var _excluded = ['className', 'style', 'placeholderClass']
+var _excluded = ['className', 'style', 'placeholderClass', 'value']
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object)
   if (Object.getOwnPropertySymbols) {
@@ -2837,7 +2840,8 @@ function Form(props, ref) {
     onMount = props.onMount,
     onDestroy = props.onDestroy,
     suspendOnFirstError = props.suspendOnFirstError,
-    style = props.style
+    style = props.style,
+    placeholderTextColor = props.placeholderTextColor
   var _useState = useState(),
     _useState2 = _slicedToArray(_useState, 2),
     nodeId = _useState2[0],
@@ -2983,6 +2987,7 @@ function Form(props, ref) {
         onMount: onMount,
         onDestroy: onDestroy,
         scrollIntoView: scrollIntoView,
+        placeholderTextColor: placeholderTextColor,
         store: store,
         _showModal: _showModal,
         __root__: true,
@@ -3216,7 +3221,8 @@ function FormItemAppearance(props) {
     contentClassName = props.contentClassName,
     contentStyle = props.contentStyle,
     inputRef = props.inputRef,
-    inputProps = props.inputProps
+    inputProps = props.inputProps,
+    placeholderTextColor = props.placeholderTextColor
   var _children = render || children
   var _align = align || ctx.align
   var _readonly = readonly === false ? false : readonly || ctx.readonly
@@ -3254,6 +3260,7 @@ function FormItemAppearance(props) {
   var labelHoverClass =
     !_readonly && (tooltip || onLabelClick) ? 'fta-form-item-content--hover' : void 0
   var contentHoverClass = _readonly ? void 0 : 'fta-form-item-content--hover'
+  var placeholderColor = placeholderTextColor || ctx.placeholderTextColor
   var _value = (itemRef == null ? void 0 : itemRef.current.getValue()) || value
   return React.createElement(
     React.Fragment,
@@ -3295,6 +3302,7 @@ function FormItemAppearance(props) {
                     placeholder: placeholder,
                     style: { textAlign: _align || 'right' },
                     value: _value,
+                    placeholderTextColor: placeholderColor,
                   },
                   inputProps
                 )
@@ -3369,8 +3377,15 @@ var BuiltinInput = forwardRef(function _BuiltinInput(props, ref) {
   var className = props.className,
     style = props.style,
     placeholderClass = props.placeholderClass,
+    value = props.value,
     extraProps = _objectWithoutProperties(props, _excluded)
-  var rootClass = classNames('fta-form-item-input', 'fta-form-item-content__text', className)
+  var isEmpty = value == null || (isString(value) && !value.length)
+  var rootClass = classNames(
+    'fta-form-item-input',
+    'fta-form-item-content__text',
+    isEmpty && 'fta-form-item-input--empty',
+    className
+  )
   var placeClass = classNames('fta-form-item-placeholder', placeholderClass)
   return React.createElement(
     Input,
@@ -3378,6 +3393,7 @@ var BuiltinInput = forwardRef(function _BuiltinInput(props, ref) {
       {
         style: _mergeEleStyles(_getStyle(rootClass), style),
         placeholderClass: placeClass,
+        value: value,
         ref: ref,
       },
       extraProps
@@ -3437,8 +3453,9 @@ function Tip(props) {
 }
 Tip.defaultProps = { button: '重新上传', title: '如需更新证件信息，请重新上传' }
 var tooltipDefaultProps = { tooltipIcon: Assets.icon.question }
-var formDefaultProps = { rules: {}, model: {}, titleAlign: 'left' }
+var formDefaultProps = { placeholderTextColor: '#cccccc', rules: {}, model: {}, titleAlign: 'left' }
 var formItemDefaultProps = {
+  placeholderTextColor: '#cccccc',
   validatePriority: validatePriority.Normal,
   onClick: function onClick() {},
 }

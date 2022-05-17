@@ -85,6 +85,7 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
     suspendOnFirstError,
     // @ts-ignore
     style,
+    placeholderTextColor,
   } = props
 
   const [nodeId, scrollIntoView] = useState<string>()
@@ -183,6 +184,7 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
         onMount,
         onDestroy,
         scrollIntoView,
+        placeholderTextColor,
         /** @private */
         store,
         /** @private */
@@ -468,6 +470,7 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
     contentStyle,
     inputRef,
     inputProps,
+    placeholderTextColor,
   } = props
 
   const _children = render || children
@@ -516,6 +519,8 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
 
   const contentHoverClass = _readonly ? void 0 : 'fta-form-item-content--hover'
 
+  const placeholderColor = placeholderTextColor || ctx.placeholderTextColor
+
   const _value = itemRef?.current.getValue() || value
 
   return (
@@ -550,6 +555,8 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
                 placeholder={placeholder}
                 style={{ textAlign: _align || 'right' }}
                 value={_value}
+                // @ts-ignore
+                placeholderTextColor={placeholderColor}
                 {...inputProps}
               />
             )
@@ -611,14 +618,21 @@ function ToolTip(props: ToolTipProps): JSX.Element {
 
 /** 内置输入框 */
 const BuiltinInput = forwardRef(function _BuiltinInput(props: BuiltinInputProps, ref: Ref<any>) {
-  const { className, style, placeholderClass, ...extraProps } = props
-  const rootClass = classNames('fta-form-item-input', 'fta-form-item-content__text', className)
+  const { className, style, placeholderClass, value, ...extraProps } = props
+  const isEmpty = value == null || (isString(value) && !value.length)
+  const rootClass = classNames(
+    'fta-form-item-input',
+    'fta-form-item-content__text',
+    isEmpty && 'fta-form-item-input--empty',
+    className
+  )
   const placeClass = classNames('fta-form-item-placeholder', placeholderClass)
   return (
     <Input
       className={rootClass}
       style={style}
       placeholderClass={placeClass}
+      value={value}
       ref={ref}
       {...extraProps}
     />
@@ -688,12 +702,14 @@ const tooltipDefaultProps: ToolTipProps = {
 }
 
 const formDefaultProps: FormProps = {
+  placeholderTextColor: '#cccccc',
   rules: {},
   model: {},
   titleAlign: 'left',
 }
 
 const formItemDefaultProps: FormItemProps = {
+  placeholderTextColor: '#cccccc',
   validatePriority: validatePriority.Normal,
   onClick() {},
 }

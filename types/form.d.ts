@@ -135,6 +135,12 @@ export interface FormProps extends BaseComponent, PropsWithChildren {
    * @default false
    */
   suspendOnFirstError?: boolean
+  /**
+   * 占位符文字颜色
+   * @supported rn
+   * @default '#cccccc'
+   */
+  placeholderTextColor?: string
 }
 
 export interface FormItemProps
@@ -150,6 +156,7 @@ export interface FormItemProps
       | 'contentStyle'
       | 'onMount'
       | 'onDestroy'
+      | 'placeholderTextColor'
     >,
     BaseComponent {
   /**

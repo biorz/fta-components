@@ -18,6 +18,7 @@ type FormContext = Pick<
   | 'onMount'
   | 'onDestroy'
   | 'rules'
+  | 'placeholderTextColor'
 > & {
   /** @private */
   store: Store
