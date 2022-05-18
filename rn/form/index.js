@@ -3120,7 +3120,7 @@ function FormItem(props, ref) {
     methodsRef.current = refMethods
   })
   useEffect(function () {
-    if (inDev) {
+    if (inDev && !ctx.__root__) {
       console.log(
         '[FTA View Warning]: FormItem ' +
           (label ? label : prop ? prop : '') +
@@ -3206,6 +3206,7 @@ function FormItemAppearance(props) {
     children = props.children,
     render = props.render,
     value = props.value,
+    format = props.format,
     readonly = props.readonly,
     placeholder = props.placeholder,
     arrow = props.arrow,
@@ -3292,7 +3293,7 @@ function FormItemAppearance(props) {
             ? React.createElement(
                 Text,
                 { style: _styleSheet['fta-form-item-content__text'] },
-                _value
+                format ? format(_value) : _value
               )
             : React.createElement(
                 BuiltinInput,

@@ -354,7 +354,7 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
    * 监听FormItem的生命周期
    */
   useEffect(() => {
-    if (inDev) {
+    if (inDev && !ctx.__root__) {
       console.log(
         `[FTA View Warning]: FormItem ${label ? label : prop ? prop : ''} 没有被Form包裹，请检查`
       )
@@ -447,7 +447,7 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
     render,
     // prop,
     value,
-
+    format,
     // required,
     // rules,
     // onMount,
@@ -548,7 +548,9 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
           {/* && !isUndef(itemRef?.current.getValue() || value) */}
           {_children == null ? (
             _readonly || arrow ? (
-              <Text className='fta-form-item-content__text'>{_value}</Text>
+              <Text className='fta-form-item-content__text'>
+                {format ? format(_value as string) : _value}
+              </Text>
             ) : (
               <BuiltinInput
                 ref={inputRef}

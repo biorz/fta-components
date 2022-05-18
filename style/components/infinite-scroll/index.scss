@@ -1,0 +1,17 @@
+@import '../../mixins/index.scss';
+@import '../../variables/default.scss';
+
+.fta-infinite-scroll {
+  flex: 1;
+  height: 100%;
+
+  &-loader {
+    @include flex-center();
+    height: 100px;
+
+    &__text {
+      color: $color-grey-2;
+      font-size: $font-size-md;
+    }
+  }
+}
