@@ -12,18 +12,18 @@ export interface InfiniteScrollProps extends BaseComponent, PropsWithChildren {
    */
   loadMore?: () => Promise<void>
   /**
-   * 触发加载事件的滚动触底距离阈值，单位为像素
-   * @default 50
+   * 触发加载事件的滚动触底距离阈值，单位为像素(包含底部loader高度)
+   * @default 100
    */
   threshold?: number
   /**
    * 加载中的提示
    */
-  loader?: ReactElement | false
+  loader?: string | ReactElement | false
   /**
    * 没有更多数据的提示
    */
-  loaded?: ReactElement | false
+  loaded?: string | ReactElement | false
 }
 
 declare const InfiniteScroll: FC<InfiniteScrollProps>

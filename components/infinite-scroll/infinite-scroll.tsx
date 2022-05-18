@@ -1,6 +1,7 @@
 import { ScrollView, Text, View } from '@tarojs/components'
 import classNames from 'classnames'
-import React, { useRef, useState } from 'react'
+import React, { Fragment, useRef, useState } from 'react'
+import { isString } from '../../common'
 import '../../style/components/infinite-scroll/index.scss'
 import { InfiniteScrollProps } from '../../types/infinite-scroll'
 
@@ -16,16 +17,16 @@ function InfiniteScroll(props: InfiniteScrollProps): JSX.Element {
     style,
     children,
     hasMore,
-    loadMore,
     loader,
     loaded,
     threshold,
+    loadMore,
   } = props
   const rootClass = classNames('fta-infinite-scroll', className)
   const rootStyle = { ...style, ...customStyle }
 
   const onLoad = async () => {
-    if (loadingRef.current || !hasMore) return console.log('已经在加载中了啊')
+    if (loadingRef.current || !hasMore) return
     // toggleLoading(true)
     loadingRef.current = true
     try {
@@ -36,15 +37,27 @@ function InfiniteScroll(props: InfiniteScrollProps): JSX.Element {
     loadingRef.current = false
   }
   return (
-    <ScrollView
-      scrollY
-      className={rootClass}
-      style={rootStyle}
-      lowerThreshold={threshold}
-      onScrollToLower={onLoad}>
-      {children}
-      {!hasLoad || hasMore ? loader : loaded}
-    </ScrollView>
+    <Fragment>
+      <ScrollView
+        scrollY
+        className={rootClass}
+        style={rootStyle}
+        lowerThreshold={threshold}
+        onScrollToLower={onLoad}>
+        {children}
+        {!hasLoad || hasMore ? (
+          isString(loader) ? (
+            <Loader title={loader} />
+          ) : (
+            loader
+          )
+        ) : isString(loaded) ? (
+          <Loader title={loaded} />
+        ) : (
+          loaded
+        )}
+      </ScrollView>
+    </Fragment>
   )
 }
 
@@ -57,9 +70,9 @@ function Loader(props: { title: string }): JSX.Element {
 }
 
 const defaultProps: InfiniteScrollProps = {
-  threshold: 50,
-  loader: <Loader title='加载中...' />,
-  loaded: <Loader title='没有更多数据了哦' />,
+  threshold: 100,
+  loader: '加载中...',
+  loaded: '没有更多数据了哦',
 }
 
 InfiniteScroll.defaultProps = defaultProps

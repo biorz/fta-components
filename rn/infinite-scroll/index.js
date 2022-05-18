@@ -2,7 +2,8 @@ import ScrollView from '@fta/components-rn/dist/components/ScrollView'
 import Text from '@fta/components-rn/dist/components/Text'
 import View from '@fta/components-rn/dist/components/View'
 import classNames from 'classnames'
-import React, { useState } from 'react'
+import React, { useRef, useState, Fragment } from 'react'
+import { isString } from '../common'
 import { StyleSheet } from 'react-native'
 import { scalePx2dp } from '@fta/runtime-rn/dist/scale2dp'
 
@@ -663,23 +664,20 @@ function _mergeEleStyles() {
 }
 var _styleSheet = indexScssStyleSheet
 function InfiniteScroll(props) {
+  var loadingRef = useRef(false)
   var _useState = useState(false),
     _useState2 = _slicedToArray(_useState, 2),
-    loading = _useState2[0],
-    toggleLoading = _useState2[1]
-  var _useState3 = useState(false),
-    _useState4 = _slicedToArray(_useState3, 2),
-    hasLoad = _useState4[0],
-    setLoad = _useState4[1]
+    hasLoad = _useState2[0],
+    setLoad = _useState2[1]
   var className = props.className,
     customStyle = props.customStyle,
     style = props.style,
     children = props.children,
     hasMore = props.hasMore,
-    loadMore = props.loadMore,
     loader = props.loader,
     loaded = props.loaded,
-    threshold = props.threshold
+    threshold = props.threshold,
+    loadMore = props.loadMore
   var rootClass = classNames('fta-infinite-scroll', className)
   var rootStyle = _objectSpread(_objectSpread({}, style), customStyle)
   var onLoad = function onLoad() {
@@ -688,27 +686,26 @@ function InfiniteScroll(props) {
         while (1) {
           switch ((_context.prev = _context.next)) {
             case 0:
-              console.log('execute loadmore')
-              if (!(loading || !hasMore)) {
-                _context.next = 3
+              if (!(loadingRef.current || !hasMore)) {
+                _context.next = 2
                 break
               }
               return _context.abrupt('return')
-            case 3:
-              toggleLoading(true)
-              _context.prev = 4
-              _context.next = 7
+            case 2:
+              loadingRef.current = true
+              _context.prev = 3
+              _context.next = 6
               return regenerator.awrap(Promise.resolve(loadMore == null ? void 0 : loadMore()))
-            case 7:
-              _context.next = 11
+            case 6:
+              _context.next = 10
               break
-            case 9:
-              _context.prev = 9
-              _context.t0 = _context['catch'](4)
-            case 11:
+            case 8:
+              _context.prev = 8
+              _context.t0 = _context['catch'](3)
+            case 10:
               setLoad(true)
-              toggleLoading(false)
-            case 13:
+              loadingRef.current = false
+            case 12:
             case 'end':
               return _context.stop()
           }
@@ -716,19 +713,30 @@ function InfiniteScroll(props) {
       },
       null,
       null,
-      [[4, 9]],
+      [[3, 8]],
       Promise
     )
   }
   return React.createElement(
-    ScrollView,
-    {
-      style: _mergeEleStyles(_getStyle(rootClass), rootStyle),
-      lowerThreshold: threshold,
-      onScrollToLower: onLoad,
-    },
-    children,
-    loading ? loader : !hasLoad || hasMore ? null : loaded
+    Fragment,
+    null,
+    React.createElement(
+      ScrollView,
+      {
+        scrollY: true,
+        style: _mergeEleStyles(_getStyle(rootClass), rootStyle),
+        lowerThreshold: threshold,
+        onScrollToLower: onLoad,
+      },
+      children,
+      !hasLoad || hasMore
+        ? isString(loader)
+          ? React.createElement(Loader, { title: loader })
+          : loader
+        : isString(loaded)
+        ? React.createElement(Loader, { title: loaded })
+        : loaded
+    )
   )
 }
 function Loader(props) {
@@ -742,13 +750,7 @@ function Loader(props) {
     )
   )
 }
-var defaultProps = {
-  threshold: 50,
-  loader: React.createElement(Loader, { title: '\u52A0\u8F7D\u4E2D' }),
-  loaded: React.createElement(Loader, {
-    title: '\u6CA1\u6709\u66F4\u591A\u6570\u636E\u4E86\u54E6',
-  }),
-}
+var defaultProps = { threshold: 100, loader: '加载中...', loaded: '没有更多数据了哦' }
 InfiniteScroll.defaultProps = defaultProps
 
 export { InfiniteScroll as default }
