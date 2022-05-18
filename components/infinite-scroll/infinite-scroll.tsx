@@ -21,11 +21,14 @@ function InfiniteScroll(props: InfiniteScrollProps): JSX.Element {
     loaded,
     threshold,
     loadMore,
+    onScrollToLower,
+    ...extraProps
   } = props
   const rootClass = classNames('fta-infinite-scroll', className)
   const rootStyle = { ...style, ...customStyle }
 
-  const onLoad = async () => {
+  const onLoad = async (evt) => {
+    onScrollToLower?.(evt)
     if (loadingRef.current || !hasMore) return
     // toggleLoading(true)
     loadingRef.current = true
@@ -43,7 +46,8 @@ function InfiniteScroll(props: InfiniteScrollProps): JSX.Element {
         className={rootClass}
         style={rootStyle}
         lowerThreshold={threshold}
-        onScrollToLower={onLoad}>
+        onScrollToLower={onLoad}
+        {...extraProps}>
         {children}
         {!hasLoad || hasMore ? (
           isString(loader) ? (

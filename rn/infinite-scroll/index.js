@@ -7,6 +7,23 @@ import { isString } from '../common'
 import { StyleSheet } from 'react-native'
 import { scalePx2dp } from '@fta/runtime-rn/dist/scale2dp'
 
+function _extends() {
+  _extends =
+    Object.assign ||
+    function (target) {
+      for (var i = 1; i < arguments.length; i++) {
+        var source = arguments[i]
+        for (var key in source) {
+          if (Object.prototype.hasOwnProperty.call(source, key)) {
+            target[key] = source[key]
+          }
+        }
+      }
+      return target
+    }
+  return _extends.apply(this, arguments)
+}
+
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -19,6 +36,35 @@ function _defineProperty(obj, key, value) {
     obj[key] = value
   }
   return obj
+}
+
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {}
+  var target = {}
+  var sourceKeys = Object.keys(source)
+  var key, i
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i]
+    if (excluded.indexOf(key) >= 0) continue
+    target[key] = source[key]
+  }
+  return target
+}
+
+function _objectWithoutProperties(source, excluded) {
+  if (source == null) return {}
+  var target = _objectWithoutPropertiesLoose(source, excluded)
+  var key, i
+  if (Object.getOwnPropertySymbols) {
+    var sourceSymbolKeys = Object.getOwnPropertySymbols(source)
+    for (i = 0; i < sourceSymbolKeys.length; i++) {
+      key = sourceSymbolKeys[i]
+      if (excluded.indexOf(key) >= 0) continue
+      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue
+      target[key] = source[key]
+    }
+  }
+  return target
 }
 
 function _arrayWithHoles(arr) {
@@ -603,6 +649,18 @@ var indexScssStyleSheet = StyleSheet.create({
   },
 })
 
+var _excluded = [
+  'className',
+  'customStyle',
+  'style',
+  'children',
+  'hasMore',
+  'loader',
+  'loaded',
+  'threshold',
+  'loadMore',
+  'onScrollToLower',
+]
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object)
   if (Object.getOwnPropertySymbols) {
@@ -677,35 +735,38 @@ function InfiniteScroll(props) {
     loader = props.loader,
     loaded = props.loaded,
     threshold = props.threshold,
-    loadMore = props.loadMore
+    loadMore = props.loadMore,
+    onScrollToLower = props.onScrollToLower,
+    extraProps = _objectWithoutProperties(props, _excluded)
   var rootClass = classNames('fta-infinite-scroll', className)
   var rootStyle = _objectSpread(_objectSpread({}, style), customStyle)
-  var onLoad = function onLoad() {
+  var onLoad = function onLoad(evt) {
     return regenerator.async(
       function onLoad$(_context) {
         while (1) {
           switch ((_context.prev = _context.next)) {
             case 0:
+              onScrollToLower == null ? void 0 : onScrollToLower(evt)
               if (!(loadingRef.current || !hasMore)) {
-                _context.next = 2
+                _context.next = 3
                 break
               }
               return _context.abrupt('return')
-            case 2:
+            case 3:
               loadingRef.current = true
-              _context.prev = 3
-              _context.next = 6
+              _context.prev = 4
+              _context.next = 7
               return regenerator.awrap(Promise.resolve(loadMore == null ? void 0 : loadMore()))
-            case 6:
-              _context.next = 10
+            case 7:
+              _context.next = 11
               break
-            case 8:
-              _context.prev = 8
-              _context.t0 = _context['catch'](3)
-            case 10:
+            case 9:
+              _context.prev = 9
+              _context.t0 = _context['catch'](4)
+            case 11:
               setLoad(true)
               loadingRef.current = false
-            case 12:
+            case 13:
             case 'end':
               return _context.stop()
           }
@@ -713,7 +774,7 @@ function InfiniteScroll(props) {
       },
       null,
       null,
-      [[3, 8]],
+      [[4, 9]],
       Promise
     )
   }
@@ -722,12 +783,15 @@ function InfiniteScroll(props) {
     null,
     React.createElement(
       ScrollView,
-      {
-        scrollY: true,
-        style: _mergeEleStyles(_getStyle(rootClass), rootStyle),
-        lowerThreshold: threshold,
-        onScrollToLower: onLoad,
-      },
+      _extends(
+        {
+          scrollY: true,
+          style: _mergeEleStyles(_getStyle(rootClass), rootStyle),
+          lowerThreshold: threshold,
+          onScrollToLower: onLoad,
+        },
+        extraProps
+      ),
       children,
       !hasLoad || hasMore
         ? isString(loader)

@@ -1,7 +1,11 @@
+import { ScrollViewProps } from '@tarojs/components/types/ScrollView'
 import { FC, ReactElement } from 'react'
 import BaseComponent, { PropsWithChildren } from './base'
 
-export interface InfiniteScrollProps extends BaseComponent, PropsWithChildren {
+export interface InfiniteScrollProps
+  extends BaseComponent,
+    PropsWithChildren,
+    Omit<ScrollViewProps, 'style'> {
   /**
    * 是否还有更多内容
    * @default true
