@@ -168,6 +168,11 @@ export interface FormItemProps
    */
   value?: string
   /**
+   * 对value做处理，页面上实际显示的值
+   * 编辑模式下，对输入框组件无效
+   */
+  format?: (value: string) => string
+  /**
    * 当前字段是否必填
    * @default false
    */
