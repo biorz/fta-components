@@ -1,6 +1,6 @@
 import { ScrollView, Text, View } from '@tarojs/components'
 import classNames from 'classnames'
-import React, { Fragment, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { isString } from '../../common'
 import '../../style/components/infinite-scroll/index.scss'
 import { InfiniteScrollProps } from '../../types/infinite-scroll'
@@ -40,28 +40,26 @@ function InfiniteScroll(props: InfiniteScrollProps): JSX.Element {
     loadingRef.current = false
   }
   return (
-    <Fragment>
-      <ScrollView
-        scrollY
-        className={rootClass}
-        style={rootStyle}
-        lowerThreshold={threshold}
-        onScrollToLower={onLoad}
-        {...extraProps}>
-        {children}
-        {!hasLoad || hasMore ? (
-          isString(loader) ? (
-            <Loader title={loader} />
-          ) : (
-            loader
-          )
-        ) : isString(loaded) ? (
-          <Loader title={loaded} />
+    <ScrollView
+      scrollY
+      className={rootClass}
+      style={rootStyle}
+      lowerThreshold={threshold}
+      onScrollToLower={onLoad}
+      {...extraProps}>
+      {children}
+      {!hasLoad || hasMore ? (
+        isString(loader) ? (
+          <Loader title={loader} />
         ) : (
-          loaded
-        )}
-      </ScrollView>
-    </Fragment>
+          loader
+        )
+      ) : isString(loaded) ? (
+        <Loader title={loaded} />
+      ) : (
+        loaded
+      )}
+    </ScrollView>
   )
 }
 

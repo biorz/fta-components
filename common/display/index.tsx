@@ -8,6 +8,7 @@ import {
   withCare as nativeWithCare,
 } from '@fta/components/common'
 import { Input, ScrollView, Text, View } from '@tarojs/components'
+import { ScrollViewProps } from '@tarojs/components/types/ScrollView'
 import { ViewProps } from '@tarojs/components/types/View'
 import Taro from '@tarojs/taro'
 import classNames from 'classnames'
@@ -369,6 +370,7 @@ export const Layout = withCare(
     showLeft?: boolean
     safeArea?: boolean
     useScrollView?: boolean
+    scrollviewProps?: ScrollViewProps
   }): JSX.Element {
     const ScrollViewAdapter = props.useScrollView === false ? View : ScrollView
     const { careMode, toggle } = useConfig()
@@ -475,7 +477,7 @@ export const Layout = withCare(
               onInput={changeThemeColor}
             />
           ) : null}
-          <ScrollViewAdapter scrollY className='fta-demo-container'>
+          <ScrollViewAdapter scrollY {...props.scrollviewProps} className='fta-demo-container'>
             {props.children}
           </ScrollViewAdapter>
           {inAlipay || props.safeArea === false ? null : <SafeArea bottom />}

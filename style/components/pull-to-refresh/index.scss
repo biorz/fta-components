@@ -1,0 +1,28 @@
+@import '../../mixins/index.scss';
+@import '../../variables/default.scss';
+
+.fta-pull-to-refresh {
+  flex: 1;
+  // overflow: hidden;
+  &-head {
+    @include display-flex(column);
+    align-items: center;
+    justify-content: flex-end;
+    @include relative;
+    overflow: hidden;
+  }
+
+  &-content {
+    // flex: 1;
+    // height: 500px;
+    height: 400px;
+
+    overflow: hidden;
+  }
+
+  &-scrollview {
+    background-color: green;
+    height: 400px;
+    flex: 1;
+  }
+}

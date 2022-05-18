@@ -29,6 +29,7 @@ export { default as Modal, ModalAction, ModalContent, ModalHeader } from './comp
 export { default as NavBar, NavBarButton } from './components/nav-bar'
 export { default as NoticeBar } from './components/notice-bar'
 export { default as Picker } from './components/picker'
+export { default as PullToRefresh } from './components/pull-to-refresh'
 export { default as Radio } from './components/radio'
 export { default as Result } from './components/result'
 export { default as SafeArea, SafeAreaView } from './components/safe-area'
