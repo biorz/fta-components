@@ -1,11 +1,12 @@
 import { ScrollView, Text, View } from '@tarojs/components'
 import classNames from 'classnames'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import '../../style/components/infinite-scroll/index.scss'
 import { InfiniteScrollProps } from '../../types/infinite-scroll'
 
 function InfiniteScroll(props: InfiniteScrollProps): JSX.Element {
-  const [loading, toggleLoading] = useState(false)
+  const loadingRef = useRef(false)
+  // const [loading, toggleLoading] = useState(false)
   const [hasLoad, setLoad] = useState(false)
 
   const {
@@ -24,23 +25,25 @@ function InfiniteScroll(props: InfiniteScrollProps): JSX.Element {
   const rootStyle = { ...style, ...customStyle }
 
   const onLoad = async () => {
-    console.log('execute loadmore')
-    if (loading || !hasMore) return
-    toggleLoading(true)
+    if (loadingRef.current || !hasMore) return console.log('已经在加载中了啊')
+    // toggleLoading(true)
+    loadingRef.current = true
     try {
       await Promise.resolve(loadMore?.())
     } catch (error) {}
     setLoad(true)
-    toggleLoading(false)
+    // toggleLoading(false)
+    loadingRef.current = false
   }
   return (
     <ScrollView
+      scrollY
       className={rootClass}
       style={rootStyle}
       lowerThreshold={threshold}
       onScrollToLower={onLoad}>
       {children}
-      {loading ? loader : !hasLoad || hasMore ? null : loaded}
+      {!hasLoad || hasMore ? loader : loaded}
     </ScrollView>
   )
 }
@@ -55,7 +58,7 @@ function Loader(props: { title: string }): JSX.Element {
 
 const defaultProps: InfiniteScrollProps = {
   threshold: 50,
-  loader: <Loader title='加载中' />,
+  loader: <Loader title='加载中...' />,
   loaded: <Loader title='没有更多数据了哦' />,
 }
 
