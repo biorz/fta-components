@@ -508,8 +508,9 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
 
   const labelTextClass = classNames('fta-form-item-label__text')
 
+  // WARNING: 必须先执行onLabelClick事件（DONE!）
   const _onLabelCick = () => {
-    if (tooltip && onLabelClick?.() !== false) {
+    if (onLabelClick?.() !== false && tooltip) {
       ctx._showModal!(tooltip)
     }
   }

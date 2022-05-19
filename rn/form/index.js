@@ -3254,7 +3254,7 @@ function FormItemAppearance(props) {
   )
   var labelTextClass = classNames('fta-form-item-label__text')
   var _onLabelCick = function _onLabelCick() {
-    if (tooltip && (onLabelClick == null ? void 0 : onLabelClick()) !== false) {
+    if ((onLabelClick == null ? void 0 : onLabelClick()) !== false && tooltip) {
       ctx._showModal(tooltip)
     }
   }
