@@ -226,7 +226,7 @@ $color-error: #f33131;
 
   &-input {
     background-color: transparent;
-    height: zoom(88px);
+    max-height: zoom(88px);
     // line-height: zoom(88px);
     flex: 1;
     // text-align: right;

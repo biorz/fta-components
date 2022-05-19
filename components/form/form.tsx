@@ -525,6 +525,10 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
 
   const _formatValue = format ? format(_value as string) : _value
 
+  const alignStyle: CSSProperties = {
+    textAlign: _align || 'right',
+  }
+
   return (
     <>
       <View className={rootClass} style={rootStyle} onClick={readonlyFn(onItemClick)}>
@@ -555,15 +559,17 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
                 (_formatValue == null || !String(_formatValue).length) &&
                 placeholder &&
                 !_readonly ? (
-                  <Placeholder>{placeholder}</Placeholder>
+                  <Placeholder style={alignStyle}>{placeholder}</Placeholder>
                 ) : (
-                  <Text className='fta-form-item-content__text'>{_formatValue}</Text>
+                  <Text style={alignStyle} className='fta-form-item-content__text'>
+                    {_formatValue}
+                  </Text>
                 )
               ) : (
                 <BuiltinInput
                   ref={inputRef}
                   placeholder={placeholder}
-                  style={{ textAlign: _align || 'right' }}
+                  style={alignStyle}
                   value={_value}
                   // @ts-ignore
                   placeholderTextColor={placeholderColor}
@@ -572,9 +578,11 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
               )
             ) : isString(_children) ? (
               !_children.length && placeholder && !_readonly ? (
-                <Placeholder>{placeholder}</Placeholder>
+                <Placeholder style={alignStyle}>{placeholder}</Placeholder>
               ) : (
-                <Text className='fta-form-item-content__text'>{_children}</Text>
+                <Text style={alignStyle} className='fta-form-item-content__text'>
+                  {_children}
+                </Text>
               )
             ) : (
               _children
@@ -652,10 +660,12 @@ const BuiltinInput = forwardRef(function _BuiltinInput(props: BuiltinInputProps,
   )
 })
 /** 占位文本 */
-function Placeholder(props: { children: ReactNode }): JSX.Element {
-  const { children } = props
+function Placeholder(props: { children: ReactNode; style?: CSSProperties }): JSX.Element {
+  const { children, style } = props
   return isString(children) ? (
-    <Text className='fta-form-item-placeholder'>{children}</Text>
+    <Text style={style} className='fta-form-item-placeholder'>
+      {children}
+    </Text>
   ) : (
     (children as ReactElement)
   )

@@ -1916,7 +1916,7 @@ var indexScssStyleSheet = StyleSheet.create({
   },
   'fta-form-item-input': {
     backgroundColor: 'transparent',
-    height: scalePx2dp(45.83333),
+    maxHeight: scalePx2dp(45.83333),
     flexGrow: 1,
     flexShrink: 1,
     flexBasis: 0,
@@ -3264,6 +3264,7 @@ function FormItemAppearance(props) {
   var placeholderColor = placeholderTextColor || ctx.placeholderTextColor
   var _value = (itemRef == null ? void 0 : itemRef.current.getValue()) || value
   var _formatValue = format ? format(_value) : _value
+  var alignStyle = { textAlign: _align || 'right' }
   return React.createElement(
     React.Fragment,
     null,
@@ -3292,10 +3293,12 @@ function FormItemAppearance(props) {
         _children == null
           ? _readonly || arrow
             ? (_formatValue == null || !String(_formatValue).length) && placeholder && !_readonly
-              ? React.createElement(Placeholder, null, placeholder)
+              ? React.createElement(Placeholder, { style: alignStyle }, placeholder)
               : React.createElement(
                   Text,
-                  { style: _styleSheet['fta-form-item-content__text'] },
+                  {
+                    style: _mergeEleStyles(_styleSheet['fta-form-item-content__text'], alignStyle),
+                  },
                   _formatValue
                 )
             : React.createElement(
@@ -3304,7 +3307,7 @@ function FormItemAppearance(props) {
                   {
                     ref: inputRef,
                     placeholder: placeholder,
-                    style: { textAlign: _align || 'right' },
+                    style: alignStyle,
                     value: _value,
                     placeholderTextColor: placeholderColor,
                   },
@@ -3313,10 +3316,10 @@ function FormItemAppearance(props) {
               )
           : isString(_children)
           ? !_children.length && placeholder && !_readonly
-            ? React.createElement(Placeholder, null, placeholder)
+            ? React.createElement(Placeholder, { style: alignStyle }, placeholder)
             : React.createElement(
                 Text,
-                { style: _styleSheet['fta-form-item-content__text'] },
+                { style: _mergeEleStyles(_styleSheet['fta-form-item-content__text'], alignStyle) },
                 _children
               )
           : _children,
@@ -3401,9 +3404,14 @@ var BuiltinInput = forwardRef(function _BuiltinInput(props, ref) {
   )
 })
 function Placeholder(props) {
-  var children = props.children
+  var children = props.children,
+    style = props.style
   return isString(children)
-    ? React.createElement(Text, { style: _styleSheet['fta-form-item-placeholder'] }, children)
+    ? React.createElement(
+        Text,
+        { style: _mergeEleStyles(_styleSheet['fta-form-item-placeholder'], style) },
+        children
+      )
     : children
 }
 function Arrow() {
