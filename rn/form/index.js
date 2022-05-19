@@ -1816,19 +1816,20 @@ var indexScssStyleSheet = StyleSheet.create({
     marginLeft: scalePx2dp(16.66667),
   },
   'fta-form-item-label': {
-    width: scalePx2dp(114.58333),
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: 'auto',
     height: '100%',
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  'fta-form-item-label--hack': {
-    width: scalePx2dp(97.91667),
+    marginRight: scalePx2dp(6.25),
   },
   'fta-form-item-label__text': {
     fontSize: scalePx2dp(14.58333),
     fontWeight: '400',
     color: '#333',
+    flexShrink: 1,
   },
   'fta-form-item-content': {
     display: 'flex',
@@ -1851,6 +1852,7 @@ var indexScssStyleSheet = StyleSheet.create({
     fontSize: scalePx2dp(16.66667),
     fontWeight: '500',
     color: '#333',
+    flexShrink: 1,
   },
   input: {
     fontWeight: '500',
@@ -1878,20 +1880,26 @@ var indexScssStyleSheet = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     marginTop: scalePx2dp(10.41667),
+    width: '100%',
     paddingBottom: scalePx2dp(5.20833),
   },
   'fta-form-item-error-icon': {
     width: scalePx2dp(16.66667),
     height: scalePx2dp(16.66667),
     marginRight: scalePx2dp(2.60417),
+    flexGrow: 0,
+    flexShrink: 0,
+    flexBasis: scalePx2dp(16.66667),
   },
   'fta-form-item-error-wrap': {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    width: scalePx2dp(236.45833),
+    width: scalePx2dp(219.79167),
+    marginRight: scalePx2dp(16.66667),
   },
   'fta-form-item-error__text': {
+    flexShrink: 1,
     color: '#f33131',
     fontSize: scalePx2dp(14.58333),
     lineHeight: scalePx2dp(16.66667),
@@ -3033,7 +3041,6 @@ function Form(props, ref) {
       : null
   )
 }
-var rnLabelClz = inRN ? 'fta-form-item-label--hack' : null
 var initialFormItemState = { status: validateStatus.unset, message: null }
 function FormItem(props, ref) {
   var label = props.label,
@@ -3232,12 +3239,7 @@ function FormItemAppearance(props) {
   }
   var rootClass = classNames('fta-form-item', className)
   var rootStyle = _objectSpread(_objectSpread({}, style), customStyle)
-  var _labelClassName = classNames(
-    'fta-form-item-label',
-    tooltip && rnLabelClz,
-    ctx.labelClassName,
-    labelClassName
-  )
+  var _labelClassName = classNames('fta-form-item-label', ctx.labelClassName, labelClassName)
   var _contentClassName = classNames(
     'fta-form-item-content',
     ctx.contentClassName,

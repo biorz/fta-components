@@ -218,7 +218,7 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
 }
 
 // FIXME: iOS RN 中 tooltip 图标溢出父容器
-const rnLabelClz = inRN ? 'fta-form-item-label--hack' : null
+// const rnLabelClz = inRN ? 'fta-form-item-label--hack' : null
 
 const initialFormItemState = {
   status: validateStatus.unset,
@@ -486,7 +486,7 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
 
   const _labelClassName = classNames(
     'fta-form-item-label',
-    tooltip && rnLabelClz,
+    // tooltip && rnLabelClz,
     ctx.labelClassName,
     labelClassName
   )
