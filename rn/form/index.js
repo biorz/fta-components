@@ -3263,6 +3263,7 @@ function FormItemAppearance(props) {
   var contentHoverClass = _readonly ? void 0 : 'fta-form-item-content--hover'
   var placeholderColor = placeholderTextColor || ctx.placeholderTextColor
   var _value = (itemRef == null ? void 0 : itemRef.current.getValue()) || value
+  var _formatValue = format ? format(_value) : _value
   return React.createElement(
     React.Fragment,
     null,
@@ -3290,11 +3291,13 @@ function FormItemAppearance(props) {
         },
         _children == null
           ? _readonly || arrow
-            ? React.createElement(
-                Text,
-                { style: _styleSheet['fta-form-item-content__text'] },
-                format ? format(_value) : _value
-              )
+            ? (_formatValue == null || !String(_formatValue).length) && placeholder && !_readonly
+              ? React.createElement(Placeholder, null, placeholder)
+              : React.createElement(
+                  Text,
+                  { style: _styleSheet['fta-form-item-content__text'] },
+                  _formatValue
+                )
             : React.createElement(
                 BuiltinInput,
                 _extends$1(
@@ -3308,10 +3311,6 @@ function FormItemAppearance(props) {
                   inputProps
                 )
               )
-          : isUndef(_children)
-          ? placeholder && !_readonly
-            ? React.createElement(Placeholder, null, placeholder)
-            : null
           : isString(_children)
           ? !_children.length && placeholder && !_readonly
             ? React.createElement(Placeholder, null, placeholder)
