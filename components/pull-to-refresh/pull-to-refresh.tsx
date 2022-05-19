@@ -48,8 +48,10 @@ function PullToRefresh(props: PullToRefreshProps) {
         // }}
         className='fta-pull-to-refresh-content'>
         <ScrollView
-          onTouchStart={onTouchStart}
-          onTouchMove={onTouchMove}
+          enhanced
+          bounces={false}
+          // onTouchStart={onTouchStart}
+          // onTouchMove={onTouchMove}
           onTouchEnd={() => {
             console.log('触摸结束')
           }}

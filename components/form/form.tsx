@@ -523,6 +523,8 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
 
   const _value = itemRef?.current.getValue() || value
 
+  const _formatValue = format ? format(_value as string) : _value
+
   return (
     <>
       <View className={rootClass} style={rootStyle} onClick={readonlyFn(onItemClick)}>
@@ -546,35 +548,44 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
           hoverClassName={contentHoverClass}
           hoverClass={contentHoverClass}>
           {/* && !isUndef(itemRef?.current.getValue() || value) */}
-          {_children == null ? (
-            _readonly || arrow ? (
-              <Text className='fta-form-item-content__text'>
-                {format ? format(_value as string) : _value}
-              </Text>
+          {
+            _children == null ? (
+              _readonly || arrow ? (
+                // 加入placeholder
+                (_formatValue == null || !String(_formatValue).length) &&
+                placeholder &&
+                !_readonly ? (
+                  <Placeholder>{placeholder}</Placeholder>
+                ) : (
+                  <Text className='fta-form-item-content__text'>{_formatValue}</Text>
+                )
+              ) : (
+                <BuiltinInput
+                  ref={inputRef}
+                  placeholder={placeholder}
+                  style={{ textAlign: _align || 'right' }}
+                  value={_value}
+                  // @ts-ignore
+                  placeholderTextColor={placeholderColor}
+                  {...inputProps}
+                />
+              )
+            ) : isString(_children) ? (
+              !_children.length && placeholder && !_readonly ? (
+                <Placeholder>{placeholder}</Placeholder>
+              ) : (
+                <Text className='fta-form-item-content__text'>{_children}</Text>
+              )
             ) : (
-              <BuiltinInput
-                ref={inputRef}
-                placeholder={placeholder}
-                style={{ textAlign: _align || 'right' }}
-                value={_value}
-                // @ts-ignore
-                placeholderTextColor={placeholderColor}
-                {...inputProps}
-              />
+              _children
             )
-          ) : isUndef(_children) ? (
-            placeholder && !_readonly ? (
-              <Placeholder>{placeholder}</Placeholder>
-            ) : null
-          ) : isString(_children) ? (
-            !_children.length && placeholder && !_readonly ? (
-              <Placeholder>{placeholder}</Placeholder>
-            ) : (
-              <Text className='fta-form-item-content__text'>{_children}</Text>
-            )
-          ) : (
-            _children
-          )}
+
+            // isUndef(_children) ? (
+            //   placeholder && !_readonly ? (
+            //     <Placeholder>{placeholder}</Placeholder>
+            //   ) : null
+            // ) :
+          }
           {arrow && !_readonly ? <Arrow /> : null}
         </View>
       </View>
