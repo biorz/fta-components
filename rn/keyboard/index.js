@@ -1,3 +1,4 @@
+import Image from '@fta/components-rn/dist/components/Image'
 import Text from '@fta/components-rn/dist/components/Text'
 import View from '@fta/components-rn/dist/components/View'
 import classNames from 'classnames'
@@ -177,36 +178,6 @@ var indexScssStyleSheet = StyleSheet.create({
     width: scalePx2dp(31.77083),
     height: scalePx2dp(18.75),
     overflow: 'hidden',
-  },
-  'fta-keyboard-delete-square': {
-    position: 'absolute',
-    height: '100%',
-    width: scalePx2dp(22.39583),
-    top: 0,
-    left: scalePx2dp(9.375),
-    backgroundColor: '#666666',
-    textAlign: 'center',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  'fta-keyboard-delete-triangle': {
-    width: 0,
-    height: 0,
-    position: 'absolute',
-    left: scalePx2dp(-8.85417),
-    top: 0,
-    borderWidth: scalePx2dp(9.375),
-    borderStyle: 'solid',
-    borderColor: 'transparent',
-    borderRightColor: '#666666',
-  },
-  'fta-keyboard-delete__text': {
-    zIndex: 1,
-    color: '#fff',
-    fontSize: scalePx2dp(16.66667),
-    lineHeight: scalePx2dp(18.75),
   },
   'fta-keyboard-placeholder': {
     color: '#999',
@@ -449,16 +420,10 @@ function Placeholder() {
   return React.createElement(View, { style: _styleSheet['fta-keyboard-item'] })
 }
 function DeleteButton() {
-  return React.createElement(
-    View,
-    { style: _styleSheet['fta-keyboard-delete'] },
-    React.createElement(View, { style: _styleSheet['fta-keyboard-delete-triangle'] }),
-    React.createElement(
-      View,
-      { style: _styleSheet['fta-keyboard-delete-square'] },
-      React.createElement(Text, { style: _styleSheet['fta-keyboard-delete__text'] }, '\xD7')
-    )
-  )
+  return React.createElement(Image, {
+    src: 'https://imagecdn.ymm56.com/ymmfile/static/resource/a0c5fc81-80a0-47c9-ad55-e3fb8d875507.png',
+    style: _styleSheet['fta-keyboard-delete'],
+  })
 }
 var defaultProps = {
   value: '',

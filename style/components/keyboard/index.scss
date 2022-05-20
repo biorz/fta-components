@@ -60,36 +60,36 @@
     height: zoom(36px);
     overflow: hidden;
 
-    &-square {
-      position: absolute;
-      height: 100%;
-      width: zoom(43px);
-      top: 0;
-      left: zoom(18px);
-      background: #666666;
-      text-align: center;
-      @include flex-center();
-    }
+    // &-square {
+    //   position: absolute;
+    //   height: 100%;
+    //   width: zoom(43px);
+    //   top: 0;
+    //   left: zoom(18px);
+    //   background: #666666;
+    //   text-align: center;
+    //   @include flex-center();
+    // }
 
-    &-triangle {
-      @include square(0);
-      position: absolute;
-      left: zoom(-17px);
-      top: 0;
-      border: zoom(18px) solid transparent;
-      border-right-color: #666666;
-    }
+    // &-triangle {
+    //   @include square(0);
+    //   position: absolute;
+    //   left: zoom(-17px);
+    //   top: 0;
+    //   border: zoom(18px) solid transparent;
+    //   border-right-color: #666666;
+    // }
 
-    &__text {
-      @include relative();
-      z-index: 1;
-      color: $color-white;
-      font-size: $font-size-md;
-      line-height: zoom(36px);
-      @include nrn {
-        top: zoom(-3px);
-      }
-    }
+    // &__text {
+    //   @include relative();
+    //   z-index: 1;
+    //   color: $color-white;
+    //   font-size: $font-size-md;
+    //   line-height: zoom(36px);
+    //   @include nrn {
+    //     top: zoom(-3px);
+    //   }
+    // }
   }
 
   &-placeholder {
