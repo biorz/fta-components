@@ -4,6 +4,12 @@
 $fta-form-bg-color: $color-bg;
 $color-error: #f33131;
 
+@mixin break-all {
+  @include nrn {
+    word-break: break-all;
+  }
+}
+
 .fta-form {
   @include display-flex(column);
   background-color: $fta-form-bg-color;
@@ -113,23 +119,26 @@ $color-error: #f33131;
   margin: zoom(20px) zoom(32px) 0;
 
   &-label {
+    flex: 1 1 auto;
     // overflow: hidden;
-    width: zoom(220px);
+    // width: zoom(220px);
     // background-color: red;
     // max-width: 200px;
     height: 100%;
     @include display-flex(row);
     align-items: center;
-
-    &--hack {
-      width: zoom(188px);
-      // background-color: green;
-    }
+    margin-right: zoom(12px);
+    // &--hack {
+    //   width: zoom(188px);
+    //   // background-color: green;
+    // }
 
     &__text {
       font-size: $font-size-sm;
       font-weight: $font-weight-normal;
       color: $color-grey-0;
+      flex-shrink: 1;
+      @include break-all;
     }
   }
 
@@ -150,6 +159,8 @@ $color-error: #f33131;
       font-size: $font-size-md;
       font-weight: $font-weight-bold;
       color: $color-grey-0;
+      flex-shrink: 1;
+      @include break-all;
       @include h5 {
         input {
           font-weight: $font-weight-bold;
@@ -185,21 +196,26 @@ $color-error: #f33131;
     @include display-flex(row);
     justify-content: flex-end;
     margin-top: zoom(20px);
+    width: 100%;
     // margin-left: zoom(calc(265 / 720) * 100vw);
     padding-bottom: zoom(10px);
 
     &-icon {
       @include square(zoom(32px));
       margin-right: zoom(5px);
+      flex: 0 0 zoom(32px);
     }
 
     &-wrap {
       @include display-flex(row);
+      @include border-box();
       align-items: center;
-      width: zoom(454px);
+      width: zoom(422px);
+      margin-right: zoom(32px);
     }
 
     &__text {
+      flex-shrink: 1;
       color: $color-error;
       font-size: $font-size-sm;
       line-height: $font-size-md;
