@@ -22,6 +22,7 @@ import {
   FormItemRef,
   FormItemRefMethods,
   FormProps,
+  FormRadioProps,
   FormRefMethods,
   TipProps,
   ToolTipProps,
@@ -49,6 +50,13 @@ const validatePriority: ValidatePriority = {
   Normal: 2,
   Low: 3,
   Lower: 4,
+}
+
+const RADIO = {
+  unset:
+    'https://imagecdn.ymm56.com/ymmfile/static/resource/d8cc03dc-087b-4550-9b01-a6413392ba9a.png',
+  checked:
+    'https://imagecdn.ymm56.com/ymmfile/static/resource/4b4a182c-ed96-4674-97c0-6e85b1bc5ed7.png',
 }
 
 /**
@@ -685,6 +693,10 @@ function ErrorIcon(): JSX.Element {
 /** 间隔 */
 function Gap(): JSX.Element {
   return <View className='fta-form-item-gap' />
+}
+
+function Radio(props: FormRadioProps) {
+  const { value, style, customStyle, className } = props
 }
 
 /** 重新上传Tip */

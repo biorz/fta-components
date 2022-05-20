@@ -1,4 +1,4 @@
-import { Text, View } from '@tarojs/components'
+import { Image, Text, View } from '@tarojs/components'
 import classNames from 'classnames'
 import React, { useEffect, useMemo, useState } from 'react'
 import { isNumber, isString } from '../../common'
@@ -210,12 +210,16 @@ function Placeholder(): JSX.Element {
  */
 function DeleteButton(): JSX.Element {
   return (
-    <View className='fta-keyboard-delete'>
-      <View className='fta-keyboard-delete-triangle' />
-      <View className='fta-keyboard-delete-square'>
-        <Text className='fta-keyboard-delete__text'>×</Text>
-      </View>
-    </View>
+    <Image
+      className='fta-keyboard-delete'
+      src='https://imagecdn.ymm56.com/ymmfile/static/resource/a0c5fc81-80a0-47c9-ad55-e3fb8d875507.png'
+    />
+    // <View className='fta-keyboard-delete'>
+    //   <View className='fta-keyboard-delete-triangle' />
+    //   <View className='fta-keyboard-delete-square'>
+    //     <Text className='fta-keyboard-delete__text'>×</Text>
+    //   </View>
+    // </View>
   )
 }
 
