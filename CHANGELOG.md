@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.2-alpha.7](https://code.amh-group.com/h5developer/basebuild/views/fta-view/compare/@fta/components@1.0.2-alpha.6...@fta/components@1.0.2-alpha.7) (2022-05-20)
+
+### Bug Fixes
+
+- **keyboard:** 删除按钮替换成图片 ([6ce2a9d](https://code.amh-group.com/h5developer/basebuild/views/fta-view/commits/6ce2a9de705beb90b42699fc4973dba380fbbf8b))
+
 ## [1.0.2-alpha.6](https://code.amh-group.com/h5developer/basebuild/views/fta-view/compare/@fta/components@1.0.2-alpha.5...@fta/components@1.0.2-alpha.6) (2022-05-20)
 
 ### Bug Fixes
