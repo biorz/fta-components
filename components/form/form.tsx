@@ -22,7 +22,6 @@ import {
   FormItemRef,
   FormItemRefMethods,
   FormProps,
-  FormRadioProps,
   FormRefMethods,
   TipProps,
   ToolTipProps,
@@ -52,12 +51,12 @@ const validatePriority: ValidatePriority = {
   Lower: 4,
 }
 
-const RADIO = {
-  unset:
-    'https://imagecdn.ymm56.com/ymmfile/static/resource/d8cc03dc-087b-4550-9b01-a6413392ba9a.png',
-  checked:
-    'https://imagecdn.ymm56.com/ymmfile/static/resource/4b4a182c-ed96-4674-97c0-6e85b1bc5ed7.png',
-}
+// const RADIO = {
+//   unset:
+//     'https://imagecdn.ymm56.com/ymmfile/static/resource/d8cc03dc-087b-4550-9b01-a6413392ba9a.png',
+//   checked:
+//     'https://imagecdn.ymm56.com/ymmfile/static/resource/4b4a182c-ed96-4674-97c0-6e85b1bc5ed7.png',
+// }
 
 /**
  * 校验状态
@@ -695,9 +694,10 @@ function Gap(): JSX.Element {
   return <View className='fta-form-item-gap' />
 }
 
-function Radio(props: FormRadioProps) {
-  const { value, style, customStyle, className } = props
-}
+// TODO:单选框组件
+// function Radio(props: FormRadioProps) {
+//   const { value, style, customStyle, className } = props
+// }
 
 /** 重新上传Tip */
 function Tip(props: TipProps): JSX.Element {

@@ -149,9 +149,9 @@ $color-error: #f33131;
     justify-content: flex-end;
     align-items: center;
     min-height: zoom(88px);
-    width: zoom(422px);
-    padding: 0 zoom(32px);
-    flex: 0 0 zoom(422px);
+    width: zoom(448px);
+    padding: 0 zoom(20px);
+    flex: 0 0 zoom(448px);
     border-radius: $border-radius-lg;
     background-color: #f9f9f9;
 
@@ -210,7 +210,7 @@ $color-error: #f33131;
       @include display-flex(row);
       @include border-box();
       align-items: center;
-      width: zoom(422px);
+      width: zoom(448px);
       margin-right: zoom(32px);
     }
 
@@ -226,6 +226,7 @@ $color-error: #f33131;
     font-size: $font-size-md;
     font-weight: $font-weight-normal;
     color: $color-grey-3;
+    flex-shrink: 1;
   }
 
   &-gap {

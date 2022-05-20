@@ -387,6 +387,34 @@ export interface FormItemRefMethods {
   [key: string]: any
 }
 
+// export interface FormRadioProps extends BaseComponent {
+//   /**
+//    * 当前是否选中
+//    */
+//   value?: boolean
+//   /**
+//    * 前缀节点
+//    */
+//   prefix?: ReactNode
+//   /**
+//    * 后缀节点
+//    */
+//   suffix?: ReactNode
+//   /**
+//    * 是否弹出提示
+//    */
+//   showTooltip?: boolean
+//   /**
+//    * 位置
+//    * @default 'top-lef
+//    */
+//   placement?: 'top-right' | 'top-left'
+//   /**
+//    * 点击之后的回调
+//    */
+//   onChange?: (checked: boolean) => any
+// }
+
 export type FormRef = MutableRefObject<FormRefMethods>
 
 export type FormItemRef = MutableRefObject<FormItemRefMethods>
