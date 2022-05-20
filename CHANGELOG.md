@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.2-alpha.6](https://code.amh-group.com/h5developer/basebuild/views/fta-view/compare/@fta/components@1.0.2-alpha.5...@fta/components@1.0.2-alpha.6) (2022-05-20)
+
+### Bug Fixes
+
+- **form:** 点击 label 时回调处理 ([66b0f22](https://code.amh-group.com/h5developer/basebuild/views/fta-view/commits/66b0f2270a338b0b741586253b69d07b58c41b9e))
+
 ## [1.0.2-alpha.5](https://code.amh-group.com/h5developer/basebuild/views/fta-view/compare/@fta/components@1.0.2-alpha.4...@fta/components@1.0.2-alpha.5) (2022-05-19)
 
 **Note:** Version bump only for package @fta/components
