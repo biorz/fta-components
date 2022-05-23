@@ -4,6 +4,8 @@
 $fta-form-bg-color: $color-bg;
 $color-error: #f33131;
 
+$fta-form-content-bg-color: #f9f9f9;
+
 @mixin break-all {
   @include nrn {
     word-break: break-all;
@@ -153,7 +155,7 @@ $color-error: #f33131;
     padding: 0 zoom(20px);
     flex: 0 0 zoom(448px);
     border-radius: $border-radius-lg;
-    background-color: #f9f9f9;
+    background-color: $fta-form-content-bg-color;
 
     &__text {
       font-size: $font-size-md;
@@ -174,6 +176,12 @@ $color-error: #f33131;
           }
         }
       }
+    }
+
+    &__suffix {
+      margin-left: zoom(20px);
+      color: $color-grey-0;
+      font-size: $font-size-md;
     }
 
     &--hover {
@@ -242,11 +250,31 @@ $color-error: #f33131;
   }
 
   &-input {
-    background-color: transparent;
-    max-height: zoom(88px);
+    display: flex;
+    flex-shrink: 1;
+    flex-grow: 1;
+    flex-basis: auto;
+    // background-color: red;
+    height: zoom(88px);
+    // max-height: zoom(88px);
+    overflow: hidden;
     // line-height: zoom(88px);
     flex: 1;
     // text-align: right;
+
+    &-hack {
+      position: absolute;
+      z-index: 10;
+      left: zoom(20px);
+      right: zoom(20px);
+      // width: 100%;
+      height: zoom(24px);
+      bottom: 0;
+      background-color: $fta-form-content-bg-color;
+      @include nrn {
+        pointer-events: none;
+      }
+    }
 
     &--empty {
       font-weight: $font-weight-normal;

@@ -255,6 +255,16 @@ export interface FormItemProps
    * 内置输入框的input ref
    */
   inputRef?: Ref<any>
+  /**
+   * 遮挡RN 内置Input框输入时折行
+   * @default '#f9f9f9'
+   * @supported rn
+   */
+  hackColor?: string
+  /**
+   * 输入框后缀
+   */
+  suffix?: ReactNode
 }
 
 export interface StatelessProps {
@@ -345,9 +355,6 @@ export interface FormRefMethods {
    * @todo
    */
   submit: () => void
-  /**
-   *
-   */
 }
 
 export interface FormItemRefMethods {

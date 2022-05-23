@@ -11,6 +11,7 @@ import React, {
   useRef,
   useImperativeHandle,
   useEffect,
+  Fragment,
 } from 'react'
 import { isString, Assets, inRN, useEnhancedState, inDev, isUndef, isArray } from '../common'
 import {
@@ -1859,6 +1860,11 @@ var indexScssStyleSheet = StyleSheet.create({
     height: scalePx2dp(45.83333),
     lineHeight: scalePx2dp(45.83333),
   },
+  'fta-form-item-content__suffix': {
+    marginLeft: scalePx2dp(10.41667),
+    color: '#333',
+    fontSize: scalePx2dp(16.66667),
+  },
   'fta-form-item-content--hover': {
     opacity: 0.6,
   },
@@ -1924,11 +1930,21 @@ var indexScssStyleSheet = StyleSheet.create({
     marginLeft: scalePx2dp(5.72917),
   },
   'fta-form-item-input': {
-    backgroundColor: 'transparent',
-    maxHeight: scalePx2dp(45.83333),
-    flexGrow: 1,
+    display: 'flex',
     flexShrink: 1,
+    flexGrow: 1,
     flexBasis: 0,
+    height: scalePx2dp(45.83333),
+    overflow: 'hidden',
+  },
+  'fta-form-item-input-hack': {
+    position: 'absolute',
+    zIndex: 10,
+    left: scalePx2dp(10.41667),
+    right: scalePx2dp(10.41667),
+    height: scalePx2dp(12.5),
+    bottom: 0,
+    backgroundColor: '#f9f9f9',
   },
   'fta-form-item-input--empty': {
     fontWeight: '400',
@@ -3231,7 +3247,9 @@ function FormItemAppearance(props) {
     contentStyle = props.contentStyle,
     inputRef = props.inputRef,
     inputProps = props.inputProps,
-    placeholderTextColor = props.placeholderTextColor
+    placeholderTextColor = props.placeholderTextColor,
+    hackColor = props.hackColor,
+    suffix = props.suffix
   var _children = render || children
   var _align = align || ctx.align
   var _readonly = readonly === false ? false : readonly || ctx.readonly
@@ -3305,17 +3323,22 @@ function FormItemAppearance(props) {
                   _formatValue
                 )
             : React.createElement(
-                BuiltinInput,
-                _extends$1(
-                  {
-                    ref: inputRef,
-                    placeholder: placeholder,
-                    style: alignStyle,
-                    value: _value,
-                    placeholderTextColor: placeholderColor,
-                  },
-                  inputProps
-                )
+                Fragment,
+                null,
+                React.createElement(
+                  BuiltinInput,
+                  _extends$1(
+                    {
+                      ref: inputRef,
+                      placeholder: placeholder,
+                      style: alignStyle,
+                      value: _value,
+                      placeholderTextColor: placeholderColor,
+                    },
+                    inputProps
+                  )
+                ),
+                React.createElement(HackView, { color: hackColor })
               )
           : isString(_children)
           ? !_children.length && placeholder && !_readonly
@@ -3326,6 +3349,13 @@ function FormItemAppearance(props) {
                 _children
               )
           : _children,
+        isString(suffix)
+          ? React.createElement(
+              Text,
+              { style: _styleSheet['fta-form-item-content__suffix'] },
+              suffix
+            )
+          : suffix,
         arrow && !_readonly ? React.createElement(Arrow, null) : null
       )
     ),
@@ -3397,6 +3427,7 @@ var BuiltinInput = forwardRef(function _BuiltinInput(props, ref) {
     Input,
     _extends$1(
       {
+        numberOfLines: 1,
         style: _mergeEleStyles(_getStyle(rootClass), style),
         placeholderClass: placeClass,
         value: value,
@@ -3406,6 +3437,18 @@ var BuiltinInput = forwardRef(function _BuiltinInput(props, ref) {
     )
   )
 })
+function HackView(props) {
+  if (inRN) {
+    return React.createElement(View, {
+      style: _mergeEleStyles(
+        _styleSheet['fta-form-item-input-hack'],
+        props.color ? { backgroundColor: props.color } : void 0
+      ),
+      pointerEvents: 'none',
+    })
+  }
+  return null
+}
 function Placeholder(props) {
   var children = props.children,
     style = props.style
