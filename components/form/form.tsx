@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import React, {
   CSSProperties,
   forwardRef,
+  Fragment,
   ReactElement,
   ReactNode,
   Ref,
@@ -478,6 +479,8 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
     inputRef,
     inputProps,
     placeholderTextColor,
+    hackColor,
+    suffix,
   } = props
 
   const _children = render || children
@@ -574,15 +577,19 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
                   </Text>
                 )
               ) : (
-                <BuiltinInput
-                  ref={inputRef}
-                  placeholder={placeholder}
-                  style={alignStyle}
-                  value={_value}
-                  // @ts-ignore
-                  placeholderTextColor={placeholderColor}
-                  {...inputProps}
-                />
+                <Fragment>
+                  <BuiltinInput
+                    ref={inputRef}
+                    placeholder={placeholder}
+                    style={alignStyle}
+                    value={_value}
+                    // @ts-ignore
+                    placeholderTextColor={placeholderColor}
+                    {...inputProps}
+                  />
+
+                  <HackView color={hackColor} />
+                </Fragment>
               )
             ) : isString(_children) ? (
               !_children.length && placeholder && !_readonly ? (
@@ -602,6 +609,11 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
             //   ) : null
             // ) :
           }
+          {isString(suffix) ? (
+            <Text className='fta-form-item-content__suffix'>{suffix}</Text>
+          ) : (
+            suffix
+          )}
           {arrow && !_readonly ? <Arrow /> : null}
         </View>
       </View>
@@ -658,6 +670,7 @@ const BuiltinInput = forwardRef(function _BuiltinInput(props: BuiltinInputProps,
   const placeClass = classNames('fta-form-item-placeholder', placeholderClass)
   return (
     <Input
+      numberOfLines={1}
       className={rootClass}
       style={style}
       placeholderClass={placeClass}
@@ -667,6 +680,22 @@ const BuiltinInput = forwardRef(function _BuiltinInput(props: BuiltinInputProps,
     />
   )
 })
+
+/** rn input hack,遮挡住第二行 */
+function HackView(props: { color?: string }): JSX.Element | null {
+  if (inRN) {
+    return (
+      <View
+        style={props.color ? { backgroundColor: props.color } : void 0}
+        className='fta-form-item-input-hack'
+        // @ts-ignore
+        pointerEvents='none'
+      />
+    )
+  }
+  return null
+}
+
 /** 占位文本 */
 function Placeholder(props: { children: ReactNode; style?: CSSProperties }): JSX.Element {
   const { children, style } = props

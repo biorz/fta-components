@@ -16,13 +16,12 @@
     // flex: 1;
     // height: 500px;
     height: 400px;
-
     overflow: hidden;
   }
 
   &-scrollview {
+    height: 100%;
     background-color: green;
-
     flex: 1;
   }
 }

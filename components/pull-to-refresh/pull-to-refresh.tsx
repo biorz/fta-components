@@ -10,7 +10,7 @@ function PullToRefresh(props: PullToRefreshProps) {
   const { children } = props
   const [height, setHeight] = useState(0)
   const [scrollTop, setScrollTop] = useState(0)
-  const ref = useRef({ start: 0, preHeight: 0, height, setHeight }).current
+  const ref = useRef({ start: 0, preHeight: 0, height, setHeight, reachTop: true }).current
 
   useEffect(() => {
     ref.height = height
@@ -33,6 +33,13 @@ function PullToRefresh(props: PullToRefreshProps) {
     setHeight(offset > 0 ? offset : 0)
     console.log(pageY)
   }
+
+  const onScroll = (evt) => {
+    console.log('scroll evt', evt)
+    if (ref.reachTop) {
+      ref.reachTop = false
+    }
+  }
   return (
     <View catchMove className='fta-pull-to-refresh'>
       <View
@@ -48,18 +55,19 @@ function PullToRefresh(props: PullToRefreshProps) {
         // }}
         className='fta-pull-to-refresh-content'>
         <ScrollView
-          enhanced
+          upperThreshold={0}
           bounces={false}
-          // onTouchStart={onTouchStart}
-          // onTouchMove={onTouchMove}
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
           onTouchEnd={() => {
-            console.log('触摸结束')
+            console.log('触摸结束' + Date.now())
           }}
+          onScrollToUpper={(evt) => {
+            console.log('滚动到顶部', evt)
+          }}
+          onScroll={onScroll}
           scrollY
-          className='fta-pull-to-refresh-scrollview'
-          // scrollTop={scrollTop}
-          // onScroll={(evt) => setScrollTop(evt.detail.scrollTop)}
-        >
+          className='fta-pull-to-refresh-scrollview'>
           {children}
         </ScrollView>
       </View>
