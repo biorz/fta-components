@@ -13,6 +13,8 @@ type FormContext = Pick<
   | 'align'
   | 'labelClassName'
   | 'labelStyle'
+  | 'labelTextClassName'
+  | 'labelTextStyle'
   | 'contentClassName'
   | 'contentStyle'
   | 'onMount'

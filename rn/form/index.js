@@ -2866,7 +2866,9 @@ function Form(props, ref) {
     onDestroy = props.onDestroy,
     suspendOnFirstError = props.suspendOnFirstError,
     style = props.style,
-    placeholderTextColor = props.placeholderTextColor
+    placeholderTextColor = props.placeholderTextColor,
+    labelTextClassName = props.labelTextClassName,
+    labelTextStyle = props.labelTextStyle
   var _useState = useState(),
     _useState2 = _slicedToArray(_useState, 2),
     nodeId = _useState2[0],
@@ -3013,6 +3015,8 @@ function Form(props, ref) {
         onDestroy: onDestroy,
         scrollIntoView: scrollIntoView,
         placeholderTextColor: placeholderTextColor,
+        labelTextClassName: labelTextClassName,
+        labelTextStyle: labelTextStyle,
         store: store,
         _showModal: _showModal,
         __root__: true,
@@ -3249,7 +3253,9 @@ function FormItemAppearance(props) {
     inputProps = props.inputProps,
     placeholderTextColor = props.placeholderTextColor,
     hackColor = props.hackColor,
-    suffix = props.suffix
+    suffix = props.suffix,
+    labelTextStyle = props.labelTextStyle,
+    labelTextClassName = props.labelTextClassName
   var _children = render || children
   var _align = align || ctx.align
   var _readonly = readonly === false ? false : readonly || ctx.readonly
@@ -3273,7 +3279,12 @@ function FormItemAppearance(props) {
     ),
     contentStyle
   )
-  var labelTextClass = classNames('fta-form-item-label__text')
+  var _labelTextClass = classNames(
+    'fta-form-item-label__text',
+    ctx.labelTextClassName,
+    labelTextClassName
+  )
+  var _labelTextStyle = _objectSpread(_objectSpread({}, ctx.labelTextStyle), labelTextStyle)
   var _onLabelCick = function _onLabelCick() {
     if ((onLabelClick == null ? void 0 : onLabelClick()) !== false && tooltip) {
       ctx._showModal(tooltip)
@@ -3300,7 +3311,11 @@ function FormItemAppearance(props) {
           hoverClass: labelHoverClass,
           hoverStyle: _getStyle(labelHoverClass),
         },
-        React.createElement(Text, { style: _getStyle(labelTextClass) }, label),
+        React.createElement(
+          Text,
+          { style: _mergeEleStyles(_getStyle(_labelTextClass), _labelTextStyle) },
+          label
+        ),
         tooltip && !_readonly ? React.createElement(ToolTip, { tooltipIcon: tooltipIcon }) : null
       ),
       React.createElement(

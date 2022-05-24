@@ -94,6 +94,8 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
     // @ts-ignore
     style,
     placeholderTextColor,
+    labelTextClassName,
+    labelTextStyle,
   } = props
 
   const [nodeId, scrollIntoView] = useState<string>()
@@ -193,6 +195,8 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
         onDestroy,
         scrollIntoView,
         placeholderTextColor,
+        labelTextClassName,
+        labelTextStyle,
         /** @private */
         store,
         /** @private */
@@ -481,6 +485,8 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
     placeholderTextColor,
     hackColor,
     suffix,
+    labelTextStyle,
+    labelTextClassName,
   } = props
 
   const _children = render || children
@@ -516,7 +522,13 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
     ...contentStyle,
   }
 
-  const labelTextClass = classNames('fta-form-item-label__text')
+  const _labelTextClass = classNames(
+    'fta-form-item-label__text',
+    ctx.labelTextClassName,
+    labelTextClassName
+  )
+
+  const _labelTextStyle = { ...ctx.labelTextStyle, ...labelTextStyle }
 
   // WARNING: 必须先执行onLabelClick事件（DONE!）
   const _onLabelCick = () => {
@@ -551,7 +563,9 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
           hoverClass={labelHoverClass}
           // @ts-ignore
           hoverClassName={labelHoverClass}>
-          <Text className={labelTextClass}>{label}</Text>
+          <Text className={_labelTextClass} style={_labelTextStyle}>
+            {label}
+          </Text>
           {tooltip && !_readonly ? <ToolTip tooltipIcon={tooltipIcon} /> : null}
         </View>
         {/* ========== content area =========== */}

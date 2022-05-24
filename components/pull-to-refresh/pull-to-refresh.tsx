@@ -4,13 +4,18 @@ import { inRN, px } from '../../common'
 import '../../style/components/pull-to-refresh/index.scss'
 import { PullToRefreshProps } from '../../types/pull-to-refresh'
 
-const getPageY = inRN ? (e) => e.nativeEvent.pageY : (e) => e.changedTouches[0].pageY as number
+const getPageY = (e) => e.changedTouches[0].pageY as number
+
+const getCrossPageY = inRN ? (e) => e.nativeEvent.pageY : getPageY
+
+// inRN ? (e) => e.nativeEvent.pageY :
 
 function PullToRefresh(props: PullToRefreshProps) {
   const { children } = props
   const [height, setHeight] = useState(0)
+  const [reachTop, setReachTop] = useState(true)
   const [scrollTop, setScrollTop] = useState(0)
-  const ref = useRef({ start: 0, preHeight: 0, height, setHeight, reachTop: true }).current
+  const ref = useRef({ start: 0, preHeight: 0, height, setHeight }).current
 
   useEffect(() => {
     ref.height = height
@@ -18,26 +23,41 @@ function PullToRefresh(props: PullToRefreshProps) {
   }, [height])
 
   const onTouchStart = (evt) => {
+    // 阻止事件冒泡
+    evt.preventDefault?.()
     ref.preHeight = height
     // alert('触摸')
-    ref.start = evt.changedTouches[0].pageY
+    console.log('ontouchstart evt')
+    ref.start = getPageY(evt)
     evt.stopPropagation?.()
     // console.log(getPageY(evt))
   }
 
   const onTouchMove = (evt) => {
-    // evt.stopPropagation?.()
-    // evt.preventDefault?.()
-    const pageY = getPageY(evt)
-    const offset = (pageY - ref.start) / 3 + ref.preHeight
-    setHeight(offset > 0 ? offset : 0)
+    // 阻止事件冒泡
+    evt.preventDefault?.()
+    console.log('onTouchMove evt')
+    const pageY = getCrossPageY(evt)
+    const offset = pageY - ref.start + ref.preHeight
+    if (offset > 0) {
+      setHeight(offset)
+    } else {
+      if (offset < 5) {
+        setReachTop(false)
+      } else {
+        setReachTop(true)
+      }
+      setHeight(0)
+      // setReachTop(false)
+    }
     console.log(pageY)
   }
 
   const onScroll = (evt) => {
     console.log('scroll evt', evt)
-    if (ref.reachTop) {
-      ref.reachTop = false
+    if (reachTop) {
+      evt.prenventDefault?.()
+      setReachTop(false)
     }
   }
   return (
@@ -48,25 +68,22 @@ function PullToRefresh(props: PullToRefreshProps) {
         <Text>下拉加载</Text>
       </View>
       <View
-        // onTouchStart={onTouchStart}
-        // onTouchMove={onTouchMove}
-        // onTouchEnd={() => {
-        //   console.log('触摸结束')
-        // }}
+        // onTouchStart={reachTop ? onTouchStart : void 0}
+        // onTouchMove={reachTop ? onTouchMove : void 0}
+        onTouchEnd={() => {}}
         className='fta-pull-to-refresh-content'>
         <ScrollView
-          upperThreshold={0}
-          bounces={false}
-          onTouchStart={onTouchStart}
-          onTouchMove={onTouchMove}
-          onTouchEnd={() => {
-            console.log('触摸结束' + Date.now())
+          scrollY
+          upperThreshold={2}
+          // bounces={false}
+          onTouchMove={() => {
+            console.log('touchmove')
           }}
           onScrollToUpper={(evt) => {
             console.log('滚动到顶部', evt)
+            setReachTop(true)
           }}
           onScroll={onScroll}
-          scrollY
           className='fta-pull-to-refresh-scrollview'>
           {children}
         </ScrollView>

@@ -114,6 +114,14 @@ export interface FormProps extends BaseComponent, PropsWithChildren {
    */
   labelStyle?: CSSProperties
   /**
+   * 标签文本className
+   */
+  labelTextClassName?: string
+  /**
+   * 标签文本内联样式
+   */
+  labelTextStyle?: CSSProperties
+  /**
    * 内容区className
    */
   contentClassName?: string
@@ -157,6 +165,8 @@ export interface FormItemProps
       | 'onMount'
       | 'onDestroy'
       | 'placeholderTextColor'
+      | 'labelTextStyle'
+      | 'labelTextClassName'
     >,
     BaseComponent {
   /**
