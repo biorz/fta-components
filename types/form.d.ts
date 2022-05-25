@@ -324,7 +324,7 @@ export interface FormItemChildrenProps
 
 export interface FormRefMethods {
   /**
-   * 手动验证所有表单项，返回一个Promise对象, true为校验失败
+   * 手动验证所有表单项，返回一个Promise对象, true为校验通过
    */
   validate: (
     callback?: (

@@ -2939,7 +2939,7 @@ function Form(props, ref) {
                 callback == null
                   ? void 0
                   : callback(!invalid, erroredPropMsgPairs, erroredAnonymousPairs)
-                return _context.abrupt('return', true)
+                return _context.abrupt('return', !invalid)
               case 19:
                 _context.next = 7
                 break
@@ -2947,7 +2947,7 @@ function Form(props, ref) {
                 callback == null
                   ? void 0
                   : callback(!invalid, erroredPropMsgPairs, erroredAnonymousPairs)
-                return _context.abrupt('return', false)
+                return _context.abrupt('return', !invalid)
               case 23:
               case 'end':
                 return _context.stop()

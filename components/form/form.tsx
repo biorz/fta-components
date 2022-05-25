@@ -124,12 +124,12 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
 
       const erroredPropMsgPairs = [] as any[]
       const erroredAnonymousPairs = [] as any[]
-      let invalid = false
+      let valid = true
       for (const item of itemRefs) {
         const { current: ref } = item
         const errMsg = await ref.validateAsync()
         if (errMsg != null) {
-          invalid = true
+          valid = false
           if (ref.prop) {
             erroredPropMsgPairs.push([errMsg, ref.prop, item])
           } else {
@@ -137,13 +137,13 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
           }
           // 校验出错，停止校验
           if (suspendOnFirstError) {
-            callback?.(!invalid, erroredPropMsgPairs, erroredAnonymousPairs)
-            return true
+            callback?.(valid, erroredPropMsgPairs, erroredAnonymousPairs)
+            return valid
           }
         }
       }
-      callback?.(!invalid, erroredPropMsgPairs, erroredAnonymousPairs)
-      return false
+      callback?.(valid, erroredPropMsgPairs, erroredAnonymousPairs)
+      return valid
     },
     highlight(prop: string, message?: string, scrollIntoView?: boolean) {
       const ref = refMethods.obtain(prop)
