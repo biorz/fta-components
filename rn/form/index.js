@@ -13,7 +13,7 @@ import React, {
   useEffect,
   Fragment,
 } from 'react'
-import { isString, Assets, inRN, useEnhancedState, inDev, isUndef, isArray } from '../common'
+import { isString, inRN, Assets, useEnhancedState, inDev, isUndef, isArray } from '../common'
 import {
   StyleSheet,
   Modal,
@@ -1933,8 +1933,7 @@ var indexScssStyleSheet = StyleSheet.create({
     display: 'flex',
     flexShrink: 1,
     flexGrow: 1,
-    flexBasis: 0,
-    height: scalePx2dp(45.83333),
+    flexBasis: 'auto',
     overflow: 'hidden',
   },
   'fta-form-item-input-hack': {
@@ -1948,6 +1947,9 @@ var indexScssStyleSheet = StyleSheet.create({
   },
   'fta-form-item-input--empty': {
     fontWeight: '400',
+  },
+  'fta-form-item-input--nrn': {
+    height: scalePx2dp(45.83333),
   },
   'fta-form-item--readonly': {},
 })
@@ -2891,7 +2893,7 @@ function Form(props, ref) {
         itemRefs,
         erroredPropMsgPairs,
         erroredAnonymousPairs,
-        invalid,
+        valid,
         _iterator,
         _step,
         item,
@@ -2909,7 +2911,7 @@ function Form(props, ref) {
                 })
                 erroredPropMsgPairs = []
                 erroredAnonymousPairs = []
-                invalid = false
+                valid = true
                 _iterator = _createForOfIteratorHelperLoose(itemRefs)
               case 7:
                 if ((_step = _iterator()).done) {
@@ -2926,7 +2928,7 @@ function Form(props, ref) {
                   _context.next = 19
                   break
                 }
-                invalid = true
+                valid = false
                 if (_ref.prop) {
                   erroredPropMsgPairs.push([errMsg, _ref.prop, item])
                 } else {
@@ -2938,16 +2940,16 @@ function Form(props, ref) {
                 }
                 callback == null
                   ? void 0
-                  : callback(!invalid, erroredPropMsgPairs, erroredAnonymousPairs)
-                return _context.abrupt('return', !invalid)
+                  : callback(valid, erroredPropMsgPairs, erroredAnonymousPairs)
+                return _context.abrupt('return', valid)
               case 19:
                 _context.next = 7
                 break
               case 21:
                 callback == null
                   ? void 0
-                  : callback(!invalid, erroredPropMsgPairs, erroredAnonymousPairs)
-                return _context.abrupt('return', !invalid)
+                  : callback(valid, erroredPropMsgPairs, erroredAnonymousPairs)
+                return _context.abrupt('return', valid)
               case 23:
               case 'end':
                 return _context.stop()
@@ -3252,10 +3254,10 @@ function FormItemAppearance(props) {
     inputRef = props.inputRef,
     inputProps = props.inputProps,
     placeholderTextColor = props.placeholderTextColor,
-    hackColor = props.hackColor,
     suffix = props.suffix,
     labelTextStyle = props.labelTextStyle,
     labelTextClassName = props.labelTextClassName
+  var _inputRef = useRef()
   var _children = render || children
   var _align = align || ctx.align
   var _readonly = readonly === false ? false : readonly || ctx.readonly
@@ -3290,6 +3292,17 @@ function FormItemAppearance(props) {
       ctx._showModal(tooltip)
     }
   }
+  var _onContentClick = function _onContentClick() {
+    if ((onClick == null ? void 0 : onClick()) !== false) {
+      var _inputRef$current
+      inRN &&
+        ((_inputRef$current = _inputRef.current) == null
+          ? void 0
+          : _inputRef$current.focus == null
+          ? void 0
+          : _inputRef$current.focus())
+    }
+  }
   var labelHoverClass =
     !_readonly && (tooltip || onLabelClick) ? 'fta-form-item-content--hover' : void 0
   var contentHoverClass = _readonly ? void 0 : 'fta-form-item-content--hover'
@@ -3322,7 +3335,7 @@ function FormItemAppearance(props) {
         View,
         {
           style: _mergeEleStyles(_getStyle(_contentClassName), _contentStyle),
-          onClick: readonlyFn(onClick),
+          onClick: readonlyFn(_onContentClick),
           hoverClass: contentHoverClass,
           hoverStyle: _getStyle(contentHoverClass),
         },
@@ -3345,6 +3358,7 @@ function FormItemAppearance(props) {
                   _extends$1(
                     {
                       ref: inputRef,
+                      _nativeRef: _inputRef,
                       placeholder: placeholder,
                       style: alignStyle,
                       value: _value,
@@ -3352,8 +3366,7 @@ function FormItemAppearance(props) {
                     },
                     inputProps
                   )
-                ),
-                React.createElement(HackView, { color: hackColor })
+                )
               )
           : isString(_children)
           ? !_children.length && placeholder && !_readonly
@@ -3435,6 +3448,7 @@ var BuiltinInput = forwardRef(function _BuiltinInput(props, ref) {
     'fta-form-item-input',
     'fta-form-item-content__text',
     isEmpty && 'fta-form-item-input--empty',
+    inRN || 'fta-form-item-input--nrn',
     className
   )
   var placeClass = classNames('fta-form-item-placeholder', placeholderClass)
@@ -3452,18 +3466,6 @@ var BuiltinInput = forwardRef(function _BuiltinInput(props, ref) {
     )
   )
 })
-function HackView(props) {
-  if (inRN) {
-    return React.createElement(View, {
-      style: _mergeEleStyles(
-        _styleSheet['fta-form-item-input-hack'],
-        props.color ? { backgroundColor: props.color } : void 0
-      ),
-      pointerEvents: 'none',
-    })
-  }
-  return null
-}
 function Placeholder(props) {
   var children = props.children,
     style = props.style

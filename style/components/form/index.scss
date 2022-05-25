@@ -255,13 +255,7 @@ $fta-form-content-bg-color: #f9f9f9;
     flex-grow: 1;
     flex-basis: auto;
     // background-color: red;
-    height: zoom(88px);
-    // max-height: zoom(88px);
     overflow: hidden;
-    // line-height: zoom(88px);
-    flex: 1;
-    // text-align: right;
-
     &-hack {
       position: absolute;
       z-index: 10;
@@ -278,6 +272,10 @@ $fta-form-content-bg-color: #f9f9f9;
 
     &--empty {
       font-weight: $font-weight-normal;
+    }
+
+    &--nrn {
+      height: zoom(88px);
     }
   }
 

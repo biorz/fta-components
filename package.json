@@ -43,8 +43,8 @@
     "@tarojs/react": ">=3",
     "classnames": ">=2",
     "prop-types": ">=15",
-    "react": ">=16.13.0",
-    "react-dom": ">=16.13.0",
+    "react": "^16.13.0 || ^17.0.0",
+    "react-dom": "^16.13.0 || ^17.0.0",
     "react-native": ">=0.6",
     "typescript": ">=4"
   },
