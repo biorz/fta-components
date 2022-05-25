@@ -52,3 +52,4 @@ export {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from './components/view'
+export { default as Tooltip } from './components/tooltip'
