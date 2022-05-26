@@ -2,7 +2,7 @@ import ScrollView from '@fta/components-rn/dist/components/ScrollView'
 import Text from '@fta/components-rn/dist/components/Text'
 import View from '@fta/components-rn/dist/components/View'
 import classNames from 'classnames'
-import React, { useRef, useState, Fragment } from 'react'
+import React, { useRef, useState } from 'react'
 import { isString } from '../common'
 import { StyleSheet } from 'react-native'
 import { scalePx2dp } from '@fta/runtime-rn/dist/scale2dp'
@@ -779,28 +779,24 @@ function InfiniteScroll(props) {
     )
   }
   return React.createElement(
-    Fragment,
-    null,
-    React.createElement(
-      ScrollView,
-      _extends(
-        {
-          scrollY: true,
-          style: _mergeEleStyles(_getStyle(rootClass), rootStyle),
-          lowerThreshold: threshold,
-          onScrollToLower: onLoad,
-        },
-        extraProps
-      ),
-      children,
-      !hasLoad || hasMore
-        ? isString(loader)
-          ? React.createElement(Loader, { title: loader })
-          : loader
-        : isString(loaded)
-        ? React.createElement(Loader, { title: loaded })
-        : loaded
-    )
+    ScrollView,
+    _extends(
+      {
+        scrollY: true,
+        style: _mergeEleStyles(_getStyle(rootClass), rootStyle),
+        lowerThreshold: threshold,
+        onScrollToLower: onLoad,
+      },
+      extraProps
+    ),
+    children,
+    !hasLoad || hasMore
+      ? isString(loader)
+        ? React.createElement(Loader, { title: loader })
+        : loader
+      : isString(loaded)
+      ? React.createElement(Loader, { title: loaded })
+      : loaded
   )
 }
 function Loader(props) {

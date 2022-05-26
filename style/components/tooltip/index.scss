@@ -1,6 +1,50 @@
 @import '../../mixins/index.scss';
 @import '../../variables/default.scss';
 
-.fta-tooltip{
+.fta-tooltip {
+  @include relative();
 
+  &-popover {
+    position: absolute;
+    width: 50vw;
+    flex-wrap: nowrap;
+    // background-color: green;
+    z-index: 1;
+    bottom: 150%;
+    left: zoom(-20px);
+
+    &__content {
+      border-radius: zoom(16px);
+      padding: zoom(16px) zoom(24px);
+      background-color: #ff5b00;
+      align-self: flex-start;
+      @include flex-center();
+      @include nrn {
+        width: fit-content;
+      }
+
+      &__text {
+        font-size: $font-size-md;
+        line-height: $font-size-md * 1.1;
+        color: $color-white;
+        @include rn {
+          align-self: flex-start;
+          align-content: flex-start;
+        }
+
+        @include nrn {
+          white-space: nowrap;
+        }
+      }
+    }
+
+    &__icon {
+      position: absolute;
+      z-index: 1;
+      top: 99%; // 防止中间出现间隙
+      left: zoom(24px);
+      width: zoom(28px);
+      height: zoom(14px);
+    }
+  }
 }

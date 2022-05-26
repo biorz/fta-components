@@ -591,7 +591,7 @@ var FTAButton = (function (_Component) {
 })(Component)
 FTAButton.propTypes = {
   size: PropTypes.oneOf(['small', 'medium', 'large']),
-  type: PropTypes.oneOf(['primary', 'secondary', 'tertiary']),
+  type: PropTypes.oneOf(['primary', 'secondary', 'tertiary', 'fourth']),
   circle: PropTypes.bool,
   full: PropTypes.bool,
   loading: PropTypes.oneOfType([PropTypes.bool, PropTypes.element]),
