@@ -65,7 +65,7 @@ const main = async () => {
       ],
     })
 
-    if (componentFilename === 'common') return
+    if (componentFilename === 'common') continue
     const tsPath = path.resolve(pkgRoot, `types/${componentFilename}.d.ts`)
     const tsOutput = path.resolve(pkgRoot, `${OUTPUT}/${componentFilename}/index.d.ts`)
     fs.copySync(tsPath, tsOutput)
