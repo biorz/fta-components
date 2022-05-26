@@ -787,3 +787,19 @@ $fta-upload-bg-color: $color-bg-light;
 $fta-upload-tip-size: $font-size-xs;
 $fta-upload-tip-color: $color-error;
 $fta-upload-tip-margin-top: zoom(10px);
+
+/* Tooltip */
+$fta-tooltip-popover-width: 50vw;
+$fta-tooltip-popover-offset-left: zoom(-20px);
+$fta-tooltip-popover-offset-bottom: 150%;
+$fta-tooltip-popover-border-radius: zoom(16px);
+$fta-tooltip-popover-padding: zoom(16px) zoom(24px);
+$fta-tooltip-popover-bg-color: #ff5b00;
+
+$fta-tooltip-text-size: $font-size-md;
+$fta-tooltip-text-color: $color-white;
+$fta-tooltip-text-line-height: $font-size-md * 1.1;
+
+$fta-tooltip-icon-width: zoom(28px);
+$fta-tooltip-icon-height: zoom(14px);
+$fta-tooltip-icon-offset-left: zoom(24px);

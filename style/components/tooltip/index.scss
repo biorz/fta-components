@@ -6,17 +6,16 @@
 
   &-popover {
     position: absolute;
-    width: 50vw;
+    width: $fta-tooltip-popover-width;
     flex-wrap: nowrap;
-    // background-color: green;
     z-index: 1;
-    bottom: 150%;
-    left: zoom(-20px);
+    bottom: $fta-tooltip-popover-offset-bottom;
+    left: $fta-tooltip-popover-offset-left;
 
     &__content {
-      border-radius: zoom(16px);
-      padding: zoom(16px) zoom(24px);
-      background-color: #ff5b00;
+      border-radius: $fta-tooltip-popover-border-radius;
+      padding: $fta-tooltip-popover-padding;
+      background-color: $fta-tooltip-popover-bg-color;
       align-self: flex-start;
       @include flex-center();
       @include nrn {
@@ -24,8 +23,8 @@
       }
 
       &__text {
-        font-size: $font-size-md;
-        line-height: $font-size-md * 1.1;
+        font-size: $fta-tooltip-text-size;
+        line-height: $fta-tooltip-text-line-height;
         color: $color-white;
         @include rn {
           align-self: flex-start;
@@ -42,9 +41,9 @@
       position: absolute;
       z-index: 1;
       top: 99%; // 防止中间出现间隙
-      left: zoom(24px);
-      width: zoom(28px);
-      height: zoom(14px);
+      left: $fta-tooltip-icon-offset-left;
+      width: $fta-tooltip-icon-width;
+      height: $fta-tooltip-icon-height;
     }
   }
 }
