@@ -53,3 +53,4 @@ export {
   TouchableWithoutFeedback,
 } from './components/view'
 export { default as Tooltip } from './components/tooltip'
+export { default as Rate } from './components/rate'

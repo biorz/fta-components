@@ -49,3 +49,4 @@ export {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from './view'
+export { default as Rate } from './rate'
