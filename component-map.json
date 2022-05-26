@@ -32,6 +32,7 @@
   "NavBarButton": { "replace": "components/nav-bar", "default": false },
   "NoticeBar": { "replace": "components/notice-bar", "default": true },
   "Picker": { "replace": "components/picker", "default": true },
+  "PullToRefresh": { "replace": "components/pull-to-refresh", "default": true },
   "Radio": { "replace": "components/radio", "default": true },
   "Result": { "replace": "components/result", "default": true },
   "SafeArea": { "replace": "components/safe-area", "default": true },
@@ -57,6 +58,5 @@
   "LayoutView": { "replace": "components/view", "default": true },
   "TouchableHighlight": { "replace": "components/view", "default": false },
   "TouchableOpacity": { "replace": "components/view", "default": false },
-  "TouchableWithoutFeedback": { "replace": "components/view", "default": false },
-  "PullToRefresh": { "replace": "components/pull-to-refresh", "default": true }
+  "TouchableWithoutFeedback": { "replace": "components/view", "default": false }
 }

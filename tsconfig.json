@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es2017",
-    "module": "ESNext",
+    "target": "ES6",
+    "module": "ES6",
     "baseUrl": ".",
     "typeRoots": ["node_modules/@types", "types"],
     "allowSyntheticDefaultImports": true,
