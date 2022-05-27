@@ -27,6 +27,7 @@ export { default as NoticeBar } from './notice-bar'
 export { default as Picker } from './picker'
 export { default as PullToRefresh, default as PullToRefresh } from './pull-to-refresh'
 export { default as Radio } from './radio'
+export { default as Rate } from './rate'
 export { default as Result } from './result'
 export { default as SafeArea, SafeAreaView } from './safe-area'
 export { default as SegmentedControl } from './segmented-control'
@@ -40,6 +41,7 @@ export { default as Tag } from './tag'
 export { default as Textarea } from './textarea'
 export { default as Timeline, TimelineItem } from './timeline'
 export { default as Toast, useToast } from './toast'
+export { default as Tooltip } from './tooltip'
 export { Text } from './typography'
 export { default as Upload } from './upload'
 export {
@@ -48,4 +50,3 @@ export {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from './view'
-export { default as Tooltip } from './tooltip'
