@@ -59,5 +59,6 @@
   "TouchableHighlight": { "replace": "components/view", "default": false },
   "TouchableOpacity": { "replace": "components/view", "default": false },
   "TouchableWithoutFeedback": { "replace": "components/view", "default": false },
-  "Tooltip": { "replace": "components/tooltip", "default": true }
+  "Tooltip": { "replace": "components/tooltip", "default": true },
+  "Rate": { "replace": "components/rate", "default": true }
 }

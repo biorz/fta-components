@@ -880,7 +880,7 @@ function useEnhancedState(initialState) {
       setState(_objectSpread(_objectSpread({}, state), record))
     }
   }
-  return [state, useCallback(setEnhancedState, [])]
+  return [state, useCallback(setEnhancedState, [state])]
 }
 
 var useMount = function useMount() {
