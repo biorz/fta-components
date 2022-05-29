@@ -1,0 +1,49 @@
+@import '../../mixins/index.scss';
+@import '../../variables/default.scss';
+
+$fta-rate-gutter: zoom(16px);
+$fta-rate-size: zoom(36px);
+
+@mixin fit-content() {
+  /* #ifndef rn */
+  width: fit-content;
+  /* #endif */
+  /* #ifdef rn */
+  align-self: flex-start;
+  /* #endif */
+}
+
+.fta-rate {
+  @include display-flex(row);
+  @include fit-content();
+}
+
+.fta-star {
+  @include relative;
+  @include square($fta-rate-size);
+  margin-right: $fta-rate-gutter;
+
+  &--last {
+    margin-right: 0;
+  }
+
+  &-image {
+    @include square(100%);
+  }
+
+  &--placeholder {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    z-index: 1;
+    top: 0;
+  }
+
+  &--left {
+    left: 0;
+  }
+
+  &--right {
+    right: 0;
+  }
+}

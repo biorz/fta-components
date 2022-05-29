@@ -40,6 +40,7 @@ export { default as Tag } from './tag'
 export { default as Textarea } from './textarea'
 export { default as Timeline, TimelineItem } from './timeline'
 export { default as Toast, useToast } from './toast'
+export { default as Tooltip } from './tooltip'
 export { Text } from './typography'
 export { default as Upload } from './upload'
 export {
@@ -48,4 +49,4 @@ export {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from './view'
-export { default as Tooltip } from './tooltip'
+export { default as Rate } from './rate'

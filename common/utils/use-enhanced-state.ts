@@ -19,5 +19,6 @@ export function useEnhancedState<S extends object = {}>(initialState: S) {
       setState({ ...state, ...(record as Record<K, T[K]>) })
     }
   }
-  return [state, useCallback(setEnhancedState, [])] as const
+  // Bug fixed
+  return [state, useCallback(setEnhancedState, [state])] as const
 }

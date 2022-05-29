@@ -242,5 +242,9 @@
   "Tooltip": {
     "replace": "components/tooltip",
     "default": true
+  },
+  "Rate": {
+    "replace": "components/rate",
+    "default": true
   }
 }
