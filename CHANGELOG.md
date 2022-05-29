@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.2-alpha.14](https://code.amh-group.com/h5developer/basebuild/views/fta-view/compare/@fta/components@1.0.2-alpha.13...@fta/components@1.0.2-alpha.14) (2022-05-29)
+
+### Bug Fixes
+
+- 入口文件 copy 错误 ([12095d0](https://code.amh-group.com/h5developer/basebuild/views/fta-view/commits/12095d0f37f8e4202c84f90d697c55b7e8d5236f))
+
 ## [1.0.2-alpha.11](https://code.amh-group.com/h5developer/basebuild/views/fta-view/compare/@fta/components@1.0.2-alpha.10...@fta/components@1.0.2-alpha.11) (2022-05-25)
 
 ### Bug Fixes
