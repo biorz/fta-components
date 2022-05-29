@@ -36,6 +36,9 @@ export default class ListItem extends React.Component<ListItemProps> {
       disabled,
       hasBorder,
       extraThumb,
+      customStyle,
+      // @ts-ignore
+      style,
       // isSwitch,
       // switchColor,
       // switchIsCheck,
@@ -96,7 +99,8 @@ export default class ListItem extends React.Component<ListItemProps> {
                   this.props.className
                 )}
                 onClick={this.handleClick}
-                hoverStyle={disabled || { backgroundColor: '#F0F0F0' }}>
+                hoverStyle={disabled || { backgroundColor: '#F0F0F0' }}
+                style={{ ...style, ...customStyle }}>
                 <View className='fta-list__item-container'>
                   {thumb && (
                     <View className={classNames('fta-list__item-thumb', thumbCareClz)}>

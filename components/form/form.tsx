@@ -124,12 +124,12 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
 
       const erroredPropMsgPairs = [] as any[]
       const erroredAnonymousPairs = [] as any[]
-      let invalid = false
+      let valid = true
       for (const item of itemRefs) {
         const { current: ref } = item
         const errMsg = await ref.validateAsync()
         if (errMsg != null) {
-          invalid = true
+          valid = false
           if (ref.prop) {
             erroredPropMsgPairs.push([errMsg, ref.prop, item])
           } else {
@@ -137,13 +137,13 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
           }
           // 校验出错，停止校验
           if (suspendOnFirstError) {
-            callback?.(!invalid, erroredPropMsgPairs, erroredAnonymousPairs)
-            return true
+            callback?.(valid, erroredPropMsgPairs, erroredAnonymousPairs)
+            return valid
           }
         }
       }
-      callback?.(!invalid, erroredPropMsgPairs, erroredAnonymousPairs)
-      return false
+      callback?.(valid, erroredPropMsgPairs, erroredAnonymousPairs)
+      return valid
     },
     highlight(prop: string, message?: string, scrollIntoView?: boolean) {
       const ref = refMethods.obtain(prop)
@@ -483,11 +483,13 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
     inputRef,
     inputProps,
     placeholderTextColor,
-    hackColor,
+    // hackColor,
     suffix,
     labelTextStyle,
     labelTextClassName,
   } = props
+
+  const _inputRef = useRef<any>()
 
   const _children = render || children
 
@@ -537,6 +539,12 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
     }
   }
 
+  const _onContentClick = () => {
+    if (onClick?.() !== false) {
+      inRN && _inputRef.current?.focus?.()
+    }
+  }
+
   const labelHoverClass =
     !_readonly && (tooltip || onLabelClick) ? 'fta-form-item-content--hover' : void 0
 
@@ -572,7 +580,7 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
         <View
           style={_contentStyle}
           className={_contentClassName}
-          onClick={readonlyFn(onClick)}
+          onClick={readonlyFn(_onContentClick)}
           //@ts-ignore
           hoverClassName={contentHoverClass}
           hoverClass={contentHoverClass}>
@@ -593,7 +601,9 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
               ) : (
                 <Fragment>
                   <BuiltinInput
+                    // @ts-ignore
                     ref={inputRef}
+                    _nativeRef={_inputRef}
                     placeholder={placeholder}
                     style={alignStyle}
                     value={_value}
@@ -602,7 +612,7 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
                     {...inputProps}
                   />
 
-                  <HackView color={hackColor} />
+                  {/* <HackView color={hackColor} /> */}
                 </Fragment>
               )
             ) : isString(_children) ? (
@@ -679,11 +689,13 @@ const BuiltinInput = forwardRef(function _BuiltinInput(props: BuiltinInputProps,
     'fta-form-item-input',
     'fta-form-item-content__text',
     isEmpty && 'fta-form-item-input--empty',
+    inRN || 'fta-form-item-input--nrn',
     className
   )
   const placeClass = classNames('fta-form-item-placeholder', placeholderClass)
   return (
     <Input
+      // @ts-ignore
       numberOfLines={1}
       className={rootClass}
       style={style}
@@ -696,19 +708,19 @@ const BuiltinInput = forwardRef(function _BuiltinInput(props: BuiltinInputProps,
 })
 
 /** rn input hack,遮挡住第二行 */
-function HackView(props: { color?: string }): JSX.Element | null {
-  if (inRN) {
-    return (
-      <View
-        style={props.color ? { backgroundColor: props.color } : void 0}
-        className='fta-form-item-input-hack'
-        // @ts-ignore
-        pointerEvents='none'
-      />
-    )
-  }
-  return null
-}
+// function HackView(props: { color?: string }): JSX.Element | null {
+//   if (inRN) {
+//     return (
+//       <View
+//         style={props.color ? { backgroundColor: props.color } : void 0}
+//         className='fta-form-item-input-hack'
+//         // @ts-ignore
+//         pointerEvents='none'
+//       />
+//     )
+//   }
+//   return null
+// }
 
 /** 占位文本 */
 function Placeholder(props: { children: ReactNode; style?: CSSProperties }): JSX.Element {

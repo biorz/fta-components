@@ -1,6 +1,6 @@
 {
   "name": "@fta/components",
-  "version": "1.0.2-alpha.10",
+  "version": "1.0.2-alpha.11",
   "description": "FTA View - Taro-based cross-platform development framework",
   "types": "./types/index.d.ts",
   "bin": {
@@ -45,8 +45,8 @@
     "@tarojs/react": ">=3",
     "classnames": ">=2",
     "prop-types": ">=15",
-    "react": ">=16.13.0",
-    "react-dom": ">=16.13.0",
+    "react": "^16.13.0 || ^17.0.0",
+    "react-dom": "^16.13.0 || ^17.0.0",
     "react-native": ">=0.6",
     "typescript": ">=4"
   },

@@ -7,6 +7,7 @@ import {
   MutableRefObject,
   ReactElement,
   ReactNode,
+  Ref,
   RefAttributes,
 } from 'react'
 import BaseComponent, { PropsWithChildren } from './base'
@@ -228,7 +229,7 @@ export interface FormItemProps
   /**
    * label存在时，点击content区域的回调
    */
-  onClick?: () => void
+  onClick?: () => any
   /**
    * 点击label的回调
    */
@@ -266,15 +267,16 @@ export interface FormItemProps
    */
   inputRef?: Ref<any>
   /**
-   * 遮挡RN 内置Input框输入时折行
-   * @default '#f9f9f9'
-   * @supported rn
-   */
-  hackColor?: string
-  /**
    * 输入框后缀
    */
   suffix?: ReactNode
+  /**
+   * 遮挡RN 内置Input框输入时折行，已停用
+   * @default '#f9f9f9'
+   * @supported rn
+   * @depreacted
+   */
+  hackColor?: string
 }
 
 export interface StatelessProps {
@@ -324,7 +326,7 @@ export interface FormItemChildrenProps
 
 export interface FormRefMethods {
   /**
-   * 手动验证所有表单项，返回一个Promise对象, true为校验失败
+   * 手动验证所有表单项，返回一个Promise对象, true为校验通过
    */
   validate: (
     callback?: (

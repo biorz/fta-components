@@ -1,0 +1,49 @@
+@import '../../mixins/index.scss';
+@import '../../variables/default.scss';
+
+.fta-tooltip {
+  @include relative();
+
+  &-popover {
+    position: absolute;
+    width: $fta-tooltip-popover-width;
+    flex-wrap: nowrap;
+    z-index: 1;
+    bottom: $fta-tooltip-popover-offset-bottom;
+    left: $fta-tooltip-popover-offset-left;
+
+    &__content {
+      border-radius: $fta-tooltip-popover-border-radius;
+      padding: $fta-tooltip-popover-padding;
+      background-color: $fta-tooltip-popover-bg-color;
+      align-self: flex-start;
+      @include flex-center();
+      @include nrn {
+        width: fit-content;
+      }
+
+      &__text {
+        font-size: $fta-tooltip-text-size;
+        line-height: $fta-tooltip-text-line-height;
+        color: $color-white;
+        @include rn {
+          align-self: flex-start;
+          align-content: flex-start;
+        }
+
+        @include nrn {
+          white-space: nowrap;
+        }
+      }
+    }
+
+    &__icon {
+      position: absolute;
+      z-index: 1;
+      top: 99%; // 防止中间出现间隙
+      left: $fta-tooltip-icon-offset-left;
+      width: $fta-tooltip-icon-width;
+      height: $fta-tooltip-icon-height;
+    }
+  }
+}

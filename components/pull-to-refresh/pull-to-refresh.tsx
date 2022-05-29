@@ -28,57 +28,63 @@ function PullToRefresh(props: PullToRefreshProps) {
     ref.preHeight = height
     // alert('触摸')
     console.log('ontouchstart evt')
-    ref.start = getPageY(evt)
-    evt.stopPropagation?.()
+    ref.start = getCrossPageY(evt)
+    // evt.stopPropagation?.()
     // console.log(getPageY(evt))
   }
 
   const onTouchMove = (evt) => {
-    // 阻止事件冒泡
-    evt.preventDefault?.()
     console.log('onTouchMove evt')
+    // 阻止事件冒泡
+    // evt.preventDefault?.()
+    if (!reachTop) {
+      ref.start = getCrossPageY(evt)
+      return
+    }
     const pageY = getCrossPageY(evt)
     const offset = pageY - ref.start + ref.preHeight
     if (offset > 0) {
       setHeight(offset)
     } else {
-      if (offset < 5) {
-        setReachTop(false)
-      } else {
-        setReachTop(true)
-      }
+      // if (offset < 5) {
+      //   setReachTop(false)
+      // } else {
+      //   setReachTop(true)
+      // }
       setHeight(0)
       // setReachTop(false)
     }
     console.log(pageY)
   }
 
+  const onTouchEnd = () => {
+    console.log('触摸结束')
+  }
+
   const onScroll = (evt) => {
-    console.log('scroll evt', evt)
+    console.log('scrolltop', evt.detail.scrollTop)
+    setScrollTop(evt.detail.scrollTop)
     if (reachTop) {
-      evt.prenventDefault?.()
-      setReachTop(false)
+      // evt.prenventDefault?.()
+      // setReachTop(false)
     }
   }
   return (
     <View catchMove className='fta-pull-to-refresh'>
       <View
         className='fta-pull-to-refresh-head'
-        style={{ height: px(height), backgroundColor: '#000' }}>
+        style={{ height: px(height), backgroundColor: '#999' }}>
         <Text>下拉加载</Text>
       </View>
-      <View
-        // onTouchStart={reachTop ? onTouchStart : void 0}
-        // onTouchMove={reachTop ? onTouchMove : void 0}
-        onTouchEnd={() => {}}
-        className='fta-pull-to-refresh-content'>
+      <View className='fta-pull-to-refresh-content'>
         <ScrollView
           scrollY
           upperThreshold={2}
-          // bounces={false}
-          onTouchMove={() => {
-            console.log('touchmove')
-          }}
+          bounces={false}
+          scrollTop={scrollTop}
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
           onScrollToUpper={(evt) => {
             console.log('滚动到顶部', evt)
             setReachTop(true)
