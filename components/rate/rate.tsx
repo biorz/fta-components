@@ -109,7 +109,12 @@ function Star(props: StarProps): JSX.Element {
 
   return (
     <View className={rootClass} style={rootStyle} onClick={half ? void 0 : () => onClick?.(true)}>
-      <Image className='fta-star-image' src={src! || IMAGE_PREFIX + STAR.active} />
+      <Image
+        className='fta-star-image'
+        src={src! || IMAGE_PREFIX + STAR.active}
+        // @ts-ignore
+        draggable='false'
+      />
       {half ? (
         <>
           <View

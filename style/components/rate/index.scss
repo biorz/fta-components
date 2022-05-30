@@ -29,6 +29,12 @@ $fta-rate-size: zoom(36px);
 
   &-image {
     @include square(100%);
+
+    @include h5 {
+      taro-image-core {
+        user-select: none;
+      }
+    }
   }
 
   &--placeholder {
