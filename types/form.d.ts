@@ -284,6 +284,10 @@ export interface FormItemProps
    * @depreacted
    */
   hackColor?: string
+  /**
+   * 自定义UI组件的其他属性
+   */
+  [key: string]: any
 }
 
 export interface StatelessProps {
