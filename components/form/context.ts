@@ -8,6 +8,7 @@ export type Store = {
 
 type FormContext = Pick<
   FormProps,
+  | 'appearance'
   | 'model'
   | 'readonly'
   | 'align'

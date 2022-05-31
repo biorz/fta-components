@@ -1,6 +1,7 @@
 import { InputProps } from '@tarojs/components/types/Input'
 import Schema, { Rule, RuleItem } from 'async-validator'
 import {
+  ComponentType,
   CSSProperties,
   FC,
   ForwardRefExoticComponent,
@@ -150,11 +151,17 @@ export interface FormProps extends BaseComponent, PropsWithChildren {
    * @default '#cccccc'
    */
   placeholderTextColor?: string
+  /**
+   * 默认的FormItem UI组件
+   * @since 1.0.2-alpha.17
+   */
+  appearance?: ComponentType
 }
 
 export interface FormItemProps
   extends Pick<
       FormProps,
+      | 'appearance'
       // | 'scrollIntoView'
       | 'readonly'
       // | 'border'
