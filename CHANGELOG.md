@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.2-alpha.18](https://code.amh-group.com/h5developer/basebuild/views/fta-view/compare/@fta/components@1.0.2-alpha.17...@fta/components@1.0.2-alpha.18) (2022-05-31)
+
+### Bug Fixes
+
+- **form:** form-item 增加索引签名 ([186e6fa](https://code.amh-group.com/h5developer/basebuild/views/fta-view/commits/186e6fae33bd57c36aadbf31c76773e82eef47cd))
+
 ## [1.0.2-alpha.16](https://code.amh-group.com/h5developer/basebuild/views/fta-view/compare/@fta/components@1.0.2-alpha.14...@fta/components@1.0.2-alpha.16) (2022-05-29)
 
 **Note:** Version bump only for package @fta/components
