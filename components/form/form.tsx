@@ -96,6 +96,7 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
     placeholderTextColor,
     labelTextClassName,
     labelTextStyle,
+    appearance,
   } = props
 
   const [nodeId, scrollIntoView] = useState<string>()
@@ -184,6 +185,7 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
   return (
     <FormProvider
       value={{
+        appearance,
         rules,
         align,
         labelClassName,
@@ -260,6 +262,7 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
     onMount,
     onDestroy,
     onItemClick,
+    appearance,
 
     /* exclude props */
 
@@ -292,6 +295,8 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
   const scrollRef = useRef<any>()
   const ctx = useFormConfig()
   const model = { ctx }
+
+  const Appearance = appearance || ctx.appearance!
 
   const formItemId = useRef(
     inRN ? void 0 : prop ? `fta-form-item-${prop}` : uniqueId('fta-form-item-')
@@ -429,7 +434,7 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
   }
   return (
     <ScrollIntoView ref={inRN ? scrollRef : void 0} id={formItemId}>
-      <FormItemAppearance
+      <Appearance
         {...omit({ ...props, error: errored, errorTip: state.message, itemRef: methodsRef }, [
           'prop',
           // 'value',
@@ -440,7 +445,7 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
           'validatePriority',
         ])}>
         {getParsedChildren()}
-      </FormItemAppearance>
+      </Appearance>
     </ScrollIntoView>
   )
 }
@@ -797,6 +802,7 @@ const formDefaultProps: FormProps = {
   rules: {},
   model: {},
   titleAlign: 'left',
+  appearance: FormItemAppearance,
 }
 
 const formItemDefaultProps: FormItemProps = {
