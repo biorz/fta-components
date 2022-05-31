@@ -38,6 +38,9 @@ var indexScssStyleSheet = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  'taro-image-core': {
+    userSelect: 'none',
+  },
   'fta-star--placeholder': {
     position: 'absolute',
     width: '50%',
@@ -214,6 +217,7 @@ function Star(props) {
     },
     React.createElement(Image, {
       src: src || IMAGE_PREFIX + STAR.active,
+      draggable: 'false',
       style: _styleSheet['fta-star-image'],
     }),
     half
