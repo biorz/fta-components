@@ -5,9 +5,9 @@ function transform(member) {
   return data
     ? {
         default: data.default,
-        replace: `@fta/components/rn/${data.replace.replace('components/', '')}`,
+        replace: `@fta/components/dist/rn/${data.replace.replace('components/', '')}`,
       }
-    : { replace: '@fta/components/rn/common' }
+    : { replace: '@fta/components/dist/rn/common' }
 }
 
 module.exports = transform

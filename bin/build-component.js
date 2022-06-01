@@ -21,10 +21,10 @@ const injectCss = (dir) => {
   }
 }
 
-const copyIndexJS = (dest) => {
-  const entryPath = path.resolve(pkgRoot, 'types/index.d.ts')
-  fs.copyFileSync(entryPath, dest)
-}
+// const copyIndexJS = (dest) => {
+//   const entryPath = path.resolve(pkgRoot, 'types/index.d.ts')
+//   fs.copyFileSync(entryPath, dest)
+// }
 
 const getComponents = () => {
   const components = require('../component-map.json')
@@ -89,7 +89,7 @@ const main = async () => {
     injectCss(output)
   }
 
-  copyIndexJS(path.resolve(pkgRoot, `${OUTPUT}/index.js`))
+  // copyIndexJS(path.resolve(pkgRoot, `${OUTPUT}/index.js`))
 
   //   execSync(`taro build native-components --type arn --input ${input} --output ${output}`, execOpts)
   //   console.log(`

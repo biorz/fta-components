@@ -6,9 +6,9 @@ function transform(member) {
   return data
     ? {
         default: data.default,
-        replace: `@fta/components/${TARO_ENV}/${data.replace.replace('components/', '')}`,
+        replace: `@fta/components/dist/${TARO_ENV}/${data.replace.replace('components/', '')}`,
       }
-    : { replace: `@fta/components/${TARO_ENV}/common` }
+    : { replace: `@fta/components/dist/${TARO_ENV}/common` }
 }
 
 module.exports = transform
