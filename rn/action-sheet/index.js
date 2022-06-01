@@ -317,6 +317,10 @@ var bodyItemScssStyleSheet = StyleSheet.create({
   },
 })
 
+function stopPropagation(evt) {
+  evt == null ? void 0 : evt.stopPropagation == null ? void 0 : evt.stopPropagation()
+}
+
 function _createSuper$3(Derived) {
   var hasNativeReflectConstruct = _isNativeReflectConstruct$3()
   return function _createSuperInternal() {
@@ -396,6 +400,7 @@ var ActionSheetItem = (function (_React$Component) {
     }
     _this = _super.call.apply(_super, [this].concat(_args))
     _this.handleClick = function (args) {
+      stopPropagation(args)
       var onClick = _this.props.onClick
       if (isFunction(onClick)) {
         onClick(args)
@@ -546,6 +551,7 @@ var ActionSheetFooter = (function (_React$Component) {
     }
     _this = _super.call.apply(_super, [this].concat(_args))
     _this.handleClick = function () {
+      stopPropagation(arguments.length <= 0 ? undefined : arguments[0])
       var onClick = _this.props.onClick
       if (isFunction(onClick)) {
         onClick.apply(void 0, arguments)
