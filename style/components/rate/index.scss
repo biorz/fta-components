@@ -32,7 +32,9 @@ $fta-rate-size: zoom(36px);
 
     @include h5 {
       taro-image-core {
-        user-select: none;
+        @include h5 {
+          user-select: none;
+        }
       }
     }
   }
