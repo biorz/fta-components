@@ -13,6 +13,7 @@ import ActionSheetFooter from './footer/index'
 import ActionSheetHeader from './header/index'
 // import { Motion, spring } from 'react-motion'
 import Motion from './motion'
+import { stopPropagation } from './util'
 
 export { ActionSheetItem, ActionSheetItem as SheetItem, ActionSheetItem as Item }
 
@@ -53,7 +54,8 @@ class ActionSheet extends React.Component<ActionSheetProps, ActionSheetState> {
     this.close()
   }
 
-  private close = (): void => {
+  private close = (evt?: any): void => {
+    stopPropagation(evt)
     if (this.props.clickOverlayOnClose) {
       this.setState(
         {

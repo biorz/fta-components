@@ -968,7 +968,8 @@ var ActionSheet = (function (_React$Component) {
       }
       _this.close()
     }
-    _this.close = function () {
+    _this.close = function (evt) {
+      stopPropagation(evt)
       if (_this.props.clickOverlayOnClose) {
         _this.setState({ _isOpened: false }, _this.handleClose)
       }
