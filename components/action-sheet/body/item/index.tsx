@@ -6,12 +6,14 @@ import { isFunction, isString } from '../../../../common'
 import '../../../../style/components/action-sheet/active.scss'
 import '../../../../style/components/action-sheet/body-item.scss'
 import { ActionSheetItemProps } from '../../../../types/action-sheet'
+import { stopPropagation } from '../../util'
 
 export default class ActionSheetItem extends React.Component<ActionSheetItemProps> {
   public static defaultProps: ActionSheetItemProps
   public static propTypes: InferProps<ActionSheetItemProps>
 
   private handleClick = (args: any): void => {
+    stopPropagation(args)
     const onClick = this.props.onClick
     if (isFunction(onClick)) {
       onClick!(args)

@@ -6,12 +6,14 @@ import { isFunction } from '../../../common'
 import '../../../style/components/action-sheet/footer.scss'
 import { ActionSheetFooterProps } from '../../../types/action-sheet'
 import Button from '../../button'
+import { stopPropagation } from '../util'
 
 export default class ActionSheetFooter extends React.Component<ActionSheetFooterProps> {
   public static defaultProps: ActionSheetFooterProps
   public static propTypes: InferProps<ActionSheetFooterProps>
 
   private handleClick = (...args: any[]): void => {
+    stopPropagation(args[0])
     const onClick = this.props.onClick
     if (isFunction(onClick)) {
       onClick!(...args)

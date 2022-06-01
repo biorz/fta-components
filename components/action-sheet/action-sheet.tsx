@@ -14,9 +14,6 @@ import ActionSheetHeader from './header/index'
 // import { Motion, spring } from 'react-motion'
 import Motion from './motion'
 
-// const height = getSystemInfoSync().screenHeight
-// console.log('screen height', height, getSystemInfoSync().screenWidth)
-
 export { ActionSheetItem, ActionSheetItem as SheetItem, ActionSheetItem as Item }
 
 class ActionSheet extends React.Component<ActionSheetProps, ActionSheetState> {
