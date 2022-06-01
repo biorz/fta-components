@@ -22,7 +22,7 @@ const OUTPUT = 'rn'
 
 const main = () => {
   const pathPrefix = path.relative(taroRoot, pkgRoot)
-  const outputDir = path.join(pathPrefix, `rn`)
+  const outputDir = path.join(pathPrefix, `dist/rn`)
   fs.ensureDirSync(path.resolve(taroRoot, outputDir))
 
   const components = getComponents()

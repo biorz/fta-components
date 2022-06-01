@@ -5,6 +5,21 @@ const resolveComponentDependCircle = require('../../../config/resolveComponentDe
 
 const taroRoot = path.resolve(__dirname, '../../../')
 const pkgRoot = path.resolve(__dirname, '../')
+/**
+ * 注入css文件
+ */
+const injectCss = (dir) => {
+  try {
+    const stylePath = path.resolve(dir, 'index.css')
+    if (fs.pathExistsSync(stylePath)) {
+      const filePath = path.resolve(dir, 'index.js')
+      const dataString = fs.readFileSync(filePath)
+      fs.writeFileSync(filePath, `import './index.css';\n${dataString}`)
+    }
+  } catch (error) {
+    console.log('CSS文件打包失败：' + path + '\n' + error.message)
+  }
+}
 
 const copyIndexJS = (dest) => {
   const entryPath = path.resolve(pkgRoot, 'types/index.d.ts')
@@ -21,7 +36,7 @@ const getComponents = () => {
 const OUTPUT = process.env.BUILD_TYPE
 
 const main = async () => {
-  const outputDir = path.resolve(__dirname, `../${OUTPUT}`)
+  const outputDir = path.resolve(__dirname, `../dist/${OUTPUT}`)
   fs.ensureDirSync(path.resolve(taroRoot, outputDir))
 
   const components = getComponents()
@@ -66,10 +81,12 @@ const main = async () => {
     })
 
     if (componentFilename === 'common') continue
-    const tsPath = path.resolve(pkgRoot, `types/${componentFilename}.d.ts`)
-    const tsOutput = path.resolve(pkgRoot, `${OUTPUT}/${componentFilename}/index.d.ts`)
-    fs.copySync(tsPath, tsOutput)
+    // NOTE: 不用拷贝dts
+    // const tsPath = path.resolve(pkgRoot, `types/${componentFilename}.d.ts`)
+    // const tsOutput = path.resolve(pkgRoot, `${OUTPUT}/${componentFilename}/index.d.ts`)
+    // fs.copySync(tsPath, tsOutput)
     // copy typescript 到当前目录
+    injectCss(output)
   }
 
   copyIndexJS(path.resolve(pkgRoot, `${OUTPUT}/index.js`))

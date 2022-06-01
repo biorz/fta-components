@@ -14,9 +14,10 @@
     "theme:recover": "node ./bin/theme-hook.js recover",
     "prepublishOnly": "npm run theme:clear",
     "postpublish": "npm run theme:recover",
-    "build:rn": "rimraf rn && npm run build:map && node ./bin/build-component-rn.js",
-    "build:h5": "rimraf dist && cross-env BUILD_TYPE=h5 node ./bin/build-component.js",
-    "build:weapp": "rimraf dist && cross-env BUILD_TYPE=weapp node ./bin/build-component.js",
+    "build": "npm run build:rn && npm run build:h5 && npm run build:weapp",
+    "build:rn": "rimraf dist/rn && npm run build:map && node ./bin/build-component-rn.js",
+    "build:h5": "rimraf dist/h5 && cross-env BUILD_TYPE=h5 node ./bin/build-component.js",
+    "build:weapp": "rimraf dist/weapp && cross-env BUILD_TYPE=weapp node ./bin/build-component.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "source": "./index.ts",
