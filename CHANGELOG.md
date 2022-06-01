@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.2-alpha.19](https://code.amh-group.com/h5developer/basebuild/views/fta-view/compare/@fta/components@1.0.2-alpha.18...@fta/components@1.0.2-alpha.19) (2022-06-01)
+
+### Bug Fixes
+
+- **action-sheet:** 阻止 item 点击事件冒泡 ([a39b434](https://code.amh-group.com/h5developer/basebuild/views/fta-view/commits/a39b43473aaf9da428acc994bafdd618c48fb389))
+
 ## [1.0.2-alpha.18](https://code.amh-group.com/h5developer/basebuild/views/fta-view/compare/@fta/components@1.0.2-alpha.17...@fta/components@1.0.2-alpha.18) (2022-05-31)
 
 ### Bug Fixes
