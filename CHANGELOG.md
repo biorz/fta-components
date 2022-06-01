@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.2-alpha.20](https://code.amh-group.com/h5developer/basebuild/views/fta-view/compare/@fta/components@1.0.2-alpha.19...@fta/components@1.0.2-alpha.20) (2022-06-01)
+
+### Bug Fixes
+
+- **action-sheet:** 蒙层点击事件阻止冒泡 ([b479d1a](https://code.amh-group.com/h5developer/basebuild/views/fta-view/commits/b479d1a5cc7594df379b5c8f56d014f7044fea20))
+
 ## [1.0.2-alpha.19](https://code.amh-group.com/h5developer/basebuild/views/fta-view/compare/@fta/components@1.0.2-alpha.18...@fta/components@1.0.2-alpha.19) (2022-06-01)
 
 ### Bug Fixes
