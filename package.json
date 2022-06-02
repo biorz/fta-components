@@ -23,6 +23,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "source": "./index.ts",
+  "publishConfig": {
+    "registry": "http://npm.amh-group.com/",
+    "access": "public"
+  },
   "keywords": [
     "FTA View",
     "cross-platform",
