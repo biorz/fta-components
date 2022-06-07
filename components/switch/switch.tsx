@@ -23,7 +23,7 @@ export default class Switch extends React.Component<SwitchProps, SwitchState> {
   }
 
   public render(): JSX.Element {
-    const { customStyle, className, disabled, border, title, color } = this.props
+    const { customStyle, className, disabled, border, title, color, rnProps } = this.props
 
     const rootCls = classNames(
       'fta-switch',
@@ -60,6 +60,7 @@ export default class Switch extends React.Component<SwitchProps, SwitchState> {
           color={inRN ? Themes.color.white : color}
           onChange={this.handleChange}
           {...extraProps}
+          {...(inRN ? rnProps : {})}
         />
       </View>
     )
@@ -83,6 +84,7 @@ Switch.defaultProps = {
   border: true,
   disabled: false,
   checked: false,
+  rnProps: {},
 }
 
 Switch.propTypes = {
@@ -94,4 +96,5 @@ Switch.propTypes = {
   border: PropTypes.bool,
   disabled: PropTypes.bool,
   onChange: PropTypes.func,
+  rnProps: PropTypes.object,
 }

@@ -1,6 +1,21 @@
 import { ComponentClass } from 'react'
+import type { StyleProp, ViewStyle } from 'react-native'
 import BaseComponent from './base'
-
+export interface RnSwitchProps {
+  width?: number
+  height?: number
+  value?: boolean
+  disabled?: boolean
+  circleColorActive?: string
+  circleColorInactive?: string
+  backgroundActive?: string
+  backgroundInactive?: string
+  onAsyncPress?: (cb: (result: boolean) => void) => void
+  onSyncPress?: (value: boolean) => void
+  style?: StyleProp<ViewStyle>
+  circleStyle?: StyleProp<ViewStyle>
+  color?: any
+}
 export interface SwitchProps extends BaseComponent {
   /**
    * 标签名
@@ -29,6 +44,10 @@ export interface SwitchProps extends BaseComponent {
    * 输入框值改变时触发的事件
    */
   onChange?: (value: boolean) => void
+  /**
+   * rn 原生属性
+   */
+  rnProps?: RnSwitchProps
 }
 
 export interface SwitchState {
