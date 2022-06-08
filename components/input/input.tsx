@@ -208,7 +208,7 @@ FTAInput.defaultProps = {
   title: '',
   cursorSpacing: 50,
   confirmType: 'done',
-  cursor: 0,
+  // cursor: 0,
   selectionStart: -1,
   selectionEnd: -1,
   adjustPosition: true,
