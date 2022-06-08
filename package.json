@@ -1,6 +1,6 @@
 {
   "name": "@fta/components",
-  "version": "1.0.2",
+  "version": "1.0.3-alpha.0",
   "description": "FTA View - Taro-based cross-platform development framework",
   "types": "./types/index.d.ts",
   "bin": {
