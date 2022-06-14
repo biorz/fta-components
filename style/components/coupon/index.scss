@@ -1,0 +1,20 @@
+@import '../../mixins/index.scss';
+@import '../../variables/default.scss';
+
+$fta-coupon-price-color: #ff8210;
+$fta-coupon-title-color: $color-grey-0;
+
+$fta-coupon-type-color: #ff5b00;
+$fta-coupon-type-bg-color: #fff5e6;
+
+$fta-coupon-desc-color: $color-grey-2;
+
+$fta-coupon-color-disabled: $color-grey-2;
+
+.fta-coupon {
+  &__text {
+    &--disabled {
+      color: $fta-coupon-color-disabled;
+    }
+  }
+}

@@ -532,14 +532,6 @@ $fta-noticebar-btn-close-size: zoom(32px) !default;
 $fta-noticebar-btn-close-margin-left: zoom(55px) !default;
 $fta-noticebar-btn-close-color: #ff5b00 !default;
 
-/* Progress */
-$fta-progress-height: 16px !default;
-$fta-progress-text-size: $font-size-sm !default;
-$fta-progress-icon-size: $font-size-xl !default;
-$fta-progress-inner-bg-color: $color-grey-6 !default;
-$fta-progress-bar-bg-color: $color-brand-light !default;
-$fta-progress-bar-bg-color-active: $color-white !default;
-
 /* Radio */
 $fta-radio-padding: zoom(32px);
 $fta-radio-bg-color: $color-bg;
@@ -570,10 +562,6 @@ $fta-segmented-control-radius: $border-radius-md !default;
 $fta-segmented-control-padding: $spacing-v-xs $spacing-h-sm !default;
 $fta-segmented-control-disabled-opacity: $opacity-disabled !default;
 $fta-segmented-control-min-width: zoom(120px) !default;
-
-/* Slider */
-$fta-slider-text-color: $color-grey-2 !default;
-$fta-slider-text-size: $font-size-base !default;
 
 /* Steps */
 $fta-steps-line-height: 1.5 !default;

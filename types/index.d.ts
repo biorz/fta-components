@@ -50,3 +50,4 @@ export {
   TouchableWithoutFeedback,
 } from './view'
 export { default as Rate } from './rate'
+export { default as Coupon } from './coupon'

@@ -54,3 +54,4 @@ export {
 } from './components/view'
 export { default as Tooltip } from './components/tooltip'
 export { default as Rate } from './components/rate'
+export { default as Coupon } from './components/coupon'
