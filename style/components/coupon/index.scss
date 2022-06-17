@@ -1,6 +1,15 @@
 @import '../../mixins/index.scss';
 @import '../../variables/default.scss';
 
+@mixin fit-content() {
+  /* #ifndef rn */
+  width: fit-content;
+  /* #endif */
+  /* #ifdef rn */
+  align-self: flex-start;
+  /* #endif */
+}
+
 $fta-coupon-price-color: #ff8210;
 $fta-coupon-title-color: $color-grey-0;
 
@@ -11,7 +20,165 @@ $fta-coupon-desc-color: $color-grey-2;
 
 $fta-coupon-color-disabled: $color-grey-2;
 
+$fta-coupon-rich-width: zoom(676px);
+$fta-coupon-rich-min-height: zoom(266px);
+
+$fta-coupon-simple-width: zoom(664px);
+$fta-coupon-simple-height: zoom(184px);
+$fta-coupon-line-margin-top: zoom(11px);
+$fta-coupon-line-height: zoom(160px);
+// prettier-ignore
+$fta-coupon-line-width: 1PX;
+$fta-coupon-line-color: #e8e8e8;
+
 .fta-coupon {
+  &-container {
+    @include display-flex(row);
+
+    &--rich {
+      height: $fta-coupon-simple-height;
+    }
+  }
+
+  &-line {
+    margin-top: $fta-coupon-line-margin-top;
+    width: 0;
+    height: $fta-coupon-line-height;
+    border-right-width: $fta-coupon-line-width;
+    border-right-style: dashed;
+    border-right-color: $fta-coupon-line-color;
+  }
+
+  &-price {
+    @include display-flex(row);
+    align-items: flex-end;
+
+    &-sign {
+      color: $fta-coupon-price-color;
+      font-size: $font-size-sm;
+      line-height: zoom(42px);
+    }
+
+    &-value {
+      color: $fta-coupon-price-color;
+      font-size: zoom(60px);
+      line-height: zoom(62px);
+    }
+  }
+
+  &-left {
+    @include flex-center(column);
+
+    &--rich {
+      width: zoom(178px);
+    }
+
+    &--simple {
+      width: zoom(172px);
+    }
+  }
+
+  &-detail {
+    @include display-flex(column);
+    justify-content: center;
+  }
+
+  &-right {
+    padding: 0 zoom(28px);
+    @include display-flex(row);
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &-title {
+    color: $fta-coupon-title-color;
+    font-size: $font-size-md;
+    line-height: $font-size-lg;
+
+    &--disabled {
+      color: $fta-coupon-color-disabled;
+    }
+  }
+
+  &-period {
+    color: $fta-coupon-color-disabled;
+    font-size: $font-size-xs;
+    line-height: $font-size-sm;
+    @include nrn {
+      white-space: nowrap;
+    }
+  }
+
+  &-remark {
+    margin-top: zoom(16px);
+    margin-bottom: zoom(12px);
+    height: zoom(32px);
+    padding: 0 zoom(8px);
+    background-color: #fff5e6;
+    border-radius: zoom(4px);
+
+    @include fit-content();
+
+    &--disabled {
+      opacity: 0.5;
+    }
+
+    &__text {
+      color: #ff5b00;
+    }
+  }
+
+  &-button {
+    @include flex-center();
+    width: zoom(112px);
+    height: zoom(48px);
+    @include rn {
+      background-color: #ff7f00;
+    }
+
+    @include nrn {
+      background: linear-gradient(90deg, #ff9400, #ff5b00);
+    }
+
+    border-radius: zoom(30px);
+    &__text {
+      color: $color-white;
+      font-size: $font-size-xs;
+    }
+  }
+
+  &-radio {
+    width: zoom(36px);
+    height: zoom(36px);
+    border-radius: zoom(22px);
+    border: 2px solid #cccccc;
+  }
+
+  &-meet {
+    margin-top: zoom(10px);
+    &__text {
+      color: $fta-coupon-color-disabled;
+      font-size: $font-size-xs;
+      line-height: $font-size-sm;
+    }
+  }
+
+  &--rich {
+    width: $fta-coupon-rich-width;
+    min-height: $fta-coupon-rich-min-height;
+  }
+
+  &--simple {
+    width: $fta-coupon-simple-width;
+    min-height: $fta-coupon-simple-height;
+    background-color: $color-white;
+  }
+  &-bg {
+    position: absolute;
+    width: 100%;
+    min-height: $fta-coupon-rich-min-height;
+  }
+
   &__text {
     &--disabled {
       color: $fta-coupon-color-disabled;
