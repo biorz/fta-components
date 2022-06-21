@@ -54,19 +54,29 @@ export interface CouponProps extends BaseComponent {
    * 展开的使用说明
    */
   // extendDesc?: string
-  /**
-   * 点击优惠券的回调
-   */
-  onClick?: () => any
+
   /**
    * 按钮文本，仅在type='rich' && status='unused'时生效
    * @default '去使用'
    */
   btnText?: string
   /**
-   * 按钮点击回调，仅在type='rich' && status='unused'时生效
+   * 是否展示展开图标
+   * @default true
+   */
+  showExpand?: boolean
+  /**
+   * 点击优惠券的回调
+   */
+  onClick?: () => any
+  /**
+   * 按钮或单选框点击回调，status='unused'时生效
    */
   onBtnClick?: () => any
+  /**
+   * 点击展开（下箭头）的回调
+   */
+  onExpand?: () => any
 }
 
 declare const Coupon: FC<CouponProps>

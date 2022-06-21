@@ -32,8 +32,13 @@ $fta-coupon-line-width: 1PX;
 $fta-coupon-line-color: #e8e8e8;
 
 .fta-coupon {
+  @include relative;
+
   &-container {
     @include display-flex(row);
+    @include relative;
+    overflow: hidden;
+    z-index: 2;
 
     &--rich {
       height: $fta-coupon-simple-height;
@@ -88,6 +93,7 @@ $fta-coupon-line-color: #e8e8e8;
     @include display-flex(row);
     justify-content: space-between;
     align-items: center;
+    flex: 1;
   }
 
   &-title {
@@ -95,9 +101,9 @@ $fta-coupon-line-color: #e8e8e8;
     font-size: $font-size-md;
     line-height: $font-size-lg;
 
-    &--disabled {
-      color: $fta-coupon-color-disabled;
-    }
+    // &--disabled {
+    //   color: $fta-coupon-color-disabled;
+    // }
   }
 
   &-period {
@@ -116,15 +122,24 @@ $fta-coupon-line-color: #e8e8e8;
     padding: 0 zoom(8px);
     background-color: #fff5e6;
     border-radius: zoom(4px);
-
+    @include flex-center();
     @include fit-content();
 
     &--disabled {
       opacity: 0.5;
+
+      &--simple {
+        opacity: 1;
+        background-color: #f0f0f0;
+      }
     }
 
     &__text {
       color: #ff5b00;
+
+      &--disabled {
+        color: $fta-coupon-color-disabled;
+      }
     }
   }
 
@@ -138,6 +153,10 @@ $fta-coupon-line-color: #e8e8e8;
 
     @include nrn {
       background: linear-gradient(90deg, #ff9400, #ff5b00);
+    }
+
+    &--hover {
+      opacity: 0.6;
     }
 
     border-radius: zoom(30px);
@@ -175,7 +194,11 @@ $fta-coupon-line-color: #e8e8e8;
   }
   &-bg {
     position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
     width: 100%;
+    height: 100%;
     min-height: $fta-coupon-rich-min-height;
   }
 
@@ -183,5 +206,34 @@ $fta-coupon-line-color: #e8e8e8;
     &--disabled {
       color: $fta-coupon-color-disabled;
     }
+  }
+
+  &-desc {
+    margin-top: zoom(24px);
+    margin-left: zoom(34px);
+    margin-right: zoom(28px);
+    padding-right: zoom(56px);
+    @include relative;
+    z-index: 2;
+
+    &__text {
+      font-size: $font-size-xs;
+      color: $fta-coupon-color-disabled;
+      line-height: $font-size-sm;
+    }
+
+    &__down {
+      @include square(zoom(28px));
+      position: absolute;
+      top: zoom(10px);
+      right: 0;
+    }
+  }
+
+  &-status {
+    position: absolute;
+    top: zoom(-28px);
+    right: zoom(-7px);
+    @include square(zoom(113px));
   }
 }

@@ -1,7 +1,7 @@
 import { Image, Text, View } from '@tarojs/components'
 import classNames from 'classnames'
 import React, { CSSProperties } from 'react'
-import { isString } from '../../common'
+import { Assets, isString } from '../../common'
 import '../../style/components/coupon/index.scss'
 import { CouponProps } from '../../types/coupon'
 
@@ -32,29 +32,37 @@ function Coupon(props: CouponProps) {
     remark,
     remarkBgColor,
     remarkColor,
-    onBtnClick,
     btnText,
+    showExpand,
+    onBtnClick,
+    onExpand,
   } = props
 
   const disabled = ['used', 'expired', 'disabled'].includes(status!)
+  const disabledClass = disabled && 'fta-coupon__text--disabled'
+  const hitTextClass = (clazz: any) => classNames(clazz, disabledClass)
   const rootClass = classNames('fta-coupon', `fta-coupon--${type}`, className)
   const rootStyle = { ...style, ...customStyle }
   const containerClass = classNames('fta-coupon-container', `fta-coupon-coupon--${type}`)
   const leftClass = classNames('fta-coupon-left', `fta-coupon-left--${type}`)
   const rightClass = classNames('fta-coupon-right', `fta-coupon-right--${type}`)
 
+  const simpleDisabled = disabled && type === 'simple'
   const remarkStyle: CSSProperties = {}
-  let i: any
-  if ((i = remarkBgColor)) remarkStyle.backgroundColor = i
-  if ((i = remarkColor)) remarkStyle.color = i
+  const bgStyle: CSSProperties = {}
+  if (!simpleDisabled) {
+    let i: any
+    if ((i = remarkBgColor)) bgStyle.backgroundColor = i
+    if ((i = remarkColor)) remarkStyle.color = i
+  }
 
   return (
     <View className={rootClass} style={rootStyle}>
       <View className={containerClass}>
         <View className={leftClass}>
           <View className='fta-coupon-price'>
-            <Text className='fta-coupon-price-sign'>￥</Text>
-            <Text className='fta-coupon-price-value'>{price}</Text>
+            <Text className={hitTextClass('fta-coupon-price-sign')}>￥</Text>
+            <Text className={hitTextClass('fta-coupon-price-value')}>{price}</Text>
           </View>
           {
             <View className='fta-coupon-meet'>
@@ -67,33 +75,52 @@ function Coupon(props: CouponProps) {
         <View className='fta-coupon-line'></View>
         <View className={rightClass}>
           <View className='fta-coupon-detail'>
-            <Text className='fta-coupon-title'>{title}</Text>
+            <Text className={hitTextClass('fta-coupon-title')}>{title}</Text>
             <View
               className={classNames(
                 'fta-coupon-remark',
-                disabled && 'fta-coupon-remark--disabled'
-              )}>
-              <Text className='fta-coupon-remark__text' style={remarkStyle}>
+                disabled && 'fta-coupon-remark--disabled',
+                simpleDisabled && 'fta-coupon-remark--disabled--simple'
+              )}
+              style={bgStyle}>
+              <Text
+                className={classNames(
+                  'fta-coupon-remark__text',
+                  simpleDisabled && 'fta-coupon-remark__text--disabled'
+                )}
+                style={remarkStyle}>
                 {remark}
               </Text>
             </View>
             <Text className='fta-coupon-period'>{period}</Text>
           </View>
           {type === 'rich' ? (
-            <View className='fta-coupon-button' onClick={onBtnClick}>
-              <Text className='fta-coupon-button__text'>{btnText}</Text>
-            </View>
-          ) : (
-            <View className='fta-coupon-radio' />
+            status === 'unused' ? (
+              <View
+                className='fta-coupon-button'
+                onClick={onBtnClick}
+                // @ts-ignore
+                hoverClassName='fta-coupon-button--hover'
+                hoverClass='fta-coupon-button--hover'>
+                <Text className='fta-coupon-button__text'>{btnText}</Text>
+              </View>
+            ) : null
+          ) : status === 'unused' ? (
+            <View className='fta-coupon-radio' onClick={onBtnClick} />
+          ) : status === 'disabled' ? null : (
+            <Image src={src || srcset[`${type}-${status}`]} className='fta-coupon-status' />
           )}
         </View>
       </View>
       {/* 类型为rich独有 */}
       {type === 'rich' ? (
         <>
-          <Image src={srcset[`${type}-${status}`]} className='fta-coupon-bg' />
+          <Image src={src || srcset[`${type}-${status}`]} className='fta-coupon-bg' />
           <View className='fta-coupon-desc'>
-            <Text className='fta-coupon-desc__text'></Text>
+            <Text className='fta-coupon-desc__text'>{desc}</Text>
+            {showExpand ? (
+              <Image onClick={onExpand} src={Assets.arrow.down} className='fta-coupon-desc__down' />
+            ) : null}
           </View>
         </>
       ) : null}
@@ -105,6 +132,7 @@ const defaultProps: CouponProps = {
   type: 'simple',
   price: 50,
   meet: 150,
+  showExpand: true,
   status: 'unused',
   btnText: '去使用',
   remark: '通用券',
