@@ -120,8 +120,17 @@ class NoticeBar extends Component<NoticeBarProps, NoticeBarState> {
   }
 
   public render(): JSX.Element | null {
-    const { single, icon, marquee, customStyle, className, textClassName, textStyle, children } =
-      this.props
+    const {
+      single,
+      icon,
+      marquee,
+      customStyle,
+      className,
+      textClassName,
+      textStyle,
+      children,
+      onClick,
+    } = this.props
     let close = this.props.close
     const { dura, show, animElemId, animationData } = this.state
     const rootClassName = 'fta-noticebar'
@@ -164,7 +173,10 @@ class NoticeBar extends Component<NoticeBarProps, NoticeBarState> {
           )
 
           return (
-            <View className={classNames(rootClassName, classObject, className)} style={customStyle}>
+            <View
+              className={classNames(rootClassName, classObject, className)}
+              style={customStyle}
+              onClick={onClick}>
               {icon ? (
                 <View className='fta-noticebar-icon'>
                   {/* start hack 百度小程序 */}

@@ -5,6 +5,12 @@ const resolveComponentDependCircle = require('../../../config/resolveComponentDe
 
 const taroRoot = path.resolve(__dirname, '../../../')
 const pkgRoot = path.resolve(__dirname, '../')
+
+const copyIndexJS = (dest) => {
+  const entryPath = path.resolve(pkgRoot, 'types/index.d.ts')
+  const data = fs.readFileSync(entryPath).toString()
+  fs.writeFileSync(dest, data.replace('../common', './common'))
+}
 /**
  * 注入css文件
  */
@@ -87,6 +93,7 @@ const main = async () => {
     // fs.copySync(tsPath, tsOutput)
     // copy typescript 到当前目录
     injectCss(output)
+    copyIndexJS(path.resolve(pkgRoot, 'dist/rn/index.js'))
   }
 
   // copyIndexJS(path.resolve(pkgRoot, `${OUTPUT}/index.js`))

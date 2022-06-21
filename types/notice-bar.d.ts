@@ -46,6 +46,11 @@ export interface NoticeBarProps extends BaseComponent, BaseTextComponent {
    * 关闭时触发
    */
   onClose?: (event: CommonEvent) => void
+  /**
+   * 点击时回调
+   * @since 1.0.3-alpha.0
+   */
+  onClick?: () => void
 }
 
 export interface NoticeBarState {
