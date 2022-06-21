@@ -93,7 +93,7 @@ const main = async () => {
     // fs.copySync(tsPath, tsOutput)
     // copy typescript 到当前目录
     injectCss(output)
-    copyIndexJS(path.resolve(pkgRoot, 'dist/rn/index.js'))
+    copyIndexJS(path.resolve(pkgRoot, `dist/${OUTPUT}/index.js`))
   }
 
   // copyIndexJS(path.resolve(pkgRoot, `${OUTPUT}/index.js`))
