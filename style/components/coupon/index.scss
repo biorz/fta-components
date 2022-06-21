@@ -50,7 +50,13 @@ $fta-coupon-line-color: #e8e8e8;
     width: 0;
     height: $fta-coupon-line-height;
     border-right-width: $fta-coupon-line-width;
-    border-right-style: dashed;
+    @include nrn {
+      border-right-style: dashed;
+    }
+    @include rn {
+      // border-style: dashed;
+    }
+
     border-right-color: $fta-coupon-line-color;
   }
 
@@ -136,6 +142,7 @@ $fta-coupon-line-color: #e8e8e8;
 
     &__text {
       color: #ff5b00;
+      font-size: $font-size-xs;
 
       &--disabled {
         color: $fta-coupon-color-disabled;
@@ -209,7 +216,7 @@ $fta-coupon-line-color: #e8e8e8;
   }
 
   &-desc {
-    margin-top: zoom(24px);
+    margin-top: zoom(34px);
     margin-left: zoom(34px);
     margin-right: zoom(28px);
     padding-right: zoom(56px);
@@ -225,7 +232,10 @@ $fta-coupon-line-color: #e8e8e8;
     &__down {
       @include square(zoom(28px));
       position: absolute;
-      top: zoom(10px);
+
+      @include nrn {
+        top: zoom(6px);
+      }
       right: 0;
     }
   }

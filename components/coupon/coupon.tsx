@@ -35,6 +35,7 @@ function Coupon(props: CouponProps) {
     btnText,
     showExpand,
     onBtnClick,
+    onClick,
     onExpand,
   } = props
 
@@ -57,7 +58,7 @@ function Coupon(props: CouponProps) {
   }
 
   return (
-    <View className={rootClass} style={rootStyle}>
+    <View className={rootClass} style={rootStyle} onClick={onClick}>
       <View className={containerClass}>
         <View className={leftClass}>
           <View className='fta-coupon-price'>
