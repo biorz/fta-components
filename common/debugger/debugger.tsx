@@ -1,6 +1,5 @@
-import { ITouchEvent, View } from '@tarojs/components'
+import { ITouchEvent, Text, View } from '@tarojs/components'
 import React, { FC, useRef, useState } from 'react'
-import { Text } from '../../components/typography'
 import { useConfig } from '../context'
 import { useCareClass } from '../utils/classnames'
 import './debugger.scss'

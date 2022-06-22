@@ -55,3 +55,4 @@ export {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from './components/view'
+export { default as Search } from './components/search'

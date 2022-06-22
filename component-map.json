@@ -8,6 +8,7 @@
   "Button": { "replace": "components/button", "default": true },
   "Cascader": { "replace": "components/cascader", "default": true },
   "Checkbox": { "replace": "components/checkbox", "default": true },
+  "Coupon": { "replace": "components/coupon", "default": true },
   "Curtain": { "replace": "components/curtain", "default": true },
   "Divider": { "replace": "components/divider", "default": true },
   "Drawer": { "replace": "components/drawer", "default": true },
@@ -34,6 +35,7 @@
   "Picker": { "replace": "components/picker", "default": true },
   "PullToRefresh": { "replace": "components/pull-to-refresh", "default": true },
   "Radio": { "replace": "components/radio", "default": true },
+  "Rate": { "replace": "components/rate", "default": true },
   "Result": { "replace": "components/result", "default": true },
   "SafeArea": { "replace": "components/safe-area", "default": true },
   "SafeAreaView": { "replace": "components/safe-area", "default": false },
@@ -53,13 +55,12 @@
   "TimelineItem": { "replace": "components/timeline", "default": false },
   "Toast": { "replace": "components/toast", "default": true },
   "useToast": { "replace": "components/toast", "default": false },
+  "Tooltip": { "replace": "components/tooltip", "default": true },
   "Text": { "replace": "components/typography", "default": false },
   "Upload": { "replace": "components/upload", "default": true },
   "LayoutView": { "replace": "components/view", "default": true },
   "TouchableHighlight": { "replace": "components/view", "default": false },
   "TouchableOpacity": { "replace": "components/view", "default": false },
   "TouchableWithoutFeedback": { "replace": "components/view", "default": false },
-  "Tooltip": { "replace": "components/tooltip", "default": true },
-  "Rate": { "replace": "components/rate", "default": true },
-  "Coupon": { "replace": "components/coupon", "default": true }
+  "Search": { "replace": "components/search", "default": true }
 }
