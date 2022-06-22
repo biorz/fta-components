@@ -10,6 +10,8 @@ const Assets = {
       'https://image.ymm56.com/ymmfile/operation-biz/1e270684-078d-49c8-9e69-23fbe607404a.png',
     circleFull:
       'https://imagecdn.ymm56.com/ymmfile/static/resource/c4aa5762-5aad-40c8-9fab-9912569aec6c.png',
+    circleBlack:
+      'https://imagecdn.ymm56.com/ymmfile/static/resource/957bbc97-e1f9-40b5-8173-15283538291e.png',
   },
   // 箭头
   arrow: {
@@ -66,6 +68,12 @@ const Assets = {
       'https://imagecdn.ymm56.com/ymmfile/static/resource/38e7d189-35ef-45e9-840c-7b39ae88c2dd.png',
     triangle:
       'https://imagecdn.ymm56.com/ymmfile/static/resource/83e4d14b-b386-4f9a-a320-dbd5e243b7a8.png',
+  },
+  // 搜索图标
+  search: {
+    default:
+      'https://imagecdn.ymm56.com/ymmfile/static/resource/51a99429-1d69-4faa-a15a-50b4ef461f75.png',
+    grey: 'https://imagecdn.ymm56.com/ymmfile/static/resource/dcb5f526-9e59-4789-a98e-69270c6cb38f.png',
   },
 }
 

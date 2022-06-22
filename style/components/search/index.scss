@@ -1,6 +1,123 @@
 @import '../../mixins/index.scss';
 @import '../../variables/default.scss';
 
-.fta-search{
+$fta-search-bg: $color-white;
+$fta-search-input-bg: #f6f6f6;
 
+%base-input-style {
+  font-size: $font-size-sm;
+  font-weight: 400;
+  height: 100%;
+}
+
+%input-style {
+  @extend %base-input-style;
+  color: $color-grey-0;
+}
+
+%placeholder-style {
+  @extend %base-input-style;
+  color: $color-grey-3;
+}
+
+.fta-search {
+  @include display-flex(row);
+
+  &-root {
+    background-color: $fta-search-bg;
+  }
+
+  &-container {
+    flex: 1;
+    min-width: zoom(572px);
+    height: zoom(80px);
+    border-radius: zoom(16px);
+    background-color: $fta-search-input-bg;
+    margin: zoom(20px) zoom(28px) zoom(14px);
+    @include flex-center(row);
+  }
+
+  &-icon {
+    @include square(zoom(36px));
+    margin-left: zoom(28px);
+    margin-right: zoom(8px);
+  }
+
+  &-input {
+    height: 100%;
+    flex: 1;
+    @include flex-center();
+    @include h5 {
+      .weui-input {
+        @extend %input-style;
+      }
+    }
+
+    &--placeholder {
+      @extend %placeholder-style;
+    }
+  }
+
+  &-clear {
+    @include square(zoom(36px));
+    margin-right: zoom(20px);
+  }
+
+  &-cancel {
+    @include display-flex(row);
+    align-items: center;
+    flex: 1;
+
+    &__text {
+      font-size: $font-size-md;
+      color: $color-grey-2;
+    }
+  }
+
+  &-result {
+    &__empty {
+      height: zoom(276px);
+      @include flex-center(column);
+    }
+
+    &-item {
+      @include border-box;
+      @include display-flex(row);
+      margin: 0 zoom(28px);
+      height: zoom(92px);
+      align-items: center;
+      // prettier-ignore
+      border-bottom-width: 1PX;
+      border-bottom-color: #e8e8e8;
+      @include nrn {
+        border-bottom-style: solid;
+      }
+    }
+
+    &__text {
+      color: $color-grey-0;
+      font-size: $font-size-sm;
+      &--hightlight {
+        color: #ff5b00;
+      }
+    }
+  }
+
+  &-title {
+    &__text {
+      font-size: $font-size-sm;
+      font-weight: 500;
+      color: $color-grey-1;
+      line-height: zoom(40px);
+    }
+  }
+
+  &-desc {
+    margin-top: zoom(6px);
+    &__text {
+      font-size: $font-size-xs;
+      color: $color-grey-2;
+      line-height: $font-size-sm;
+    }
+  }
 }

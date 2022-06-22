@@ -112,7 +112,9 @@ class NoticeBar extends Component<NoticeBarProps, NoticeBarState> {
             }, 900)
           }
           animBody()
-          this.interval = setInterval(animBody, dura * 1000 + 1000)
+          setTimeout(() => {
+            this.interval = setInterval(animBody, dura * 1000)
+          }, 1000)
         }
         query.select(`.${this.state.animElemId}`).boundingClientRect(queryCb).exec(queryCb)
       }

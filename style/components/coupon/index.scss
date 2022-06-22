@@ -198,6 +198,7 @@ $fta-coupon-line-color: #e8e8e8;
     width: $fta-coupon-simple-width;
     min-height: $fta-coupon-simple-height;
     background-color: $color-white;
+    border-radius: zoom(20px);
   }
   &-bg {
     position: absolute;
