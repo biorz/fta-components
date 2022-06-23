@@ -56,3 +56,4 @@ export {
   TouchableWithoutFeedback,
 } from './components/view'
 export { default as Search } from './components/search'
+export { default as Line } from './components/line'

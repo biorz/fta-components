@@ -1,0 +1,20 @@
+@import '../../mixins/index.scss';
+@import '../../variables/default.scss';
+
+$fta-line-color: #e8e8e8;
+
+.fta-line {
+  &--row {
+    width: 100%;
+    border-bottom-color: $fta-line-color;
+    // prettier-ignore
+    border-bottom-width: 1PX;
+  }
+
+  &--col {
+    height: 100%;
+    border-right-color: $fta-line-color;
+    // prettier-ignore
+    border-right-width: 1PX;
+  }
+}
