@@ -20,13 +20,13 @@ function Line(props: LineProps) {
     hairline,
     dashed,
   } = props
+  const suffix = col ? 'col' : 'row'
   const rootClass = classNames(
     'fta-line',
-    col ? 'fta-line--col' : 'fta-line--row',
+    `fta-line--${suffix}`,
     {
-      'fta-line--hairline': hairline,
-
-      'fta-line--dashed': dashed,
+      [`fta-line--hairline--${suffix}`]: hairline,
+      [`fta-line--dashed--${suffix}`]: dashed,
     },
     className
   )
@@ -48,6 +48,8 @@ function Line(props: LineProps) {
       Object.entries(margin).forEach(([key, val]) => {
         rootStyle[`margin${upperCase(key)}`] = val
       })
+    } else {
+      rootStyle['margin'] = margin
     }
   }
 

@@ -4,7 +4,14 @@
 $fta-line-color: #e8e8e8;
 
 .fta-line {
+  border-radius: 100px;
+  border-width: 0;
+  @include nrn {
+    border-style: solid;
+  }
+
   &--row {
+    height: 0;
     width: 100%;
     border-bottom-color: $fta-line-color;
     // prettier-ignore
@@ -12,9 +19,50 @@ $fta-line-color: #e8e8e8;
   }
 
   &--col {
+    width: 0;
     height: 100%;
     border-right-color: $fta-line-color;
     // prettier-ignore
     border-right-width: 1PX;
+  }
+
+  &--hairline {
+    &--row {
+      @include nrn {
+        transform: scaleY(50%);
+      }
+
+      @include rn {
+        // prettier-ignore
+        border-bottom-width: 0.5PX;
+      }
+    }
+
+    &--col {
+      @include nrn {
+        transform: scaleX(50%);
+      }
+
+      @include rn {
+        // prettier-ignore
+        border-right-width: 0.5PX;
+      }
+    }
+  }
+
+  &--dashed {
+    &--row {
+      border-style: dashed;
+      @include nrn {
+        border-bottom-style: dashed;
+      }
+    }
+
+    &--col {
+      border-style: dashed;
+      @include nrn {
+        border-right-style: dashed;
+      }
+    }
   }
 }

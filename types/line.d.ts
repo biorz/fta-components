@@ -18,7 +18,7 @@ export interface LineProps extends BaseComponent {
    */
   color?: string
   /**
-   * 长度，设计稿720px
+   * 长度
    * @default '100%'
    */
   length?: string | number
@@ -38,7 +38,7 @@ export interface LineProps extends BaseComponent {
    */
   dashed?: boolean
   /**
-   * 线条与上下左右元素的边距，设计稿720px
+   * 线条与上下左右元素的边距
    */
   margin?: LineMargin
 }
