@@ -17,6 +17,7 @@ $fta-search-input-bg: #f6f6f6;
 
 %placeholder-style {
   @extend %base-input-style;
+  text-align: left;
   color: $color-grey-3;
 }
 
@@ -29,7 +30,7 @@ $fta-search-input-bg: #f6f6f6;
 
   &-container {
     flex: 1;
-    min-width: zoom(572px);
+    // min-width: zoom(572px);
     height: zoom(80px);
     border-radius: zoom(16px);
     background-color: $fta-search-input-bg;
@@ -50,8 +51,13 @@ $fta-search-input-bg: #f6f6f6;
     @include h5 {
       .weui-input {
         @extend %input-style;
+
+        &::placeholder {
+          @extend %placeholder-style;
+        }
       }
     }
+    @extend %input-style;
 
     &--placeholder {
       @extend %placeholder-style;
@@ -66,7 +72,7 @@ $fta-search-input-bg: #f6f6f6;
   &-cancel {
     @include display-flex(row);
     align-items: center;
-    flex: 1;
+    margin-right: zoom(28px);
 
     &__text {
       font-size: $font-size-md;

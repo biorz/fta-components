@@ -25,6 +25,7 @@ function Search(props: SearchProps): JSX.Element {
     clearable,
     cancelText,
     result,
+    disabled,
     onCancel,
     onClear,
     onChange,
@@ -67,6 +68,7 @@ function Search(props: SearchProps): JSX.Element {
             icon
           )}
           <Input
+            disabled={disabled}
             value={value}
             className={inputClass}
             style={inputStyle}
@@ -84,7 +86,7 @@ function Search(props: SearchProps): JSX.Element {
           ) : null}
         </View>
         {/* 取消按钮 */}
-        {focused ? (
+        {focused || value?.length ? (
           <View className='fta-search-cancel' onClick={onCancel}>
             <Text className='fta-search-cancel__text'>{cancelText}</Text>
           </View>
@@ -129,8 +131,8 @@ function ResultText(props: {
   const reg = new RegExp(keyword, 'g')
   let t: any
   let i = 0
+  let tmp: any
   while ((t = reg.exec(children))) {
-    let tmp: any
     if ((tmp = children.slice(i, t.index as number))) {
       list.push(<Text className='fta-search-result__text'>{tmp}</Text>)
     }
@@ -144,6 +146,9 @@ function ResultText(props: {
       i = i + len
     }
   }
+  if ((tmp = children.slice(i))) {
+    list.push(<Text className='fta-search-result__text'>{tmp}</Text>)
+  }
   console.log('list', list.length)
   return (
     <Fragment>
@@ -155,6 +160,7 @@ function ResultText(props: {
 }
 
 const defaultProps: SearchProps = {
+  disabled: false,
   cancelText: '取消',
   placeholderTextColor: '#cccccc',
 }
