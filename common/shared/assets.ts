@@ -45,6 +45,8 @@ const Assets = {
   check: {
     default:
       'https://imagecdn.ymm56.com/ymmfile/static/resource/f1b19e18-3105-4951-8e95-f0de00b221d2.png',
+    primary:
+      'https://imagecdn.ymm56.com/ymmfile/common-operation/d5c09873-f788-4fe8-8d46-669fb5bbce91.png',
   },
   // 加载中
   loading: {

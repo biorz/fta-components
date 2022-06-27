@@ -12,6 +12,8 @@
   "Curtain": { "replace": "components/curtain", "default": true },
   "Divider": { "replace": "components/divider", "default": true },
   "Drawer": { "replace": "components/drawer", "default": true },
+  "Dropdown": { "replace": "components/dropdown", "default": true },
+  "DropdownItem": { "replace": "components/dropdown", "default": false },
   "Empty": { "replace": "components/empty", "default": true },
   "Form": { "replace": "components/form", "default": true },
   "FormItem": { "replace": "components/form", "default": false },
@@ -22,6 +24,7 @@
   "Input": { "replace": "components/input", "default": true },
   "InputNumber": { "replace": "components/input-number", "default": true },
   "Keyboard": { "replace": "components/keyboard", "default": true },
+  "Line": { "replace": "components/line", "default": true },
   "List": { "replace": "components/list", "default": true },
   "ListItem": { "replace": "components/list", "default": false },
   "Loading": { "replace": "components/loading", "default": true },
@@ -39,6 +42,7 @@
   "Result": { "replace": "components/result", "default": true },
   "SafeArea": { "replace": "components/safe-area", "default": true },
   "SafeAreaView": { "replace": "components/safe-area", "default": false },
+  "Search": { "replace": "components/search", "default": true },
   "SegmentedControl": { "replace": "components/segmented-control", "default": true },
   "Steps": { "replace": "components/steps", "default": true },
   "StepsItem": { "replace": "components/steps", "default": false },
@@ -61,6 +65,5 @@
   "LayoutView": { "replace": "components/view", "default": true },
   "TouchableHighlight": { "replace": "components/view", "default": false },
   "TouchableOpacity": { "replace": "components/view", "default": false },
-  "TouchableWithoutFeedback": { "replace": "components/view", "default": false },
-  "Search": { "replace": "components/search", "default": true }
+  "TouchableWithoutFeedback": { "replace": "components/view", "default": false }
 }
