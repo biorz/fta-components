@@ -55,3 +55,4 @@ export {
   TouchableWithoutFeedback,
 } from './view'
 export { default as Overlay } from './overlay'
+export { default as Intro } from './intro'
