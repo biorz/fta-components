@@ -65,5 +65,6 @@
   "LayoutView": { "replace": "components/view", "default": true },
   "TouchableHighlight": { "replace": "components/view", "default": false },
   "TouchableOpacity": { "replace": "components/view", "default": false },
-  "TouchableWithoutFeedback": { "replace": "components/view", "default": false }
+  "TouchableWithoutFeedback": { "replace": "components/view", "default": false },
+  "Overlay": { "replace": "components/overlay", "default": true }
 }

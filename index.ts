@@ -58,3 +58,4 @@ export {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from './components/view'
+export { default as Overlay } from './components/overlay'

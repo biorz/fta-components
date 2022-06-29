@@ -54,3 +54,4 @@ export {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from './view'
+export { default as Overlay } from './overlay'

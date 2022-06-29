@@ -1,0 +1,55 @@
+@import '../../mixins/index.scss';
+@import '../../variables/default.scss';
+
+%absolute-full {
+  // flex: 1;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 800px;
+}
+
+.fta-overlay {
+  @extend %absolute-full;
+  position: absolute;
+  z-index: 99;
+  background-color: #000000;
+  opacity: 0.5;
+
+  &-container {
+    @extend %absolute-full;
+    position: absolute;
+    background-color: transparent;
+    z-index: 100;
+
+    @include nrn {
+      pointer-events: none;
+    }
+
+    &--center {
+      @include flex-center();
+    }
+  }
+
+  &--anim {
+    @include nrn {
+      animation: fta-overlay 300ms;
+    }
+  }
+
+  &--fixed {
+    @include nrn {
+      position: fixed;
+    }
+  }
+}
+
+@keyframes fta-overlay {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.5;
+  }
+}
