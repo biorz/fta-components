@@ -135,6 +135,12 @@ $fta-form-content-bg-color: #f9f9f9;
     //   // background-color: green;
     // }
 
+    &__required {
+      font-size: $font-size-md;
+      line-height: $font-size-md;
+      color: #ff5b00;
+    }
+
     &__text {
       font-size: $font-size-sm;
       font-weight: $font-weight-normal;

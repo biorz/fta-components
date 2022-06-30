@@ -438,7 +438,7 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
         {...omit({ ...props, error: errored, errorTip: state.message, itemRef: methodsRef }, [
           'prop',
           // 'value',
-          'required',
+          // 'required',
           'rules',
           'onMount',
           'onDestroy',
@@ -465,7 +465,7 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
     // prop,
     value,
     format,
-    // required,
+    required,
     // rules,
     // onMount,
     // onDestroy,
@@ -576,6 +576,7 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
           hoverClass={labelHoverClass}
           // @ts-ignore
           hoverClassName={labelHoverClass}>
+          {required && !_readonly ? <Text className='fta-form-item-label__required'>*</Text> : null}
           <Text className={_labelTextClass} style={_labelTextStyle}>
             {label}
           </Text>
