@@ -36,7 +36,7 @@ export interface IntroContext {
 export type WithIntro = <T extends ComponentType<any>, P extends ComponentProps<T>>(
   ChildComponent: T,
   props: P = any
-) => JSX.Element
+) => () => JSX.Element
 
 export interface IntroProps {}
 

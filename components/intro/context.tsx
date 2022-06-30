@@ -26,7 +26,9 @@ function _IntroProvider(props: { children: ReactNode }, ref: ForwardedRef<IntroC
   const hasReachEnd = () => r.cursor >= stack.length + 1
 
   const refMethods: IntroContext = {
-    show(step = r.cursor++) {},
+    show(step = r.cursor++) {
+      toggle(true)
+    },
     hide() {
       toggle(false)
     },
@@ -66,10 +68,13 @@ function _IntroProvider(props: { children: ReactNode }, ref: ForwardedRef<IntroC
 const IntroProvider = forwardRef(_IntroProvider)
 
 /** 高阶函数，直接包裹组件 */
-const withIntro: WithIntro = (ChildComponent, props = {} as any) => (
-  <IntroProvider>
-    <ChildComponent {...props} />
-  </IntroProvider>
-)
+const withIntro: WithIntro =
+  (ChildComponent, props = {} as any) =>
+  () =>
+    (
+      <IntroProvider>
+        <ChildComponent {...props} />
+      </IntroProvider>
+    )
 
 export { IntroProvider, IntroConsumer, useIntroContext, withIntro }
