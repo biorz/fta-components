@@ -24,6 +24,13 @@ export { default as Image } from './components/image'
 export { default as InfiniteScroll } from './components/infinite-scroll'
 export { default as Input } from './components/input'
 export { default as InputNumber } from './components/input-number'
+export {
+  default as Intro,
+  IntroConsumer,
+  IntroProvider,
+  useIntroContext,
+  withIntro,
+} from './components/intro'
 export { default as Keyboard } from './components/keyboard'
 export { default as Line } from './components/line'
 export { default as List, ListItem } from './components/list'
@@ -31,6 +38,7 @@ export { default as Loading } from './components/loading'
 export { default as Modal, ModalAction, ModalContent, ModalHeader } from './components/modal'
 export { default as NavBar, NavBarButton } from './components/nav-bar'
 export { default as NoticeBar } from './components/notice-bar'
+export { default as Overlay } from './components/overlay'
 export { default as Picker } from './components/picker'
 export { default as PullToRefresh } from './components/pull-to-refresh'
 export { default as Radio } from './components/radio'
@@ -58,5 +66,3 @@ export {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from './components/view'
-export { default as Overlay } from './components/overlay'
-export { default as Intro } from './components/intro'
