@@ -1,8 +1,26 @@
 import { ComponentProps, ComponentType, FC, Provider, ReactElement } from 'react'
+import BaseComponent from './base'
 
 export type Step = any
 
+export interface Rect {
+  x: number
+  y: number
+  width: number
+  height: number
+}
+
+export interface MetaData extends Pick<IntroContext, 'readonly'> {
+  el: ReactElement
+  rect: Rect
+}
+
 export interface IntroContext {
+  /**
+   * 元素是否不可点击
+   * @default true
+   */
+  readonly?: boolean
   /**
    * 显示指引
    */
@@ -22,7 +40,7 @@ export interface IntroContext {
   /**
    * 注册步骤
    */
-  register(step: Step): void
+  register(data: MetaData): void
   /**
    * 移除步骤
    */
@@ -51,8 +69,16 @@ export type WithIntro = <T extends ComponentType<any>, P extends ComponentProps<
   props: P = any
 ) => () => JSX.Element
 
-export interface IntroProps {
+export interface IntroProps extends BaseComponent, Pick<IntroContext, 'readonly'> {
+  /**
+   * 需要引导的节点组件
+   */
   children: ReactElement
+  /**
+   * 提示文字/按钮框放置的位置
+   * @default 'bottom'
+   */
+  placement?: 'top' | 'bottom'
 }
 
 declare const withIntro: WithIntro

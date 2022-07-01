@@ -129,8 +129,9 @@ export const Button = forwardRef(
     const { className, style, ...extraProps } = props
     const rootClass = useCarelessClass(['fta-demo-button'], [className])
     const txtClz = useCareClass(['fta-demo-button__text'])
+    const refObj = inRN ? { _ref: ref } : { ref }
     return (
-      <View style={{ flex: 1 }}>
+      <View className='fta-demo-button-container' {...refObj}>
         <TouchableOpacity className={rootClass} style={style} {...extraProps}>
           <Text className={txtClz}>{props.children}</Text>
         </TouchableOpacity>

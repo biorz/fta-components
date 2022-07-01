@@ -123,6 +123,11 @@ $navbar-height: 80px;
   }
 
   &-button {
+    &-container {
+      margin: 0 14px;
+      flex: 1 0 auto;
+    }
+
     @include flex();
     flex: 1 0 auto;
     height: 90px;
@@ -131,7 +136,6 @@ $navbar-height: 80px;
 
     // width: 500px;
     // align-self: center;
-    margin: 0 14px;
     background-color: #fff;
     border-radius: 40px;
     &__text {
@@ -146,7 +150,6 @@ $navbar-height: 80px;
   }
 
   &-button--care {
-    margin: 0 care(14px);
     border-radius: care(40px);
     height: care(90px);
   }
