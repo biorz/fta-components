@@ -23,6 +23,11 @@
   "InfiniteScroll": { "replace": "components/infinite-scroll", "default": true },
   "Input": { "replace": "components/input", "default": true },
   "InputNumber": { "replace": "components/input-number", "default": true },
+  "Intro": { "replace": "components/intro", "default": true },
+  "IntroConsumer": { "replace": "components/intro", "default": false },
+  "IntroProvider": { "replace": "components/intro", "default": false },
+  "useIntroContext": { "replace": "components/intro", "default": false },
+  "withIntro": { "replace": "components/intro", "default": false },
   "Keyboard": { "replace": "components/keyboard", "default": true },
   "Line": { "replace": "components/line", "default": true },
   "List": { "replace": "components/list", "default": true },
@@ -35,6 +40,7 @@
   "NavBar": { "replace": "components/nav-bar", "default": true },
   "NavBarButton": { "replace": "components/nav-bar", "default": false },
   "NoticeBar": { "replace": "components/notice-bar", "default": true },
+  "Overlay": { "replace": "components/overlay", "default": true },
   "Picker": { "replace": "components/picker", "default": true },
   "PullToRefresh": { "replace": "components/pull-to-refresh", "default": true },
   "Radio": { "replace": "components/radio", "default": true },
@@ -65,6 +71,5 @@
   "LayoutView": { "replace": "components/view", "default": true },
   "TouchableHighlight": { "replace": "components/view", "default": false },
   "TouchableOpacity": { "replace": "components/view", "default": false },
-  "TouchableWithoutFeedback": { "replace": "components/view", "default": false },
-  "Overlay": { "replace": "components/overlay", "default": true }
+  "TouchableWithoutFeedback": { "replace": "components/view", "default": false }
 }

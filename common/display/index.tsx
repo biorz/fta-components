@@ -18,6 +18,8 @@ import React, {
   ComponentProps,
   ComponentType,
   CSSProperties,
+  ForwardedRef,
+  forwardRef,
   Fragment,
   ReactNode,
   useEffect,
@@ -122,16 +124,20 @@ function createDemoHOC<P extends object>(
   }
 }
 
-export function Button(props: ComponentProps<typeof TouchableOpacity>) {
-  const { className, style, ...extraProps } = props
-  const rootClass = useCarelessClass(['fta-demo-button'], [className])
-  const txtClz = useCareClass(['fta-demo-button__text'])
-  return (
-    <TouchableOpacity className={rootClass} style={style} {...extraProps}>
-      <Text className={txtClz}>{props.children}</Text>
-    </TouchableOpacity>
-  )
-}
+export const Button = forwardRef(
+  (props: ComponentProps<typeof TouchableOpacity>, ref: ForwardedRef<any>) => {
+    const { className, style, ...extraProps } = props
+    const rootClass = useCarelessClass(['fta-demo-button'], [className])
+    const txtClz = useCareClass(['fta-demo-button__text'])
+    return (
+      <View forwardedRef={ref}>
+        <TouchableOpacity className={rootClass} style={style} {...extraProps}>
+          <Text className={txtClz}>{props.children}</Text>
+        </TouchableOpacity>
+      </View>
+    )
+  }
+)
 
 /**
  * 组件演示区

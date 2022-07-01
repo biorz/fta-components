@@ -1,4 +1,4 @@
-import { ComponentProps, ComponentType, FC, Provider } from 'react'
+import { ComponentProps, ComponentType, FC, Provider, ReactElement } from 'react'
 
 export type Step = any
 
@@ -31,6 +31,19 @@ export interface IntroContext {
    * 移除所有步骤
    */
   destroy(): void
+  /**
+   * 是否禁用提示
+   * @default false
+   */
+  disabled(): boolean
+  /**
+   * 禁用提示
+   */
+  disable(): void
+  /**
+   * 启用提示
+   */
+  enable(): void
 }
 
 export type WithIntro = <T extends ComponentType<any>, P extends ComponentProps<T>>(
@@ -38,7 +51,9 @@ export type WithIntro = <T extends ComponentType<any>, P extends ComponentProps<
   props: P = any
 ) => () => JSX.Element
 
-export interface IntroProps {}
+export interface IntroProps {
+  children: ReactElement
+}
 
 declare const withIntro: WithIntro
 
