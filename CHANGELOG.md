@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.3-alpha.4](https://code.amh-group.com/h5developer/basebuild/views/fta-view/compare/@fta/components@1.0.3-alpha.3...@fta/components@1.0.3-alpha.4) (2022-07-01)
+
+**Note:** Version bump only for package @fta/components
+
 ## [1.0.3-alpha.2](https://code.amh-group.com/h5developer/basebuild/views/fta-view/compare/@fta/components@1.0.3-alpha.1...@fta/components@1.0.3-alpha.2) (2022-06-23)
 
 **Note:** Version bump only for package @fta/components
