@@ -222,7 +222,7 @@ $fta-modal-duration: 200ms;
     }
 
     &:not(:first-child) {
-      @include hairline-left-relative($color: $color-grey-4);
+      @include hairline-left-relative($color: $fta-modal-line-color);
     }
   }
 
@@ -232,8 +232,9 @@ $fta-modal-duration: 200ms;
   }
 
   .button--border {
-    border-left-width: 0.5px;
-    border-color: $color-grey-4;
+    // prettier-ignore
+    border-left-width: 0.5PX;
+    border-color: $fta-modal-line-color;
   }
 
   .button-confirm__text {

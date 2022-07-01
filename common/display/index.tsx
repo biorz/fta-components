@@ -130,7 +130,7 @@ export const Button = forwardRef(
     const rootClass = useCarelessClass(['fta-demo-button'], [className])
     const txtClz = useCareClass(['fta-demo-button__text'])
     return (
-      <View forwardedRef={ref}>
+      <View style={{ flex: 1 }}>
         <TouchableOpacity className={rootClass} style={style} {...extraProps}>
           <Text className={txtClz}>{props.children}</Text>
         </TouchableOpacity>

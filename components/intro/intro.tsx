@@ -2,7 +2,6 @@ import React, { cloneElement, ForwardedRef, forwardRef, Fragment, useEffect, use
 import '../../style/components/intro/index.scss'
 import { IntroProps } from '../../types/intro'
 import { IntroConsumer, IntroProvider, useIntroContext, withIntro } from './context'
-import { getBoundingClientRect } from './dom-rect'
 
 function _Intro(props: IntroProps, ref: ForwardedRef<any>) {
   const children = cloneElement(props.children, { ref })
@@ -19,13 +18,13 @@ function Intro(props: IntroProps) {
     if (ctx.disabled()) return
     console.log('ref', ref)
     // window.ref = ref
-    getBoundingClientRect(ref).then((rect) => {
-      console.log('尺寸信息', rect)
-      // @ts-ignore
-      ctx.register(
-        React.cloneElement(props.children, { style: { marginTop: rect.y, marginLeft: rect.x } })
-      )
-    })
+    // getBoundingClientRect(ref).then((rect) => {
+    //   console.log('尺寸信息', rect)
+    //   // @ts-ignore
+    //   ctx.register(
+    //     React.cloneElement(props.children, { style: { marginTop: rect.y, marginLeft: rect.x } })
+    //   )
+    // })
   }, [])
 
   return <FowardedIntro ref={ref}>{props.children}</FowardedIntro>
