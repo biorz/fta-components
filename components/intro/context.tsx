@@ -2,9 +2,11 @@ import React, {
   createContext,
   ForwardedRef,
   forwardRef,
+  ReactElement,
   ReactNode,
   useContext,
   useImperativeHandle,
+  useLayoutEffect,
   useRef,
   useState,
 } from 'react'
@@ -17,16 +19,32 @@ const IntroConsumer = context.Consumer
 
 const useIntroContext = () => useContext(context)
 
-function _IntroProvider(props: { children: ReactNode }, ref: ForwardedRef<IntroContext>) {
+function _IntroProvider(
+  props: { children: ReactNode; disabled?: boolean },
+  _ref: ForwardedRef<IntroContext>
+) {
+  const [isDisabled, disabled] = useState(!!props.disabled)
+
   const [show, toggle] = useState(false)
   const [children, setChildren] = useState<any>(null)
-  const [stack, setStack] = useState([])
-  const r = useRef({ cursor: 1 }).current
+  const [stack, setStack] = useState<ReactElement[]>([])
+  const ref = useRef({ isDisabled, disabled, cursor: 1 }).current
 
-  const hasReachEnd = () => r.cursor >= stack.length + 1
+  const hasReachEnd = () => ref.cursor >= stack.length + 1
+
+  useLayoutEffect(() => {
+    ref.isDisabled = isDisabled
+    ref.disabled = disabled
+  }, [isDisabled, disabled])
+
+  useLayoutEffect(() => {
+    disabled(!!props.disabled)
+    console.log('useLayoutEffect')
+  }, [props.disabled])
 
   const refMethods: IntroContext = {
-    show(step = r.cursor++) {
+    show(step = ref.cursor++) {
+      if (ref.isDisabled) return
       toggle(true)
     },
     hide() {
@@ -42,12 +60,21 @@ function _IntroProvider(props: { children: ReactNode }, ref: ForwardedRef<IntroC
     prev() {
       toggle(true)
     },
-    register() {},
+    register(el: ReactElement) {
+      console.log('register element', el)
+      setStack([...stack, el])
+    },
     unregister() {},
     destroy() {},
+    disable: () => {
+      ref.disabled(true)
+      ref.isDisabled = true
+    },
+    enable: () => ref.disabled(false),
+    disabled: () => ref.isDisabled,
   }
 
-  useImperativeHandle(ref, () => refMethods)
+  useImperativeHandle(_ref, () => refMethods)
 
   const onOverlayClick = () => {
     refMethods.next()
@@ -55,7 +82,9 @@ function _IntroProvider(props: { children: ReactNode }, ref: ForwardedRef<IntroC
 
   return (
     <context.Provider value={refMethods}>
-      <Overlay show={show} onClick={onOverlayClick}></Overlay>
+      <Overlay show={show} onClick={onOverlayClick}>
+        {stack[ref.cursor - 1] || null}
+      </Overlay>
       {props.children}
     </context.Provider>
   )

@@ -17,8 +17,9 @@
 
 .fta-modal {
   &__footer {
+    margin-top: $spacing-v-max;
     @include display-flex;
-    @include hairline-top-relative($color: $color-grey-4);
+    @include hairline-top-relative($color: $fta-modal-line-color);
 
     .fta-modal__action {
       @include display-flex;
