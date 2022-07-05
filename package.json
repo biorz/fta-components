@@ -7,7 +7,7 @@
     "fta-theme": "./bin/theme-handler.js"
   },
   "react-native": "dist/rn/index.js",
-  "h5": "dist/h5/index.js",
+  "main:h5": "dist/h5/index.js",
   "weapp": "dist/weapp/index.js",
   "scripts": {
     "build:map": "node ./extract-component-map.js",
