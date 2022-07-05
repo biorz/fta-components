@@ -1,12 +1,18 @@
-import { Gap, inAlipay, inRN, NavBar, SafeArea, Tabs, TouchableOpacity } from '@fta/components'
 import {
+  Gap,
+  inAlipay,
+  inRN,
   inWeapp,
+  NavBar,
+  SafeArea,
+  Tabs,
+  TouchableOpacity,
   useCareClass,
   useCareClasses,
   useCarelessClass,
   useConfig,
   withCare as nativeWithCare,
-} from '@fta/components/common'
+} from '@fta/components'
 import { Input, ScrollView, Text, View } from '@tarojs/components'
 import { ScrollViewProps } from '@tarojs/components/types/ScrollView'
 import { ViewProps } from '@tarojs/components/types/View'
@@ -129,8 +135,9 @@ export const Button = forwardRef(
     const { className, style, ...extraProps } = props
     const rootClass = useCarelessClass(['fta-demo-button'], [className])
     const txtClz = useCareClass(['fta-demo-button__text'])
+    const refObj = inRN ? { _ref: ref } : { ref }
     return (
-      <View style={{ flex: 1 }}>
+      <View className='fta-demo-button-container' {...refObj}>
         <TouchableOpacity className={rootClass} style={style} {...extraProps}>
           <Text className={txtClz}>{props.children}</Text>
         </TouchableOpacity>

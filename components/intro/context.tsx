@@ -1,8 +1,8 @@
+import { View } from '@tarojs/components'
 import React, {
   createContext,
   ForwardedRef,
   forwardRef,
-  ReactElement,
   ReactNode,
   useContext,
   useImperativeHandle,
@@ -10,7 +10,9 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import { IntroContext, WithIntro } from '../../types/intro'
+import { classNames, px } from '../../common'
+import '../../style/components/intro/index.scss'
+import { IntroContext, MetaData, WithIntro } from '../../types/intro'
 import Overlay from '../overlay'
 
 const context = createContext<IntroContext>({} as IntroContext)
@@ -20,17 +22,17 @@ const IntroConsumer = context.Consumer
 const useIntroContext = () => useContext(context)
 
 function _IntroProvider(
-  props: { children: ReactNode; disabled?: boolean },
+  props: { children: ReactNode; disabled?: boolean; readonly?: boolean },
   _ref: ForwardedRef<IntroContext>
 ) {
   const [isDisabled, disabled] = useState(!!props.disabled)
 
   const [show, toggle] = useState(false)
-  const [children, setChildren] = useState<any>(null)
-  const [stack, setStack] = useState<ReactElement[]>([])
+  const [cursor, moveCursorTo] = useState(0)
+  const [stack, setStack] = useState<MetaData[]>([])
   const ref = useRef({ isDisabled, disabled, cursor: 1 }).current
 
-  const hasReachEnd = () => ref.cursor >= stack.length + 1
+  const hasReachEnd = () => cursor + 1 >= stack.length
 
   useLayoutEffect(() => {
     ref.isDisabled = isDisabled
@@ -42,15 +44,19 @@ function _IntroProvider(
     console.log('useLayoutEffect')
   }, [props.disabled])
 
-  const refMethods: IntroContext = {
-    show(step = ref.cursor++) {
+  const refAttrs: IntroContext = {
+    readonly: props.readonly,
+    show(step) {
       if (ref.isDisabled) return
+      step = step || 0
+      moveCursorTo(step)
       toggle(true)
     },
     hide() {
       toggle(false)
     },
     next() {
+      console.log('hasreachend', hasReachEnd(), cursor)
       if (hasReachEnd()) {
         toggle(false)
       } else {
@@ -60,9 +66,9 @@ function _IntroProvider(
     prev() {
       toggle(true)
     },
-    register(el: ReactElement) {
-      console.log('register element', el)
-      setStack([...stack, el])
+    register(metaData) {
+      console.log('register element', metaData)
+      setStack([...stack, metaData])
     },
     unregister() {},
     destroy() {},
@@ -74,16 +80,33 @@ function _IntroProvider(
     disabled: () => ref.isDisabled,
   }
 
-  useImperativeHandle(_ref, () => refMethods)
+  useImperativeHandle(_ref, () => refAttrs)
 
   const onOverlayClick = () => {
-    refMethods.next()
+    refAttrs.next()
   }
 
+  const current = stack[cursor]
+  const _readonly = current?.readonly === false ? false : current?.readonly || props.readonly
+
   return (
-    <context.Provider value={refMethods}>
+    <context.Provider value={refAttrs}>
       <Overlay show={show} onClick={onOverlayClick}>
-        {stack[ref.cursor - 1] || null}
+        {current ? (
+          <View
+            // @ts-ignore
+            pointerEvents={_readonly ? 'none' : void 0}
+            className={classNames('fta-intro-wrapper', _readonly && 'fta-intro-wrapper--readonly')}
+            style={{
+              position: 'absolute',
+              top: px(current.rect.y),
+              left: px(current.rect.x),
+              width: px(current.rect.width),
+              height: px(current.rect.height),
+            }}>
+            {current.el || null}
+          </View>
+        ) : null}
       </Overlay>
       {props.children}
     </context.Provider>
@@ -95,6 +118,10 @@ function _IntroProvider(
  * 全局引导配置
  */
 const IntroProvider = forwardRef(_IntroProvider)
+
+IntroProvider.defaultProps = {
+  readonly: true,
+}
 
 /** 高阶函数，直接包裹组件 */
 const withIntro: WithIntro =

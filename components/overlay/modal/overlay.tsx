@@ -1,7 +1,7 @@
 import { CommonEvent, View } from '@tarojs/components'
 import classNames from 'classnames'
 import React, { CSSProperties } from 'react'
-import { inRN } from '../../../common'
+import { inRN, inWeb } from '../../../common'
 import '../../../style/components/overlay/index.scss'
 import { OverlayProps } from '../../../types/overlay'
 import { defaultProps } from './defalut-props'
@@ -58,7 +58,7 @@ export default function Overlay(props: OverlayProps) {
         )}
         style={bodyStyle}
         onClick={stopPropagation}>
-        {children}
+        {inWeb || inRN ? children : <View className='fta-overlay-container-root'>{children}</View>}
       </View>
     </>
   ) : null
