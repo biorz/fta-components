@@ -1,12 +1,18 @@
-import { Gap, inAlipay, inRN, NavBar, SafeArea, Tabs, TouchableOpacity } from '@fta/components'
 import {
+  Gap,
+  inAlipay,
+  inRN,
   inWeapp,
+  NavBar,
+  SafeArea,
+  Tabs,
+  TouchableOpacity,
   useCareClass,
   useCareClasses,
   useCarelessClass,
   useConfig,
   withCare as nativeWithCare,
-} from '@fta/components/common'
+} from '@fta/components'
 import { Input, ScrollView, Text, View } from '@tarojs/components'
 import { ScrollViewProps } from '@tarojs/components/types/ScrollView'
 import { ViewProps } from '@tarojs/components/types/View'
