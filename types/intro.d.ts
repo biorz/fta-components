@@ -1,4 +1,4 @@
-import { ComponentProps, ComponentType, FC, Provider, ReactElement } from 'react'
+import { ComponentProps, ComponentType, CSSProperties, FC, Provider, ReactElement } from 'react'
 import BaseComponent from './base'
 
 export type Step = any
@@ -69,7 +69,34 @@ export type WithIntro = <T extends ComponentType<any>, P extends ComponentProps<
   props: P = any
 ) => () => JSX.Element
 
-export interface IntroProps extends BaseComponent, Pick<IntroContext, 'readonly'> {
+export interface TooltipProps {
+  /**
+   * 类名
+   */
+  tooltipClassName?: string
+  /**
+   * 样式
+   */
+  tooltipStyle?: CSSProperties
+  /**
+   * 提示标题
+   */
+  title?: string
+  /**
+   * 提示内容，不传则不展示
+   */
+  desc?: string
+  /**
+   * 提示按钮文本，不传则不展示
+   */
+  text?: string
+  /**
+   * 点击按钮的回调，默认跳到下一步
+   */
+  onClick?(): void
+}
+
+export interface IntroProps extends BaseComponent, Pick<IntroContext, 'readonly'>, TooltipProps {
   /**
    * 需要引导的节点组件
    */

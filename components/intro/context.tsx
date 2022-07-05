@@ -10,7 +10,8 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import { px } from '../../common'
+import { classNames, px } from '../../common'
+import '../../style/components/intro/index.scss'
 import { IntroContext, MetaData, WithIntro } from '../../types/intro'
 import Overlay from '../overlay'
 
@@ -95,6 +96,7 @@ function _IntroProvider(
           <View
             // @ts-ignore
             pointerEvents={_readonly ? 'none' : void 0}
+            className={classNames('fta-intro-wrapper', _readonly && 'fta-intro-wrapper--readonly')}
             style={{
               position: 'absolute',
               top: px(current.rect.y),

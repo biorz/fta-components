@@ -1,6 +1,12 @@
 @import '../../mixins/index.scss';
 @import '../../variables/default.scss';
 
-.fta-intro{
-
+.fta-intro {
+  &-wrapper {
+    &--readonly {
+      @include nrn {
+        pointer-events: none;
+      }
+    }
+  }
 }
