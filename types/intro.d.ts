@@ -136,11 +136,14 @@ declare const IntroConsumer: Consumer<IntroContext>
 
 declare const useIntroContext: () => IntroContext
 
+declare const Tooltip: FC<TooltipProps>
+
 declare const Intro: FC<IntroProps> & {
   Provider: typeof IntroProvider
   Consumer: typeof IntroConsumer
   with: typeof withIntro
   useContext: typeof useIntroContext
+  Tooltip: typeof Tooltip
 }
 
 export { Intro as default, withIntro, IntroProvider, IntroConsumer, useIntroContext }
