@@ -13,6 +13,11 @@ export interface Rect {
 export interface MetaData extends Pick<IntroContext, 'readonly'> {
   el: ReactElement
   rect: Rect
+  tooltip: TooltipProps
+  /** 优先级 */
+  priority: number
+  /** id */
+  prop?: string
 }
 
 export interface IntroContext {
@@ -23,8 +28,14 @@ export interface IntroContext {
   readonly?: boolean
   /**
    * 显示指引
+   * @param curosr 不传从0开始
    */
-  show(step?: number): void
+  show(curosr?: number): void
+  /**
+   * 显示指引
+   * @param prop 不传从0开始
+   */
+  show(prop?: string): void
   /**
    * 隐藏指引
    */
@@ -91,21 +102,30 @@ export interface TooltipProps {
    */
   text?: string
   /**
+   * 提示文字/按钮框放置的位置
+   * @default 'bottom'
+   */
+  placement?: 'top' | 'bottom'
+  /**
+   * icon三角形偏移百分比
+   * @default '30%'
+   */
+  offset?: string
+  /**
    * 点击按钮的回调，默认跳到下一步
    */
   onClick?(): void
 }
 
-export interface IntroProps extends BaseComponent, Pick<IntroContext, 'readonly'>, TooltipProps {
+export interface IntroProps
+  extends BaseComponent,
+    Pick<IntroContext, 'readonly'>,
+    TooltipProps,
+    Pick<MetaData, 'prop'> {
   /**
    * 需要引导的节点组件
    */
   children: ReactElement
-  /**
-   * 提示文字/按钮框放置的位置
-   * @default 'bottom'
-   */
-  placement?: 'top' | 'bottom'
 }
 
 declare const withIntro: WithIntro

@@ -1,11 +1,97 @@
 @import '../../mixins/index.scss';
 @import '../../variables/default.scss';
 
+@mixin fit-content {
+  @include nrn {
+    width: fit-content;
+  }
+
+  @include rn {
+    align-self: flex-start;
+  }
+}
+
 .fta-intro {
   &-wrapper {
+    position: absolute;
+
     &--readonly {
       @include nrn {
         pointer-events: none;
+      }
+    }
+  }
+
+  &-tooltip {
+    @include fit-content();
+    @include nrn {
+      pointer-events: auto;
+    }
+    position: absolute;
+    border-radius: zoom(20px);
+    background-color: $color-white;
+
+    &-title {
+      padding: zoom(24px) zoom(32px) zoom(22px);
+
+      &__text {
+        font-size: $font-size-md;
+        color: $color-grey-0;
+        font-weight: $font-weight-bold;
+        line-height: zoom(45px);
+      }
+
+      &--simple {
+        padding-bottom: zoom(14px);
+      }
+    }
+
+    &-desc {
+      margin-bottom: zoom(28px);
+      padding: 0 zoom(32px);
+      &__text {
+        font-size: $font-size-sm;
+        line-height: $font-size-md;
+        color: $color-grey-2;
+      }
+    }
+
+    &-button {
+      @include flex-center();
+      border-top-color: #e7e7e7;
+      // prettier-ignore
+      border-top-width: 1PX;
+      @include nrn {
+        border-top-style: solid;
+        pointer-events: auto;
+      }
+      height: zoom(88px);
+
+      &__text {
+        font-size: $font-size-md;
+        color: $color-brand;
+        font-weight: $font-weight-bold;
+      }
+    }
+
+    &-icon {
+      @include square(0);
+      position: absolute;
+      z-index: 1;
+      border-width: zoom(14px);
+      border-color: transparent;
+      @include nrn {
+        border-style: solid;
+      }
+
+      &--top {
+        border-top-color: $color-white;
+        top: 99%;
+      }
+
+      &--bottom {
+        border-bottom-color: $color-white;
+        bottom: 99%;
       }
     }
   }
