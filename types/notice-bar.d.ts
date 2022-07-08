@@ -1,8 +1,8 @@
 import { CommonEvent } from '@tarojs/components/types/common'
 import { ComponentClass, ReactNode } from 'react'
-import BaseComponent, { BaseTextComponent } from './base'
+import BaseComponent, { BaseTextComponent, PropsWithChildren } from './base'
 
-export interface NoticeBarProps extends BaseComponent, BaseTextComponent {
+export interface NoticeBarProps extends BaseComponent, BaseTextComponent, PropsWithChildren {
   /**
    * 是否需要关闭按钮, 可传入自定义节点覆盖
    * @default false

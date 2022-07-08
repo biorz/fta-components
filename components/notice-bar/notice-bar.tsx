@@ -26,7 +26,7 @@ class NoticeBar extends Component<NoticeBarProps, NoticeBarState> {
   public static propTypes: InferProps<NoticeBarProps>
 
   private timeout: NodeJS.Timeout | null
-  private interval: NodeJS.Timer | null
+  private interval: NodeJS.Timer
 
   public constructor(props: NoticeBarProps) {
     super(props)
@@ -37,7 +37,7 @@ class NoticeBar extends Component<NoticeBarProps, NoticeBarState> {
       animationData: {
         actions: [{}],
       },
-      dura: 1000,
+      dura: 15,
     }
   }
 
@@ -48,16 +48,12 @@ class NoticeBar extends Component<NoticeBarProps, NoticeBarState> {
     this.props.onClose && this.props.onClose(event)
   }
   // TODO: 优化
-  public UNSAFE_componentWillReceiveProps(): void {
-    if (this.timeout) {
-      clearTimeout(this.timeout)
-      this.timeout = null
+  public UNSAFE_componentWillReceiveProps(nextProps: NoticeBarProps): void {
+    if (nextProps.children === this.props.children) return
+    if (!this.timeout) {
+      this.interval && clearInterval(this.interval)
+      this.initAnimation()
     }
-    if (this.interval) {
-      clearInterval(this.interval)
-      this.interval = null
-    }
-    this.initAnimation()
   }
 
   public componentDidMount(): void {
@@ -139,6 +135,7 @@ class NoticeBar extends Component<NoticeBarProps, NoticeBarState> {
       close,
       onClick,
     } = this.props
+
     const { dura, show, animElemId, animationData } = this.state
     const rootClassName = 'fta-noticebar'
 
@@ -148,7 +145,7 @@ class NoticeBar extends Component<NoticeBarProps, NoticeBarState> {
       marquee && 'fta-noticebar__content-inner--marquee',
     ]
     if (marquee) {
-      // if (close === void 0) close = false
+      // close = false
       style['animation-duration'] = `${dura}s`
       innerClassName.push(animElemId as string)
     }
