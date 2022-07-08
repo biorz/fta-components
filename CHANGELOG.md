@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.3-alpha.9](https://code.amh-group.com/h5developer/basebuild/views/fta-view/compare/@fta/components@1.0.3-alpha.8...@fta/components@1.0.3-alpha.9) (2022-07-08)
+
+### Bug Fixes
+
+- **notice-bar:** 兼容 mw ([13042e7](https://code.amh-group.com/h5developer/basebuild/views/fta-view/commits/13042e781cb90c96cfde8c2889669405e26c4cbc))
+
 ## [1.0.3-alpha.8](https://code.amh-group.com/h5developer/basebuild/views/fta-view/compare/@fta/components@1.0.3-alpha.7...@fta/components@1.0.3-alpha.8) (2022-07-08)
 
 **Note:** Version bump only for package @fta/components
