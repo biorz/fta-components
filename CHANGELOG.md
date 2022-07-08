@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.3-alpha.7](https://code.amh-group.com/h5developer/basebuild/views/fta-view/compare/@fta/components@1.0.3-alpha.6...@fta/components@1.0.3-alpha.7) (2022-07-08)
+
+### Bug Fixes
+
+- **notice-bar:** 修复动态 text 内容不滚动 ([537378d](https://code.amh-group.com/h5developer/basebuild/views/fta-view/commits/537378ddd86938fef8d3bd4e14259ac72b6a6d96))
+
 ## [1.0.3-alpha.5](https://code.amh-group.com/h5developer/basebuild/views/fta-view/compare/@fta/components@1.0.3-alpha.4...@fta/components@1.0.3-alpha.5) (2022-07-05)
 
 **Note:** Version bump only for package @fta/components
