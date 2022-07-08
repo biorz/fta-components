@@ -66,7 +66,9 @@ class NoticeBar extends Component<NoticeBarProps, NoticeBarState> {
     if (inRN) return
     this.timeout = setTimeout(() => {
       this.timeout = null
-      if (inWeb) {
+      // TODO: web环境支持mw
+      // @ts-ignore
+      if (inWeb || process.env.TARO_ENV === 'mw') {
         const { speed = 100 } = this.props
         const elem = document.querySelector(`.${this.state.animElemId}`)
         if (!elem) return
