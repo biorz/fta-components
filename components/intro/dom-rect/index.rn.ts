@@ -1,6 +1,6 @@
 import { RefObject } from 'react'
 
-export function getBoundingClientRect(ref: RefObject<any>) {
+export function getBoundingClientRect(ref: RefObject<any>, delay: number) {
   return new Promise((resolve) => {
     setTimeout(() => {
       ref.current.measure(
@@ -13,6 +13,6 @@ export function getBoundingClientRect(ref: RefObject<any>) {
           })
         }
       )
-    })
+    }, delay)
   })
 }

@@ -132,12 +132,12 @@ function createDemoHOC<P extends object>(
 
 export const Button = forwardRef(
   (props: ComponentProps<typeof TouchableOpacity>, ref: ForwardedRef<any>) => {
-    const { className, style, ...extraProps } = props
+    const { className, style, id, ...extraProps } = props
     const rootClass = useCarelessClass(['fta-demo-button'], [className])
     const txtClz = useCareClass(['fta-demo-button__text'])
     const refObj = inRN ? { _ref: ref } : { ref }
     return (
-      <View className='fta-demo-button-container' {...refObj}>
+      <View className='fta-demo-button-container' {...refObj} id={id}>
         <TouchableOpacity className={rootClass} style={style} {...extraProps}>
           <Text className={txtClz}>{props.children}</Text>
         </TouchableOpacity>

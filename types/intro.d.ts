@@ -27,6 +27,11 @@ export interface IntroContext {
    */
   readonly?: boolean
   /**
+   * 收集定位的延迟，单位秒
+   * @default 0
+   */
+  delay?: number
+  /**
    * 显示指引
    * @param curosr 不传从0开始
    */
@@ -119,7 +124,7 @@ export interface TooltipProps {
 
 export interface IntroProps
   extends BaseComponent,
-    Pick<IntroContext, 'readonly'>,
+    Pick<IntroContext, 'readonly' | 'delay'>,
     TooltipProps,
     Pick<MetaData, 'prop'> {
   /**

@@ -9,15 +9,17 @@ function _Intro(props: Omit<IntroProps, 'prop'>, ref: ForwardedRef<any>) {
   return <Fragment>{children}</Fragment>
 }
 
+let uid = 0
+
 const FowardedIntro = forwardRef(_Intro)
 function Intro(props: IntroProps) {
-  const ref = useRef<HTMLElement>(null as any as HTMLElement)
+  const ref = useRef<HTMLElement>(uid++ as any as HTMLElement)
   const ctx = useIntroContext()
 
   useEffect(() => {
     if (ctx.disabled()) return
     // console.log('ref', ref)
-    getBoundingClientRect(ref).then((rect) => {
+    getBoundingClientRect(ref, props.delay! || ctx.delay!).then((rect) => {
       // @ts-ignore
       ctx.register({
         rect,
@@ -28,7 +30,11 @@ function Intro(props: IntroProps) {
     })
   }, [])
 
-  return <FowardedIntro ref={ref}>{props.children}</FowardedIntro>
+  return (
+    <FowardedIntro ref={ref}>
+      {React.cloneElement(props.children, { id: 'fta-intro-child' + ref.current })}
+    </FowardedIntro>
+  )
 }
 
 Intro.Provider = IntroProvider

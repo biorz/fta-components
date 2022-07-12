@@ -29,7 +29,7 @@ const IntroConsumer = context.Consumer
 const useIntroContext = () => useContext(context)
 
 function _IntroProvider(
-  props: { children: ReactNode; disabled?: boolean; readonly?: boolean },
+  props: { children: ReactNode; disabled?: boolean; readonly?: boolean; delay?: number },
   _ref: ForwardedRef<IntroContext>
 ) {
   const [isDisabled, disabled] = useState(!!props.disabled)
@@ -51,6 +51,7 @@ function _IntroProvider(
   }, [props.disabled])
 
   const refAttrs: IntroContext = {
+    delay: props.delay || 0,
     readonly: props.readonly,
     show(cursor) {
       if (ref.isDisabled) return
