@@ -1,5 +1,8 @@
 const componentMap = require('./component-map.json')
-
+/**
+ * @deprecated
+ * 请替换成babel-import.js
+ */
 function transform(member) {
   const data = componentMap[member]
   return data
