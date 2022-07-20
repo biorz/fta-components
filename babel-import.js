@@ -1,5 +1,5 @@
 const componentMap = require('./component-map.json')
-const TARO_ENV = process.env.TARO_ENV
+const TARO_ENV = process.env.TARO_ENV || 'h5'
 
 function transform(member) {
   const data = componentMap[member]
