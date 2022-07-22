@@ -42,7 +42,7 @@ AnimateView.propTypes = {
 
 function formatConfig(config: AnimateItem[]): { animatedConfig: any; animatedStyle: Object } {
   if (!config || !config.length) return { animatedConfig: [], animatedStyle: {} }
-  const animatedConfig = [] // animated config
+  const animatedConfig = [] as any[] // animated config
   const animatedStyle = {} // animated component style
   config.forEach((item) => {
     const { type, start, end, duration, delay, easing, useNativeDriver } = item
@@ -53,7 +53,7 @@ function formatConfig(config: AnimateItem[]): { animatedConfig: any; animatedSty
         toValue: transformIfPx(end),
         duration: duration,
         delay: delay || 0,
-        easing: getAnimateEasing(easing),
+        easing: getAnimateEasing(easing!),
         useNativeDriver: useNativeDriver || false,
       },
     ])

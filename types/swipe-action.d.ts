@@ -3,7 +3,7 @@ import { CSSProperties, FC, ReactNode } from 'react'
 export interface SwipeActionRef {
   startX: number
   offset: number
-  timer: NodeJS.Timer
+  timer: NodeJS.Timer | null
   transitionClass: string
   setOffset(offset: number): void
   show?: boolean

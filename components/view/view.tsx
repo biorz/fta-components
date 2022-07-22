@@ -33,7 +33,7 @@ class LayoutView extends Component<ViewProps> {
     this.props.onLayout &&
       !inRN &&
       createSelectorQuery?.(`._fta-view-layout__${this._id}`, (result) => {
-        this.props.onLayout(result, result)
+        this.props.onLayout!(result, result)
       })
   }
 
@@ -81,7 +81,7 @@ export class TouchableOpacity extends Component<TouchableOpacityProps> {
       <View
         {...props}
         hoverStyle={{ opacity: activeOpacity }}
-        hoverClass={`fta-view-hover__${activeOpacity * 10}`}>
+        hoverClass={`fta-view-hover__${activeOpacity! * 10}`}>
         {children}
       </View>
     )
@@ -110,20 +110,20 @@ export class TouchableHighlight extends Component<TouchableHighlightProps> {
     let hoverClass: string
     if (underlayClass) hoverClass = underlayClass
     else if (!inRN) {
-      if (!~colorList.indexOf(underlayColor)) {
+      if (!~colorList.indexOf(underlayColor!)) {
         underlayColor = '#000'
       } else {
-        hoverClass = `fta-view-hover__${colorMap[underlayColor]}`
+        hoverClass = `fta-view-hover__${colorMap[underlayColor!]}`
       }
     }
     // 给子组件加额外的props
     const clonedChildren = cloneElement(children as ReactElement, {
-      hoverClass: `fta-view-hover__${activeOpacity * 10}`,
+      hoverClass: `fta-view-hover__${activeOpacity! * 10}`,
       hoverStyle: { opacity: activeOpacity },
     })
     // console.log(clonedChildren, 'clonedChildren')
     return (
-      <View hoverStyle={{ backgroundColor: underlayColor }} hoverClass={hoverClass} {...props}>
+      <View hoverStyle={{ backgroundColor: underlayColor }} hoverClass={hoverClass!} {...props}>
         {clonedChildren}
       </View>
     )
@@ -133,7 +133,6 @@ export class TouchableHighlight extends Component<TouchableHighlightProps> {
 TouchableHighlight.defaultProps = {
   underlayColor: '#000',
   activeOpacity: 0.2,
-  underlayClass: null,
 }
 
 TouchableHighlight.propTypes = {

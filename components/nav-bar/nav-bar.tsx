@@ -164,8 +164,10 @@ class NavBar extends Component<NavBarProps> {
     const rootClass = classNames('fta-nav-bar', containerClassName)
 
     let statusBar: JSX.Element = <SafeArea top style={safeAreaStyle} />
+    // @ts-ignore
     const showStatusBar = !this.props.statusBar.hidden
     if (inIOS) {
+      // @ts-ignore
       statusBar = showStatusBar
         ? statusBar
         : // <View
@@ -184,8 +186,8 @@ class NavBar extends Component<NavBarProps> {
                 <View className={classNames('fta-nav-bar-container', className)} style={style}>
                   {/* {console.log('关怀模式改变', careMode)} */}
                   {getTitleElement(title, careMode)}
-                  {getButtonElement(leftButton, 'fta-nav-bar-left-button')}
-                  {getButtonElement(rightButton, 'fta-nav-bar-right-button')}
+                  {getButtonElement(leftButton!, 'fta-nav-bar-left-button')}
+                  {getButtonElement(rightButton!, 'fta-nav-bar-right-button')}
                 </View>
               </View>
             </Fragment>

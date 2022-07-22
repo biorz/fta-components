@@ -81,6 +81,7 @@ export default class Textarea extends React.Component<TextareaProps> {
         <TaroTextArea
           className='fta-textarea__textarea'
           style={textareaStyle}
+          // @ts-ignore
           placeholderStyle={placeholderStyle}
           placeholderClass={placeholderCls}
           cursorSpacing={cursorSpacing}

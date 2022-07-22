@@ -91,8 +91,8 @@ function assemblePropsToString(props: object) {
 function assembleSampleCode(params: {
   render?: ComponentType<any>
   parent?: ComponentType<any>
-  parentProps?: object
-  props?: object
+  parentProps?: Record<string, any>
+  props?: Record<string, any>
 }): string {
   const { render, parent, parentProps = {}, props = {} } = params
   const renderPropsStr = assemblePropsToString(props)
@@ -121,7 +121,7 @@ function createDemoHOC<P extends object>(
 
       const children =
         (repeat as number) > 1 ? (
-          new Array(repeat).fill(0).map((v, i) => <Comp key={i} {...props} />)
+          new Array(repeat).fill(0).map((_, i) => <Comp key={i} {...props} />)
         ) : (
           <Comp {...props} />
         )
@@ -185,7 +185,11 @@ export function DemoArea<P extends object>(demoAreaProps: DemoAreaProps<P>): JSX
       <View className='fta-demo-title'>
         <Text className={titleClz}>{title}</Text>
         {HOC !== EmptyComponent ? (
-          <Text className={copyClz} title='拷贝样例代码' onClick={copySampleCode}>
+          <Text
+            className={copyClz}
+            // @ts-ignore
+            title='拷贝样例代码'
+            onClick={copySampleCode}>
             Copy
           </Text>
         ) : null}
@@ -336,6 +340,8 @@ export function PropsArea(props: PropsAreaProps): JSX.Element {
             <Fragment key={i}>
               <Label label={item.label} remark={item.remark}></Label>
               <Tabs
+                // TODO:
+                // @ts-ignore
                 scrollX
                 scrollY
                 scrollable
@@ -343,7 +349,7 @@ export function PropsArea(props: PropsAreaProps): JSX.Element {
                 className='fta-demo-tabs'
                 options={list}
                 controls={false}
-                onChange={(i: number, value: any) => onChange(value, item)}
+                onChange={(_, value: any) => onChange(value, item)}
               />
             </Fragment>
           )
@@ -371,9 +377,7 @@ const navigateBack = () => {
 /** 包裹层 */
 // alert(process.env.LOCAL_IP)
 
-const withCare = inFTAView
-  ? nativeWithCare
-  : (v: any, careMode?: boolean): ReturnType<typeof nativeWithCare> => v
+const withCare = inFTAView ? nativeWithCare : (v: any): ReturnType<typeof nativeWithCare> => v
 export const Layout = withCare(
   function Layout(props: {
     children: ReactNode
@@ -529,6 +533,7 @@ export default function Display(props: DisplayProps) {
   const { options, title, defaultProps, omitText, qrcode, ...demoAreaProps } = props
   const defaultState =
     defaultProps ||
+    // @ts-ignore
     Object.fromEntries(
       options.filter((item) => !item.omit).map(({ label, list }) => [[label], list[0]])
     )

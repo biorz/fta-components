@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react'
-import { SafeAreaContext } from '../types'
+import { SafeAreaContext } from '../..//types/safe-area'
 
 const safeAreaContext = createContext<SafeAreaContext>({
   disabled: false,

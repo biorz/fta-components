@@ -60,7 +60,7 @@ class Image extends Component<ImageProps, ImageState> {
   public getInlineStyle(): CSSProperties {
     const style = { ...this.props.customStyle }
     let i: string
-    if ((i = this.props.bgColor)) {
+    if ((i = this.props.bgColor!)) {
       style.backgroundColor = i
     }
     return style

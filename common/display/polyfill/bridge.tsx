@@ -1,7 +1,7 @@
 const MBBridge = {
   app: {
     base: {
-      openSchema: (schema: { url: string }) => {},
+      openSchema: (_: { url: string }) => {},
     },
   },
 }

@@ -97,7 +97,7 @@ class Tabs extends Component<TabsProps, TabsState> {
       })
     } else {
       // 克隆子节点，注入相关props
-      clonedChildren = Array.isArray(children) ? cloneChidren(children, activeIndex) : children
+      clonedChildren = Array.isArray(children) ? cloneChidren(children, activeIndex!) : children
     }
 
     const rootClass = classNames('fta-tabs', vertical && 'fta-tabs--vertical', className)
@@ -160,7 +160,7 @@ class Tab extends Component<TabProps> {
                 <View
                   className={rootClass}
                   style={style}
-                  onClick={() => isDisabled || context.onChange?.(index, value)}>
+                  onClick={() => isDisabled || context.onChange?.(index!, value)}>
                   {isString(children) ? (
                     <Text
                       className={classNames(

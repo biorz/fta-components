@@ -10,7 +10,7 @@ export interface TextareaProps extends AtComponent {
   /**
    * 标题
    */
-  // title?: string
+  title?: string
   /**
    * 最大长度
    * @default 200

@@ -85,7 +85,7 @@ function Keyboard(props: KeyboardProps): JSX.Element {
   const [val, _setVal] = useState<string>(String(value))
   const isBasicType = typePresets.includes(type!)
 
-  const setVal = (char: string, index?: number) => {
+  const setVal = (char: string, _index?: number) => {
     const newVal = val + String(char)
     if (newVal.length > maxlength!) return
     if (controlled) return onChange!(newVal, val)

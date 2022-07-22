@@ -50,6 +50,7 @@ export default class FTAInput extends React.Component<FTAInputProps> {
   private inputClearing = false
 
   private handleInput = (event: BaseEventOrig<InputEventDetail>): void =>
+    // @ts-ignore
     this.props.onChange(event.detail.value, event)
 
   private handleFocus = (event: BaseEventOrig<FocusEventDetail>): void => {
@@ -63,6 +64,7 @@ export default class FTAInput extends React.Component<FTAInputProps> {
       this.props.onBlur(event.detail.value, event)
     }
     if (event.type === 'blur' && !this.inputClearing) {
+      // @ts-ignore
       // fix # 583 FTAInput 不触发 onChange 的问题
       this.props.onChange(event.detail.value, event as BaseEventOrig<InputEventDetail>)
     }
@@ -84,6 +86,7 @@ export default class FTAInput extends React.Component<FTAInputProps> {
 
   private handleClearValue = (event: ITouchEvent): void => {
     this.inputClearing = true
+    // @ts-ignore
     this.props.onChange('', event)
   }
 

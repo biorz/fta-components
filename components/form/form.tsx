@@ -169,7 +169,7 @@ function Form(props: FormProps, ref: Ref<FormRefMethods>): JSX.Element {
     // TODO:
     resetFields() {},
     // TODO:
-    validateField(props: string[], callback: (valid: boolean, failedProps: string[]) => void) {
+    validateField(_props: string[], _callback: (valid: boolean, failedProps: string[]) => void) {
       return Promise.resolve()
     },
     // TODO:

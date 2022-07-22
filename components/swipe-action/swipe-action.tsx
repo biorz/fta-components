@@ -94,7 +94,7 @@ function SwipeAction(props: SwipeActionProps): JSX.Element {
     e.preventDefault?.()
     const deltaX = getPageX(e) - ref.current.startX + ref.current.offset
 
-    if (isMovable(left, deltaX, distance)) {
+    if (isMovable(left!, deltaX, distance)) {
       // console.log('movable')
       setOffset(deltaX)
       setTimer()
@@ -105,16 +105,16 @@ function SwipeAction(props: SwipeActionProps): JSX.Element {
   /** 松手自动定位，open or close */
   function autoPositioning(deltaX: number) {
     const { setOffset, show } = ref.current
-    const ratio = show ? 1 - breakpoint : breakpoint
+    const ratio = show ? 1 - breakpoint! : breakpoint
     // console.log(show, 'ref.current.show')
     let offset = 0
 
     if (left && deltaX > 0) {
-      offset = deltaX > distance * ratio ? distance : 0
+      offset = deltaX > distance * ratio! ? distance : 0
       setOffset(offset)
       props.onToggle?.(!!offset)
     } else if (!left && deltaX < 0) {
-      offset = deltaX * -1 > distance * ratio ? -1 * distance : 0
+      offset = deltaX * -1 > distance * ratio! ? -1 * distance : 0
       setOffset(offset)
       props.onToggle?.(!!offset)
     }
@@ -134,7 +134,7 @@ function SwipeAction(props: SwipeActionProps): JSX.Element {
     if ((t = ref.current.timer)) clearTimeout(t)
     const deltaX = e.changedTouches[0].pageX - ref.current.startX + ref.current.offset
     // console.log('touchend outside', deltaX, offset)
-    if (isMovable(left, deltaX, distance)) {
+    if (isMovable(left!, deltaX, distance)) {
       autoPositioning(deltaX)
       // console.log(offset, 'touchend')
     } else {
@@ -180,7 +180,7 @@ function SwipeAction(props: SwipeActionProps): JSX.Element {
         )}>
         {render || (
           <Fragment>
-            {options.map((o, i) => (
+            {options!.map((o, i) => (
               <View
                 key={i}
                 className={classNames('fta-swipe-action-button', o.containerClassName)}

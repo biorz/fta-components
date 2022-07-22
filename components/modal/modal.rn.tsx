@@ -67,9 +67,9 @@ export default class FTAModal extends React.Component<ModalProps, ModalState> {
     }
   }
 
-  private handleTouchMove = (e: CommonEvent): void => {
-    e.stopPropagation()
-  }
+  // private handleTouchMove = (e: CommonEvent): void => {
+  //   e.stopPropagation()
+  // }
 
   public render(): JSX.Element {
     const { _isOpened } = this.state

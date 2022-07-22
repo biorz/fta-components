@@ -32,7 +32,7 @@ export const getSelectorDepth = (fields: string) =>
 export const parseDate = (date: string) => date.split('-').map(Number)
 /** 生成指定数字区间数组 */
 export const genPeriodList = (start: number, end: number) =>
-  new Array(end - start + 1).fill(0).map((v, i) => start + i)
+  new Array(end - start + 1).fill(0).map((_, i) => start + i)
 /** 根据年月获取当前月有多少天 */
 export const getDaysCount = (year: number, month: number) => new Date(year, month, 0).getDate()
 

@@ -42,7 +42,7 @@ class Divider extends Component<DividerProps> {
           return (
             <View className='fta-divider'>
               <View
-                className={this.handleLineStyle(true, dashed, hairline, textPosition, careMode)}
+                className={this.handleLineStyle(true, dashed!, hairline!, textPosition!, careMode)}
                 style={lineStyle}
               />
               <View
@@ -62,7 +62,7 @@ class Divider extends Component<DividerProps> {
                 )}
               </View>
               <View
-                className={this.handleLineStyle(false, dashed, hairline, textPosition, careMode)}
+                className={this.handleLineStyle(false, dashed!, hairline!, textPosition!, careMode)}
                 style={lineStyle}
               />
             </View>
@@ -77,7 +77,6 @@ Divider.defaultProps = {
   dashed: false,
   hairline: true,
   dot: false,
-  text: null,
   textPosition: 'center',
 }
 
