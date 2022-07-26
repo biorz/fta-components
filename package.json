@@ -6,7 +6,7 @@
   "bin": {
     "fta-theme": "./bin/theme-handler.js"
   },
-  "react-native1": "dist/rn/index.js",
+  "react-native": "dist/rn/index.js",
   "main:h5": "dist/h5/index.js",
   "weapp": "dist/weapp/index.js",
   "scripts": {
