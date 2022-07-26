@@ -133,7 +133,18 @@ class Tab extends Component<TabProps> {
   public static defaultProps: InferProps<TabProps>
 
   public render(): JSX.Element {
-    const { className, style, disabled, active, children, index, value } = this.props
+    const {
+      className,
+      style,
+      disabled,
+      active,
+      children,
+      index,
+      value,
+      dot,
+      dotClassName,
+      dotStyle,
+    } = this.props
 
     return (
       <ConfigConsumer>
@@ -156,14 +167,22 @@ class Tab extends Component<TabProps> {
                       ),
                 isDisabled && context.disabledClassName
               )
+
+              const rootStyle = {
+                ...context.tabStyle,
+                ...style,
+                ...(active && context.activeStyle),
+              }
               return (
                 <View
                   className={rootClass}
-                  style={style}
+                  style={rootStyle}
                   onClick={() => isDisabled || context.onChange?.(index!, value)}>
                   {isString(children) ? (
                     <Text
+                      style={context.textStyle}
                       className={classNames(
+                        context.textClassName,
                         useClassWithCare(careMode, ['fta-tab__text']),
                         isDisabled
                           ? 'fta-tab--disabled__text'
@@ -176,6 +195,12 @@ class Tab extends Component<TabProps> {
                   ) : (
                     children
                   )}
+                  {/* 小红点 */}
+                  {dot ? (
+                    <View className={classNames('fta-tab__dot', dotClassName)} style={dotStyle} />
+                  ) : null}
+                  {/* 底部激活 */}
+                  {active ? <View className='fta-tab__line' /> : null}
                 </View>
               )
             }}

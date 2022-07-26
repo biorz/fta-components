@@ -47,7 +47,8 @@
 .fta-tab {
   @include flex();
   @include fit-content();
-  @include border-bottom();
+  // @include border-bottom();
+  @include relative();
   // flex: auto;
   margin: $fta-tabs-item-margin;
   justify-content: center;
@@ -70,6 +71,20 @@
     font-size: care($fta-tabs-font-size);
   }
 
+  &__dot {
+    background-color: red;
+    @include square-circle(zoom(16px));
+    @include relative();
+  }
+
+  &__line {
+    position: absolute;
+    width: 50%;
+    // prettier-ignore
+    bottom: -2PX;
+    @include border-bottom(6px, red);
+  }
+
   taro-text-core {
     /* #ifdef h5 */
     white-space: nowrap;
@@ -83,7 +98,7 @@
 }
 
 .fta-tab--active {
-  border-bottom-color: $fta-tabs-color-active;
+  // border-bottom-color: $fta-tabs-color-active;
 
   &__text {
     color: $fta-tabs-color-active;

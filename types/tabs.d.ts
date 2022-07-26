@@ -17,6 +17,10 @@ export interface TabsContext {
    */
   activeClassName?: string
   /**
+   * 激活时候的内联样式
+   */
+  activeStyle?: CSSProperties
+  /**
    * 是否全部禁用
    * @default false
    */
@@ -29,6 +33,18 @@ export interface TabsContext {
    * tab项的类名
    */
   tabClassName?: string
+  /**
+   * tab项内联样式
+   */
+  tabStyle?: CSSProperties
+  /**
+   * 文字类名
+   */
+  textClassName?: string
+  /**
+   * 文字内联样式
+   */
+  textStyle?: CSSProperties
   /**
    * 当前激活的索引
    */
@@ -116,6 +132,15 @@ export interface TabProps extends FTAComponentProps {
    * 当前tab绑定的值
    */
   value?: any
+  /**
+   * 是否显示小红点
+   * @default false
+   */
+  dot?: boolean
+
+  dotClassName?: string
+
+  dotStyle?: CSSProperties
 }
 
 declare const Tab: ComponentClass<TabProps>
