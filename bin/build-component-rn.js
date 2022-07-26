@@ -56,7 +56,7 @@ const main = () => {
 
     if (componentFilename === 'common') return
     const tsPath = path.resolve(pkgRoot, `types/${componentFilename}.d.ts`)
-    const tsOutput = path.resolve(pkgRoot, `${OUTPUT}/${componentFilename}/index.d.ts`)
+    const tsOutput = path.resolve(pkgRoot, `dist/${OUTPUT}/${componentFilename}/index.d.ts`)
     fs.copySync(tsPath, tsOutput)
     // copy typescript 到当前目录
   })
