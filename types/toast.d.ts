@@ -7,7 +7,7 @@ export interface ToastProps extends BaseComponent, BaseTextComponent {
   /**
    * 提示文本
    */
-  title: ReactNode
+  title?: ReactNode
   /**
    * 提示持续时间，设置为0则默认不关闭
    * @default 2

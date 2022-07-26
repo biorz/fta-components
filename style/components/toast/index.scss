@@ -37,6 +37,7 @@ $toast-prefix: 'fta-toast';
     align-self: center;
     /* #ifndef rn */
     width: fit-content;
+    box-sizing: border-box;
     pointer-events: auto;
     animation: fta-toast-text 0.2s ease;
     /* #endif */
@@ -45,6 +46,7 @@ $toast-prefix: 'fta-toast';
     border-radius: $fta-toast-radius;
     max-width: $fta-toast-max-width;
     min-width: $fta-toast-min-width;
+    min-height: $fta-toast-min-height;
 
     &--loading {
       flex-direction: column;
@@ -60,8 +62,6 @@ $toast-prefix: 'fta-toast';
 
   &-loading {
     @include square($fta-toast-loading-size);
-
-    margin-bottom: $fta-toast-loading-margin-bottom;
   }
 
   &__text {
@@ -72,6 +72,8 @@ $toast-prefix: 'fta-toast';
       color: $fta-toast-color;
     }
     text-align: center;
+    margin-top: $fta-toast-loading-margin-bottom;
+    line-height: $font-size-md;
   }
 
   &--overlay {

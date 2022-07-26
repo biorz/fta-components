@@ -21,6 +21,7 @@
     "build:all": "npm run build:rn && npm run build:h5 && npm run build:weapp",
     "build:rn": "rimraf dist/rn && npm run build:map && node ./bin/build-component-rn.js",
     "build:h5": "rimraf dist/h5 && cross-env BUILD_TYPE=h5 node ./bin/build-component.js",
+    "build:mw": "rimraf dist/mw && cross-env BUILD_TYPE=mw node ./bin/build-component.js",
     "build:tt": "rimraf dist/tt && cross-env BUILD_TYPE=tt node ./bin/build-component.js",
     "build:alipay": "rimraf dist/alipay && cross-env BUILD_TYPE=alipay node ./bin/build-component.js",
     "build:weapp": "rimraf dist/weapp && cross-env BUILD_TYPE=weapp node ./bin/build-component.js",
