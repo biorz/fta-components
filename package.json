@@ -18,7 +18,7 @@
     "theme:recover": "node ./bin/theme-hook.js recover",
     "prepublishOnly": "npm run theme:clear",
     "postpublish": "npm run theme:recover",
-    "build:all": "npm run build:rn && npm run build:h5 && npm run build:weapp",
+    "build:all": "npm run build:rn && npm run build:h5 && npm run build:weapp && npm run build:mw && npm run build:alipay && npm run build:tt",
     "build:rn": "rimraf dist/rn && npm run build:map && node ./bin/build-component-rn.js",
     "build:h5": "rimraf dist/h5 && cross-env BUILD_TYPE=h5 node ./bin/build-component.js",
     "build:mw": "rimraf dist/mw && cross-env BUILD_TYPE=mw node ./bin/build-component.js",

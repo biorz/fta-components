@@ -13,7 +13,7 @@ declare namespace NodeJS {
   interface ProcessEnv {
     NODE_ENV: string
     // @ts-ignore
-    TARO_ENV: 'weapp' | 'swan' | 'alipay' | 'h5' | 'rn' | 'tt' | 'quickapp' | 'qq'
+    TARO_ENV: 'weapp' | 'swan' | 'alipay' | 'h5' | 'rn' | 'tt' | 'quickapp' | 'qq' | 'mw'
     [key: string]: any
   }
 }

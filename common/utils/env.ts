@@ -7,7 +7,7 @@ export const TARO_ENV = process.env.TARO_ENV
 /** 是否运行在RN */
 export const inRN = TARO_ENV === 'rn'
 /** 是否运行在H5 */
-export const inWeb = TARO_ENV === 'h5'
+export const inWeb = TARO_ENV === 'h5' || TARO_ENV === 'mw'
 /** 是否运行在微信小程序 */
 export const inWeapp = TARO_ENV === 'weapp'
 /** 是否运行在阿里小程序 */
