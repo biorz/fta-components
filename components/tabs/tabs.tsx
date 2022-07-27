@@ -133,18 +133,7 @@ class Tab extends Component<TabProps> {
   public static defaultProps: InferProps<TabProps>
 
   public render(): JSX.Element {
-    const {
-      className,
-      style,
-      disabled,
-      active,
-      children,
-      index,
-      value,
-      dot,
-      dotClassName,
-      dotStyle,
-    } = this.props
+    const { className, style, disabled, active, children, index, value, dot } = this.props
 
     return (
       <ConfigConsumer>
@@ -173,6 +162,12 @@ class Tab extends Component<TabProps> {
                 ...style,
                 ...(active && context.activeStyle),
               }
+
+              const textStyle = {
+                ...context.textStyle,
+                ...(active && context.activeTextStyle),
+              }
+
               return (
                 <View
                   className={rootClass}
@@ -180,14 +175,14 @@ class Tab extends Component<TabProps> {
                   onClick={() => isDisabled || context.onChange?.(index!, value)}>
                   {isString(children) ? (
                     <Text
-                      style={context.textStyle}
+                      style={textStyle}
                       className={classNames(
                         context.textClassName,
                         useClassWithCare(careMode, ['fta-tab__text']),
                         isDisabled
                           ? 'fta-tab--disabled__text'
                           : active
-                          ? 'fta-tab--active__text'
+                          ? classNames('fta-tab--active__text', context.activeTextClassName)
                           : null
                       )}>
                       {children}
@@ -197,10 +192,18 @@ class Tab extends Component<TabProps> {
                   )}
                   {/* 小红点 */}
                   {dot ? (
-                    <View className={classNames('fta-tab__dot', dotClassName)} style={dotStyle} />
+                    <View
+                      className={classNames('fta-tab__dot', context.dotClassName)}
+                      style={context.dotStyle}
+                    />
                   ) : null}
                   {/* 底部激活 */}
-                  {active ? <View className='fta-tab__line' /> : null}
+                  {active ? (
+                    <View
+                      className={classNames('fta-tab__line', context.lineClassName)}
+                      style={context.lineStyle}
+                    />
+                  ) : null}
                 </View>
               )
             }}

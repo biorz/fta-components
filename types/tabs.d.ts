@@ -17,9 +17,18 @@ export interface TabsContext {
    */
   activeClassName?: string
   /**
-   * 激活时候的内联样式
+   * 激活时的内联样式
    */
   activeStyle?: CSSProperties
+
+  /**
+   * 激活时的文字样式
+   */
+  activeTextClassName?: string
+  /**
+   * 激活时的文字内联样式
+   */
+  activeTextStyle?: CSSProperties
   /**
    * 是否全部禁用
    * @default false
@@ -59,6 +68,18 @@ export interface TabsContext {
    * @default false
    */
   vertical?: boolean
+  /**
+   * 激活时底部线条类名
+   */
+  lineClassName?: string
+  /**
+   * 激活时底部线条内联样式
+   */
+  lineStyle?: CSSProperties
+
+  dotClassName?: string
+
+  dotStyle?: CSSProperties
   /**
    * 切换tab时的回调
    */
@@ -137,10 +158,6 @@ export interface TabProps extends FTAComponentProps {
    * @default false
    */
   dot?: boolean
-
-  dotClassName?: string
-
-  dotStyle?: CSSProperties
 }
 
 declare const Tab: ComponentClass<TabProps>

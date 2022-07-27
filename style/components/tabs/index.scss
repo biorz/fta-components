@@ -73,6 +73,7 @@
 
   &__dot {
     background-color: red;
+    top: zoom(-16px);
     @include square-circle(zoom(16px));
     @include relative();
   }
@@ -81,8 +82,8 @@
     position: absolute;
     width: 50%;
     // prettier-ignore
-    bottom: -2PX;
-    @include border-bottom(6px, red);
+    bottom: 0PX;
+    @include border-bottom(6px, $fta-tabs-color-active);
   }
 
   taro-text-core {
