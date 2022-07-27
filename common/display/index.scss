@@ -21,6 +21,8 @@ $navbar-height: 80px;
     // margin-top: 30px;
     /* #ifndef rn */
     overflow: auto;
+    overflow-x: hidden;
+    width: 100%;
     /* #endif */
 
     /* #ifndef rn */
