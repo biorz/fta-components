@@ -65,3 +65,4 @@ export {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from './components/view'
+export { default as Layout } from './components/layout'
