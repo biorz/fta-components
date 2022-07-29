@@ -4,8 +4,10 @@
 .fta-layout {
   @include display-flex(column);
   flex: 1;
-  background-color: red;
   overflow: hidden;
+  @include nrn {
+    height: 100vh;
+  }
 
   &-wrapper {
     @include nrn {
