@@ -31,6 +31,7 @@ export {
   withIntro,
 } from './components/intro'
 export { default as Keyboard } from './components/keyboard'
+export { default as Layout } from './components/layout'
 export { default as Line } from './components/line'
 export { default as List, ListItem } from './components/list'
 export { default as Loading } from './components/loading'
