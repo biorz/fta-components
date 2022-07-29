@@ -1,6 +1,15 @@
 @import '../../mixins/index.scss';
 @import '../../variables/default.scss';
 
-.fta-layout{
+.fta-layout {
+  @include display-flex(column);
+  flex: 1;
+  background-color: red;
+  overflow: hidden;
 
+  &-wrapper {
+    @include nrn {
+      overflow: auto;
+    }
+  }
 }
