@@ -9,19 +9,25 @@ export default class ModalContent extends React.Component<ModalContentProps> {
     withTitle: true,
   }
   public render(): JSX.Element {
+    const { withTitle, className, style, customStyle, children } = this.props
     const rootClass = classNames(
       'fta-modal__content',
-      this.props.withTitle || 'fta-modal__content--no-title',
-      this.props.className
+      withTitle || 'fta-modal__content--no-title',
+      className
     )
+
+    const rootStyle = {
+      ...style,
+      ...customStyle,
+    }
     return (
       <ScrollView
         scrollY
         // @ts-ignore
         alwaysBounceVertical={false}
         className={rootClass}
-        style={this.props.customStyle}>
-        {this.props.children}
+        style={rootStyle}>
+        {children}
       </ScrollView>
     )
   }
