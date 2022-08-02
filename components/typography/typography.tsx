@@ -4,46 +4,48 @@ import { px, scale as scaleSize, useCarelessClass, useCareMode } from '../../com
 import '../../style/components/typography/index.scss'
 import { TextProps } from '../../types/typography'
 
-// function Typography(props: TypographyProps): JSX.Element {
-//   return <View className='fta-typography'>{props.children}</View>
-// }
-
-/**
- * 标题
- */
-// function Title(): JSX.Element {
-//   return (
-//     <View>
-//       <Text></Text>
-//     </View>
-//   )
-// }
-
-/**
- * 超链接
- */
-// function Link(): JSX.Element {
-//   return (
-//     <View>
-//       <Text></Text>
-//     </View>
-//   )
-// }
-
 /**
  * 正文
  */
 function Text(props: TextProps): JSX.Element {
-  const { className, style, level, children, size, color, scale, weight, ...extraProps } = props
-  const textClz = useCarelessClass(['fta-text', size ? '' : `fta-text--${level}`], [className])
+  const {
+    className,
+    style,
+    level,
+    children,
+    size,
+    color,
+    scale,
+    weight,
+    line,
+    underline,
+    type,
+    strong,
+    italic,
+    ...extraProps
+  } = props
+  const textClz = useCarelessClass(
+    ['fta-text', size ? '' : `fta-text--${level}`],
+    [type && `fta-text--${type}`, className]
+  )
   const careMode = useCareMode()
   const textStyle = { ...style }
   if (color) {
     textStyle.color = color
   }
-  if (weight) {
-    textStyle.fontWeight = weight
+  if (strong) {
+    textStyle.fontWeight = '500'
   }
+  if (weight) {
+    textStyle.fontWeight = weight + ''
+  }
+  if (italic) {
+    textStyle.fontStyle = 'italic'
+  }
+  if (line || underline) {
+    textStyle.textDecorationLine = line ? 'line-through' : 'underline'
+  }
+
   if (size) {
     const fontSize: string | number = careMode ? size * 1.3 : size
     textStyle.fontSize = scale ? scaleSize(fontSize) : px(fontSize)

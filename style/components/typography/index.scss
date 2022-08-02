@@ -83,4 +83,20 @@
       }
     }
   }
+
+  &--success {
+    color: $color-success;
+  }
+
+  &--error {
+    color: $color-error;
+  }
+
+  &--warning {
+    color: $color-warning;
+  }
+
+  &--info {
+    color: $color-info;
+  }
 }

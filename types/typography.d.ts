@@ -10,6 +10,8 @@ export interface LinkProps extends BaseProps {}
 
 export type TextLevel = 1 | 2 | 3 | 4 | 5 | 6
 
+export type TextType = 'success' | 'error' | 'warning' | 'info'
+
 export type TextWeight = 'normal' | 'bold' | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900
 export interface TextProps extends BaseProps {
   /**
@@ -38,6 +40,31 @@ export interface TextProps extends BaseProps {
    * 字体字重
    */
   weight?: TextWeight
+  /**
+   * @since 1.0.3
+   * 文本类型
+   */
+  type?: TextType
+  /**
+   * 是否展示下划线
+   * @default false
+   */
+  underline?: boolean
+  /**
+   * 是否展示删除线，优先级比underline高
+   * @default false
+   */
+  line?: boolean
+  /**
+   * 是否加粗显示
+   * @default false
+   */
+  strong?: boolean
+  /**
+   * 是否斜体字
+   * @default false
+   */
+  italic?: boolean
 }
 
 export interface TypographyProps extends BaseProps {}
