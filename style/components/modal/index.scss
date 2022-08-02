@@ -68,7 +68,6 @@ $fta-modal-duration: 200ms;
   }
 
   &__container {
-    max-height: 80vh;
     @include absolute-center();
     width: $fta-modal-width;
     border-radius: $border-radius-lg;

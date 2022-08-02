@@ -23,6 +23,14 @@ export interface ModalProps extends BaseComponent {
    */
   contentAlign?: Align
   /**
+   * @since 1.0.3-alpha.13
+   */
+  contentClassName?: string
+  /**
+   * @since 1.0.3-alpha.13
+   */
+  contentStyle?: CSSProperties
+  /**
    * 点击浮层的时候时候自动关闭
    * @default true
    */
@@ -79,6 +87,10 @@ export interface ModalContentProps extends BaseComponent {
    * @default true
    */
   withTitle?: boolean
+
+  className?: string
+
+  style?: CSSProperties
 }
 
 export interface ModalHeaderProps extends BaseComponent {}

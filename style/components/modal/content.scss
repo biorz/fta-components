@@ -15,18 +15,19 @@
 
 .fta-modal {
   &__content {
+    max-height: 50vh;
     /* #ifndef rn */
     @extend %content;
     box-sizing: border-box;
     /* #endif */
-
-    padding: $spacing-v-xl $spacing-h-max 0;
+    margin-top: $spacing-v-xl;
+    padding: 0 $spacing-h-max;
     flex: 1;
     text-align: center;
     width: 100%;
 
     &--no-title {
-      padding-top: $spacing-v-max;
+      margin-top: $spacing-v-max;
     }
   }
 }
