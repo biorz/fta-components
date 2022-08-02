@@ -7,6 +7,8 @@ import { TagProps } from '../../types/tag'
 function Tag(props: TagProps): JSX.Element {
   const {
     className,
+    // @ts-ignore
+    style,
     customStyle,
     type,
     textStyle,
@@ -26,6 +28,7 @@ function Tag(props: TagProps): JSX.Element {
   const textClz = useCarelessClass(['fta-tag__text'], [`fta-tag__text--${type}`, textClassName])
 
   const rootStyle = {
+    ...style,
     ...customStyle,
   }
 
