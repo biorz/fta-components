@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.3-beta.1](https://code.amh-group.com/h5developer/basebuild/views/fta-view/compare/@fta/components@1.0.3-beta.0...@fta/components@1.0.3-beta.1) (2022-08-03)
+
+### Bug Fixes
+
+- **action-sheet:** 修复 action-sheet-item 行高遮挡文字 ([e9f910a](https://code.amh-group.com/h5developer/basebuild/views/fta-view/commits/e9f910ab5ce2bf3eb64e434e7f96254e9b5f1cff))
+
 ## [1.0.3-alpha.9](https://code.amh-group.com/h5developer/basebuild/views/fta-view/compare/@fta/components@1.0.3-alpha.8...@fta/components@1.0.3-alpha.9) (2022-07-08)
 
 ### Bug Fixes
