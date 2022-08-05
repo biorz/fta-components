@@ -16,7 +16,7 @@
     "broadcast": "node ./bin/broadcast.js",
     "theme:clear": "node ./bin/theme-hook.js clear",
     "theme:recover": "node ./bin/theme-hook.js recover",
-    "prepublishOnly": "npm run theme:clear",
+    "prepublishOnly": "npm run theme:clear && npm run build:map",
     "postpublish": "npm run theme:recover",
     "build:all": "npm run build:rn && npm run build:h5 && npm run build:weapp && npm run build:mw && npm run build:alipay && npm run build:tt",
     "build:rn": "rimraf dist/rn && npm run build:map && node ./bin/build-component-rn.js",
