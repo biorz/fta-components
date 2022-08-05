@@ -29,6 +29,7 @@
   "useIntroContext": { "replace": "components/intro", "default": false },
   "withIntro": { "replace": "components/intro", "default": false },
   "Keyboard": { "replace": "components/keyboard", "default": true },
+  "Layout": { "replace": "components/layout", "default": true },
   "Line": { "replace": "components/line", "default": true },
   "List": { "replace": "components/list", "default": true },
   "ListItem": { "replace": "components/list", "default": false },
