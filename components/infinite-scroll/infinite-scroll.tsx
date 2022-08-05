@@ -9,6 +9,7 @@ function InfiniteScroll(props: InfiniteScrollProps): JSX.Element {
   const loadingRef = useRef(false)
   // const [loading, toggleLoading] = useState(false)
   const [hasLoad, setLoad] = useState(false)
+  const [showLoader, toggleLoader] = useState(false)
 
   const {
     className,
@@ -28,6 +29,7 @@ function InfiniteScroll(props: InfiniteScrollProps): JSX.Element {
   const rootStyle = { ...style, ...customStyle }
 
   const onLoad = async (evt) => {
+    showLoader || toggleLoader(true)
     onScrollToLower?.(evt)
     if (loadingRef.current || !hasMore) return
     // toggleLoading(true)
@@ -49,11 +51,13 @@ function InfiniteScroll(props: InfiniteScrollProps): JSX.Element {
       {...extraProps}>
       {children}
       {!hasLoad || hasMore ? (
-        isString(loader) ? (
-          <Loader title={loader} />
-        ) : (
-          loader
-        )
+        showLoader ? (
+          isString(loader) ? (
+            <Loader title={loader} />
+          ) : (
+            loader
+          )
+        ) : null
       ) : isString(loaded) ? (
         <Loader title={loaded} />
       ) : (
