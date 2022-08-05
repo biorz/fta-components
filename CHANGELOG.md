@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.3-beta.3](https://code.amh-group.com/h5developer/basebuild/views/fta-view/compare/@fta/components@1.0.3-beta.2...@fta/components@1.0.3-beta.3) (2022-08-05)
+
+### Bug Fixes
+
+- **infinite-scroll:** 修复数据长度不够时仍然显示加载中 ([bfaef87](https://code.amh-group.com/h5developer/basebuild/views/fta-view/commits/bfaef878ac4a9c852e3e438413adac772bccf007))
+
 ## [1.0.3-beta.1](https://code.amh-group.com/h5developer/basebuild/views/fta-view/compare/@fta/components@1.0.3-beta.0...@fta/components@1.0.3-beta.1) (2022-08-03)
 
 ### Bug Fixes
