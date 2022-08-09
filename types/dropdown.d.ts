@@ -59,6 +59,12 @@ export interface DropdownItemProps {
    * 默认激活的索引，设置为-1则默认不聚焦
    */
   activeIndex?: number
+  /**
+   * 阻止默认展开事件
+   * @default false
+   * @since 1.0.3-beta.5
+   */
+  preventDefault?: boolean
 }
 
 export interface DropdownSideEffectState

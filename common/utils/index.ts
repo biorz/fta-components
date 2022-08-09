@@ -17,6 +17,7 @@ export const upperCase = (val: string) => val[0].toUpperCase() + val.slice(1)
 
 export const log = inDev ? console.log : noob
 
+export * from './auto-increment'
 export * from './classnames'
 export * from './create-selector-query'
 export * from './deep-merge'
