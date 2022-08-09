@@ -1,5 +1,14 @@
 @import '../../variables/default.scss';
 @import '../../mixins/index.scss';
+
+@mixin text-overflow {
+  @include nrn {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+
 .fta-noticebar {
   display: flex;
   @include relative();
@@ -39,6 +48,12 @@
       overflow: hidden;
     }
 
+    &--vertical {
+      @include border-box();
+      height: 42px;
+      overflow: hidden;
+    }
+
     &-text {
       color: $fta-noticebar-text-color;
     }
@@ -52,6 +67,12 @@
           transform: translateZ(0);
           display: inline-block;
           animation: fta-marquee 1s linear infinite both;
+        }
+      }
+
+      &--vertical {
+        @include nrn {
+          transition: transform 1s;
         }
       }
     }
@@ -101,11 +122,12 @@
   /* modifiers */
 
   &--single {
-    @include nrn {
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
+    @include text-overflow();
+  }
+
+  &--vertical {
+    // background-color: green;
+    @include display-flex(column);
   }
 
   &--weapp {
@@ -127,9 +149,7 @@
     }
 
     &--single {
-      @include nrn {
-        white-space: nowrap;
-      }
+      @include text-overflow();
     }
   }
 }

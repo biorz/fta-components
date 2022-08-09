@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, Fragment } from 'react'
 import { AnimatedProps } from './type'
 
-export const AnimatedView: FC<AnimatedProps> = ({ children }) => <>{children}</>
+export const AnimatedView: FC<AnimatedProps> = ({ children }) => <Fragment>{children}</Fragment>

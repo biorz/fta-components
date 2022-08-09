@@ -7,6 +7,8 @@ export const defaultProps: NoticeBarProps = {
   marquee: false,
   icon: false,
   speed: 100,
+  text: [],
+  duration: 3,
 }
 
 export const propTypes: InferProps<NoticeBarProps> = {

@@ -3,7 +3,7 @@ import { CommonEvent } from '@tarojs/components/types/common'
 import Taro from '@tarojs/taro'
 import classNames from 'classnames'
 import { InferProps } from 'prop-types'
-import React, { Component, CSSProperties } from 'react'
+import React, { Component, CSSProperties, Fragment } from 'react'
 import {
   Assets,
   ConfigConsumer,
@@ -19,6 +19,7 @@ import '../../style/components/notice-bar/index.scss'
 import { NoticeBarProps, NoticeBarState } from '../../types/notice-bar'
 import Icon from '../icon'
 import { AnimatedView } from './animation'
+import { VerticalView } from './animation/vertical'
 import { defaultProps, propTypes } from './common'
 
 class NoticeBar extends Component<NoticeBarProps, NoticeBarState> {
@@ -32,13 +33,18 @@ class NoticeBar extends Component<NoticeBarProps, NoticeBarState> {
     super(props)
     const animElemId = `J_${Math.ceil(Math.random() * 10e5).toString(36)}`
     this.state = {
+      transition: true,
       show: true,
       animElemId,
       animationData: {
         actions: [{}],
       },
       dura: 15,
+      cursor: 0,
+      text: props.text!,
     }
+
+    this.initVerticalAnimation = this.initVerticalAnimation.bind(this)
   }
 
   private onClose(event: CommonEvent): void {
@@ -57,11 +63,62 @@ class NoticeBar extends Component<NoticeBarProps, NoticeBarState> {
   }
 
   public componentDidMount(): void {
-    if (!this.props.marquee) return
     this.initAnimation()
   }
 
-  private initAnimation(): void {
+  public componentDidUpdate(_nextProps: NoticeBarProps, nextState: NoticeBarState) {
+    // if (nextState.cursor != this.state.cursor) {
+    // }
+  }
+
+  public componentWillUnmount() {
+    clearInterval(this.interval)
+  }
+
+  private sortVertical() {
+    // 排序的时候要马上去除动画样式
+    const copy = this.state.text!.slice()
+    copy.push(copy.shift()!)
+    this.setState(
+      {
+        text: copy,
+        transition: false,
+        cursor: 0,
+      },
+      () => {
+        inRN ||
+          setTimeout(() => {
+            console.log('动画执行完毕')
+            this.setState({ transition: true })
+          }, 1000)
+      }
+    )
+  }
+
+  private initAnimation() {
+    const { marquee, vertical } = this.props
+    if (!marquee || inRN) return
+    vertical ? this.initVerticalAnimation() : this.initHorizontalAnimation()
+  }
+
+  private initVerticalAnimation(): void {
+    const length = this.props.text?.length || 0
+    if (!length) return
+    if (inRN) {
+      this.sortVertical()
+      return
+    }
+    this.interval = setTimeout(() => {
+      this.setState({ cursor: 1 }, () => {
+        setTimeout(() => {
+          this.sortVertical()
+        }, 1000)
+      })
+      this.initVerticalAnimation()
+    }, (this.props.duration! + 1) * 1000)
+  }
+
+  private initHorizontalAnimation(): void {
     // RN端动画单独做兼容
     if (inRN) return
     this.timeout = setTimeout(() => {
@@ -135,21 +192,30 @@ class NoticeBar extends Component<NoticeBarProps, NoticeBarState> {
       textStyle,
       children,
       close,
+      duration,
+      vertical,
       onClick,
     } = this.props
 
-    const { dura, show, animElemId, animationData } = this.state
+    const { dura, show, animElemId, animationData, cursor, text, transition } = this.state
     const rootClassName = 'fta-noticebar'
 
     const style: CSSProperties = {}
     const innerClassName = [
       'fta-noticebar__content-inner',
-      marquee && 'fta-noticebar__content-inner--marquee',
+      marquee &&
+        `fta-noticebar__content-inner--${
+          vertical ? (transition ? 'vertical' : 'none') : 'marquee'
+        }`,
     ]
     if (marquee) {
-      // close = false
-      style['animation-duration'] = `${dura}s`
-      innerClassName.push(animElemId as string)
+      if (vertical) {
+        !inRN && (style.transform = `translateY(${(-100 / text!.length) * cursor}%)`)
+      } else {
+        // close = false
+        style['animation-duration'] = `${dura}s`
+        innerClassName.push(animElemId as string)
+      }
     }
 
     const classObject = {
@@ -161,10 +227,7 @@ class NoticeBar extends Component<NoticeBarProps, NoticeBarState> {
       ...textStyle,
     }
 
-    const AnimatedAdaptor = inRN && marquee ? AnimatedView : View
-
-    // const iconClass = ['fta-icon']
-    // if (icon) iconClass.push(`fta-icon-${icon}`)
+    const AnimatedAdaptor = inRN && marquee ? (vertical ? VerticalView : AnimatedView) : View
 
     return show ? (
       <ConfigConsumer>
@@ -193,17 +256,39 @@ class NoticeBar extends Component<NoticeBarProps, NoticeBarState> {
               <View
                 className={classNames(
                   'fta-noticebar__content',
-                  marquee && 'fta-noticebar__content--marquee'
+                  marquee && `fta-noticebar__content--${vertical ? 'vertical' : 'marquee'}`
                 )}>
                 <AnimatedAdaptor
+                  // @ts-ignore
+                  length={text!.length}
+                  duration={duration}
                   id={animElemId}
                   animation={animationData}
                   className={classNames(
                     innerClassName,
-                    !marquee && single && 'fta-noticebar--single'
+                    !marquee && single && 'fta-noticebar--single',
+                    marquee && vertical && 'fta-noticebar--vertical'
                   )}
-                  style={style}>
-                  {isString(children) ? (
+                  style={style}
+                  // @ts-ignore
+                  onAnimEnd={this.initVerticalAnimation}>
+                  {vertical ? (
+                    // 垂直滚动
+                    text?.map((txt, i) =>
+                      isString(txt) ? (
+                        <Text
+                          key={i}
+                          // @ts-ignore
+                          numberOfLines={1}
+                          className={classNames(textClz, 'fta-noticebar__text--single')}
+                          style={textStyle}>
+                          {txt}
+                        </Text>
+                      ) : (
+                        <Fragment key={i}>{txt}</Fragment>
+                      )
+                    )
+                  ) : isString(children) ? (
                     <Text
                       style={composeTextStyle}
                       className={classNames(

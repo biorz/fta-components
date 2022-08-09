@@ -6,3 +6,9 @@ export interface AnimatedProps extends BaseComponent, PropsWithChildren {
 
   duration?: number
 }
+
+export interface VerticalProps extends AnimatedProps {
+  length: number
+
+  onAnimEnd(): any
+}

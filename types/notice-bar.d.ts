@@ -1,5 +1,5 @@
 import { CommonEvent } from '@tarojs/components/types/common'
-import { ComponentClass, ReactNode } from 'react'
+import { ComponentClass, ReactElement, ReactNode } from 'react'
 import BaseComponent, { BaseTextComponent, PropsWithChildren } from './base'
 
 export interface NoticeBarProps extends BaseComponent, BaseTextComponent, PropsWithChildren {
@@ -51,9 +51,27 @@ export interface NoticeBarProps extends BaseComponent, BaseTextComponent, PropsW
    * @since 1.0.3-alpha.0
    */
   onClick?: () => void
+  /**
+   * 是否纵向滚动，仅在marquee=true时生效
+   * @default false
+   * @since 1.0.3-beta.4
+   */
+  vertical?: boolean
+  /**
+   * 纵向滚动时传入text数组，仅在
+   * @since 1.0.3-beta.4
+   */
+  text?: (ReactElement | string)[]
+  /**
+   * 垂直滚动时切换间隔,单位秒
+   * @default 3
+   */
+  duration?: number
 }
 
-export interface NoticeBarState {
+export interface NoticeBarState extends Pick<NoticeBarProps, 'text'> {
+  transition: boolean
+  cursor: number
   show: boolean
   animElemId?: string
   animationData?: {
