@@ -79,6 +79,8 @@ export interface DropdownSideEffectState
    * 值改变时候的回调
    */
   onChange: (activeIndex: number) => any
+
+  rect: any
 }
 
 export interface DropdownRef {

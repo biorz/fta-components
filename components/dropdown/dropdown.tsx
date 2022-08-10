@@ -1,14 +1,16 @@
-import { Image, Text, View } from '@tarojs/components'
+import { Image, ScrollView, Text, View } from '@tarojs/components'
 import React, {
   forwardRef,
+  Fragment,
   Ref,
   RefObject,
   useEffect,
   useImperativeHandle,
+  useLayoutEffect,
   useRef,
   useState,
 } from 'react'
-import { Assets, classNames, inRN, useEnhancedState } from '../../common'
+import { Assets, classNames, inRN, useEnhancedState, useMeasure } from '../../common'
 import '../../style/components/dropdown/index.scss'
 import {
   DropdownItemProps,
@@ -20,6 +22,18 @@ import {
   DropdownWithList,
 } from '../../types/dropdown'
 import { DropdownProvider, useDropdown } from './context'
+import NativeView from './native-view'
+import createRootSiblings from './root-siblings'
+
+const useOnceCallback = (cb) => {
+  const timesRef = useRef(true)
+  const resRef = useRef<any>()
+  if (timesRef.current) {
+    timesRef.current = false
+    resRef.current = cb()
+  }
+  return resRef
+}
 
 function Dropdown(props: DropdownProps, ref: Ref<DropdownRef>): JSX.Element {
   const { check, arrow, onChange } = props
@@ -30,9 +44,18 @@ function Dropdown(props: DropdownProps, ref: Ref<DropdownRef>): JSX.Element {
     // activeItem: -1,
     options: [],
     onChange() {},
+    rect: {},
   })
 
   const refs = useRef<Set<RefObject<any>>>(new Set()).current
+  const [mRef, measure] = useMeasure()
+
+  useEffect(() => {
+    measure().then((res) => {
+      console.log('rect', res)
+      setState('rect', res)
+    })
+  }, [])
 
   const register = (ref) => {
     refs.add(ref)
@@ -67,7 +90,9 @@ function Dropdown(props: DropdownProps, ref: Ref<DropdownRef>): JSX.Element {
     },
   }))
 
-  return (
+  const rootClass = classNames('fta-dropdown', state.isOpened && 'fta-dropdown--full')
+
+  const sibling = (
     <DropdownProvider
       value={{
         register,
@@ -76,7 +101,7 @@ function Dropdown(props: DropdownProps, ref: Ref<DropdownRef>): JSX.Element {
         arrow,
         check,
       }}>
-      <View className='fta-dropdown'>
+      <View className={rootClass} style={{ top: inRN ? state.rect.top : void 0 }}>
         <View className='fta-dropdown-menu'>
           {(props as DropdownWithChildren).children ||
             (props as DropdownWithList).list?.map((cprops, i) => (
@@ -89,25 +114,50 @@ function Dropdown(props: DropdownProps, ref: Ref<DropdownRef>): JSX.Element {
               'fta-dropdown-options',
               !inRN && props.absolute && 'fta-dropdown-options--absolute'
             )}>
-            {state.options.map((v, i) => {
-              const isActive = state.activeIndex === i
-              return (
-                <View className='fta-dropdown-option' key={i} onClick={() => _onItemClick(v, i)}>
-                  <Text
+            <ScrollView bounces={false}>
+              {state.options.map((v, i, self) => {
+                const isActive = state.activeIndex === i
+                return (
+                  <View
                     className={classNames(
-                      'fta-dropdown-option__text',
-                      isActive && 'fta-dropdown-option__text--active'
-                    )}>
-                    {v.label}
-                  </Text>
-                  {isActive ? <Image src={check!} className='fta-dropdown-option__check' /> : null}
-                </View>
-              )
-            })}
+                      'fta-dropdown-option',
+                      self.length === i + 1 && 'fta-dropdown-option--borderless'
+                    )}
+                    key={i}
+                    onClick={() => _onItemClick(v, i)}>
+                    <Text
+                      className={classNames(
+                        'fta-dropdown-option__text',
+                        isActive && 'fta-dropdown-option__text--active'
+                      )}>
+                      {v.label}
+                    </Text>
+                    {isActive ? (
+                      <Image src={check!} className='fta-dropdown-option__check' />
+                    ) : null}
+                  </View>
+                )
+              })}
+            </ScrollView>
           </View>
         ) : null}
       </View>
     </DropdownProvider>
+  )
+  const sRef = useOnceCallback(() => createRootSiblings(sibling))
+
+  useLayoutEffect(() => {
+    sRef.current?.update(sibling)
+  })
+  // const elem = useRef().current
+
+  return (
+    <Fragment>
+      {inRN ? null : sibling}
+      <NativeView className='fta-dropdown fta-dropdown--blank' {...mRef}>
+        <View className='fta-dropdown-item'></View>
+      </NativeView>
+    </Fragment>
   )
 }
 

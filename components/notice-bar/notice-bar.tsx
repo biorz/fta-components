@@ -88,7 +88,7 @@ class NoticeBar extends Component<NoticeBarProps, NoticeBarState> {
       () => {
         inRN ||
           setTimeout(() => {
-            console.log('动画执行完毕')
+            // console.log('动画执行完毕')
             this.setState({ transition: true })
           }, 1000)
       }
