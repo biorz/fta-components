@@ -7,8 +7,12 @@
     "fta-theme": "./bin/theme-handler.js"
   },
   "react-native": "dist/rn/index.js",
+  "main:react-native": "dist/rn/index.js",
   "main:h5": "dist/h5/index.js",
-  "weapp": "dist/weapp/index.js",
+  "main:weapp": "dist/weapp/index.js",
+  "main:alipay": "dist/alipay/index.js",
+  "main:tt": "dist/tt/index.js",
+  "main:mw": "dist/mw/index.js",
   "scripts": {
     "dev": "yarn run dev:lib",
     "dev:lib": "tsc --project ./tsconfig.build.json --watch --incremental",
