@@ -65,10 +65,39 @@ export interface DropdownItemProps {
    * @since 1.0.3-beta.5
    */
   preventDefault?: boolean
+  /**
+   * menu 点击事件
+   * @since 1.0.3-beta.5
+   */
+  onClick?: () => void
+}
+
+export interface DropdownOptionProps {
+  /**
+   * 展示文本
+   */
+  children: string
+  /**
+   * 当前项是否激活
+   */
+  active?: boolean
+  /**
+   * 不展示下边框
+   */
+  borderless?: boolean
+  /**
+   * 自定义选中图标
+   */
+  check?: string
+  /**
+   * 点击当前项的回调
+   */
+  onClick?: () => any
 }
 
 export interface DropdownSideEffectState
-  extends Required<Pick<DropdownItemProps, 'options' | 'activeIndex' | 'prop'>> {
+  extends Required<Pick<DropdownItemProps, 'options' | 'activeIndex' | 'prop'>>,
+    Pick<DropdownItemProps, 'preventDefault'> {
   //  activeItem: number
   /**
    * 是否打开选择面板
@@ -81,6 +110,8 @@ export interface DropdownSideEffectState
   onChange: (activeIndex: number) => any
 
   rect: any
+
+  height: number
 }
 
 export interface DropdownRef {
@@ -105,4 +136,6 @@ declare const Dropdown: FC<DropdownProps>
 
 declare const DropdownItem: FC<DropdownItemProps>
 
-export { Dropdown as default, DropdownItem }
+declare const DropdownOption: FC<DropdownOptionProps>
+
+export { Dropdown as default, DropdownItem, DropdownOption }

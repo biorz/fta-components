@@ -89,18 +89,35 @@
 
   &-options {
     @include display-flex(column);
-    padding-left: zoom(28px);
-    // flex: 1;
+    padding-left: 0;
     border-radius: 0px 0px zoom(16px) zoom(16px);
-    background-color: $color-white;
 
     &--absolute {
       position: absolute;
       z-index: 2;
-      background-color: $color-white;
       top: 100%;
       left: 0;
       width: 100%;
+      background-color: $color-transparent;
+    }
+  }
+
+  &-scrollview {
+    padding-left: zoom(28px);
+    background-color: $color-white;
+
+    @include nrn {
+      overflow: auto;
+      animation: fta-dropdown-options 0.5s;
+      transition: all 0.5s;
+    }
+  }
+
+  &-modal {
+    flex: 1;
+    background-color: rgba(0, 0, 0, 0.1);
+    @include nrn {
+      animation: fta-dropdown-modal 0.5s;
     }
   }
 
@@ -128,5 +145,22 @@
     &--borderless {
       border-bottom-color: transparent;
     }
+  }
+}
+
+@keyframes fta-dropdown-modal {
+  from {
+    background-color: rgba($color: #000000, $alpha: 0);
+  }
+}
+
+@keyframes fta-dropdown-options {
+  from {
+    max-height: 0;
+    overflow: hidden;
+  }
+  to {
+    max-height: 100vh;
+    overflow: auto;
   }
 }
