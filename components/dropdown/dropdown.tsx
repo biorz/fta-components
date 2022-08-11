@@ -14,6 +14,7 @@ import {
   Assets,
   classNames,
   inRN,
+  isArray,
   px,
   systemInfo,
   useEnhancedState,
@@ -29,6 +30,7 @@ import {
   DropdownSideEffectState,
   DropdownWithChildren,
   DropdownWithList,
+  Option,
 } from '../../types/dropdown'
 import SafeArea from '../safe-area'
 import { DropdownProvider, useDropdown } from './context'
@@ -45,6 +47,8 @@ const useOnceCallback = (cb) => {
   return resRef
 }
 
+const ScrollViewContainer = inRN ? View : Fragment
+
 function Dropdown(props: DropdownProps, ref: Ref<DropdownRef>): JSX.Element {
   const { check, arrow, onChange } = props
 
@@ -58,22 +62,59 @@ function Dropdown(props: DropdownProps, ref: Ref<DropdownRef>): JSX.Element {
     onChange() {},
     rect: {},
     height: 300,
+    maxDepth: 0,
   })
-
+  const [depth, setDepth] = useState(1)
+  const [opts, setOpts] = useState<Option[]>([])
   const refs = useRef<Set<RefObject<any>>>(new Set()).current
+  const store = useRef({
+    // depth: 1,
+    option: {},
+    options: [] as Option[],
+    // reachEnd: false,
+  }).current
+
   const [mRef, measure] = useMeasure()
 
-  useLayoutEffect(() => {
+  const positioning = () =>
     measure().then((res) => {
       const stretchHeight = systemInfo.windowHeight - res.bottom
       setState({ height: stretchHeight, rect: res })
       // console.log('systemInfo', systemInfo)
       // console.log('rect', res)
       // console.log('stretchHeight', stretchHeight)
-
-      return () => sRef.current?.destroy?.()
     })
+
+  useLayoutEffect(() => {
+    positioning()
+    return () => sRef.current?.destroy?.()
   }, [])
+
+  useEffect(() => {
+    console.log('state change', state)
+  }, [state])
+
+  useEffect(() => {
+    if (!state.preventDefault && !isArray(state.options) && state.maxDepth && state.isOpened) {
+      console.log('depth', depth, state.isOpened)
+      fetchData()
+    }
+  }, [depth, state.isOpened, state.options])
+
+  const fetchData = async () => {
+    const dataList = await (state.options as any)(depth, store.option)
+    console.log('dataList', dataList)
+    if (isArray(dataList)) {
+      setState('activeIndex', -1)
+      setOpts(dataList)
+    }
+  }
+
+  const hasReachEnd = (depth: number, option: Option) => {
+    const res = (state.options as any)(depth, option)
+    console.log('hasreachend', !res)
+    return !res
+  }
 
   const register = (ref) => {
     refs.add(ref)
@@ -85,29 +126,68 @@ function Dropdown(props: DropdownProps, ref: Ref<DropdownRef>): JSX.Element {
 
   const toggle = (params) => {
     const { ref, ...state } = params
-
-    const copy = new Set(refs)
-    copy.delete(ref)
-
-    copy.forEach((ref) => {
-      ref.current.isOpened && ref.current.close()
-    })
+    console.log('toggle open', state.isOpened)
+    closeItems(ref)
     if (!state.preventDefault) {
+      // 重置当前选择的深度
+      setDepth(1)
       setState(state)
     } else {
       setState('isOpened', false)
     }
   }
 
-  const _onItemClick = (item, index) => {
-    setState('activeIndex', index)
-    state.onChange(index)
-    onChange?.(state.prop, item.value || item.label)
+  const closeItems = (ref?: any) => {
+    const copy = new Set(refs)
+    ref && copy.delete(ref)
+
+    copy.forEach((ref) => {
+      ref.current.isOpened && ref.current.close()
+    })
   }
 
-  const closePanel = () => setState('isOpened', false)
+  const _onItemClick = async (item, index) => {
+    if (depth < state.maxDepth!) {
+      console.log('depth', depth, item)
+      if (!(await hasReachEnd(depth + 1, item))) {
+        // 说明是级联选择
+        console.log('1111111')
+        setTimeout(() => {
+          setDepth(depth + 1)
+        }, 200)
+      }
+    }
+
+    setState('activeIndex', index)
+    state.onChange(index)
+    store.option = item
+    onChange?.(state.prop, item.value || item.label, depth)
+  }
+
+  const closePanel = () => {
+    closeItems()
+    setState('isOpened', false)
+  }
+
+  const renderOptions = (opts: Option[]) => (
+    <Fragment>
+      {opts.map((v, i, self) => {
+        return (
+          <DropdownOption
+            key={i}
+            check={check}
+            active={state.activeIndex === i}
+            borderless={self.length === i + 1}
+            onClick={() => _onItemClick(v, i)}>
+            {v.label}
+          </DropdownOption>
+        )
+      })}
+    </Fragment>
+  )
 
   useImperativeHandle(ref, () => ({
+    measure: positioning,
     close() {
       refs.forEach((ref) => {
         ref.current.isOpened && ref.current.close()
@@ -141,22 +221,11 @@ function Dropdown(props: DropdownProps, ref: Ref<DropdownRef>): JSX.Element {
               'fta-dropdown-options',
               !inRN && props.absolute && 'fta-dropdown-options--absolute'
             )}>
-            <View>
-              <ScrollView bounces={false} className='fta-dropdown-scrollview'>
-                {state.options.map((v, i, self) => {
-                  return (
-                    <DropdownOption
-                      key={i}
-                      check={check}
-                      active={state.activeIndex === i}
-                      borderless={self.length === i + 1}
-                      onClick={() => _onItemClick(v, i)}>
-                      {v.label}
-                    </DropdownOption>
-                  )
-                })}
+            <ScrollViewContainer>
+              <ScrollView scrollY bounces={false} className='fta-dropdown-scrollview'>
+                {isArray(state.options) ? renderOptions(state.options) : renderOptions(opts)}
               </ScrollView>
-            </View>
+            </ScrollViewContainer>
 
             <View className='fta-dropdown-modal' onClick={closePanel} />
             <SafeArea />
@@ -183,7 +252,7 @@ function Dropdown(props: DropdownProps, ref: Ref<DropdownRef>): JSX.Element {
 }
 
 function DropdownItem(props: DropdownItemProps, ref: Ref<DropdownItemRef>): JSX.Element {
-  const { title, options, activeIndex, prop, preventDefault } = props
+  const { title, options, activeIndex, prop, preventDefault, maxDepth } = props
   const activeIndexRef = useRef(activeIndex)
   const [isOpened, toggleOpened] = useState(false)
   const ctx = useDropdown()
@@ -199,13 +268,15 @@ function DropdownItem(props: DropdownItemProps, ref: Ref<DropdownItemRef>): JSX.
     props.onClick?.()
 
     const willOpen = !isOpened
+    console.log('will open', willOpen)
     if (!preventDefault) {
       toggleOpened(willOpen)
     }
     ctx.toggle({
       prop,
-      ref: mRef,
       options,
+      ref: mRef,
+      maxDepth: maxDepth || 0,
       isOpened: willOpen,
       preventDefault: !!preventDefault,
       activeIndex: activeIndexRef.current,
@@ -217,9 +288,7 @@ function DropdownItem(props: DropdownItemProps, ref: Ref<DropdownItemRef>): JSX.
 
   useImperativeHandle(ref, () => _ref)
 
-  useEffect(() => {
-    mRef.current = _ref
-  })
+  mRef.current = _ref
 
   useEffect(() => {
     ctx.register(mRef)

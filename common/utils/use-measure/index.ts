@@ -23,7 +23,7 @@ export function useMeasure() {
     return new Promise((resolve: (value: Rect) => void) => {
       setTimeout(() => {
         createSelectorQuery(`#${props.id}`, (rect) => {
-          console.log('rect', rect, props.id)
+          // console.log('rect', rect, props.id)
           resolve(
             // @ts-ignore
             rect || {

@@ -23,7 +23,7 @@ export interface BaseDropdown {
   /**
    * 选中值改变的回调
    */
-  onChange?(prop: string, value: any): any
+  onChange?(prop: string, value: any, depth?: number): any
 }
 
 export interface DropdownWithChildren extends BaseDropdown {
@@ -54,7 +54,11 @@ export interface DropdownItemProps {
   /**
    * 列表
    */
-  options?: Option[]
+  options?: Option[] | ((depth: number, opt: Option) => Option[] | false)
+  /**
+   * 指定选择的最大深度，仅在options返回函数时生效
+   */
+  maxDepth?: number
   /**
    * 默认激活的索引，设置为-1则默认不聚焦
    */
@@ -97,7 +101,7 @@ export interface DropdownOptionProps {
 
 export interface DropdownSideEffectState
   extends Required<Pick<DropdownItemProps, 'options' | 'activeIndex' | 'prop'>>,
-    Pick<DropdownItemProps, 'preventDefault'> {
+    Pick<DropdownItemProps, 'preventDefault' | 'maxDepth'> {
   //  activeItem: number
   /**
    * 是否打开选择面板
@@ -115,10 +119,13 @@ export interface DropdownSideEffectState
 }
 
 export interface DropdownRef {
+  /** 收起下拉菜单 */
   close: () => void
+  /** 重新对下拉菜单进行定位，适用于滚动场景或元素位置会动态改变时 */
+  measure: () => void
 }
 
-export interface DropdownItemRef extends DropdownRef {
+export interface DropdownItemRef extends Omit<DropdownRef, 'measure'> {
   isOpened?: () => boolean
 }
 
