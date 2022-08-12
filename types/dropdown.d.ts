@@ -1,4 +1,4 @@
-import { FC, ReactNode, RefObject } from 'react'
+import { CSSProperties, FC, ReactNode, RefObject } from 'react'
 
 export interface Option {
   label: string
@@ -20,6 +20,25 @@ export interface BaseDropdown {
    * 自定义选中时的对号图标
    */
   check?: string
+  /**
+   * 级联选择的延迟效果，单位ms
+   * @since 1.0.3-beta.5
+   * @default 200
+   */
+  delay?: number
+  /**
+   * 是否显示下层遮罩层
+   * @default true
+   */
+  overlay?: boolean
+  /**
+   * 遮罩层类名
+   */
+  overlayClassName?: string
+  /**
+   * 遮罩层内联样式
+   */
+  overlayStyle?: CSSProperties
   /**
    * 选中值改变的回调
    */
@@ -61,8 +80,9 @@ export interface DropdownItemProps {
   maxDepth?: number
   /**
    * 默认激活的索引，设置为-1则默认不聚焦
+   * 级联选择请传入数组
    */
-  activeIndex?: number
+  activeIndex?: number | number[]
   /**
    * 阻止默认展开事件
    * @default false
@@ -111,7 +131,7 @@ export interface DropdownSideEffectState
   /**
    * 值改变时候的回调
    */
-  onChange: (activeIndex: number) => any
+  onChange: (activeIndex: number, depth?: number) => any
 
   rect: any
 
