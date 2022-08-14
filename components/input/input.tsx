@@ -4,6 +4,7 @@ import { InputProps } from '@tarojs/components/types/Input'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
+import { inRN } from '../../common'
 import '../../style/components/input/index.scss'
 import {
   BlurEventDetail,
@@ -150,8 +151,11 @@ export default class FTAInput extends React.Component<FTAInputProps> {
           <View className={overlayCls} onClick={this.handleClick}></View>
           {title && (
             <Label
-              className={`fta-input__title ${required && 'fta-input__title--required'}`}
+              className={`fta-input__title ${required && !inRN && 'fta-input__title--required'} ${
+                error && inRN && 'fta-input--error'
+              }`}
               for={name}>
+              {required && inRN ? <Text className='fta-input__title--required'>*</Text> : null}
               {title}
             </Label>
           )}

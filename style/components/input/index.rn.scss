@@ -1,7 +1,6 @@
 @import '../../variables/default.scss';
-// @import '../../mixins/index.scss';
+@import '../../mixins/index.scss';
 @import '../../mixins/libs/hairline.rn.scss';
-@import '../../mixins/libs/placeholder.scss';
 
 .fta-input {
   position: relative;
@@ -21,6 +20,7 @@
   }
 
   &__title {
+    @include display-flex(row);
     margin-right: $spacing-h-md;
     width: 172px;
     font-size: $fta-input-font-size;
@@ -29,15 +29,10 @@
     text-align: left;
 
     &--required {
-      &::before {
-        display: flex;
-        margin-right: 8px;
-        color: $color-error;
-        font-size: 28px;
-        font-family: SimSun, sans-serif;
-        // line-height: 1;
-        // content: "*";
-      }
+      display: flex;
+      margin-right: 8px;
+      color: $color-error;
+      font-size: 28px;
     }
   }
 
@@ -52,13 +47,13 @@
     @include placeholder($fta-input-placeholder-color);
   }
 
-  input {
-    color: $fta-input-text-color;
-    font-size: $fta-input-font-size;
-    height: $fta-input-font-size * 1.4;
-    // line-height: $line-height-zh;
-    // border: none;
-  }
+  // input {
+  //   color: $fta-input-text-color;
+  //   font-size: $fta-input-font-size;
+  //   height: $fta-input-font-size * 1.4;
+  //   // line-height: $line-height-zh;
+  //   // border: none;
+  // }
 
   &__icon {
     display: flex;
@@ -120,6 +115,8 @@
   }
 
   &--without-border {
-    border-width: 0;
+    margin-bottom: 0;
+    // FIXME: rn border = false失效
+    border-bottom-width: 0;
   }
 }
