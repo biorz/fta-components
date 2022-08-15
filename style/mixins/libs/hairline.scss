@@ -5,8 +5,8 @@
  */
 
 @mixin hairline-common() {
+  /*  #ifndef rn  */
   position: absolute;
-  /*  #ifndef  rn  */
   content: '';
   transform-origin: center;
   box-sizing: border-box;
@@ -17,19 +17,24 @@
 @mixin hairline-base($color: $color-border-light, $style: solid) {
   @include hairline-common();
 
+  /*  #ifdef rn  */
+  border-color: $color;
+  /*  #endif  */
+
+  /*  #ifndef rn  */
   top: -50%;
   left: -50%;
   right: -50%;
   bottom: -50%;
   border: 0 $style $color;
   transform: scale(0.5);
+  /*  #endif  */
 }
+
 // prettier-ignore
-@mixin hairline-surround(
-  $color: $color-border-light,
+@mixin hairline-surround($color: $color-border-light,
   $style: solid,
-  $width: 1PX
-) {
+  $width: 1PX) {
   position: relative;
 
   &::after {
@@ -40,35 +45,40 @@
 }
 
 // prettier-ignore
-@mixin hairline-top(
-  $color: $color-border-light,
+@mixin hairline-top($color: $color-border-light,
   $style: solid,
-  $width: 1PX
-) {
-  position: relative;
+  $width: 1PX) {
 
-  &::after {
-    @include hairline-base($color, $style);
-
+  @include rn {
     border-top-width: $width;
+    @include hairline-base();
   }
+
+  @include nrn {
+    position: relative;
+
+    &::after {
+      @include hairline-base($color, $style);
+      border-top-width: $width;
+    }
+  }
+
 }
 
 // prettier-ignore
-@mixin hairline-bottom(
-  $color: $color-border-light,
+@mixin hairline-bottom($color: $color-border-light,
   $style: solid,
-  $width: 1PX
-) {
+  $width: 1PX) {
 
 
-  @include rn{
+  @include rn {
     @include hairline-base($color, $style);
     border-bottom-width: $width;
   }
 
-  @include nrn{
+  @include nrn {
     position: relative;
+
     &::after {
       @include hairline-base($color, $style);
       border-bottom-width: $width;
@@ -78,11 +88,9 @@
 }
 
 // prettier-ignore
-@mixin hairline-left(
-  $color: $color-border-light,
+@mixin hairline-left($color: $color-border-light,
   $style: solid,
-  $width: 1PX
-) {
+  $width: 1PX) {
   position: relative;
 
   &::after {
@@ -93,11 +101,9 @@
 }
 
 // prettier-ignore
-@mixin hairline-right(
-  $color: $color-border-light,
+@mixin hairline-right($color: $color-border-light,
   $style: solid,
-  $width: 1PX
-) {
+  $width: 1PX) {
   position: relative;
 
   &::after {
@@ -108,105 +114,132 @@
 }
 
 // prettier-ignore
-@mixin hairline-top-bottom(
-  $color: $color-border-light,
+@mixin hairline-top-bottom($color: $color-border-light,
   $style: solid,
-  $width: 1PX
-) {
-  position: relative;
+  $width: 1PX) {
 
-  &::after {
+  @include rn {
     @include hairline-base($color, $style);
-
     border-top-width: $width;
     border-bottom-width: $width;
   }
-}
 
-// prettier-ignore
-@mixin hairline-bottom-relative(
-  $color: $color-border-light,
-  $style: solid,
-  $width: 1PX,
-  $left: 0
-) {
-  position: relative;
-  &::after {
-    @include hairline-common();
+  @include nrn {
+    position: relative;
 
-    top: auto;
-    left: $left;
-    right: 0;
-    bottom: 0;
-    transform: scaleY(0.5);
-    /*  #ifndef  rn  */
-    border-bottom: $width $style $color;
-    /*  #endif  */
+    &::after {
+      @include hairline-base($color, $style);
+      border-top-width: $width;
+      border-bottom-width: $width;
+    }
   }
 }
+
 // prettier-ignore
-@mixin hairline-top-relative(
-  $color: $color-border-light,
+@mixin hairline-bottom-relative($color: $color-border-light,
   $style: solid,
   $width: 1PX,
-  $left: 0
-) {
-  position: relative;
+  $left: 0) {
 
-  &::before {
-    @include hairline-common();
+  @include rn {
+    @include hairline-bottom($color, $style , $width);
+  }
 
-    top: 0;
-    left: $left;
-    right: 0;
-    bottom: auto;
-    transform: scaleY(0.5);
-    /*  #ifndef  rn  */
-    border-top: $width $style $color;
-    /*  #endif  */
+  @include nrn {
+    position: relative;
+
+    &::after {
+      @include hairline-common();
+
+      top: auto;
+      left: $left;
+      right: 0;
+      bottom: 0;
+      transform: scaleY(0.5);
+      border-bottom: $width $style $color;
+    }
+  }
+
+}
+
+// prettier-ignore
+@mixin hairline-top-relative($color: $color-border-light,
+  $style: solid,
+  $width: 1PX,
+  $left: 0) {
+  @include rn {
+    @include hairline-top($color, $style , $width);
+  }
+
+  @include nrn {
+    position: relative;
+
+    &::before {
+      @include hairline-common();
+
+      top: 0;
+      left: $left;
+      right: 0;
+      bottom: auto;
+      transform: scaleY(0.5);
+      border-top: $width $style $color;
+    }
   }
 }
+
 // prettier-ignore
-@mixin hairline-left-relative(
-  $color: $color-border-light,
+@mixin hairline-left-relative($color: $color-border-light,
   $style: solid,
   $width: 1PX,
-  $top: 0
-) {
-  position: relative;
+  $top: 0) {
 
-  &::after {
-    @include hairline-common();
-
-    top: $top;
-    left: 0;
-    right: auto;
-    bottom: 0;
-    transform: scaleX(0.5);
-    /*  #ifndef  rn  */
-    border-left: $width $style $color;
-    /*  #endif  */
+  @include rn {
+    border-style: $style;
+    border-left-width: $width;
+    border-left-color: $color;
   }
+
+  @include nrn {
+    position: relative;
+
+    &::after {
+      @include hairline-common();
+
+      top: $top;
+      left: 0;
+      right: auto;
+      bottom: 0;
+      transform: scaleX(0.5);
+      border-left: $width $style $color;
+    }
+  }
+
 }
+
 // prettier-ignore
-@mixin hairline-right-relative(
-  $color: $color-border-light,
+@mixin hairline-right-relative($color: $color-border-light,
   $style: solid,
   $width: 1PX,
-  $top: 0
-) {
-  position: relative;
+  $top: 0) {
 
-  &::after {
-    @include hairline-common();
+  @include rn {
+    border-style: $style;
+    border-right-width: $width;
+    border-right-color: $color;
+  }
 
-    top: $top;
-    left: auto;
-    right: 0;
-    bottom: 0;
-    transform: scaleX(0.5);
-    /*  #ifndef  rn  */
-    border-right: $width $style $color;
-    /*  #endif  */
+  @include nrn {
+    position: relative;
+
+    &::after {
+      @include hairline-common();
+
+      top: $top;
+      left: auto;
+      right: 0;
+      bottom: 0;
+      transform: scaleX(0.5);
+      border-right: $width $style $color;
+    }
   }
 }
