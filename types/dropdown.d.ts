@@ -1,4 +1,5 @@
-import { CSSProperties, FC, ReactNode, RefObject } from 'react'
+import { ComponentType, CSSProperties, FC, ReactNode, RefObject } from 'react'
+import { SafeAreaProps } from './safe-area'
 
 export interface Option {
   label: string
@@ -39,6 +40,11 @@ export interface BaseDropdown {
    * 遮罩层内联样式
    */
   overlayStyle?: CSSProperties
+  /**
+   * 底部安全区相关属性
+   * @since 1.0.3-beta.7
+   */
+  safeArea?: SafeAreaProps
   /**
    * 选中值改变的回调
    */
@@ -164,5 +170,7 @@ declare const Dropdown: FC<DropdownProps>
 declare const DropdownItem: FC<DropdownItemProps>
 
 declare const DropdownOption: FC<DropdownOptionProps>
+
+declare function withDropdown<P>(Component: ComponentType<P>): FC<P>
 
 export { Dropdown as default, DropdownItem, DropdownOption }

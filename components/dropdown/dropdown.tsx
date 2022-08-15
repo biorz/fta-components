@@ -35,7 +35,7 @@ import {
 import SafeArea from '../safe-area'
 import { DropdownProvider, useDropdown } from './context'
 import NativeView from './native-view'
-import createRootSiblings from './root-siblings'
+import createRootSiblings, { withRootSiblings } from './root-siblings'
 
 const useOnceCallback = (cb) => {
   const timesRef = useRef(true)
@@ -50,7 +50,7 @@ const useOnceCallback = (cb) => {
 const ScrollViewContainer = inRN ? View : Fragment
 
 function Dropdown(props: DropdownProps, ref: Ref<DropdownRef>): JSX.Element {
-  const { check, arrow, delay, onChange, overlay, overlayClassName, overlayStyle } = props
+  const { check, arrow, delay, onChange, overlay, overlayClassName, overlayStyle, safeArea } = props
 
   const [state, setState] = useEnhancedState<DropdownSideEffectState>({
     prop: '',
@@ -190,6 +190,15 @@ function Dropdown(props: DropdownProps, ref: Ref<DropdownRef>): JSX.Element {
       })
       setState('isOpened', false)
     },
+    show() {
+      sRef.current?.update?.(sibling)
+    },
+    hide() {
+      sRef.current?.update?.(null)
+    },
+    destroy() {
+      sRef.current?.destroy?.()
+    },
   }))
 
   const rootClass = classNames('fta-dropdown', state.isOpened && 'fta-dropdown--full')
@@ -230,7 +239,7 @@ function Dropdown(props: DropdownProps, ref: Ref<DropdownRef>): JSX.Element {
                 onClick={closePanel}
               />
             ) : null}
-            <SafeArea />
+            <SafeArea {...safeArea} />
           </View>
         ) : null}
       </View>
@@ -240,6 +249,7 @@ function Dropdown(props: DropdownProps, ref: Ref<DropdownRef>): JSX.Element {
 
   useLayoutEffect(() => {
     sRef.current?.update(sibling)
+    // console.log('sRef.current', sRef.current?.)
   })
   // const elem = useRef().current
 
@@ -351,10 +361,16 @@ ForwardedDropdown.defaultProps = {
   check: Assets.check.primary,
   delay: 200,
   overlay: true,
+  safeArea: {},
 }
 
 DropdownOption.defaultProps = {
   check: Assets.check.primary,
 }
 
-export { ForwardedDropdown as default, ForwardedDropdownItem as DropdownItem, DropdownOption }
+export {
+  ForwardedDropdown as default,
+  ForwardedDropdownItem as DropdownItem,
+  DropdownOption,
+  withRootSiblings as withDropdown,
+}
