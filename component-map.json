@@ -15,6 +15,7 @@
   "Dropdown": { "replace": "components/dropdown", "default": true },
   "DropdownItem": { "replace": "components/dropdown", "default": false },
   "DropdownOption": { "replace": "components/dropdown", "default": false },
+  "withDropdown": { "replace": "components/dropdown", "default": false },
   "Empty": { "replace": "components/empty", "default": true },
   "Form": { "replace": "components/form", "default": true },
   "FormItem": { "replace": "components/form", "default": false },
