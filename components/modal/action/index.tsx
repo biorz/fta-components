@@ -18,8 +18,14 @@ export default class ModalAction extends React.Component<ModalActionProps> {
       this.props.className
     )
 
+    const rootStyle = {
+      // @ts-ignore
+      ...this.props.style,
+      ...this.props.customStyle,
+    }
+
     return (
-      <View className={rootClass}>
+      <View className={rootClass} style={rootStyle}>
         <View className='fta-modal__action'>{this.props.children}</View>
       </View>
     )
