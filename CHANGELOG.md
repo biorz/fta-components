@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.3-beta.6](https://code.amh-group.com/h5developer/basebuild/views/fta-view/compare/@fta/components@1.0.3-beta.5...@fta/components@1.0.3-beta.6) (2022-08-15)
+
+### Bug Fixes
+
+- **input:** 修复 rn 端隐藏 border 不生效 ([f25df18](https://code.amh-group.com/h5developer/basebuild/views/fta-view/commits/f25df180b2ea12674274589d951aab875729c194))
+- **modal:** 修复 modal action 自定义样式不生效 ([d1f9a8a](https://code.amh-group.com/h5developer/basebuild/views/fta-view/commits/d1f9a8a0eed5ec2d4962166d869852a87badba5a))
+- **types:** 优化 infinite-scroll types 文件 ([fa22b62](https://code.amh-group.com/h5developer/basebuild/views/fta-view/commits/fa22b626c334aaf9adcaca2622be5ddb7875ac4e))
+
 ## [1.0.3-beta.3](https://code.amh-group.com/h5developer/basebuild/views/fta-view/compare/@fta/components@1.0.3-beta.2...@fta/components@1.0.3-beta.3) (2022-08-05)
 
 ### Bug Fixes
