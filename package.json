@@ -8,7 +8,6 @@
   },
   "react-native": "dist/rn/index.js",
   "main:react-native": "dist/rn/index.js",
-  "main:h5": "dist/h5/index.js",
   "main:weapp": "dist/weapp/index.js",
   "main:alipay": "dist/alipay/index.js",
   "main:tt": "dist/tt/index.js",
