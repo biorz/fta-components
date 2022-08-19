@@ -1,6 +1,6 @@
 {
   "name": "@fta/components",
-  "version": "1.0.3-beta.7",
+  "version": "1.0.3-canary.0",
   "description": "FTA View - Taro-based cross-platform development framework",
   "types": "./types/index.d.ts",
   "bin": {
@@ -64,9 +64,9 @@
     "typescript": "^4.0.0"
   },
   "peerDependencies": {
-    "@tarojs/taro": ">=3",
     "@tarojs/components": ">=3",
     "@tarojs/react": ">=3",
+    "@tarojs/taro": ">=3",
     "classnames": ">=2",
     "prop-types": ">=15",
     "react": "^16.13.0 || ^17.0.0",
