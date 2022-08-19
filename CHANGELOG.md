@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.3-canary.1](https://code.amh-group.com/h5developer/basebuild/views/fta-view/compare/@fta/components@1.0.3-canary.0...@fta/components@1.0.3-canary.1) (2022-08-19)
+
+### Bug Fixes
+
+- **d.ts:** 声明文件加上 withDropdown ([c225678](https://code.amh-group.com/h5developer/basebuild/views/fta-view/commits/c2256780927c449d074bd5501c131a5e82a39c7e))
+
 ## [1.0.3-beta.6](https://code.amh-group.com/h5developer/basebuild/views/fta-view/compare/@fta/components@1.0.3-beta.5...@fta/components@1.0.3-beta.6) (2022-08-15)
 
 ### Bug Fixes
