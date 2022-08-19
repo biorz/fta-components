@@ -173,4 +173,4 @@ declare const DropdownOption: FC<DropdownOptionProps>
 
 declare function withDropdown<P>(Component: ComponentType<P>): FC<P>
 
-export { Dropdown as default, DropdownItem, DropdownOption }
+export { Dropdown as default, DropdownItem, DropdownOption, withDropdown }
