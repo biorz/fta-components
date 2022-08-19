@@ -62,7 +62,7 @@ export { default as Tag } from './components/tag'
 export { default as Textarea } from './components/textarea'
 export { default as Timeline, TimelineItem } from './components/timeline'
 export { default as Toast, useToast } from './components/toast'
-export { default as Tooltip } from './components/tooltip'
+export { default as Tooltip, TooltipView, withTooltip } from './components/tooltip'
 export { Text } from './components/typography'
 export { default as Upload } from './components/upload'
 export {

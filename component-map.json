@@ -69,6 +69,8 @@
   "Toast": { "replace": "components/toast", "default": true },
   "useToast": { "replace": "components/toast", "default": false },
   "Tooltip": { "replace": "components/tooltip", "default": true },
+  "TooltipView": { "replace": "components/tooltip", "default": false },
+  "withTooltip": { "replace": "components/tooltip", "default": false },
   "Text": { "replace": "components/typography", "default": false },
   "Upload": { "replace": "components/upload", "default": true },
   "LayoutView": { "replace": "components/view", "default": true },

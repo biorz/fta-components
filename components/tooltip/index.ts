@@ -1,1 +1,1 @@
-export { default } from './tooltip'
+export { default, TooltipView, withTooltip } from './tooltip'

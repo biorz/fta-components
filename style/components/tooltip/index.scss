@@ -1,6 +1,21 @@
 @import '../../mixins/index.scss';
 @import '../../variables/default.scss';
 
+%absolute-full {
+  @include rn {
+    position: absolute;
+  }
+
+  @include nrn {
+    position: fixed;
+  }
+  // flex: 1;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
 .fta-tooltip {
   @include relative();
 
@@ -45,5 +60,11 @@
       width: $fta-tooltip-icon-width;
       height: $fta-tooltip-icon-height;
     }
+  }
+
+  &-overlay {
+    @extend %absolute-full;
+    background-color: transparent;
+    z-index: 99;
   }
 }
