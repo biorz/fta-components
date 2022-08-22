@@ -9,6 +9,10 @@
   // 消除空白幽灵节点
   vertical-align: middle;
   /* #endif */
+
+  &--errored {
+    display: none;
+  }
 }
 
 .fta-image--circle {

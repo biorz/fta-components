@@ -562,7 +562,7 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
   const _formatValue = format ? format(_value as string) : _value
 
   const alignStyle: CSSProperties = {
-    textAlign: _align || 'right',
+    textAlign: _align === 'between' ? 'left' : _align || 'right',
   }
 
   return (
@@ -662,7 +662,10 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
 }
 
 /** 标题 */
-function Title(props: { children?: ReactNode; align?: Align }): JSX.Element | null {
+function Title(props: {
+  children?: ReactNode
+  align?: Exclude<Align, 'between'>
+}): JSX.Element | null {
   const { children: title, align: titleAlign } = props
   return title ? (
     <View className='fta-form-title' style={{ textAlign: titleAlign }}>

@@ -29,6 +29,10 @@ class Image extends Component<ImageProps, ImageState> {
     return !this.state._errored && !this.state._loaded
   }
 
+  public get isErrored() {
+    return this.state._errored && this.props.showError
+  }
+
   public get needLoading() {
     return !!(this.isLoading && this.props.showLoading && this.props.loadingIcon)
   }
@@ -108,13 +112,13 @@ class Image extends Component<ImageProps, ImageState> {
       onLoad,
       ...props
     } = this.props
-    const { _errored } = this.state
 
     const loadingClass = classNames('fta-image', className, this.isCircle && 'fta-image--circle')
 
     const rootClass = classNames(
       loadingClass,
-      ((showLoading && this.isLoading) || (showError && _errored)) && 'fta-image--loading'
+      ((showLoading && this.isLoading) || this.isErrored) && 'fta-image--loading',
+      this.isErrored && 'fta-image--errored'
     )
 
     return (
