@@ -112,6 +112,20 @@ $fta-form-content-bg-color: #f9f9f9;
       }
     }
   }
+
+  &-captcha {
+    @include flex-center();
+    align-self: stretch;
+
+    &__text {
+      color: $color-brand;
+      font-size: $font-size-md;
+      @include nrn {
+        display: inline-block;
+        white-space: nowrap;
+      }
+    }
+  }
 }
 
 .fta-form-item {

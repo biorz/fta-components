@@ -5,6 +5,7 @@ import React, {
   CSSProperties,
   forwardRef,
   Fragment,
+  isValidElement,
   ReactElement,
   ReactNode,
   Ref,
@@ -33,12 +34,18 @@ import { TouchableOpacity } from '../view'
 import { FormProvider, Store, useFormConfig } from './context'
 import { FullScreen as Modal } from './full-screen'
 import { ScrollIntoView, ScrollView } from './scroll-into-view'
+import FormCaptcha from './use-captcha'
 import { isEmptyRules, omit, parseChildren, uniqueId } from './util'
+
+/**
+ *  20220802 新增倒计时hook
+ */
 
 const justifyContentMap: Record<Align, CSSProperties['justifyContent']> = {
   left: 'flex-start',
   center: 'center',
   right: 'flex-end',
+  between: 'space-between',
 }
 
 /**
@@ -51,13 +58,6 @@ const validatePriority: ValidatePriority = {
   Low: 3,
   Lower: 4,
 }
-
-// const RADIO = {
-//   unset:
-//     'https://imagecdn.ymm56.com/ymmfile/static/resource/d8cc03dc-087b-4550-9b01-a6413392ba9a.png',
-//   checked:
-//     'https://imagecdn.ymm56.com/ymmfile/static/resource/4b4a182c-ed96-4674-97c0-6e85b1bc5ed7.png',
-// }
 
 /**
  * 校验状态
@@ -593,7 +593,7 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
           {/* && !isUndef(itemRef?.current.getValue() || value) */}
           {
             _children == null ? (
-              _readonly || arrow ? (
+              _readonly || (arrow && arrow !== 'arrow') ? (
                 // 加入placeholder
                 (_formatValue == null || !String(_formatValue).length) &&
                 placeholder &&
@@ -644,7 +644,7 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
           ) : (
             suffix
           )}
-          {arrow && !_readonly ? <Arrow /> : null}
+          {arrow && !_readonly ? isValidElement(arrow) ? arrow : <Arrow /> : null}
         </View>
       </View>
       {/* 套了一个View标签，解决Taro H5 顺序颠倒 */}
@@ -825,6 +825,7 @@ const ForwardForm = forwardRef(Form) as React.ForwardRefExoticComponent<
   ValidatePriority: ValidatePriority
   ValidateStatus: ValidateStatus
   AsyncValidator: typeof AsyncValidator
+  Captcha: typeof FormCaptcha
 }
 
 const FowardFormItem = forwardRef(FormItem)
@@ -840,6 +841,8 @@ FormItemAppearance.defaultProps = {
 /** Extend Form */
 
 ForwardForm.Item = FowardFormItem
+
+ForwardForm.Captcha = FormCaptcha
 
 ForwardForm.ItemView = FormItemAppearance
 

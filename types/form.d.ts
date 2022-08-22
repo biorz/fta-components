@@ -15,7 +15,7 @@ import BaseComponent, { PropsWithChildren } from './base'
 
 type AnyFn = (...args: any[]) => any
 
-export type Align = 'left' | 'center' | 'right'
+export type Align = 'left' | 'center' | 'right' | 'between'
 
 export type Callback = (message?: string | null) => void
 
@@ -209,8 +209,9 @@ export interface FormItemProps
   rules?: ValidateRule
   /**
    * 是否显示右箭头（可传入自定义节点）
+   * 传入arrow='arrow'可实现带箭头的input
    */
-  arrow?: boolean | ReactElement
+  arrow?: boolean | ReactElement | 'arrow'
   /**
    * 点击label弹出的提示，设置为true，则显示icon图标
    */
@@ -471,6 +472,58 @@ export interface TipProps extends BaseComponent {
 
 export type ToolTipProps = Pick<FormItemProps, 'tooltipIcon'>
 
+export interface captchaProps {
+  /**
+   * 验证码持续时间，单位秒
+   * @default 60
+   */
+  duration?: number
+  /**
+   * 文案
+   * @default '获取验证码'
+   */
+  text?: string
+  /**
+   * 格式化倒计时显示
+   * @default ''
+   */
+  format?(duration: number): string
+  /**
+   * 自定义样式
+   */
+  style?: CSSProperties
+  /**
+   * 类名
+   */
+  className?: string
+  /**
+   * 自定义文本样式
+   */
+  textStyle?: CSSProperties
+  /**
+   * 文本类名
+   */
+  textClassName?: string
+  /**
+   * 点击开始倒计时的回调
+   */
+  onClick?(): any
+}
+
+declare const FormCaptcha: ForwardRefExoticComponent<
+  captchaProps &
+    RefAttributes<{
+      /**
+       * 关闭倒计时
+       */
+      reset(): void
+      /**
+       * 手动触发倒计时
+       */
+      countdown(): void
+    }>
+>
+
 declare const Tip: FC<TipProps>
 
 declare const FormItem: ForwardRefExoticComponent<FormItemProps & RefAttributes<FormItemRefMethods>>
@@ -491,6 +544,8 @@ declare const Form: ForwardRefExoticComponent<FormProps & RefAttributes<FormRefM
   ValidateStatus: ValidateStatus
   /** 异步校验器 */
   AsyncValidator: typeof Schema
+  /** 内置验证码 */
+  Captcha: typeof FormCaptcha
 }
 
-export { Form as default, FormItem }
+export { Form as default, FormItem, FormCaptcha }
