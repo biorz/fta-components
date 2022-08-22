@@ -22,5 +22,17 @@ export function useMeasure() {
       }, 0)
     })
   }
-  return [{ ref }, measure]
+  return [
+    {
+      ref,
+      /**
+       * 下列属性兼容部分安卓机位置获取不到的问题
+       * @see https://reactnative.dev/docs/view#collapsable-android
+       * Views that are only used to layout their children or otherwise don't draw anything may be automatically removed from the native hierarchy as an optimization.
+       * Set this property to false to disable this optimization and ensure that this View exists in the native view hierarchy.
+       */
+      collapsable: false,
+    },
+    measure,
+  ]
 }
