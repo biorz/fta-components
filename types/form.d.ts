@@ -10,6 +10,7 @@ import {
   ReactNode,
   Ref,
   RefAttributes,
+  RefObject,
 } from 'react'
 import BaseComponent, { PropsWithChildren } from './base'
 
@@ -289,6 +290,10 @@ export interface FormItemProps
    * 自定义UI组件的其他属性
    */
   [key: string]: any
+  /**
+   * 原生rn input ref
+   */
+  _nativeRef?: RefObject<HTMLInputElement>
 }
 
 export interface StatelessProps {

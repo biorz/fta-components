@@ -492,6 +492,7 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
     suffix,
     labelTextStyle,
     labelTextClassName,
+    _nativeRef,
   } = props
 
   const _inputRef = useRef<any>()
@@ -609,7 +610,13 @@ function FormItemAppearance(props: FormItemAppearanceProps) {
                   <BuiltinInput
                     // @ts-ignore
                     ref={inputRef}
-                    _nativeRef={_inputRef}
+                    _nativeRef={(ref) => {
+                      _inputRef.current = ref
+                      // 暴露出ref引用
+                      if (_nativeRef) {
+                        _nativeRef.current = ref
+                      }
+                    }}
                     placeholder={placeholder}
                     style={alignStyle}
                     value={_value}
