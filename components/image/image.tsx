@@ -71,19 +71,14 @@ class Image extends Component<ImageProps, ImageState> {
     return style
   }
 
-  public renderIntermediate(
-    needRender: boolean,
-    icon: ReactNode,
-    className: string,
-    style: CSSProperties
-  ) {
+  public renderIntermediate(needRender: boolean, icon: ReactNode, className: string) {
     const circleClass = this.isCircle && 'fta-image--circle'
     return needRender ? (
       isString(icon) ? (
         <TaroImage
           src={icon}
           className={classNames(className, circleClass)}
-          style={style}
+          style={this.getInlineStyle()}
           mode={this.props.mode}
         />
       ) : (
@@ -124,16 +119,16 @@ class Image extends Component<ImageProps, ImageState> {
     return (
       <Fragment>
         {/* 加载中 */}
-        {this.renderIntermediate(this.needLoading, loadingIcon, loadingClass, customStyle!)}
+        {this.renderIntermediate(this.needLoading, loadingIcon, loadingClass)}
         {/* 加载失败 */}
-        {this.renderIntermediate(this.needError, errorIcon, loadingClass, customStyle!)}
+        {this.renderIntermediate(this.needError, errorIcon, loadingClass)}
         <TaroImage
+          {...props}
           src={src}
           className={rootClass}
           style={this.getInlineStyle()}
           onLoad={this.onLoad}
           onError={this.onError}
-          {...props}
         />
       </Fragment>
     )

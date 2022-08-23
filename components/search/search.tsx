@@ -149,7 +149,7 @@ function ResultText(props: {
   if ((tmp = children.slice(i))) {
     list.push(<Text className='fta-search-result__text'>{tmp}</Text>)
   }
-  console.log('list', list.length)
+  // console.log('list', list.length)
   return (
     <Fragment>
       {list.map((node, i) => (
