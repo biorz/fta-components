@@ -1,6 +1,6 @@
 {
   "name": "@fta/components",
-  "version": "1.0.3-canary.3",
+  "version": "1.0.3-canary.4",
   "description": "FTA View - Taro-based cross-platform development framework",
   "types": "./types/index.d.ts",
   "bin": {
