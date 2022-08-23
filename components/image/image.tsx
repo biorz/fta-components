@@ -22,6 +22,17 @@ class Image extends Component<ImageProps, ImageState> {
     this.onLoad = this.onLoad.bind(this)
     this.onError = this.onError.bind(this)
   }
+
+  // FIXME: 异步加载图片不生效
+  public componentDidUpdate(nextProps: ImageProps) {
+    if (nextProps.src !== this.props.src) {
+      this.setState({
+        _errored: false,
+        _loaded: false,
+      })
+    }
+  }
+
   /**
    * 是否是加载态
    */
@@ -49,7 +60,6 @@ class Image extends Component<ImageProps, ImageState> {
     this.setState({
       _loaded: true,
     })
-    // console.log('loaded', event)
     return this.props.onLoad?.(event as BaseEventOrig<TaroImageProps.onLoadEventDetail>)
   }
 
@@ -57,11 +67,10 @@ class Image extends Component<ImageProps, ImageState> {
     this.setState({
       _errored: true,
     })
-    // console.log('errored', event)
     return this.props.onError?.(event as BaseEventOrig<TaroImageProps.onErrorEventDetail>)
   }
 
-  public getInlineStyle(): CSSProperties {
+  private getInlineStyle(): CSSProperties {
     // @ts-ignore
     const style = { ...this.props.style, ...this.props.customStyle }
     let i: string
@@ -71,7 +80,7 @@ class Image extends Component<ImageProps, ImageState> {
     return style
   }
 
-  public renderIntermediate(needRender: boolean, icon: ReactNode, className: string) {
+  private renderIntermediate(needRender: boolean, icon: ReactNode, className: string) {
     const circleClass = this.isCircle && 'fta-image--circle'
     return needRender ? (
       isString(icon) ? (
@@ -105,10 +114,16 @@ class Image extends Component<ImageProps, ImageState> {
       bgColor,
       onError,
       onLoad,
+      asyncIcon,
       ...props
     } = this.props
 
     const loadingClass = classNames('fta-image', className, this.isCircle && 'fta-image--circle')
+
+    // 异步加载的image先返回占位符
+    if (!src && asyncIcon !== false) {
+      return asyncIcon || <View className={loadingClass} style={this.getInlineStyle()} />
+    }
 
     const rootClass = classNames(
       loadingClass,

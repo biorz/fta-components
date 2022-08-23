@@ -1,5 +1,5 @@
 import { ImageProps as TaroImageProps } from '@tarojs/components/types/Image'
-import { ComponentClass, CSSProperties, ReactNode } from 'react'
+import { ComponentClass, CSSProperties, ReactElement, ReactNode } from 'react'
 
 export type ImageShape = 'square' | 'circle'
 
@@ -37,6 +37,11 @@ export interface ImageProps extends Omit<TaroImageProps, 'style'> {
    * 内联样式
    */
   customStyle?: CSSProperties
+  /**
+   * 异步加载图片时的占位节点（src初始值为falsy的情况）
+   * 设置为false则禁用
+   */
+  asyncIcon?: ReactElement | false
 }
 
 export interface ImageState {
