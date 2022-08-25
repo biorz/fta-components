@@ -6,8 +6,12 @@ export interface CustomTitle {
   title: ReactNode
   onConfirm?: () => void
   onCancel?: () => void
-  confirmText?: string
-  cancelText?: string
+  confirmText?: ReactNode
+  confirmTextClassName?: string
+  confirmTextStyle?: CSSProperties
+  cancelText?: ReactNode
+  cancelTextClassName?: string
+  cancelTextStyle?: CSSProperties
   icon?: ReactNode
   border?: boolean
 }

@@ -29,11 +29,25 @@ export default class ActionSheetHeader extends Component<ActionSheetHeaderProps>
       // 字符串直接展示标题
       fragment = <Text className='fta-action-sheet__header__text'>{children}</Text>
     } else if (isComplexType) {
-      const { title, confirmText, cancelText, onCancel, onConfirm, icon } = children as CustomTitle
+      const {
+        title,
+        confirmText,
+        cancelText,
+        onCancel,
+        onConfirm,
+        icon,
+        confirmTextClassName,
+        confirmTextStyle,
+        cancelTextClassName,
+        cancelTextStyle,
+      } = children as CustomTitle
       fragment = (
         <>
           {isString(cancelText) && !icon ? (
-            <Text className='fta-action-sheet__header-cancel' onClick={onCancel}>
+            <Text
+              className={classNames('fta-action-sheet__header-cancel', cancelTextClassName)}
+              style={cancelTextStyle}
+              onClick={onCancel}>
               {cancelText}
             </Text>
           ) : icon ? null : (
@@ -41,7 +55,10 @@ export default class ActionSheetHeader extends Component<ActionSheetHeaderProps>
           )}
           {isString(title) ? <Text className='fta-action-sheet__header-text'>{title}</Text> : title}
           {isString(confirmText) && !icon ? (
-            <Text className='fta-action-sheet__header-confirm' onClick={onConfirm}>
+            <Text
+              className={classNames('fta-action-sheet__header-confirm', confirmTextClassName)}
+              style={confirmTextStyle}
+              onClick={onConfirm}>
               {confirmText}
             </Text>
           ) : icon ? null : (
