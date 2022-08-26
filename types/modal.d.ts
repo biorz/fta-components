@@ -60,6 +60,12 @@ export interface ModalProps extends BaseComponent {
    */
   overlayStyle?: CSSProperties
   /**
+   * 是否使用原生Modal组件
+   * @default true
+   * @supported rn
+   */
+  useNativeModal?: boolean
+  /**
    * 触发关闭时的事件
    */
   onClose?: CommonEventFunction

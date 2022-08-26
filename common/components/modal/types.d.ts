@@ -44,4 +44,6 @@ export interface ModalProps {
    * The onShow prop allows passing a function that will be called once the modal has been shown.
    */
   onShow?(): void
+
+  [key: string]: any
 }

@@ -3,8 +3,8 @@ import { CommonEvent } from '@tarojs/components/types/common'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React, { Fragment } from 'react'
-import { Modal } from 'react-native'
 import { handleTouchScroll } from '../../common'
+import Modal from '../../common/components/modal'
 import '../../style/components/modal/index.scss'
 import { ModalProps, ModalState } from '../../types/modal'
 import { TouchableOpacity as Button } from '../view'
@@ -85,6 +85,7 @@ export default class FTAModal extends React.Component<ModalProps, ModalState> {
       contentAlign,
       contentClassName,
       contentStyle,
+      useNativeModal,
     } = this.props
     const rootClass = classNames(
       'fta-modal',
@@ -111,6 +112,7 @@ export default class FTAModal extends React.Component<ModalProps, ModalState> {
       const isRenderAction = cancelText || confirmText
       return (
         <Modal
+          useNative={useNativeModal}
           visible={_isOpened}
           animationType='none'
           transparent
@@ -186,6 +188,7 @@ FTAModal.defaultProps = {
   isOpened: false,
   closeOnClickOverlay: false,
   contentAlign: 'center',
+  useNativeModal: true,
 }
 
 FTAModal.propTypes = {
