@@ -132,7 +132,11 @@ function _TooltipView(props: TooltipViewProps, ref: Ref<any>) {
         rect.top === -0.1 ? null : isFunction(render) ? (
           render(rect)
         ) : (
-          <View style={{ position, top: px(rect.top), left: px(rect.left), zIndex: 100 }}>
+          <View
+            className='fta-tooltip-wrapper'
+            style={{ position, top: px(rect.top), left: px(rect.left) }}
+            // @ts-ignore
+            pointerEvents='box-none'>
             {render}
           </View>
         )

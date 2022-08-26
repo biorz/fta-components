@@ -62,6 +62,11 @@
     }
   }
 
+  &-wrapper {
+    z-index: 100;
+    @include relative();
+  }
+
   &-overlay {
     @extend %absolute-full;
     background-color: transparent;
