@@ -192,10 +192,14 @@ class Tab extends Component<TabProps> {
                   )}
                   {/* 小红点 */}
                   {dot ? (
-                    <View
-                      className={classNames('fta-tab__dot', context.dotClassName)}
-                      style={context.dotStyle}
-                    />
+                    isValidElement(dot) ? (
+                      dot
+                    ) : (
+                      <View
+                        className={classNames('fta-tab__dot', context.dotClassName)}
+                        style={context.dotStyle}
+                      />
+                    )
                   ) : null}
                   {/* 底部激活 */}
                   {active ? (
