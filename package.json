@@ -16,7 +16,7 @@
   "scripts": {
     "dev": "yarn run dev:lib",
     "dev:lib": "tsc --project ./tsconfig.build.json --watch --incremental",
-    "build:map": "node ./extract-component-map.js && prettier --write ./extract-component-map.js",
+    "build:map": "node ./extract-component-map.js && prettier --write component-map.json",
     "broadcast": "node ./bin/broadcast.js",
     "theme:clear": "node ./bin/theme-hook.js clear",
     "theme:recover": "node ./bin/theme-hook.js recover",
