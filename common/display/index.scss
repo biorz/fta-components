@@ -72,6 +72,12 @@ $navbar-height: 80px;
     }
   }
 
+  &-right-button {
+    width: 140px;
+    height: 51px;
+    margin-right: 16px;
+  }
+
   &-title--no-margin {
     margin-bottom: 0;
     position: relative;
@@ -176,6 +182,7 @@ $navbar-height: 80px;
   }
 
   &-back-button {
+    margin-left: 6px;
     display: flex;
     flex-direction: row;
     align-items: center;
