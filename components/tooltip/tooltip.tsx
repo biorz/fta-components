@@ -25,8 +25,6 @@ const useOnceCallback = (cb) => {
   return resRef
 }
 
-//
-createRootSiblings
 function Tooltip(props: TooltipProps) {
   const {
     children,

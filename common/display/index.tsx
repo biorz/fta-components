@@ -455,7 +455,7 @@ export const Layout = withCare(
                 ) : (
                   <TouchableOpacity onClick={navigateBack} className='fta-demo-back-button'>
                     <NavBar.BackIcon title='查看组件总览' />
-                    <Text className={titleClz}>组件总览</Text>
+                    {/* <Text className={titleClz}>组件总览</Text> */}
                   </TouchableOpacity>
                 )
               }
