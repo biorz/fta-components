@@ -13,7 +13,7 @@ import {
   useConfig,
   withCare as nativeWithCare,
 } from '@fta/components'
-import { ScrollView, Text, View } from '@tarojs/components'
+import { Image, ScrollView, Text, View } from '@tarojs/components'
 import { ScrollViewProps } from '@tarojs/components/types/ScrollView'
 import { ViewProps } from '@tarojs/components/types/View'
 import Taro from '@tarojs/taro'
@@ -440,7 +440,7 @@ export const Layout = withCare(
       toggleQR(!showQR)
     }
 
-    const titleClz = useCareClass(['fta-demo-back-button__text'])
+    // const titleClz = useCareClass(['fta-demo-back-button__text'])
 
     return (
       <>
@@ -449,40 +449,48 @@ export const Layout = withCare(
             <NavBar
               safeAreaStyle={{ backgroundColor: '#fff' }}
               title={{ title: props.title, handler }}
-              leftButton={
-                props.showLeft === false ? (
-                  <Fragment />
-                ) : (
-                  <TouchableOpacity onClick={navigateBack} className='fta-demo-back-button'>
-                    <NavBar.BackIcon title='查看组件总览' />
-                    {/* <Text className={titleClz}>组件总览</Text> */}
-                  </TouchableOpacity>
-                )
-              }
-              rightButton={{
-                title: inFTAView
-                  ? '关怀模式'
-                  : `${!careMode ? '关怀' : '标准'}${
-                      inWeapp ? (careMode ? '           ' : '              ') : '模式'
-                    }`,
-                style: inWeapp ? { whiteSpace: 'pre' } : undefined,
-                handler() {
-                  // if (inFTAView) {
-                  //   const color = document.getElementById('color-input')!
-                  //     .firstChild as HTMLInputElement
-                  //   color.focus()
-                  //   color.value = getThemeColor() as string
-                  //   Promise.resolve().then(() => color.click())
+              // leftButton={
+              //   props.showLeft === false ? (
+              //     <Fragment />
+              //   ) : (
+              //     <TouchableOpacity onClick={navigateBack} className='fta-demo-back-button'>
+              //       <NavBar.BackIcon title='查看组件总览' />
+              //       {/* <Text className={titleClz}>组件总览</Text> */}
+              //     </TouchableOpacity>
+              //   )
+              // }
+              rightButton={
+                <Image
+                  className='fta-demo-right-button'
+                  onClick={navigateBack}
+                  src='https://imagecdn.ymm56.com/ymmfile/static/resource/82720e4c-ce49-4a22-bd28-2f13a193fd62.png'
+                />
+                //   {
+                //   title:
+                //   inFTAView
+                //     ? '关怀模式'
+                //     : `${!careMode ? '关怀' : '标准'}${
+                //         inWeapp ? (careMode ? '           ' : '              ') : '模式'
+                //       }`,
+                //   style: inWeapp ? { whiteSpace: 'pre' } : undefined,
+                //   handler() {
+                //     // if (inFTAView) {
+                //     //   const color = document.getElementById('color-input')!
+                //     //     .firstChild as HTMLInputElement
+                //     //   color.focus()
+                //     //   color.value = getThemeColor() as string
+                //     //   Promise.resolve().then(() => color.click())
 
-                  //   return
-                  // }
-                  toggle('careMode', !careMode)
-                  Taro.showToast({ title: `切换到${careMode ? '标准' : '关怀'}模式`, mask: true })
-                  if (inFTAView) {
-                    localStorage.__CARE_MODE__ = !careMode ? '1' : ''
-                  }
-                },
-              }}
+                //     //   return
+                //     // }
+                //     toggle('careMode', !careMode)
+                //     Taro.showToast({ title: `切换到${careMode ? '标准' : '关怀'}模式`, mask: true })
+                //     if (inFTAView) {
+                //       localStorage.__CARE_MODE__ = !careMode ? '1' : ''
+                //     }
+                //   },
+                // }
+              }
             />
           )}
           <Debugger force />
