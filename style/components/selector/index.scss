@@ -1,0 +1,13 @@
+@import '../../mixins/index.scss';
+@import '../../variables/default.scss';
+
+.fta-selector {
+  &-container {
+    @include display-flex(row);
+    height: 787px;
+  }
+
+  &-scrollarea {
+    flex: 1;
+  }
+}
