@@ -71,3 +71,4 @@ export {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from './components/view'
+export { default as Selector } from './components/selector'
