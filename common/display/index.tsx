@@ -48,7 +48,7 @@ const setThemeColor = (color: string) => {
   if (inFTAView) {
     const root = document.documentElement
     root.style.setProperty(THEME_KEY, color)
-    console.log(color)
+    // console.log(color)
 
     sessionStorage[THEME_KEY] = color
   }
