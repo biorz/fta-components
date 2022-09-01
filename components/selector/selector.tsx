@@ -20,7 +20,7 @@ import {
   getDefaultItemClass,
   getDefaultItemTextClass,
 } from './shared'
-import { CHECKED, UNCHECKED } from './static'
+import { CHECK, CHECKED, UNCHECKED } from './static'
 
 function tail(options: Option[], depth: number, current: number, valueKey: string) {
   try {
@@ -32,10 +32,15 @@ function tail(options: Option[], depth: number, current: number, valueKey: strin
     return null
   }
 }
-
-function CountDot(props: { children: string | number }) {
+/**
+ * @component
+ * 计数小红点
+ */
+function CountDot(props: { children: string | number; theme?: string }) {
   return (
-    <View className='fta-selector-count'>
+    <View
+      className='fta-selector-count'
+      style={props.theme ? { backgroundColor: props.theme } : void 0}>
       <Text className='fta-selector-count__text'>{props.children}</Text>
     </View>
   )
@@ -64,15 +69,18 @@ function ScrollArea(props: ScrollAreaProps) {
     fieldNames,
     multiple,
     limit,
+    theme,
     suffixIcon,
+    autoHeight,
     activeSuffixIcon,
     itemClassName,
     activeItemClassName,
-    acitveItemStyle,
     itemStyle,
+    activeItemStyle,
     _index,
     _end,
   } = props
+
   const depth = _index! + 1
   const [activeIndex, setActiveIndex] = useState(multiple && _end ? [] : 0)
   const builtInClass = getDefaultColClass(depth)
@@ -81,11 +89,12 @@ function ScrollArea(props: ScrollAreaProps) {
   const itemActiveClass = getDefaultActiveItemClass(depth)
   const textClass = getDefaultItemTextClass(depth)
   const textActiveClass = getDefaultActiveItemTextClass(depth)
+
   const onSelect = (idx) => {
     setActiveIndex(idx)
   }
 
-  const scrollTop = (activeIndex > 0 ? activeIndex - 1 : 0) * itemHeight!
+  const scrollTop = autoHeight ? undefined : (activeIndex > 0 ? activeIndex - 1 : 0) * itemHeight!
   return (
     <View className={rootClass} style={style}>
       <ScrollView
@@ -103,26 +112,35 @@ function ScrollArea(props: ScrollAreaProps) {
             active && activeItemClassName
           )
 
+          const [themeStyle, themeBgStyle] =
+            theme && active ? [{ color: theme }, { backgroundColor: theme }] : [{}, {}]
+
+          const heightStyle = autoHeight ? {} : { height: px(itemHeight!), minHeight: 'auto' }
+
           const itemStyl = {
+            ...heightStyle,
             ...itemStyle,
-            ...(active ? acitveItemStyle : {}),
-            height: px(itemHeight!),
+            ...(active ? activeItemStyle : {}),
           }
+
           return (
             <View className={itemCls} style={itemStyl} key={i} onClick={() => onSelect(i)}>
-              <Text className={classNames(textClass, active && textActiveClass)}>
+              <Text className={classNames(textClass, active && textActiveClass)} style={themeStyle}>
                 {opt[fieldNames!.label]}
               </Text>
               <View>
                 {_end ? (
-                  suffixIcon ? (
-                    <Image
-                      className='fta-selector-suffix'
-                      src={active ? (activeSuffixIcon as string) : suffixIcon}
-                    />
-                  ) : null
-                ) : active && showCount ? (
-                  <CountDot>1</CountDot>
+                  (active ? activeSuffixIcon : suffixIcon) || (
+                    <View
+                      className={`fta-selector-suffix${
+                        active ? ' fta-selector-suffix--active' : ''
+                      }`}
+                      style={themeBgStyle}>
+                      <Image className='fta-selector-suffix__icon' src={CHECK} />
+                    </View>
+                  )
+                ) : multiple && active && showCount ? (
+                  <CountDot theme={theme}>1</CountDot>
                 ) : null}
               </View>
             </View>
@@ -139,15 +157,17 @@ const Selector = forwardRef(function _Selector(props: SelectorProps, ref: Ref<an
     options,
     itemHeight,
     fieldNames,
+    showSearch,
+    theme,
+    placeholder,
     columnClassName,
     columnStyle,
     className,
-    showSearch,
-    placeholder,
     // @ts-ignore
     style,
     limit,
     multiple,
+    autoHeight,
     customStyle,
     containerClassName,
     containerStyle,
@@ -191,8 +211,10 @@ const Selector = forwardRef(function _Selector(props: SelectorProps, ref: Ref<an
                 itemHeight={itemHeight}
                 options={options}
                 className={colClass}
+                theme={theme}
                 style={colStyle}
                 multiple={multiple}
+                autoHeight={autoHeight}
                 limit={limit}
                 {...extraProps}
                 key={i}
@@ -219,7 +241,8 @@ const defaultProps: SelectorProps = {
   itemHeight: 46,
   multiple: false,
   showSearch: false,
-  showCount: false,
+  showCount: true,
+  autoHeight: false,
   options: [],
   placeholder: '支持按城市、区县名称搜索',
   fieldNames: {

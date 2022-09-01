@@ -31,10 +31,19 @@ export interface ScrollAreaProps {
    */
   limit?: number
   /**
+   * 主题色，默认为满帮橙
+   * @default '#FA871E'
+   */
+  theme?: CSSProperties['color']
+  /**
    * (多选时生效)是否显示子级已选择数量
-   * @default false
+   * @default true
    */
   showCount?: boolean
+  /**
+   * 是否自适应item高度，设置后没有自动对齐效果
+   */
+  autoHeight?: boolean
   /**
    * 自定义选择的后缀图标, 传入字符串默认为图片URL
    */
@@ -102,6 +111,10 @@ export type Option = {
    * 子节点
    */
   children?: Option[] | null | false
+  /**
+   * 其他属性
+   */
+  [key: string]: any
 }
 
 export interface SelectorContext
@@ -118,6 +131,8 @@ export interface SelectorContext
     | 'itemStyle'
     | 'activeItemStyle'
     | 'showCount'
+    | 'autoHeight'
+    | 'theme'
   > {
   /**
    * 传递给各列ScrollView组件的props
@@ -146,12 +161,6 @@ export interface SelectorProps extends BaseComponent, SelectorContext {
    * @default 3
    */
   depth?: number
-
-  /**
-   * 主题色，默认为满帮橙
-   * @default '#FA871E'
-   */
-  theme?: string
   /**
    * 自定义渲染Item
    */

@@ -42,6 +42,7 @@ $color-grey: #666;
   &-item {
     @include display-flex(row);
     padding-left: 48px;
+    min-height: 92px;
     align-items: center;
     overflow: hidden;
     justify-content: space-between;
@@ -80,8 +81,21 @@ $color-grey: #666;
 
   &-suffix {
     @include square(40px);
+    @include flex-center();
+    @include circle();
     margin-right: 23px;
+    margin-left: 21px;
     flex: 0 0 40px;
+    background-color: #ededed;
+
+    &--active {
+      background-color: $color-brand;
+    }
+
+    &__icon {
+      width: 21px;
+      height: 20px;
+    }
   }
 
   &-count {
@@ -96,5 +110,12 @@ $color-grey: #666;
       color: $color-white;
       font-size: 24px;
     }
+  }
+  // 隐藏滚动条
+  ::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    color: transparent;
+    display: none;
   }
 }
