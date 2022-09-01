@@ -109,6 +109,8 @@ $color-grey: #666;
     &__text {
       color: $color-white;
       font-size: 24px;
+      font-weight: bold;
+      line-height: 28px;
     }
   }
   // 隐藏滚动条
