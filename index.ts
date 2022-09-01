@@ -52,6 +52,7 @@ export { default as Result } from './components/result'
 export { default as SafeArea, SafeAreaView } from './components/safe-area'
 export { default as Search } from './components/search'
 export { default as SegmentedControl } from './components/segmented-control'
+export { default as Selector } from './components/selector'
 export { default as Steps, StepsItem } from './components/steps'
 export { default as SwipeAction } from './components/swipe-action'
 export { default as Swiper, SwiperItem } from './components/swiper'
@@ -71,4 +72,3 @@ export {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from './components/view'
-export { default as Selector } from './components/selector'

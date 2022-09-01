@@ -1,13 +1,100 @@
 @import '../../mixins/index.scss';
 @import '../../variables/default.scss';
 
+$color-grey: #666;
+
 .fta-selector {
   &-container {
     @include display-flex(row);
     height: 787px;
+    background-color: $color-white;
+    overflow: hidden;
   }
 
   &-scrollarea {
     flex: 1;
+
+    @include nrn {
+      overflow: auto;
+    }
+  }
+
+  &-col {
+    &-0 {
+      background-color: #f7f7f7;
+    }
+
+    &-1 {
+      background-color: $color-white;
+    }
+
+    &-2 {
+      background-color: $color-white;
+      border-left-color: #e8e8e8;
+      @include nrn {
+        border-left-style: solid;
+      }
+      // prettier-ignore
+      border-left-width: 1PX;
+    }
+  }
+
+  &-item {
+    @include display-flex(row);
+    padding-left: 48px;
+    align-items: center;
+    overflow: hidden;
+    justify-content: space-between;
+
+    &--active {
+    }
+
+    &-0 {
+      &--active {
+        background-color: $color-white;
+      }
+    }
+  }
+
+  &-text {
+    flex: 0 1 auto;
+    font-size: 30px;
+    line-height: 32px;
+    color: $color-grey;
+    font-weight: normal;
+    min-width: 0;
+
+    @include nrn {
+      // white-space: nowrap;
+      display: inline-block;
+    }
+
+    &--active {
+      color: $color-brand;
+      font-weight: bold;
+    }
+
+    &-0 {
+    }
+  }
+
+  &-suffix {
+    @include square(40px);
+    margin-right: 23px;
+    flex: 0 0 40px;
+  }
+
+  &-count {
+    @include square(36px);
+    @include circle();
+    @include flex-center();
+    flex: 0 0 36px;
+    margin-right: 25px;
+    background-color: $color-brand;
+
+    &__text {
+      color: $color-white;
+      font-size: 24px;
+    }
   }
 }
