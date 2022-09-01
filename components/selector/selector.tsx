@@ -20,7 +20,7 @@ import {
   getDefaultItemClass,
   getDefaultItemTextClass,
 } from './shared'
-import { CHECK, CHECKED, UNCHECKED } from './static'
+import { CHECK } from './static'
 
 function tail(options: Option[], depth: number, current: number, valueKey: string) {
   try {
@@ -250,8 +250,6 @@ const defaultProps: SelectorProps = {
     value: 'value',
     children: 'children',
   },
-  suffixIcon: UNCHECKED,
-  activeSuffixIcon: CHECKED,
 }
 
 Selector.defaultProps = defaultProps
