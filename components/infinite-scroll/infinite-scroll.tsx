@@ -30,6 +30,7 @@ function InfiniteScroll(props: InfiniteScrollProps): JSX.Element {
 
   const onLoad = async (evt) => {
     showLoader || toggleLoader(true)
+    setLoad(true)
     onScrollToLower?.(evt)
     if (loadingRef.current || !hasMore) return
     // toggleLoading(true)
@@ -37,7 +38,6 @@ function InfiniteScroll(props: InfiniteScrollProps): JSX.Element {
     try {
       await Promise.resolve(loadMore?.())
     } catch (error) {}
-    setLoad(true)
     // toggleLoading(false)
     loadingRef.current = false
   }
