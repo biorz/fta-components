@@ -68,6 +68,7 @@ function ScrollArea(props: ScrollAreaProps) {
     itemHeight,
     fieldNames,
     multiple,
+    activeIndex,
     limit,
     theme,
     suffixIcon,
@@ -77,12 +78,13 @@ function ScrollArea(props: ScrollAreaProps) {
     activeItemClassName,
     itemStyle,
     activeItemStyle,
+    onChange,
     _index,
     _end,
   } = props
 
   const depth = _index! + 1
-  const [activeIndex, setActiveIndex] = useState(multiple && _end ? [] : 0)
+  // const [activeIndex, setActiveIndex] = useState(multiple && _end ? [] : 0)
   const builtInClass = getDefaultColClass(depth)
   const rootClass = classNames('fta-selector-scrollarea', builtInClass, className)
   const itemClass = getDefaultItemClass(depth)
@@ -91,10 +93,12 @@ function ScrollArea(props: ScrollAreaProps) {
   const textActiveClass = getDefaultActiveItemTextClass(depth)
 
   const onSelect = (idx) => {
-    setActiveIndex(idx)
+    if (idx !== activeIndex) {
+      onChange!(idx, _index!)
+    }
   }
 
-  const scrollTop = autoHeight ? undefined : (activeIndex > 0 ? activeIndex - 1 : 0) * itemHeight!
+  const scrollTop = autoHeight ? undefined : (activeIndex! > 0 ? activeIndex! - 1 : 0) * itemHeight!
   return (
     <View className={rootClass} style={style}>
       <ScrollView
@@ -151,6 +155,11 @@ function ScrollArea(props: ScrollAreaProps) {
   )
 }
 
+ScrollArea.defaultProps = {
+  activeIndex: 0,
+  onChange() {},
+}
+
 const Selector = forwardRef(function _Selector(props: SelectorProps, ref: Ref<any>) {
   const {
     depth,
@@ -175,7 +184,9 @@ const Selector = forwardRef(function _Selector(props: SelectorProps, ref: Ref<an
     ...extraProps
   } = props
   // 多选是否要聚焦，单选
-  const [selected, setSelected] = useState(value)
+  // const [selected, setSelected] = useState(value)
+
+  const [activeIndexes, setActiveIndexes] = useState(new Array(depth).fill(0))
 
   // 锚定目标
   const anchor = () => {
@@ -193,8 +204,16 @@ const Selector = forwardRef(function _Selector(props: SelectorProps, ref: Ref<an
   const rootStyle = Object.assign({}, style, customStyle)
   const containerClass = classNames('fta-selector-container', containerClassName)
 
+  const onSelectChange = (index: number, depth: number) => {
+    const copy = activeIndexes.slice()
+    copy[depth] = index
+    setActiveIndexes(copy)
+  }
+
   // TODO:
   useImperativeHandle(ref, () => ({}))
+
+  let tmpOpts: typeof options
 
   return (
     <Provider value={{ itemHeight }}>
@@ -204,12 +223,14 @@ const Selector = forwardRef(function _Selector(props: SelectorProps, ref: Ref<an
           {_loops.map((_, i) => {
             const colClass = columnClassName?.(i + 1)
             const colStyle = columnStyle?.(i + 1)
+            tmpOpts = i ? tmpOpts[activeIndexes[i - 1]]?.[fieldNames!.children] || [] : options
             return (
               // @ts-ignore
               <ScrollArea
+                activeIndex={activeIndexes[i]}
                 fieldNames={fieldNames}
                 itemHeight={itemHeight}
-                options={options}
+                options={tmpOpts}
                 className={colClass}
                 theme={theme}
                 style={colStyle}
@@ -218,6 +239,7 @@ const Selector = forwardRef(function _Selector(props: SelectorProps, ref: Ref<an
                 limit={limit}
                 {...extraProps}
                 key={i}
+                onChange={onSelectChange}
                 // @private
                 _index={i}
                 _end={i + 1 === _loops.length}

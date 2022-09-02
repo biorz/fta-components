@@ -12,6 +12,11 @@ export interface ScrollAreaProps {
   className?: string
   style?: CSSProperties
   /**
+   * 当前激活的索引
+   * @default 0
+   */
+  activeIndex?: number
+  /**
    * 数据列表
    */
   options: Option[] | null | undefined
@@ -80,6 +85,10 @@ export interface ScrollAreaProps {
     option: Option
     active: boolean
   }>
+  /**
+   * 选择项发生变化
+   */
+  onChange?: (index: number | number[], depth: number) => void
   /**
    * （多选生效）选择项溢出时的回调
    */
