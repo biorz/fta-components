@@ -17,6 +17,10 @@ export interface ScrollAreaProps {
    */
   activeIndex?: number
   /**
+   * 多选时选中的索引数组
+   */
+  seletedIndexes?: number[]
+  /**
    * 数据列表
    */
   options: Option[] | null | undefined
@@ -88,7 +92,7 @@ export interface ScrollAreaProps {
   /**
    * 选择项发生变化
    */
-  onChange?: (index: number | number[], depth: number) => void
+  onChange?: (index: number | number[], depth: number, cancel: boolean) => void
   /**
    * （多选生效）选择项溢出时的回调
    */

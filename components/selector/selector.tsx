@@ -69,6 +69,7 @@ function ScrollArea(props: ScrollAreaProps) {
     fieldNames,
     multiple,
     activeIndex,
+    seletedIndexes = [],
     limit,
     theme,
     suffixIcon,
@@ -93,12 +94,21 @@ function ScrollArea(props: ScrollAreaProps) {
   const textActiveClass = getDefaultActiveItemTextClass(depth)
 
   const onSelect = (idx) => {
-    if (idx !== activeIndex) {
-      onChange!(idx, _index!)
-    }
+    onChange!(idx, _index!)
+    // if (idx !== activeIndex) {
+    //   onChange!(idx, _index!)
+    // }
   }
 
-  const scrollTop = autoHeight ? undefined : (activeIndex! > 0 ? activeIndex! - 1 : 0) * itemHeight!
+  // FIXME: 只有最后一列才能取消
+
+  // 判断当前索引是否是激活状态
+  const isActive = multiple
+    ? (i: number) => seletedIndexes.includes(i)
+    : (i: number) => i === activeIndex
+  // TODO: 选择时滚动定位
+  const scrollTop =
+    autoHeight || multiple ? undefined : (activeIndex! > 0 ? activeIndex! - 1 : 0) * itemHeight!
   return (
     <View className={rootClass} style={style}>
       <ScrollView
@@ -108,7 +118,7 @@ function ScrollArea(props: ScrollAreaProps) {
         // @ts-ignore
         showsVerticalScrollIndicator={false}>
         {(options || [])!.map((opt, i) => {
-          const active = i === activeIndex
+          const active = isActive(i)
           const itemCls = classNames(
             itemClass,
             itemClassName,
@@ -186,7 +196,10 @@ const Selector = forwardRef(function _Selector(props: SelectorProps, ref: Ref<an
   // 多选是否要聚焦，单选
   // const [selected, setSelected] = useState(value)
 
+  // const activeRef = useRef(new Array(depth).fill(0).map(() => (multiple ? [0] : 0)))
+  // console.log('activeRef', activeRef)
   const [activeIndexes, setActiveIndexes] = useState(new Array(depth).fill(0))
+  const [selectedIndexes, setSelectedIndexes] = useState<any[]>([])
 
   // 锚定目标
   const anchor = () => {
@@ -203,10 +216,36 @@ const Selector = forwardRef(function _Selector(props: SelectorProps, ref: Ref<an
   const rootClass = classNames('fta-selector', className)
   const rootStyle = Object.assign({}, style, customStyle)
   const containerClass = classNames('fta-selector-container', containerClassName)
+  // 取消选中的依赖
+  const uncheck = (index) => {
+    const copy = selectedIndexes.slice()
+  }
 
-  const onSelectChange = (index: number, depth: number) => {
+  const onSelectChange = (index: number, depth: number, cancel: boolean) => {
     const copy = activeIndexes.slice()
-    copy[depth] = index
+    // 多选模式
+    if (multiple) {
+      if (copy[depth] === index) {
+        // 取消勾选
+        if (cancel) {
+          copy[depth] = -1
+          // 将勾选项目从selectedIndexes移出
+          uncheck(index)
+        } else {
+          // FIXME: 啥也不干
+        }
+      } else {
+        copy[depth] = index
+        // 成功勾选
+        // 加入此项
+      }
+    } else {
+      // 单选模式，如果已经激活则直接return
+      if (copy[depth] === index) return
+      copy[depth] = index
+    }
+    //
+    // 收集依赖，触发
     setActiveIndexes(copy)
   }
 
@@ -214,6 +253,10 @@ const Selector = forwardRef(function _Selector(props: SelectorProps, ref: Ref<an
   useImperativeHandle(ref, () => ({}))
 
   let tmpOpts: typeof options
+  // 解析每一列该展示的选项列表
+  const resolveOpts = (i: number) => {
+    tmpOpts = i ? tmpOpts[activeIndexes[i - 1]]?.[fieldNames!.children] || [] : options
+  }
 
   return (
     <Provider value={{ itemHeight }}>
@@ -223,11 +266,12 @@ const Selector = forwardRef(function _Selector(props: SelectorProps, ref: Ref<an
           {_loops.map((_, i) => {
             const colClass = columnClassName?.(i + 1)
             const colStyle = columnStyle?.(i + 1)
-            tmpOpts = i ? tmpOpts[activeIndexes[i - 1]]?.[fieldNames!.children] || [] : options
+            resolveOpts(i)
             return (
               // @ts-ignore
               <ScrollArea
                 activeIndex={activeIndexes[i]}
+                seletedIndexes={selectedIndexes[i]}
                 fieldNames={fieldNames}
                 itemHeight={itemHeight}
                 options={tmpOpts}
