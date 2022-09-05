@@ -1,14 +1,6 @@
 import { Image, Input, ScrollView, Text, View } from '@tarojs/components'
 import classNames from 'classnames'
-import React, {
-  forwardRef,
-  Ref,
-  useEffect,
-  useImperativeHandle,
-  useMemo,
-  useRef,
-  useState,
-} from 'react'
+import React, { forwardRef, Ref, useImperativeHandle, useMemo, useRef, useState } from 'react'
 import { px } from '../../common'
 import '../../style/components/selector/index.scss'
 import { FieldNames, IndexLeaf, Option, ScrollAreaProps, SelectorProps } from '../../types/selector'
@@ -97,7 +89,7 @@ function ScrollArea(props: ScrollAreaProps) {
   const textActiveClass = getDefaultActiveItemTextClass(depth)
 
   const onSelect = (idx: number) => {
-    onChange!(idx, _index!, multiple! && seletedIndexes.includes(idx))
+    onChange!(idx, _index!, multiple! && _end! && seletedIndexes.includes(idx))
     // if (idx !== activeIndex) {
     //   onChange!(idx, _index!)
     // }
@@ -106,9 +98,9 @@ function ScrollArea(props: ScrollAreaProps) {
   // FIXME: 只有最后一列才能取消
 
   // 判断当前索引是否是激活状态
-  const isActive = multiple
-    ? (i: number) => seletedIndexes.includes(i) || i === activeIndex
-    : (i: number) => i === activeIndex
+  const isActive =
+    _end && multiple ? (i: number) => seletedIndexes.includes(i) : (i: number) => i === activeIndex
+
   // TODO: 选择时滚动定位
   const scrollTop =
     autoHeight || multiple ? undefined : (activeIndex! > 0 ? activeIndex! - 1 : 0) * itemHeight!
@@ -181,21 +173,56 @@ const parseLeafFromIndex = (indexes: number[]) => {
   })
   return map
 }
-
-const getSelectedCounts = (leaf: IndexLeaf, depth: number, counterRef = { current: 0 }) => {
+/** 计算已选数量 */
+const calcSelectedCounts = (leaf: IndexLeaf, depth: number, counterRef = { current: 0 }) => {
   const keys = Object.keys(leaf)
   if (depth === 1) {
-    console.log('keys', keys)
     counterRef.current += keys.length
   } else {
     keys.forEach((k) => {
       if (leaf[k]) {
-        getSelectedCounts(leaf[k], depth - 1, counterRef)
+        calcSelectedCounts(leaf[k], depth - 1, counterRef)
       }
     })
   }
-
   return counterRef.current
+}
+
+/** 解析子项数量 */
+const resolveCounts = (
+  leaf: IndexLeaf,
+  depth: number,
+  counterRef = { current: new Array(depth).fill(0).map(() => ({})) }
+) => {
+  // 从最深处开始解析
+  const keys = Object.keys(leaf)
+  if (depth === 1) {
+    console.log('keys:', keys)
+  } else {
+    keys.forEach((k) => {
+      if (leaf[k]) {
+        resolveCounts(leaf[k], depth - 1, counterRef)
+      }
+    })
+  }
+}
+
+/**  获取即将被选中的树结构 */
+const getWillSelected = (indexes: number[], selected: IndexLeaf) => {
+  const selectedCopy = deepCopy(selected)
+  let current = selectedCopy
+  let tmp: any
+  for (const i of indexes) {
+    const node = current[i]
+    if (!node) {
+      tmp = {}
+      current[i] = tmp
+      current = tmp
+    } else {
+      current = node
+    }
+  }
+  return selectedCopy
 }
 
 const Selector = forwardRef(function _Selector(props: SelectorProps, ref: Ref<any>) {
@@ -230,40 +257,11 @@ const Selector = forwardRef(function _Selector(props: SelectorProps, ref: Ref<an
     // 深度遍历，找到为止
   }
 
-  useEffect(() => {
-    if (value != null) {
-    }
-  }, [value])
-
   const _loops = useRef(new Array(depth).fill(0)).current
 
   const rootClass = classNames('fta-selector', className)
   const rootStyle = Object.assign({}, style, customStyle)
   const containerClass = classNames('fta-selector-container', containerClassName)
-
-  const getWillSelected = (indexes: number[]) => {
-    const selectedCopy = deepCopy(selected)
-    let current = selectedCopy
-    let tmp: any
-    for (const i of indexes) {
-      const node = current[i]
-      if (!node) {
-        tmp = {}
-        current[i] = tmp
-        current = tmp
-      } else {
-        current = node
-      }
-    }
-    return selectedCopy
-  }
-
-  // // 勾选节点
-  // const check = (indexes: number[]) => {
-  //   // console.log('选中节点', indexes)
-  //   const selectedCopy = getWillSelected(indexes)
-  //   setSelected(selectedCopy)
-  // }
 
   // 取消选中的节点
   const uncheck = (indexes: number[]) => {
@@ -293,9 +291,9 @@ const Selector = forwardRef(function _Selector(props: SelectorProps, ref: Ref<an
         console.log('will check')
         if (depth === cursor + 1) {
           // 判断是否超出🚫
-          const willChecked = getWillSelected(copy)
+          const willChecked = getWillSelected(copy, selected)
           console.log('willchecked', willChecked)
-          const counts = getSelectedCounts(willChecked, depth!)
+          const counts = calcSelectedCounts(willChecked, depth!)
           if (counts > limit!) {
             console.log('exceed')
             return onExceed?.()
@@ -308,6 +306,9 @@ const Selector = forwardRef(function _Selector(props: SelectorProps, ref: Ref<an
       // 单选模式，如果已经激活则直接return
       if (copy[cursor] === index) return
       copy[cursor] = index
+      for (let i = cursor + 1; i < copy.length; i++) {
+        copy[i] = 0
+      }
     }
     setActiveIndexes(copy)
   }
@@ -334,6 +335,9 @@ const Selector = forwardRef(function _Selector(props: SelectorProps, ref: Ref<an
       return prev
     }, {})
   }
+
+  const counts = resolveCounts(selected, depth!)
+  console.log('resolveCounts', counts)
 
   return (
     <Provider value={{ itemHeight }}>
