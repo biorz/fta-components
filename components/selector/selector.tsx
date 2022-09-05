@@ -1,6 +1,14 @@
 import { Image, Input, ScrollView, Text, View } from '@tarojs/components'
 import classNames from 'classnames'
-import React, { forwardRef, Ref, useImperativeHandle, useMemo, useRef, useState } from 'react'
+import React, {
+  forwardRef,
+  Ref,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import { px, useCareClass, useCareMode } from '../../common'
 import '../../style/components/selector/index.scss'
 import { FieldNames, IndexLeaf, Option, ScrollAreaProps, SelectorProps } from '../../types/selector'
@@ -262,6 +270,37 @@ const getWillSelected = (indexes: number[], selected: IndexLeaf) => {
   return selectedCopy
 }
 
+/** 单选模式下，从索引处获得选项数组 */
+const resolveOptsFromIndexes = (indexes: number[], options: Option[]) => {
+  let tmpOpts = options
+  const selectedOpts = indexes.reduce((prev, cur) => {
+    const tmp = tmpOpts[cur]
+    prev.push(tmp)
+    tmpOpts = tmp?.children || []
+    return prev
+  }, [] as Option[])
+  return selectedOpts
+}
+
+/** 多选模式下，从索引处获得数组 */
+const resolveOptsFromIndexLeaf = (
+  indexes: IndexLeaf,
+  options: Option[],
+  selectedOpts = [] as Option[][]
+) => {
+  // const selectedOpts = []
+  let tmpOpts = options
+  const keys = Object.keys(options)
+  keys.forEach
+  // indexes.reduce((prev, cur) => {
+  //   const tmp = tmpOpts[cur]
+  //   prev.push(tmp)
+  //   tmpOpts = tmp?.children || []
+  //   return prev
+  // }, [] as Option[])
+  return selectedOpts
+}
+
 const Selector = forwardRef(function _Selector(props: SelectorProps, ref: Ref<any>) {
   const {
     depth,
@@ -283,16 +322,17 @@ const Selector = forwardRef(function _Selector(props: SelectorProps, ref: Ref<an
     containerClassName,
     containerStyle,
     onExceed,
+    onChange,
     value = multiple ? [] : initValue({ options, depth: depth!, fieldNames: fieldNames! }),
     ...extraProps
   } = props
 
-  const [activeIndexes, setActiveIndexes] = useState(new Array(depth).fill(0))
+  const [activeIndexes, setActiveIndexes] = useState<number[]>(new Array(depth).fill(0))
   const [selected, setSelected] = useState<IndexLeaf>(parseLeafFromIndex(activeIndexes))
   // 锚定目标
-  const anchor = () => {
-    // 深度遍历，找到为止
-  }
+  // const anchor = () => {
+  //   // 深度遍历，找到为止
+  // }
 
   const _loops = useRef(new Array(depth).fill(0)).current
 
@@ -357,6 +397,21 @@ const Selector = forwardRef(function _Selector(props: SelectorProps, ref: Ref<an
   // TODO:
   useImperativeHandle(ref, () => ({}))
 
+  useEffect(() => {
+    if (!multiple && activeIndexes.every((v) => v >= 0)) {
+      console.log('effect: activeIndexes', activeIndexes)
+      const selectedOpts = resolveOptsFromIndexes(activeIndexes, options)
+      console.log('on Change: ', selectedOpts)
+      onChange?.(selectedOpts)
+    }
+  }, [activeIndexes])
+
+  useEffect(() => {
+    if (multiple) {
+      console.log('effect: selected', selected)
+    }
+  }, [selected])
+
   const counts = resolveCounts(selected, depth!)
 
   let tmpOpts: typeof options
@@ -371,11 +426,6 @@ const Selector = forwardRef(function _Selector(props: SelectorProps, ref: Ref<an
     tmpLeaf = (cursor ? tmpLeaf[active] : tmpLeaf) || ({} as IndexLeaf)
     tmpIndexes = Object.keys(tmpLeaf).map(Number)
     tmpCounts = (cursor ? tmpCounts[active] : tmpCounts) || {}
-    // tmpCounts = tmpIndexes.reduce((prev, cur) => {
-    //   const leaf = (tmpLeaf[cur] || {}) as IndexLeaf
-    //   prev[cur] = Object.keys(leaf).length
-    //   return prev
-    // }, {})
   }
   const careMode = useCareMode()
 

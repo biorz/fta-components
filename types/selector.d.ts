@@ -217,7 +217,7 @@ export interface SelectorProps extends BaseComponent, SelectorContext {
   /**
    * 选择改变后的回调
    */
-  onChange?: (value, selectedOptions) => void
+  onChange?: (selectedOptions: Option[]) => void
   /**
    * （多选生效）选择项溢出时的回调
    */
