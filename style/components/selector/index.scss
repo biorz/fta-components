@@ -47,6 +47,17 @@ $color-grey: #666;
     overflow: hidden;
     justify-content: space-between;
 
+    &--care {
+      padding-left: 40px;
+      min-height: 120px;
+    }
+
+    &--auto {
+      min-height: auto;
+      padding-top: 28px;
+      padding-bottom: 28px;
+    }
+
     &--active {
     }
 
@@ -60,10 +71,24 @@ $color-grey: #666;
   &-text {
     flex: 0 1 auto;
     font-size: 30px;
-    line-height: 32px;
+    line-height: 36px;
     color: $color-grey;
     font-weight: normal;
     min-width: 0;
+
+    &--care {
+      line-height: 47px;
+      font-size: 39px;
+    }
+
+    &--auto {
+      line-height: 36px;
+
+      &--care {
+        line-height: 47px;
+        font-size: 39px;
+      }
+    }
 
     @include nrn {
       // white-space: nowrap;
@@ -84,7 +109,7 @@ $color-grey: #666;
     @include flex-center();
     @include circle();
     margin-right: 23px;
-    margin-left: 21px;
+    margin-left: 4px;
     flex: 0 0 40px;
     background-color: #ededed;
 
@@ -92,9 +117,19 @@ $color-grey: #666;
       background-color: $color-brand;
     }
 
+    &--care {
+      @include square(47px);
+      flex: 0 0 47px;
+    }
+
     &__icon {
       width: 21px;
       height: 20px;
+
+      &--care {
+        width: 24.7px;
+        height: 23.5px;
+      }
     }
   }
 
@@ -106,11 +141,22 @@ $color-grey: #666;
     margin-right: 25px;
     background-color: $color-brand;
 
+    &--care {
+      @include square(47px);
+      flex: 0 0 47px;
+      margin-right: 15px;
+    }
+
     &__text {
       color: $color-white;
       font-size: 24px;
       font-weight: bold;
-      line-height: 28px;
+      line-height: 36px;
+
+      &--care {
+        font-size: 31px;
+        line-height: 47px;
+      }
     }
   }
   // 隐藏滚动条

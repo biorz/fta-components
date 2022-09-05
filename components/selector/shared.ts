@@ -30,10 +30,10 @@ export const getDefaultColClass = (depth: number) =>
   defaults.columnClassNames[depth - 1] || defaults.unsetColumnClassName
 
 /** 获取默认item类名 */
-export const getDefaultItemClass = (depth: number) =>
+export const getDefaultItemClass = (depth: number, careMode?: boolean) =>
   `${defaults.itemClassNames[depth - 1] || defaults.unsetItemClassName} ${
     defaults.initItemClassName
-  }`
+  } ${careMode ? defaults.initItemClassName + '--care' : ''}`
 
 /** 获取默认item激活类名 */
 export const getDefaultActiveItemClass = (depth: number) =>
@@ -41,10 +41,10 @@ export const getDefaultActiveItemClass = (depth: number) =>
     defaults.initItemActiveClassName
   }`
 /** 获取默认item text 类名 */
-export const getDefaultItemTextClass = (depth: number) =>
+export const getDefaultItemTextClass = (depth: number, careMode?: boolean) =>
   `${defaults.itemTextClassNames[depth - 1] || defaults.unsetItemTextClassName} ${
     defaults.initItemTextClassName
-  }`
+  } ${careMode ? defaults.initItemTextClassName + '--care' : ''}`
 
 /** 获取默认item text激活类名 */
 export const getDefaultActiveItemTextClass = (depth: number) =>

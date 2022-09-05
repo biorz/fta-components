@@ -1,7 +1,7 @@
 import { Image, Input, ScrollView, Text, View } from '@tarojs/components'
 import classNames from 'classnames'
 import React, { forwardRef, Ref, useImperativeHandle, useMemo, useRef, useState } from 'react'
-import { px } from '../../common'
+import { px, useCareClass, useCareMode } from '../../common'
 import '../../style/components/selector/index.scss'
 import { FieldNames, IndexLeaf, Option, ScrollAreaProps, SelectorProps } from '../../types/selector'
 import { Provider } from './context'
@@ -29,11 +29,11 @@ function tail(options: Option[], depth: number, current: number, valueKey: strin
  * 计数小红点
  */
 function CountDot(props: { children: string | number; theme?: string }) {
+  const rootClass = useCareClass.single('fta-selector-count')
+  const textClass = useCareClass.single('fta-selector-count__text')
   return (
-    <View
-      className='fta-selector-count'
-      style={props.theme ? { backgroundColor: props.theme } : void 0}>
-      <Text className='fta-selector-count__text'>{props.children}</Text>
+    <View className={rootClass} style={props.theme ? { backgroundColor: props.theme } : void 0}>
+      <Text className={textClass}>{props.children}</Text>
     </View>
   )
 }
@@ -74,7 +74,7 @@ function ScrollArea(props: ScrollAreaProps) {
     multiple,
     activeIndex,
     seletedIndexes = [],
-    limit,
+    // limit,
     theme,
     suffixIcon,
     autoHeight,
@@ -89,12 +89,13 @@ function ScrollArea(props: ScrollAreaProps) {
   } = props
 
   const depth = _index! + 1
+  const careMode = useCareMode()
   // const [activeIndex, setActiveIndex] = useState(multiple && _end ? [] : 0)
   const builtInClass = getDefaultColClass(depth)
   const rootClass = classNames('fta-selector-scrollarea', builtInClass, className)
-  const itemClass = getDefaultItemClass(depth)
+  const itemClass = getDefaultItemClass(depth, careMode)
   const itemActiveClass = getDefaultActiveItemClass(depth)
-  const textClass = getDefaultItemTextClass(depth)
+  const textClass = getDefaultItemTextClass(depth, careMode)
   const textActiveClass = getDefaultActiveItemTextClass(depth)
 
   const onSelect = (idx: number) => {
@@ -110,6 +111,20 @@ function ScrollArea(props: ScrollAreaProps) {
   // TODO: 选择时滚动定位
   const scrollTop =
     autoHeight || multiple ? undefined : (activeIndex! > 0 ? activeIndex! - 1 : 0) * itemHeight!
+
+  const itemStaticClass = classNames(
+    itemClass,
+    itemClassName,
+    autoHeight && `fta-selector-item--auto ${careMode ? 'fta-selector-item--auto--care' : ''}`
+  )
+
+  const textStaticClass = classNames(
+    textClass,
+    autoHeight && `fta-selector-text--auto ${careMode ? 'fta-selector-text--auto--care' : ''}`
+  )
+
+  const iconClass = useCareClass.single('fta-selector-suffix__icon')
+
   return (
     <View className={rootClass} style={style}>
       <ScrollView
@@ -121,8 +136,7 @@ function ScrollArea(props: ScrollAreaProps) {
         {(options || [])!.map((opt, i) => {
           const active = isActive(i)
           const itemCls = classNames(
-            itemClass,
-            itemClassName,
+            itemStaticClass,
             active && itemActiveClass,
             active && activeItemClassName
           )
@@ -140,7 +154,9 @@ function ScrollArea(props: ScrollAreaProps) {
 
           return (
             <View className={itemCls} style={itemStyl} key={i} onClick={() => onSelect(i)}>
-              <Text className={classNames(textClass, active && textActiveClass)} style={themeStyle}>
+              <Text
+                className={classNames(textStaticClass, active && textActiveClass)}
+                style={themeStyle}>
                 {opt[fieldNames!.label]}
               </Text>
               <View>
@@ -149,9 +165,9 @@ function ScrollArea(props: ScrollAreaProps) {
                     <View
                       className={`fta-selector-suffix${
                         active ? ' fta-selector-suffix--active' : ''
-                      }`}
+                      }${careMode ? ' fta-selector-suffix--care' : ''}`}
                       style={themeBgStyle}>
-                      <Image className='fta-selector-suffix__icon' src={CHECK} />
+                      <Image className={iconClass} src={CHECK} />
                     </View>
                   )
                 ) : multiple && showCount && counts![i] ? (
@@ -205,17 +221,12 @@ const resolveCounts = (
       }
       return prev
     },
-    { total: 0, parent: null }
+    { total: 0, parent: null as any }
   ),
   _index = 0,
   parent = counter
 ) => {
-  // console.log(deepCopy(counter), 'counter')
-  // 从最深处开始解析
   const keys = Object.keys(leaf)
-  // if (parent === counter) {
-  //   console.log('厉害了')
-  // }
   if (depth === 1) {
     parent.total = keys.length
     let p = parent
@@ -366,9 +377,12 @@ const Selector = forwardRef(function _Selector(props: SelectorProps, ref: Ref<an
     //   return prev
     // }, {})
   }
+  const careMode = useCareMode()
+
+  const _itemHeight = itemHeight! * (careMode ? 1.3 : 1)
 
   return (
-    <Provider value={{ itemHeight }}>
+    <Provider value={{ itemHeight: _itemHeight }}>
       <View className={rootClass} style={rootStyle}>
         {showSearch ? <Input placeholder={placeholder} /> : null}
         <View className={containerClass} style={containerStyle}>
@@ -383,7 +397,7 @@ const Selector = forwardRef(function _Selector(props: SelectorProps, ref: Ref<an
                 activeIndex={activeIndex}
                 seletedIndexes={tmpIndexes}
                 fieldNames={fieldNames}
-                itemHeight={itemHeight}
+                itemHeight={_itemHeight}
                 options={tmpOpts}
                 className={colClass}
                 theme={theme}
@@ -419,7 +433,7 @@ const defaultProps: SelectorProps = {
   multiple: false,
   showSearch: false,
   showCount: true,
-  autoHeight: false,
+  autoHeight: true,
   options: [],
   placeholder: '支持按城市、区县名称搜索',
   fieldNames: {
