@@ -2,6 +2,10 @@ import { ScrollViewProps } from '@tarojs/components/types/ScrollView'
 import { ComponentType, CSSProperties, FC, ReactNode } from 'react'
 import BaseComponent from './base'
 
+export interface IndexLeaf {
+  [key: number]: null | undefined | {} | IndexLeaf
+}
+
 export interface FieldNames {
   label: string
   value: string
@@ -44,6 +48,10 @@ export interface ScrollAreaProps {
    * @default '#FA871E'
    */
   theme?: CSSProperties['color']
+  /**
+   * 子项选择的数目
+   */
+  counts?: { [key: number]: number | undefined | null }
   /**
    * (多选时生效)是否显示子级已选择数量
    * @default true
@@ -92,11 +100,8 @@ export interface ScrollAreaProps {
   /**
    * 选择项发生变化
    */
-  onChange?: (index: number | number[], depth: number, cancel: boolean) => void
-  /**
-   * （多选生效）选择项溢出时的回调
-   */
-  onExceed?: () => void
+  onChange?: (index: number, cursor: number, cancel: boolean) => void
+
   /**
    * @internal
    */
@@ -213,6 +218,10 @@ export interface SelectorProps extends BaseComponent, SelectorContext {
    * 选择改变后的回调
    */
   onChange?: (value, selectedOptions) => void
+  /**
+   * （多选生效）选择项溢出时的回调
+   */
+  onExceed?: () => void
 
   [key: string]: any
 }

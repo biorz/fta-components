@@ -11,7 +11,7 @@ import React, {
 } from 'react'
 import { px } from '../../common'
 import '../../style/components/selector/index.scss'
-import { FieldNames, Option, ScrollAreaProps, SelectorProps } from '../../types/selector'
+import { FieldNames, IndexLeaf, Option, ScrollAreaProps, SelectorProps } from '../../types/selector'
 import { Provider } from './context'
 import {
   getDefaultActiveItemClass,
@@ -46,6 +46,8 @@ function CountDot(props: { children: string | number; theme?: string }) {
   )
 }
 
+const deepCopy = (record: Record<string, any>) => JSON.parse(JSON.stringify(record))
+
 function initValue({
   options,
   fieldNames,
@@ -61,6 +63,7 @@ function initValue({
 
 function ScrollArea(props: ScrollAreaProps) {
   const {
+    counts,
     showCount,
     className,
     style,
@@ -93,8 +96,8 @@ function ScrollArea(props: ScrollAreaProps) {
   const textClass = getDefaultItemTextClass(depth)
   const textActiveClass = getDefaultActiveItemTextClass(depth)
 
-  const onSelect = (idx) => {
-    onChange!(idx, _index!)
+  const onSelect = (idx: number) => {
+    onChange!(idx, _index!, multiple! && seletedIndexes.includes(idx))
     // if (idx !== activeIndex) {
     //   onChange!(idx, _index!)
     // }
@@ -104,7 +107,7 @@ function ScrollArea(props: ScrollAreaProps) {
 
   // 判断当前索引是否是激活状态
   const isActive = multiple
-    ? (i: number) => seletedIndexes.includes(i)
+    ? (i: number) => seletedIndexes.includes(i) || i === activeIndex
     : (i: number) => i === activeIndex
   // TODO: 选择时滚动定位
   const scrollTop =
@@ -153,8 +156,8 @@ function ScrollArea(props: ScrollAreaProps) {
                       <Image className='fta-selector-suffix__icon' src={CHECK} />
                     </View>
                   )
-                ) : multiple && active && showCount ? (
-                  <CountDot theme={theme}>1</CountDot>
+                ) : multiple && showCount && counts![i] ? (
+                  <CountDot theme={theme}>{counts![i] as number}</CountDot>
                 ) : null}
               </View>
             </View>
@@ -168,6 +171,31 @@ function ScrollArea(props: ScrollAreaProps) {
 ScrollArea.defaultProps = {
   activeIndex: 0,
   onChange() {},
+}
+
+const parseLeafFromIndex = (indexes: number[]) => {
+  const map = {}
+  let tmp = map
+  indexes.forEach((i) => {
+    tmp = tmp[i] = {}
+  })
+  return map
+}
+
+const getSelectedCounts = (leaf: IndexLeaf, depth: number, counterRef = { current: 0 }) => {
+  const keys = Object.keys(leaf)
+  if (depth === 1) {
+    console.log('keys', keys)
+    counterRef.current += keys.length
+  } else {
+    keys.forEach((k) => {
+      if (leaf[k]) {
+        getSelectedCounts(leaf[k], depth - 1, counterRef)
+      }
+    })
+  }
+
+  return counterRef.current
 }
 
 const Selector = forwardRef(function _Selector(props: SelectorProps, ref: Ref<any>) {
@@ -190,17 +218,13 @@ const Selector = forwardRef(function _Selector(props: SelectorProps, ref: Ref<an
     customStyle,
     containerClassName,
     containerStyle,
+    onExceed,
     value = multiple ? [] : initValue({ options, depth: depth!, fieldNames: fieldNames! }),
     ...extraProps
   } = props
-  // 多选是否要聚焦，单选
-  // const [selected, setSelected] = useState(value)
 
-  // const activeRef = useRef(new Array(depth).fill(0).map(() => (multiple ? [0] : 0)))
-  // console.log('activeRef', activeRef)
   const [activeIndexes, setActiveIndexes] = useState(new Array(depth).fill(0))
-  const [selectedIndexes, setSelectedIndexes] = useState<any[]>([])
-
+  const [selected, setSelected] = useState<IndexLeaf>(parseLeafFromIndex(activeIndexes))
   // 锚定目标
   const anchor = () => {
     // 深度遍历，找到为止
@@ -216,36 +240,75 @@ const Selector = forwardRef(function _Selector(props: SelectorProps, ref: Ref<an
   const rootClass = classNames('fta-selector', className)
   const rootStyle = Object.assign({}, style, customStyle)
   const containerClass = classNames('fta-selector-container', containerClassName)
-  // 取消选中的依赖
-  const uncheck = (index) => {
-    const copy = selectedIndexes.slice()
+
+  const getWillSelected = (indexes: number[]) => {
+    const selectedCopy = deepCopy(selected)
+    let current = selectedCopy
+    let tmp: any
+    for (const i of indexes) {
+      const node = current[i]
+      if (!node) {
+        tmp = {}
+        current[i] = tmp
+        current = tmp
+      } else {
+        current = node
+      }
+    }
+    return selectedCopy
   }
 
-  const onSelectChange = (index: number, depth: number, cancel: boolean) => {
+  // // 勾选节点
+  // const check = (indexes: number[]) => {
+  //   // console.log('选中节点', indexes)
+  //   const selectedCopy = getWillSelected(indexes)
+  //   setSelected(selectedCopy)
+  // }
+
+  // 取消选中的节点
+  const uncheck = (indexes: number[]) => {
+    const selectedCopy = { ...selected }
+    const prevs = indexes.slice(0, -1)
+    const end = indexes.slice(-1)[0]
+    const endMap = prevs.reduce((prev, cur) => prev[cur], selectedCopy)
+    delete endMap![end]
+    setSelected(selectedCopy)
+  }
+
+  const onSelectChange = (index: number, cursor: number, cancel: boolean) => {
     const copy = activeIndexes.slice()
     // 多选模式
     if (multiple) {
-      if (copy[depth] === index) {
+      if (copy[cursor] === index) {
         // 取消勾选
         if (cancel) {
-          copy[depth] = -1
+          copy[cursor] = -1
           // 将勾选项目从selectedIndexes移出
-          uncheck(index)
-        } else {
-          // FIXME: 啥也不干
+          uncheck(copy.slice(0, -1).concat([index]))
         }
       } else {
-        copy[depth] = index
+        copy[cursor] = index
         // 成功勾选
-        // 加入此项
+        // 如果是最后一项， 加入此项，如果没有则创建索引数组
+        console.log('will check')
+        if (depth === cursor + 1) {
+          // 判断是否超出🚫
+          const willChecked = getWillSelected(copy)
+          console.log('willchecked', willChecked)
+          const counts = getSelectedCounts(willChecked, depth!)
+          if (counts > limit!) {
+            console.log('exceed')
+            return onExceed?.()
+          } else {
+            setSelected(willChecked)
+          }
+        }
       }
     } else {
       // 单选模式，如果已经激活则直接return
-      if (copy[depth] === index) return
-      copy[depth] = index
+      if (copy[cursor] === index) return
+      copy[cursor] = index
     }
-    //
-    // 收集依赖，触发
     setActiveIndexes(copy)
   }
 
@@ -253,9 +316,23 @@ const Selector = forwardRef(function _Selector(props: SelectorProps, ref: Ref<an
   useImperativeHandle(ref, () => ({}))
 
   let tmpOpts: typeof options
+  let tmpIndexes: number[]
+  let tmpLeaf: IndexLeaf = selected
+  // let tmpCount = 0
   // 解析每一列该展示的选项列表
-  const resolveOpts = (i: number) => {
-    tmpOpts = i ? tmpOpts[activeIndexes[i - 1]]?.[fieldNames!.children] || [] : options
+  let tmpCounts: {
+    [key: number]: undefined | null | number
+  }
+  const resolveOpts = (cursor: number) => {
+    const active = activeIndexes[cursor - 1]
+    tmpOpts = cursor ? tmpOpts[active]?.[fieldNames!.children] || [] : options
+    tmpLeaf = (cursor ? tmpLeaf[active] : tmpLeaf) || ({} as IndexLeaf)
+    tmpIndexes = Object.keys(tmpLeaf).map(Number)
+    tmpCounts = tmpIndexes.reduce((prev, cur) => {
+      const leaf = (tmpLeaf[cur] || {}) as IndexLeaf
+      prev[cur] = Object.keys(leaf).length
+      return prev
+    }, {})
   }
 
   return (
@@ -266,12 +343,13 @@ const Selector = forwardRef(function _Selector(props: SelectorProps, ref: Ref<an
           {_loops.map((_, i) => {
             const colClass = columnClassName?.(i + 1)
             const colStyle = columnStyle?.(i + 1)
+            const activeIndex = activeIndexes[i]
             resolveOpts(i)
             return (
               // @ts-ignore
               <ScrollArea
-                activeIndex={activeIndexes[i]}
-                seletedIndexes={selectedIndexes[i]}
+                activeIndex={activeIndex}
+                seletedIndexes={tmpIndexes}
                 fieldNames={fieldNames}
                 itemHeight={itemHeight}
                 options={tmpOpts}
@@ -281,6 +359,7 @@ const Selector = forwardRef(function _Selector(props: SelectorProps, ref: Ref<an
                 multiple={multiple}
                 autoHeight={autoHeight}
                 limit={limit}
+                counts={tmpCounts}
                 {...extraProps}
                 key={i}
                 onChange={onSelectChange}
