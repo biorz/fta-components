@@ -40,6 +40,15 @@ function CountDot(props: { children: string | number; theme?: string }) {
 
 const deepCopy = (record: Record<string, any>) => JSON.parse(JSON.stringify(record))
 
+const formatCount = (record: Record<string, any>) => {
+  const { parent, total, ...rest } = record
+  const rect = Object.keys(rest).reduce((prev, cur) => {
+    prev[cur] = rest[cur].total
+    return prev
+  }, {})
+  return rect
+}
+
 function initValue({
   options,
   fieldNames,
@@ -90,9 +99,6 @@ function ScrollArea(props: ScrollAreaProps) {
 
   const onSelect = (idx: number) => {
     onChange!(idx, _index!, multiple! && _end! && seletedIndexes.includes(idx))
-    // if (idx !== activeIndex) {
-    //   onChange!(idx, _index!)
-    // }
   }
 
   // FIXME: 只有最后一列才能取消
@@ -192,19 +198,39 @@ const calcSelectedCounts = (leaf: IndexLeaf, depth: number, counterRef = { curre
 const resolveCounts = (
   leaf: IndexLeaf,
   depth: number,
-  counterRef = { current: new Array(depth).fill(0).map(() => ({})) }
+  counter = Object.keys(leaf).reduce(
+    (prev, cur) => {
+      prev[cur] = {
+        total: 0,
+      }
+      return prev
+    },
+    { total: 0, parent: null }
+  ),
+  _index = 0,
+  parent = counter
 ) => {
+  // console.log(deepCopy(counter), 'counter')
   // 从最深处开始解析
   const keys = Object.keys(leaf)
+  // if (parent === counter) {
+  //   console.log('厉害了')
+  // }
   if (depth === 1) {
-    console.log('keys:', keys)
+    parent.total = keys.length
+    let p = parent
+    while ((p = p.parent)) {
+      p.total += parent.total
+    }
   } else {
     keys.forEach((k) => {
       if (leaf[k]) {
-        resolveCounts(leaf[k], depth - 1, counterRef)
+        resolveCounts(leaf[k], depth - 1, counter, +k, (parent[k] = { total: 0, parent }))
       }
     })
   }
+
+  return counter
 }
 
 /**  获取即将被选中的树结构 */
@@ -277,25 +303,29 @@ const Selector = forwardRef(function _Selector(props: SelectorProps, ref: Ref<an
     const copy = activeIndexes.slice()
     // 多选模式
     if (multiple) {
-      if (copy[cursor] === index) {
-        // 取消勾选
-        if (cancel) {
-          copy[cursor] = -1
-          // 将勾选项目从selectedIndexes移出
-          uncheck(copy.slice(0, -1).concat([index]))
-        }
+      // 取消勾选
+
+      if (cancel) {
+        copy[cursor] = -1
+        // 将勾选项目从selectedIndexes移出
+        uncheck(copy.slice(0, -1).concat([index]))
       } else {
         copy[cursor] = index
+        for (let i = cursor + 1; i < copy.length; i++) {
+          // TODO:
+          if (i + 1 === copy.length) {
+            copy[i] = -1
+          } else {
+            copy[i] = 0
+          }
+        }
         // 成功勾选
         // 如果是最后一项， 加入此项，如果没有则创建索引数组
-        console.log('will check')
         if (depth === cursor + 1) {
           // 判断是否超出🚫
           const willChecked = getWillSelected(copy, selected)
-          console.log('willchecked', willChecked)
           const counts = calcSelectedCounts(willChecked, depth!)
           if (counts > limit!) {
-            console.log('exceed')
             return onExceed?.()
           } else {
             setSelected(willChecked)
@@ -316,28 +346,26 @@ const Selector = forwardRef(function _Selector(props: SelectorProps, ref: Ref<an
   // TODO:
   useImperativeHandle(ref, () => ({}))
 
+  const counts = resolveCounts(selected, depth!)
+
   let tmpOpts: typeof options
   let tmpIndexes: number[]
   let tmpLeaf: IndexLeaf = selected
   // let tmpCount = 0
   // 解析每一列该展示的选项列表
-  let tmpCounts: {
-    [key: number]: undefined | null | number
-  }
+  let tmpCounts = counts
   const resolveOpts = (cursor: number) => {
     const active = activeIndexes[cursor - 1]
     tmpOpts = cursor ? tmpOpts[active]?.[fieldNames!.children] || [] : options
     tmpLeaf = (cursor ? tmpLeaf[active] : tmpLeaf) || ({} as IndexLeaf)
     tmpIndexes = Object.keys(tmpLeaf).map(Number)
-    tmpCounts = tmpIndexes.reduce((prev, cur) => {
-      const leaf = (tmpLeaf[cur] || {}) as IndexLeaf
-      prev[cur] = Object.keys(leaf).length
-      return prev
-    }, {})
+    tmpCounts = (cursor ? tmpCounts[active] : tmpCounts) || {}
+    // tmpCounts = tmpIndexes.reduce((prev, cur) => {
+    //   const leaf = (tmpLeaf[cur] || {}) as IndexLeaf
+    //   prev[cur] = Object.keys(leaf).length
+    //   return prev
+    // }, {})
   }
-
-  const counts = resolveCounts(selected, depth!)
-  console.log('resolveCounts', counts)
 
   return (
     <Provider value={{ itemHeight }}>
@@ -363,7 +391,7 @@ const Selector = forwardRef(function _Selector(props: SelectorProps, ref: Ref<an
                 multiple={multiple}
                 autoHeight={autoHeight}
                 limit={limit}
-                counts={tmpCounts}
+                counts={formatCount(tmpCounts)}
                 {...extraProps}
                 key={i}
                 onChange={onSelectChange}
