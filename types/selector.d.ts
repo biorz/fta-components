@@ -226,6 +226,11 @@ export interface SelectorProps extends BaseComponent, SelectorContext {
   [key: string]: any
 }
 
-declare const Selector: FC<SelectorProps>
+declare const SelectorCore: FC<SelectorProps>
 
-export default Selector
+declare function useSelectorCore(
+  initialProps: SelectorProps,
+  deps?: any[]
+): readonly [React.MutableRefObject<undefined>, JSX.Element]
+
+export { SelectorCore, useSelectorCore }

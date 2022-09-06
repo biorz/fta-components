@@ -284,24 +284,25 @@ const resolveOptsFromIndexes = (indexes: number[], options: Option[]) => {
 
 /** 多选模式下，从索引处获得数组 */
 const resolveOptsFromIndexLeaf = (
-  indexes: IndexLeaf,
+  leaf: IndexLeaf,
   options: Option[],
-  selectedOpts = [] as Option[][]
+  selectedOpts = [] as (Option[] | Option)[]
 ) => {
   // const selectedOpts = []
-  let tmpOpts = options
-  const keys = Object.keys(options)
-  keys.forEach
-  // indexes.reduce((prev, cur) => {
-  //   const tmp = tmpOpts[cur]
-  //   prev.push(tmp)
-  //   tmpOpts = tmp?.children || []
-  //   return prev
-  // }, [] as Option[])
+
+  const keys = Object.keys(leaf).map(Number)
+  keys.forEach((k) => {
+    if (leaf[k]) {
+      const option = options[k]
+      const opts = [option]
+      selectedOpts.push(opts)
+      resolveOptsFromIndexLeaf(leaf[k] as IndexLeaf, (option.children || []) as Option[], opts)
+    }
+  })
   return selectedOpts
 }
 
-const Selector = forwardRef(function _Selector(props: SelectorProps, ref: Ref<any>) {
+const SelectorCore = forwardRef(function _SelectorCore(props: SelectorProps, ref: Ref<any>) {
   const {
     depth,
     options,
@@ -399,16 +400,19 @@ const Selector = forwardRef(function _Selector(props: SelectorProps, ref: Ref<an
 
   useEffect(() => {
     if (!multiple && activeIndexes.every((v) => v >= 0)) {
-      console.log('effect: activeIndexes', activeIndexes)
+      // console.log('effect: activeIndexes', activeIndexes)
       const selectedOpts = resolveOptsFromIndexes(activeIndexes, options)
-      console.log('on Change: ', selectedOpts)
+      // console.log('on Change: ', selectedOpts)
       onChange?.(selectedOpts)
     }
   }, [activeIndexes])
 
   useEffect(() => {
     if (multiple) {
-      console.log('effect: selected', selected)
+      // console.log('effect: selected', selected)
+      const selectedOpts = resolveOptsFromIndexLeaf(selected, options)
+      // console.log('on Change: ', selectedOpts)
+      onChange?.(selectedOpts)
     }
   }, [selected])
 
@@ -471,9 +475,9 @@ const Selector = forwardRef(function _Selector(props: SelectorProps, ref: Ref<an
   )
 })
 
-function useSelector(initialProps: SelectorProps, deps = [] as any[]) {
+function useSelectorCore(initialProps: SelectorProps, deps = [] as any[]) {
   const ref = useRef()
-  return [ref, useMemo(() => <Selector {...initialProps} ref={ref} />, deps)] as const
+  return [ref, useMemo(() => <SelectorCore {...initialProps} ref={ref} />, deps)] as const
 }
 
 const defaultProps: SelectorProps = {
@@ -493,6 +497,6 @@ const defaultProps: SelectorProps = {
   },
 }
 
-Selector.defaultProps = defaultProps
+SelectorCore.defaultProps = defaultProps
 
-export { Selector as default, useSelector }
+export { SelectorCore, useSelectorCore }

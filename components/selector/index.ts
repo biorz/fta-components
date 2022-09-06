@@ -1,1 +1,1 @@
-export { default } from './selector'
+export { SelectorCore, useSelectorCore } from './selector'
