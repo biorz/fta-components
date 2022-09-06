@@ -286,7 +286,9 @@ const resolveOptsFromIndexes = (indexes: number[], options: Option[]) => {
 const resolveOptsFromIndexLeaf = (
   leaf: IndexLeaf,
   options: Option[],
-  selectedOpts = [] as (Option[] | Option)[]
+  depth: number,
+  selectedOpts = [] as (Option[] | Option)[],
+  lastSelectedOpts = [] as Option[]
 ) => {
   // const selectedOpts = []
 
@@ -296,10 +298,19 @@ const resolveOptsFromIndexLeaf = (
       const option = options[k]
       const opts = [option]
       selectedOpts.push(opts)
-      resolveOptsFromIndexLeaf(leaf[k] as IndexLeaf, (option.children || []) as Option[], opts)
+      if (depth === 1) {
+        lastSelectedOpts.push(option)
+      }
+      resolveOptsFromIndexLeaf(
+        leaf[k] as IndexLeaf,
+        (option.children || []) as Option[],
+        depth - 1,
+        opts,
+        lastSelectedOpts
+      )
     }
   })
-  return selectedOpts
+  return [selectedOpts, lastSelectedOpts]
 }
 
 const SelectorCore = forwardRef(function _SelectorCore(props: SelectorProps, ref: Ref<any>) {
@@ -410,9 +421,9 @@ const SelectorCore = forwardRef(function _SelectorCore(props: SelectorProps, ref
   useEffect(() => {
     if (multiple) {
       // console.log('effect: selected', selected)
-      const selectedOpts = resolveOptsFromIndexLeaf(selected, options)
+      const [selectedOpts, lastSelectedOpts] = resolveOptsFromIndexLeaf(selected, options, depth!)
       // console.log('on Change: ', selectedOpts)
-      onChange?.(selectedOpts)
+      onChange?.(selectedOpts, lastSelectedOpts)
     }
   }, [selected])
 

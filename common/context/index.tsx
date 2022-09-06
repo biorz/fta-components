@@ -48,7 +48,7 @@ interface GlobalContext {
 type ConfigProviderProps = Partial<GlobalContext> & { children: ReactNode }
 
 const defaultContext: GlobalContext = {
-  careMode: false,
+  careMode: true,
   platform: 'ymm',
   debugger: true,
   toggle() {},
