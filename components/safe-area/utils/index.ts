@@ -33,6 +33,8 @@ export const _safeArea = {
   bottom:
     safeArea.top > 20 && inRN && inIOS
       ? 34
+      : inRN && inAndroid
+      ? 0
       : safeArea.bottom
       ? systemInfo.screenHeight - safeArea.bottom
       : needSafeArea
