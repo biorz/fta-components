@@ -341,6 +341,7 @@ const SelectorCore = forwardRef(function _SelectorCore(props: SelectorProps, ref
 
   const [activeIndexes, setActiveIndexes] = useState<number[]>(new Array(depth).fill(0))
   const [selected, setSelected] = useState<IndexLeaf>(parseLeafFromIndex(activeIndexes))
+  const firstRef = useRef(true)
   // 锚定目标
   // const anchor = () => {
   //   // 深度遍历，找到为止
@@ -411,15 +412,21 @@ const SelectorCore = forwardRef(function _SelectorCore(props: SelectorProps, ref
 
   useEffect(() => {
     if (!multiple && activeIndexes.every((v) => v >= 0)) {
-      // console.log('effect: activeIndexes', activeIndexes)
+      if (firstRef.current) {
+        firstRef.current = false
+        return
+      }
       const selectedOpts = resolveOptsFromIndexes(activeIndexes, options)
-      // console.log('on Change: ', selectedOpts)
       onChange?.(selectedOpts)
     }
   }, [activeIndexes])
 
   useEffect(() => {
     if (multiple) {
+      if (firstRef.current) {
+        firstRef.current = false
+        return
+      }
       // console.log('effect: selected', selected)
       const [selectedOpts, lastSelectedOpts] = resolveOptsFromIndexLeaf(selected, options, depth!)
       // console.log('on Change: ', selectedOpts)
