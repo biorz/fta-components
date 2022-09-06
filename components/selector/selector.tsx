@@ -499,4 +499,4 @@ const defaultProps: SelectorProps = {
 
 SelectorCore.defaultProps = defaultProps
 
-export { SelectorCore, useSelectorCore }
+export { SelectorCore, SelectorCore as default, useSelectorCore }
