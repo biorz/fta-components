@@ -11,7 +11,14 @@ import React, {
 } from 'react'
 import { px, useCareClass, useCareMode } from '../../common'
 import '../../style/components/selector/index.scss'
-import { FieldNames, IndexLeaf, Option, ScrollAreaProps, SelectorProps } from '../../types/selector'
+import {
+  FieldNames,
+  IndexLeaf,
+  Option,
+  OptionWithParent,
+  ScrollAreaProps,
+  SelectorProps,
+} from '../../types/selector'
 import { Provider } from './context'
 import {
   getDefaultActiveItemClass,
@@ -273,13 +280,18 @@ const resolveWillSelected = (indexes: number[], selected: IndexLeaf) => {
 /** 单选模式下，从索引处获得选项数组 */
 const resolveOptsFromIndexes = (indexes: number[], options: Option[]) => {
   let tmpOpts = options
+  let lastSelectedOpts: OptionWithParent = null as unknown as OptionWithParent
   const selectedOpts = indexes.reduce((prev, cur) => {
     const tmp = tmpOpts[cur]
+    const copy = { ...tmp } as OptionWithParent
+    copy.__parent__ = lastSelectedOpts
+    lastSelectedOpts = copy
     prev.push(tmp)
     tmpOpts = tmp?.children || []
     return prev
   }, [] as Option[])
-  return selectedOpts
+
+  return [selectedOpts, lastSelectedOpts] as const
 }
 
 /** 多选模式下，从索引处获得数组 */
@@ -288,25 +300,30 @@ const resolveOptsFromIndexLeaf = (
   options: Option[],
   depth: number,
   selectedOpts = [] as (Option[] | Option)[],
-  lastSelectedOpts = [] as Option[]
+  lastSelectedOpts = [] as Option[],
+  parent = null as unknown as OptionWithParent
 ) => {
   // const selectedOpts = []
 
   const keys = Object.keys(leaf).map(Number)
   keys.forEach((k) => {
     if (leaf[k]) {
+      // shallow copy
       const option = options[k]
       const opts = [option]
       selectedOpts.push(opts)
+      const copy = { ...option } as OptionWithParent
+      copy.__parent__ = parent
       if (depth === 1) {
-        lastSelectedOpts.push(option)
+        lastSelectedOpts.push(copy)
       }
       resolveOptsFromIndexLeaf(
         leaf[k] as IndexLeaf,
         (option.children || []) as Option[],
         depth - 1,
         opts,
-        lastSelectedOpts
+        lastSelectedOpts,
+        (parent = copy)
       )
     }
   })
@@ -416,8 +433,8 @@ const SelectorCore = forwardRef(function _SelectorCore(props: SelectorProps, ref
         firstRef.current = false
         return
       }
-      const selectedOpts = resolveOptsFromIndexes(activeIndexes, options)
-      onChange?.(selectedOpts)
+      const [selectedOpts, lastSelectedOpt] = resolveOptsFromIndexes(activeIndexes, options)
+      onChange?.(selectedOpts, lastSelectedOpt)
     }
   }, [activeIndexes])
 

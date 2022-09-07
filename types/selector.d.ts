@@ -135,6 +135,10 @@ export type Option = {
   [key: string]: any
 }
 
+export interface OptionWithParent extends Option {
+  __parent__: OptionWithParent | null
+}
+
 export interface SelectorContext
   extends Pick<
     ScrollAreaProps,
@@ -217,7 +221,10 @@ export interface SelectorProps extends BaseComponent, SelectorContext {
   /**
    * 选择改变后的回调
    */
-  onChange?: (selectedOptions: (Option[] | Option)[], lastSelectedOptions?: Option[]) => void
+  onChange?: (
+    selectedOptions: (Option[] | Option)[],
+    lastSelectedOptions: OptionWithParent[] | OptionWithParent
+  ) => void
   /**
    * （多选生效）选择项溢出时的回调
    */
