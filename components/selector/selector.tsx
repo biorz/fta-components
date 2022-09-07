@@ -253,7 +253,7 @@ const resolveCounts = (
 }
 
 /**  获取即将被选中的树结构 */
-const getWillSelected = (indexes: number[], selected: IndexLeaf) => {
+const resolveWillSelected = (indexes: number[], selected: IndexLeaf) => {
   const selectedCopy = deepCopy(selected)
   let current = selectedCopy
   let tmp: any
@@ -387,7 +387,7 @@ const SelectorCore = forwardRef(function _SelectorCore(props: SelectorProps, ref
         // 如果是最后一项， 加入此项，如果没有则创建索引数组
         if (depth === cursor + 1) {
           // 判断是否超出🚫
-          const willChecked = getWillSelected(copy, selected)
+          const willChecked = resolveWillSelected(copy, selected)
           const counts = calcSelectedCounts(willChecked, depth!)
           if (counts > limit!) {
             return onExceed?.()

@@ -9,6 +9,12 @@ $color-grey: #666;
     height: 787px;
     background-color: $color-white;
     overflow: hidden;
+    // prettier-ignore
+    border-top-width: 1PX;
+    @include nrn {
+      border-top-style: solid;
+    }
+    border-top-color: #e8e8e8;
   }
 
   &-scrollarea {
