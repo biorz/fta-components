@@ -329,7 +329,7 @@ const lookupLeaf = (
   depth: number,
   valueKey: string,
   linkedList = new DoublyLinkedList(0),
-  result = []
+  result = [] as number[][]
 ) => {
   if (value.length) {
     for (let i = 0; i < options.length; i++) {
@@ -361,9 +361,19 @@ const resolveSelectedFromValue = (
   depth: number,
   valueKey: string
 ) => {
+  console.log('value==', value)
   if (isArray(value) && value.length) {
     const result = lookupLeaf(value.slice(), options, depth, valueKey)
-    console.log('搜索结果', result)
+    console.log('result==', result)
+    const leaf = {}
+
+    result.forEach((path) => {
+      path.reduce((prev, cur) => {
+        return (prev[cur] = prev[cur] || {})
+      }, leaf)
+    })
+    console.log('leaffff', leaf)
+    return leaf
   }
   return {}
 }
@@ -408,17 +418,13 @@ const SelectorCore = forwardRef(function _SelectorCore(props: SelectorProps, ref
     multiple ? resolveSelectedFromValue(value, options, depth!, fieldNames!.value) : {}
   )
 
-  // 锚定目标
-  // const anchor = () => {
-  //   // 深度遍历，找到为止
-  // }
-
   useEffect(() => {
-    // console.time()
-    const result = lookupLeaf([642001], options, depth!, fieldNames!.value)
-    console.log('搜索结果', result)
-    // console.timeEnd()
-  }, [])
+    if (options.length) {
+      setSelected(
+        multiple ? resolveSelectedFromValue(value, options, depth!, fieldNames!.value) : {}
+      )
+    }
+  }, [options])
 
   useEffect(() => {
     if (shallowCompare(prevValueRef.current, value)) return
