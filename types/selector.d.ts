@@ -114,9 +114,10 @@ export interface ScrollAreaProps {
 
 export type Option = {
   /**
-   * 绑定值
+   * 默认绑定的值
+   * 多选传数组
    */
-  value?: string | number
+  value?: (string | number) | (string | number)[]
   /**
    * 显示的标签
    */

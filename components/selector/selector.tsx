@@ -9,10 +9,9 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import { px, useCareClass, useCareMode } from '../../common'
+import { isArray, px, useCareClass, useCareMode } from '../../common'
 import '../../style/components/selector/index.scss'
 import {
-  FieldNames,
   IndexLeaf,
   Option,
   OptionWithParent,
@@ -20,6 +19,7 @@ import {
   SelectorProps,
 } from '../../types/selector'
 import { Provider } from './context'
+import DoublyLinkedList from './doubly-linked-list'
 import {
   getDefaultActiveItemClass,
   getDefaultActiveItemTextClass,
@@ -29,16 +29,6 @@ import {
 } from './shared'
 import { CHECK } from './static'
 
-function tail(options: Option[], depth: number, current: number, valueKey: string) {
-  try {
-    if (depth === current) {
-      return options[0][valueKey as 'value']
-    }
-    return tail(options[0].children!, depth, current + 1, valueKey)
-  } catch (error) {
-    return null
-  }
-}
 /**
  * @component
  * 计数小红点
@@ -62,19 +52,6 @@ const formatCount = (record: Record<string, any>) => {
     return prev
   }, {})
   return rect
-}
-
-function initValue({
-  options,
-  fieldNames,
-  depth,
-}: {
-  options: Option[]
-  fieldNames: FieldNames
-  depth: number
-}) {
-  const { value } = fieldNames
-  return tail(options!, depth, 1, value)
 }
 
 function ScrollArea(props: ScrollAreaProps) {
@@ -202,7 +179,16 @@ ScrollArea.defaultProps = {
   onChange() {},
 }
 
-const parseLeafFromIndex = (indexes: number[]) => {
+/** 减比较选择的值是否相等 */
+const shallowCompare = (v1: any, v2: any) => {
+  if (v1 === v2) return true
+  if (isArray(v1) && isArray(v2)) {
+    return v1.every((v, i) => v === v2[i])
+  }
+  return false
+}
+
+const resolveLeafFromIndex = (indexes: number[]) => {
   const map = {}
   let tmp = map
   indexes.forEach((i) => {
@@ -300,7 +286,7 @@ const resolveOptsFromIndexLeaf = (
   options: Option[],
   depth: number,
   selectedOpts = [] as (Option[] | Option)[],
-  lastSelectedOpts = [] as Option[],
+  lastSelectedOpts = [] as OptionWithParent[],
   parent = null as unknown as OptionWithParent
 ) => {
   // const selectedOpts = []
@@ -327,7 +313,59 @@ const resolveOptsFromIndexLeaf = (
       )
     }
   })
-  return [selectedOpts, lastSelectedOpts]
+  return [selectedOpts, lastSelectedOpts] as const
+}
+
+const resolveIndexesFromValue = (value: any, options: Option[], depth: number) => {
+  if (value != null) {
+    console.log('value', value)
+  }
+  return new Array(depth).fill(0)
+}
+
+const lookupLeaf = (
+  value: (string | number)[],
+  options: Option[],
+  depth: number,
+  valueKey: string,
+  linkedList = new DoublyLinkedList(0),
+  result = []
+) => {
+  if (value.length) {
+    for (let i = 0; i < options.length; i++) {
+      if (!value.length) break
+      const option = options[i]
+      const optVal = option[valueKey]
+      const nextLinkedList = new DoublyLinkedList(i, linkedList)
+      linkedList.append(nextLinkedList)
+      nextLinkedList.prev
+      const index = value.indexOf(optVal)
+      // console.log(option.shortName, 'optVal')
+      if (index > -1) {
+        console.log(nextLinkedList.resolvePath(), 'nextLinkedList.resolvePath()', nextLinkedList)
+        // 找到索引
+        value.splice(index, 1)
+        result.push(nextLinkedList.resolvePath())
+        if (!value.length) break
+      } else if (option.children && depth > 0) {
+        lookupLeaf(value, option.children, depth - 1, valueKey, nextLinkedList, result)
+      }
+    }
+  }
+  return result
+}
+
+const resolveSelectedFromValue = (
+  value: any,
+  options: Option[],
+  depth: number,
+  valueKey: string
+) => {
+  if (isArray(value) && value.length) {
+    const result = lookupLeaf(value.slice(), options, depth, valueKey)
+    console.log('搜索结果', result)
+  }
+  return {}
 }
 
 const SelectorCore = forwardRef(function _SelectorCore(props: SelectorProps, ref: Ref<any>) {
@@ -352,17 +390,41 @@ const SelectorCore = forwardRef(function _SelectorCore(props: SelectorProps, ref
     containerStyle,
     onExceed,
     onChange,
-    value = multiple ? [] : initValue({ options, depth: depth!, fieldNames: fieldNames! }),
+    value = multiple ? [] : null,
+    // value = multiple ? [] : initValue({ options, depth: depth!, fieldNames: fieldNames! }),
     ...extraProps
   } = props
 
-  const [activeIndexes, setActiveIndexes] = useState<number[]>(new Array(depth).fill(0))
-  const [selected, setSelected] = useState<IndexLeaf>(parseLeafFromIndex(activeIndexes))
+  const prevValueRef = useRef(value)
+  // 记录useEffect是否第一次触发
   const firstRef = useRef(true)
+
+  const [activeIndexes, setActiveIndexes] = useState<number[]>(() =>
+    resolveIndexesFromValue(multiple ? value?.[0] : value!, options!, depth!, fieldNames!.value)
+  )
+  // resolveLeafFromIndex(activeIndexes)
+  console.log('activeIndexes', activeIndexes)
+  const [selected, setSelected] = useState<IndexLeaf>(() =>
+    multiple ? resolveSelectedFromValue(value, options, depth!, fieldNames!.value) : {}
+  )
+
   // 锚定目标
   // const anchor = () => {
   //   // 深度遍历，找到为止
   // }
+
+  useEffect(() => {
+    // console.time()
+    const result = lookupLeaf([642001], options, depth!, fieldNames!.value)
+    console.log('搜索结果', result)
+    // console.timeEnd()
+  }, [])
+
+  useEffect(() => {
+    if (shallowCompare(prevValueRef.current, value)) return
+    prevValueRef.current = value
+    // 重新聚焦
+  }, [value])
 
   const _loops = useRef(new Array(depth).fill(0)).current
 
