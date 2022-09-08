@@ -48,6 +48,13 @@ export interface TagProps extends BaseComponent {
   onClick?(): void
 }
 
+export interface SearchProps {
+  value?: string
+  placeholder?: string
+  onChange(value: string): void
+  [key: string]: any
+}
+
 export interface ScrollAreaProps {
   className?: string
   style?: CSSProperties
@@ -207,6 +214,8 @@ export interface SelectorContext
   }
 }
 
+export type HitFn = (keyword: string, label: string, option: Option) => boolean
+
 export interface SelectorProps extends BaseComponent, SelectorContext {
   /**
    * 选项列表
@@ -230,6 +239,11 @@ export interface SelectorProps extends BaseComponent, SelectorContext {
    * @default false
    */
   showSearch?: boolean
+  /**
+   * 是否严格匹配搜索字符串，传入回调可自定义搜索命中
+   * @default false
+   */
+  strictSearch?: boolean | HitFn
   /**
    * 是否显示选择结果
    * @default false

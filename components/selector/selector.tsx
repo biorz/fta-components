@@ -1,4 +1,4 @@
-import { Image, Input, ScrollView, Text, View } from '@tarojs/components'
+import { Image, ScrollView, Text, View } from '@tarojs/components'
 import classNames from 'classnames'
 import React, {
   forwardRef,
@@ -9,9 +9,10 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import { isArray, px, useCareClass, useCareMode } from '../../common'
+import { isArray, isFunction, px, useCareClass, useCareMode } from '../../common'
 import '../../style/components/selector/index.scss'
 import {
+  HitFn,
   IndexLeaf,
   Option,
   OptionWithParent,
@@ -21,6 +22,7 @@ import {
 import { Provider } from './context'
 import CountDot from './count-dot'
 import DoublyLinkedList from './doubly-linked-list'
+import Search from './search'
 import {
   getDefaultActiveItemClass,
   getDefaultActiveItemTextClass,
@@ -298,12 +300,12 @@ const resolveOptsFromIndexLeaf = (
   return [selectedOpts, lastSelectedOpts] as const
 }
 
-const resolveIndexesFromValue = (value: any, options: Option[], depth: number) => {
-  if (value != null) {
-    console.log('value', value)
-  }
-  return new Array(depth).fill(0)
-}
+// const resolveIndexesFromValue = (value: any, options: Option[], depth: number) => {
+//   if (value != null) {
+//     console.log('value', value)
+//   }
+//   return new Array(depth).fill(0)
+// }
 
 const lookupLeaf = (
   value: (string | number)[],
@@ -344,20 +346,53 @@ const resolveSelectedFromValue = (
   valueKey: string
 ) => {
   console.log('value==', value)
+  const leaf = {}
+  if (!isArray(value) && value != null) {
+    value = [value]
+  }
   if (isArray(value) && value.length) {
     const result = lookupLeaf(value.slice(), options, depth, valueKey)
     // console.log('result==', result)
-    const leaf = {}
-
     result.forEach((path) => {
       path.reduce((prev, cur) => {
         return (prev[cur] = prev[cur] || {})
       }, leaf)
     })
     // console.log('leaffff', leaf)
-    return leaf
+    return [leaf, result[0]] as const
   }
-  return {}
+  return [leaf, [] as number[]] as const
+}
+
+/** 遍历搜索 */
+const traverseSearch = (
+  options: Option[],
+  hit: HitFn,
+  labelKey: string,
+  keyword: string,
+  needbreakRef = { current: false },
+  linkedList = new DoublyLinkedList(0),
+  result: number[] = []
+) => {
+  if (needbreakRef.current) return result
+  for (let i = 0; i < options.length; i++) {
+    if (needbreakRef.current) break
+    const option = options[i]
+
+    if (hit(keyword, option[labelKey], option)) {
+      needbreakRef.current = true
+      result.push(...linkedList.resolvePath(), i)
+      break
+    }
+    const newLinkedList = new DoublyLinkedList(i)
+    newLinkedList.prepend(linkedList)
+    linkedList.append(newLinkedList)
+    if (option.children) {
+      traverseSearch(option.children, hit, labelKey, keyword, needbreakRef, newLinkedList, result)
+    }
+  }
+
+  return result
 }
 
 const formatTagText = (option: OptionWithParent, labelKey: string, valueKey: string) => {
@@ -377,6 +412,7 @@ const SelectorCore = forwardRef(function _SelectorCore(props: SelectorProps, ref
     fieldNames,
     showSearch,
     showResult,
+    strictSearch,
     theme,
     placeholder,
     columnClassName,
@@ -395,27 +431,31 @@ const SelectorCore = forwardRef(function _SelectorCore(props: SelectorProps, ref
     onExceed,
     onChange,
     defaultValue: value = multiple ? [] : null,
-    // value = multiple ? [] : initValue({ options, depth: depth!, fieldNames: fieldNames! }),
     ...extraProps
   } = props
 
   const prevValueRef = useRef(value)
   // 记录useEffect是否第一次触发
   const firstRef = useRef(true)
+  const _loops = useRef(new Array(depth).fill(0)).current
 
-  const [activeIndexes, setActiveIndexes] = useState<number[]>(() =>
-    resolveIndexesFromValue(multiple ? value?.[0] : value!, options!, depth!, fieldNames!.value)
-  )
-  const [selected, setSelected] = useState<IndexLeaf>(() =>
-    multiple ? resolveSelectedFromValue(value, options, depth!, fieldNames!.value) : {}
-  )
+  const [activeIndexes, setActiveIndexes] = useState<number[]>(_loops)
+  const [selected, setSelected] = useState<IndexLeaf>({})
   const [activeList, setActiveList] = useState<OptionWithParent[]>([])
 
+  // useEffect(() => {
+  //   console.log('selected', selected)
+  // }, [])
+
   useEffect(() => {
-    if (options.length) {
-      setSelected(
-        multiple ? resolveSelectedFromValue(value, options, depth!, fieldNames!.value) : {}
-      )
+    if (options.length && value != null) {
+      const [leaf, indexes] = resolveSelectedFromValue(value, options, depth!, fieldNames!.value)
+      setSelected(leaf)
+      if (indexes?.length) {
+        setActiveIndexes(indexes)
+      }
+
+      // console.log('useEffect indexes', indexes, leaf, value, [value])
     }
   }, [options])
 
@@ -424,8 +464,6 @@ const SelectorCore = forwardRef(function _SelectorCore(props: SelectorProps, ref
     prevValueRef.current = value
     // 重新聚焦
   }, [value])
-
-  const _loops = useRef(new Array(depth).fill(0)).current
 
   const rootClass = classNames('fta-selector', className)
   const rootStyle = Object.assign({}, style, customStyle)
@@ -459,6 +497,23 @@ const SelectorCore = forwardRef(function _SelectorCore(props: SelectorProps, ref
 
     console.log('==indexes==', indexes)
     uncheck(indexes.reverse())
+  }
+
+  const onSearch = (keyword: string) => {
+    const hit = isFunction(strictSearch)
+      ? strictSearch
+      : strictSearch === true
+      ? (keyword: string, label: string) => keyword === label
+      : (keyword: string, label: string) => String(label).indexOf(keyword) > -1
+
+    const result = traverseSearch(options, hit, fieldNames!.label, keyword)
+    if (result.length) {
+      const indexes = result.concat(_loops).slice(0, depth)
+      setActiveIndexes(indexes)
+      console.log('result', indexes)
+    } else {
+      console.log('没有搜索到')
+    }
   }
 
   const onSelectChange = (index: number, cursor: number, cancel: boolean) => {
@@ -503,8 +558,6 @@ const SelectorCore = forwardRef(function _SelectorCore(props: SelectorProps, ref
     }
     setActiveIndexes(copy)
   }
-
-  useEffect(() => {})
 
   // TODO:
   useImperativeHandle(ref, () => ({}))
@@ -559,7 +612,11 @@ const SelectorCore = forwardRef(function _SelectorCore(props: SelectorProps, ref
   return (
     <Provider value={{ itemHeight: _itemHeight }}>
       <View className={rootClass} style={rootStyle}>
-        {showSearch ? <Input placeholder={placeholder} /> : null}
+        {showSearch ? (
+          <View className='fta-selector-search-wrap'>
+            <Search placeholder={placeholder} onChange={onSearch} />
+          </View>
+        ) : null}
         {showResult && activeList.length ? (
           <View className='fta-selector-result'>
             <ScrollView
@@ -592,6 +649,7 @@ const SelectorCore = forwardRef(function _SelectorCore(props: SelectorProps, ref
             return (
               // @ts-ignore
               <ScrollArea
+                key={i}
                 activeIndex={activeIndex}
                 seletedIndexes={tmpIndexes}
                 fieldNames={fieldNames}
@@ -605,7 +663,6 @@ const SelectorCore = forwardRef(function _SelectorCore(props: SelectorProps, ref
                 limit={limit}
                 counts={formatCount(tmpCounts)}
                 {...extraProps}
-                key={i}
                 onChange={onSelectChange}
                 // @private
                 _index={i}
@@ -633,7 +690,6 @@ const defaultProps: SelectorProps = {
   showCount: true,
   autoHeight: true,
   options: [],
-  placeholder: '支持按城市、区县名称搜索',
   fieldNames: {
     label: 'label',
     value: 'value',

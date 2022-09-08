@@ -225,6 +225,38 @@ $color-grey: #666;
     }
   }
 
+  &-search {
+    @include display-flex(row);
+    align-items: center;
+    margin: 0 28px;
+    height: 72px;
+    background-color: #f4f4f4;
+    border-radius: 12px;
+    flex: 1;
+
+    &-wrap {
+      height: 120px;
+      @include flex-center(row);
+    }
+
+    &__icon {
+      @include square(30px);
+      margin-right: 12px;
+      margin-left: 16px;
+    }
+
+    &__input {
+      height: 100%;
+      flex: 1;
+      // background-color: red;
+      color: #333333;
+      font-size: $font-size-sm;
+      input {
+        height: 100%;
+      }
+    }
+  }
+
   // 隐藏滚动条
   ::-webkit-scrollbar {
     width: 0;
