@@ -107,6 +107,7 @@ function ScrollArea(props: ScrollAreaProps) {
   )
 
   const iconClass = useCareClass.single('fta-selector-suffix__icon')
+  const labelKey = fieldNames!.label
 
   return (
     <View className={rootClass} style={style}>
@@ -116,7 +117,7 @@ function ScrollArea(props: ScrollAreaProps) {
         scrollTop={scrollTop}
         // @ts-ignore
         showsVerticalScrollIndicator={false}>
-        {(options || [])!.map((opt, i) => {
+        {[{ [labelKey]: '全国' }].concat(options || [])!.map((opt, i) => {
           const active = isActive(i)
           const itemCls = classNames(
             itemStaticClass,
@@ -525,7 +526,7 @@ const SelectorCore = forwardRef(function _SelectorCore(
     if (multiple) {
       // 取消勾选
       if (cancel) {
-        copy[cursor] = -1
+        copy[cursor] = NaN
         // 将勾选项目从selectedIndexes移出
         uncheck(copy.slice(0, -1).concat([index]))
       } else {
@@ -533,7 +534,7 @@ const SelectorCore = forwardRef(function _SelectorCore(
         for (let i = cursor + 1; i < copy.length; i++) {
           // TODO:
           if (i + 1 === copy.length) {
-            copy[i] = -1
+            copy[i] = NaN
           } else {
             copy[i] = 0
           }
@@ -608,12 +609,26 @@ const SelectorCore = forwardRef(function _SelectorCore(
   let tmpOpts: typeof options
   let tmpIndexes: number[]
   let tmpLeaf: IndexLeaf = selected
-  // let tmpCount = 0
   // 解析每一列该展示的选项列表
   let tmpCounts = counts
   const resolveOpts = (cursor: number) => {
+    const parentActive = activeIndexes[cursor]
     const active = activeIndexes[cursor - 1]
-    tmpOpts = cursor ? tmpOpts[active]?.[fieldNames!.children] || [] : options
+    let opts = (cursor ? tmpOpts[active]?.[fieldNames!.children] || [] : options).slice()
+
+    // const parent = tmpOpts?.[parentActive] ?? null
+    // console.log('parent', parent)
+    // const labelKey = fieldNames!.label
+    // opts.forEach((opt) => (opt.__parent__ = parent))
+    // if (cursor + 1 <= depth! && parent) {
+    //   const copy = { ...parent }
+    //   copy.__parent__ = parent
+    //   copy.__label__ = copy[labelKey]
+
+    //   copy[fieldNames!.label] = '全' + (parent?.__label__ ?? parent[labelKey])
+    //   opts = parentActive ? [copy] : [copy, ...opts]
+    // }
+    tmpOpts = opts
     tmpLeaf = (cursor ? tmpLeaf[active] : tmpLeaf) || ({} as IndexLeaf)
     tmpIndexes = Object.keys(tmpLeaf).map(Number)
     tmpCounts = (cursor ? tmpCounts[active] : tmpCounts) || {}
