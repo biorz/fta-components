@@ -1,8 +1,8 @@
 import { Image, ScrollView, Text, View } from '@tarojs/components'
 import classNames from 'classnames'
 import React, {
+  ForwardedRef,
   forwardRef,
-  Ref,
   useEffect,
   useImperativeHandle,
   useMemo,
@@ -17,6 +17,7 @@ import {
   Option,
   OptionWithParent,
   ScrollAreaProps,
+  SelectorCoreRefMethods,
   SelectorProps,
 } from '../../types/selector'
 import { Provider } from './context'
@@ -404,7 +405,10 @@ const formatTagText = (option: OptionWithParent, labelKey: string, valueKey: str
   return str
 }
 
-const SelectorCore = forwardRef(function _SelectorCore(props: SelectorProps, ref: Ref<any>) {
+const SelectorCore = forwardRef(function _SelectorCore(
+  props: SelectorProps,
+  ref: ForwardedRef<SelectorCoreRefMethods>
+) {
   const {
     depth,
     options,
@@ -510,9 +514,8 @@ const SelectorCore = forwardRef(function _SelectorCore(props: SelectorProps, ref
     if (result.length) {
       const indexes = result.concat(_loops).slice(0, depth)
       setActiveIndexes(indexes)
-      console.log('result', indexes)
     } else {
-      console.log('没有搜索到')
+      console.log('search result: null')
     }
   }
 
@@ -559,8 +562,20 @@ const SelectorCore = forwardRef(function _SelectorCore(props: SelectorProps, ref
     setActiveIndexes(copy)
   }
 
-  // TODO:
-  useImperativeHandle(ref, () => ({}))
+  useImperativeHandle(ref, () => ({
+    reset() {
+      setActiveIndexes(_loops)
+      setSelected({} as IndexLeaf)
+      setActiveList([])
+    },
+    uncheck(option) {
+      if (isArray(option)) {
+        uncheck(option)
+      } else {
+        uncheckFromList(option)
+      }
+    },
+  }))
 
   useEffect(() => {
     if (!multiple && activeIndexes.every((v) => v >= 0)) {
@@ -569,7 +584,6 @@ const SelectorCore = forwardRef(function _SelectorCore(props: SelectorProps, ref
         return
       }
       const [selectedOpts, lastSelectedOpt] = resolveOptsFromIndexes(activeIndexes, options)
-
       onChange?.(selectedOpts, lastSelectedOpt)
     }
   }, [activeIndexes])
@@ -578,13 +592,12 @@ const SelectorCore = forwardRef(function _SelectorCore(props: SelectorProps, ref
     if (multiple) {
       const [selectedOpts, lastSelectedOpts] = resolveOptsFromIndexLeaf(selected, options, depth!)
       setActiveList(lastSelectedOpts)
-      console.log('setter', lastSelectedOpts.length)
+      // console.log('setter', lastSelectedOpts.length)
       if (firstRef.current) {
         firstRef.current = false
         return
       }
       // console.log('effect: selected', selected)
-
       // console.log('on Change: ', selectedOpts)
       onChange?.(selectedOpts, lastSelectedOpts)
     }
