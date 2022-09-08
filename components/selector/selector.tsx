@@ -19,6 +19,7 @@ import {
   SelectorProps,
 } from '../../types/selector'
 import { Provider } from './context'
+import CountDot from './count-dot'
 import DoublyLinkedList from './doubly-linked-list'
 import {
   getDefaultActiveItemClass,
@@ -28,20 +29,7 @@ import {
   getDefaultItemTextClass,
 } from './shared'
 import { CHECK } from './static'
-
-/**
- * @component
- * 计数小红点
- */
-function CountDot(props: { children: string | number; theme?: string }) {
-  const rootClass = useCareClass.single('fta-selector-count')
-  const textClass = useCareClass.single('fta-selector-count__text')
-  return (
-    <View className={rootClass} style={props.theme ? { backgroundColor: props.theme } : void 0}>
-      <Text className={textClass}>{props.children}</Text>
-    </View>
-  )
-}
+import Tag from './tag'
 
 const deepCopy = (record: Record<string, any>) => JSON.parse(JSON.stringify(record))
 
@@ -54,6 +42,9 @@ const formatCount = (record: Record<string, any>) => {
   return rect
 }
 
+/**
+ * @component
+ */
 function ScrollArea(props: ScrollAreaProps) {
   const {
     counts,
@@ -93,9 +84,6 @@ function ScrollArea(props: ScrollAreaProps) {
   const onSelect = (idx: number) => {
     onChange!(idx, _index!, multiple! && _end! && seletedIndexes.includes(idx))
   }
-
-  // FIXME: 只有最后一列才能取消
-
   // 判断当前索引是否是激活状态
   const isActive =
     _end && multiple ? (i: number) => seletedIndexes.includes(i) : (i: number) => i === activeIndex
@@ -179,23 +167,15 @@ ScrollArea.defaultProps = {
   onChange() {},
 }
 
-/** 减比较选择的值是否相等 */
+/** 浅比较选择的值是否相等 */
 const shallowCompare = (v1: any, v2: any) => {
   if (v1 === v2) return true
   if (isArray(v1) && isArray(v2)) {
-    return v1.every((v, i) => v === v2[i])
+    return v1.length === v2.length && v1.every((v, i) => v === v2[i])
   }
   return false
 }
 
-const resolveLeafFromIndex = (indexes: number[]) => {
-  const map = {}
-  let tmp = map
-  indexes.forEach((i) => {
-    tmp = tmp[i] = {}
-  })
-  return map
-}
 /** 计算已选数量 */
 const calcSelectedCounts = (leaf: IndexLeaf, depth: number, counterRef = { current: 0 }) => {
   const keys = Object.keys(leaf)
@@ -267,10 +247,11 @@ const resolveWillSelected = (indexes: number[], selected: IndexLeaf) => {
 const resolveOptsFromIndexes = (indexes: number[], options: Option[]) => {
   let tmpOpts = options
   let lastSelectedOpts: OptionWithParent = null as unknown as OptionWithParent
-  const selectedOpts = indexes.reduce((prev, cur) => {
+  const selectedOpts = indexes.reduce((prev, cur, i) => {
     const tmp = tmpOpts[cur]
     const copy = { ...tmp } as OptionWithParent
     copy.__parent__ = lastSelectedOpts
+    copy.__index__ = i
     lastSelectedOpts = copy
     prev.push(tmp)
     tmpOpts = tmp?.children || []
@@ -300,6 +281,7 @@ const resolveOptsFromIndexLeaf = (
       selectedOpts.push(opts)
       const copy = { ...option } as OptionWithParent
       copy.__parent__ = parent
+      copy.__index__ = +k
       if (depth === 1) {
         lastSelectedOpts.push(copy)
       }
@@ -309,7 +291,7 @@ const resolveOptsFromIndexLeaf = (
         depth - 1,
         opts,
         lastSelectedOpts,
-        (parent = copy)
+        copy
       )
     }
   })
@@ -364,7 +346,7 @@ const resolveSelectedFromValue = (
   console.log('value==', value)
   if (isArray(value) && value.length) {
     const result = lookupLeaf(value.slice(), options, depth, valueKey)
-    console.log('result==', result)
+    // console.log('result==', result)
     const leaf = {}
 
     result.forEach((path) => {
@@ -372,10 +354,19 @@ const resolveSelectedFromValue = (
         return (prev[cur] = prev[cur] || {})
       }, leaf)
     })
-    console.log('leaffff', leaf)
+    // console.log('leaffff', leaf)
     return leaf
   }
   return {}
+}
+
+const formatTagText = (option: OptionWithParent, labelKey: string, valueKey: string) => {
+  let str = option[labelKey] as string
+  const parent = option.__parent__
+  if (parent && parent[valueKey] !== option[valueKey]) {
+    return parent[labelKey] + '/' + str
+  }
+  return str
 }
 
 const SelectorCore = forwardRef(function _SelectorCore(props: SelectorProps, ref: Ref<any>) {
@@ -385,6 +376,7 @@ const SelectorCore = forwardRef(function _SelectorCore(props: SelectorProps, ref
     itemHeight,
     fieldNames,
     showSearch,
+    showResult,
     theme,
     placeholder,
     columnClassName,
@@ -398,9 +390,11 @@ const SelectorCore = forwardRef(function _SelectorCore(props: SelectorProps, ref
     customStyle,
     containerClassName,
     containerStyle,
+    tagBgColor,
+    tagColor,
     onExceed,
     onChange,
-    value = multiple ? [] : null,
+    defaultValue: value = multiple ? [] : null,
     // value = multiple ? [] : initValue({ options, depth: depth!, fieldNames: fieldNames! }),
     ...extraProps
   } = props
@@ -412,11 +406,10 @@ const SelectorCore = forwardRef(function _SelectorCore(props: SelectorProps, ref
   const [activeIndexes, setActiveIndexes] = useState<number[]>(() =>
     resolveIndexesFromValue(multiple ? value?.[0] : value!, options!, depth!, fieldNames!.value)
   )
-  // resolveLeafFromIndex(activeIndexes)
-  console.log('activeIndexes', activeIndexes)
   const [selected, setSelected] = useState<IndexLeaf>(() =>
     multiple ? resolveSelectedFromValue(value, options, depth!, fieldNames!.value) : {}
   )
+  const [activeList, setActiveList] = useState<OptionWithParent[]>([])
 
   useEffect(() => {
     if (options.length) {
@@ -443,9 +436,29 @@ const SelectorCore = forwardRef(function _SelectorCore(props: SelectorProps, ref
     const selectedCopy = { ...selected }
     const prevs = indexes.slice(0, -1)
     const end = indexes.slice(-1)[0]
-    const endMap = prevs.reduce((prev, cur) => prev[cur], selectedCopy)
+
+    const endMap = prevs.reduce(
+      (prev, cur) =>
+        prev[cur] ||
+        // ⚠️容错性
+        {},
+      selectedCopy
+    )
     delete endMap![end]
     setSelected(selectedCopy)
+  }
+
+  // 从选择的列表中取消选中节点
+  const uncheckFromList = (option: OptionWithParent) => {
+    const indexes = [] as number[]
+    let tmp: OptionWithParent | null = option
+    while (tmp) {
+      indexes.push(tmp.__index__)
+      tmp = tmp.__parent__
+    }
+
+    console.log('==indexes==', indexes)
+    uncheck(indexes.reverse())
   }
 
   const onSelectChange = (index: number, cursor: number, cancel: boolean) => {
@@ -453,7 +466,6 @@ const SelectorCore = forwardRef(function _SelectorCore(props: SelectorProps, ref
     // 多选模式
     if (multiple) {
       // 取消勾选
-
       if (cancel) {
         copy[cursor] = -1
         // 将勾选项目从selectedIndexes移出
@@ -492,6 +504,8 @@ const SelectorCore = forwardRef(function _SelectorCore(props: SelectorProps, ref
     setActiveIndexes(copy)
   }
 
+  useEffect(() => {})
+
   // TODO:
   useImperativeHandle(ref, () => ({}))
 
@@ -502,18 +516,22 @@ const SelectorCore = forwardRef(function _SelectorCore(props: SelectorProps, ref
         return
       }
       const [selectedOpts, lastSelectedOpt] = resolveOptsFromIndexes(activeIndexes, options)
+
       onChange?.(selectedOpts, lastSelectedOpt)
     }
   }, [activeIndexes])
 
   useEffect(() => {
     if (multiple) {
+      const [selectedOpts, lastSelectedOpts] = resolveOptsFromIndexLeaf(selected, options, depth!)
+      setActiveList(lastSelectedOpts)
+      console.log('setter', lastSelectedOpts.length)
       if (firstRef.current) {
         firstRef.current = false
         return
       }
       // console.log('effect: selected', selected)
-      const [selectedOpts, lastSelectedOpts] = resolveOptsFromIndexLeaf(selected, options, depth!)
+
       // console.log('on Change: ', selectedOpts)
       onChange?.(selectedOpts, lastSelectedOpts)
     }
@@ -542,6 +560,29 @@ const SelectorCore = forwardRef(function _SelectorCore(props: SelectorProps, ref
     <Provider value={{ itemHeight: _itemHeight }}>
       <View className={rootClass} style={rootStyle}>
         {showSearch ? <Input placeholder={placeholder} /> : null}
+        {showResult && activeList.length ? (
+          <View className='fta-selector-result'>
+            <ScrollView
+              scrollX
+              scrollY={false}
+              enableFlex
+              // @ts-ignore
+              showsHorizontalScrollIndicator={false}
+              className='fta-selector-result-wrap'>
+              <View className='fta-selector-result-tags'>
+                {activeList.map((option, i) => (
+                  <Tag
+                    key={option[fieldNames!.value] + '__' + i}
+                    color={tagColor}
+                    bgColor={tagBgColor}
+                    onClose={() => uncheckFromList(option)}>
+                    {formatTagText(option, fieldNames!.label, fieldNames!.value)}
+                  </Tag>
+                ))}
+              </View>
+            </ScrollView>
+          </View>
+        ) : null}
         <View className={containerClass} style={containerStyle}>
           {_loops.map((_, i) => {
             const colClass = columnClassName?.(i + 1)

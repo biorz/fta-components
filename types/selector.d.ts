@@ -12,6 +12,42 @@ export interface FieldNames {
   children: string
   [key: string]: string
 }
+
+export interface TagProps extends BaseComponent {
+  /**
+   * tag文本
+   */
+  children: string
+  /**
+   * 文字和边框颜色
+   */
+  color?: string
+  /**
+   * 背景颜色
+   */
+  bgColor?: string
+  /**
+   * 自定义关闭图标
+   */
+  closeIcon?: string
+  /**
+   * 文字样式
+   */
+  textClassName?: string
+  /**
+   * 文字样式
+   */
+  textStyle?: CSSProperties
+  /**
+   * 点击关闭按钮的回调
+   */
+  onClose?(): void
+  /**
+   * 点击标签时的回调
+   */
+  onClick?(): void
+}
+
 export interface ScrollAreaProps {
   className?: string
   style?: CSSProperties
@@ -138,6 +174,7 @@ export type Option = {
 
 export interface OptionWithParent extends Option {
   __parent__: OptionWithParent | null
+  __index__: number
 }
 
 export interface SelectorContext
@@ -176,9 +213,9 @@ export interface SelectorProps extends BaseComponent, SelectorContext {
    */
   options: Option[]
   /**
-   * 指定选中项，多选传数组，单选传基础类型
+   * 默认选中项，多选传数组，单选传基础类型
    */
-  value?: string[] | number[] | string | number
+  defaultValue?: string[] | number[] | string | number
   /**
    * 选择器深度
    * @default 3
@@ -193,6 +230,11 @@ export interface SelectorProps extends BaseComponent, SelectorContext {
    * @default false
    */
   showSearch?: boolean
+  /**
+   * 是否显示选择结果
+   * @default false
+   */
+  showResult?: boolean
   /**
    * 输入框文本
    * @default '支持按城市、区县名称搜索'
@@ -211,6 +253,14 @@ export interface SelectorProps extends BaseComponent, SelectorContext {
    * 滚动容器内联样式
    */
   containerStyle?: CSSProperties
+  /**
+   * 标签颜色
+   */
+  tagColor?: string
+  /**
+   * 标签背景颜色
+   */
+  tagBgColor?: string
   /**
    * 滚动列类名
    */
