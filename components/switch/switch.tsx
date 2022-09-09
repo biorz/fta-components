@@ -14,6 +14,14 @@ export default class Switch extends React.Component<SwitchProps, SwitchState> {
     checked: !!this.props.checked,
   }
 
+  public componentDidUpdate(prevProps: SwitchProps) {
+    if (prevProps.checked !== this.state.checked && prevProps.checked !== this.props.checked) {
+      this.setState({
+        checked: !!this.props.checked,
+      })
+    }
+  }
+
   private handleChange = (event): void => {
     const { value, checked } = event.detail
     const state = typeof value === 'undefined' ? checked : value
