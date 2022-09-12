@@ -93,6 +93,10 @@ export interface ScrollAreaProps {
    */
   limit?: number
   /**
+   * 允许全选
+   */
+  enableCheckAll?: boolean
+  /**
    * 主题色，默认为满帮橙
    * @default '#FA871E'
    */
@@ -159,6 +163,10 @@ export interface ScrollAreaProps {
    * @internal
    */
   _end?: boolean
+  /**
+   * @internal
+   */
+  _parent?: Option
 }
 
 export type Option = {
@@ -265,6 +273,11 @@ export interface SelectorProps extends BaseComponent, SelectorContext {
    * @default false
    */
   // changeOnSelect?: boolean
+  /**
+   * 是否允许全选
+   * 数组长度是深度 - 1
+   */
+  enableCheckAll?: boolean[]
   /**
    * 滚动容器类名
    */
