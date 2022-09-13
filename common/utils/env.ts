@@ -33,6 +33,6 @@ export const inIPhone =
   systemInfo.model === 'iPhone' ||
   inIOS
 /** 当前是否是iPhone刘海屏 */
-export const inNotch = inIPhone && (systemInfo.screenHeight >= 812 || systemInfo.screenWidth >= 812)
+export const inNotch = inIPhone && (systemInfo.screenHeight >= 780 || systemInfo.screenWidth >= 780)
 /** 当前是否是安卓系统 */
 export const inAndroid = systemInfo.platform === 'android'
