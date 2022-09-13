@@ -1,5 +1,5 @@
 import { ScrollViewProps } from '@tarojs/components/types/ScrollView'
-import React, { CSSProperties, ForwardRefExoticComponent, ReactNode, RefAttributes } from 'react'
+import React, { CSSProperties, ForwardRefExoticComponent, ReactNode } from 'react'
 import BaseComponent from './base'
 
 export interface IndexLeaf {
@@ -341,8 +341,7 @@ export interface SelectorCoreRefMethods {
   uncheck: ((indexes: number[]) => void) | ((option: OptionWithParent) => void)
 }
 
-declare const SelectorCore: ForwardRefExoticComponent<SelectorProps> &
-  RefAttributes<SelectorCoreRefMethods>
+declare const SelectorCore: ForwardRefExoticComponent<SelectorProps> & Ref<SelectorCoreRefMethods>
 
 declare function useSelectorCore(
   initialProps: SelectorProps,

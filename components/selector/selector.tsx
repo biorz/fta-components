@@ -771,7 +771,7 @@ const SelectorCore = forwardRef(function _SelectorCore(
 })
 
 function useSelectorCore(initialProps: SelectorProps, deps = [] as any[]) {
-  const ref = useRef()
+  const ref = useRef<SelectorCoreRefMethods>(null)
   return [ref, useMemo(() => <SelectorCore {...initialProps} ref={ref} />, deps)] as const
 }
 
