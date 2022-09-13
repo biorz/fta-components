@@ -244,12 +244,23 @@ const resolveCounts = (
   return counter
 }
 
+const emptyRecord = (record: object) => {
+  Object.keys(record).forEach((key) => delete record[key])
+}
+
 /**  获取即将被选中的树结构 */
 const resolveWillSelected = (indexes: number[], selected: IndexLeaf) => {
   const selectedCopy = deepCopy(selected)
   let current = selectedCopy
   let tmp: any
   for (const i of indexes) {
+    if (i === -1) {
+      // 如果是全选，清空所有选项
+      emptyRecord(current)
+    } else {
+      // 单选清空全选
+      delete current[-1]
+    }
     const node = current[i]
     if (!node) {
       tmp = {}
@@ -296,9 +307,6 @@ const resolveOptsFromIndexLeaf = (
     if (k === -1) {
       selectedOpts.push([parent])
       lastSelectedOpts.push(parent)
-      if (depth === 1) {
-        console.log('===parent===', parent)
-      }
     } else if (leaf[k]) {
       // shallow copy
       const option = options[k]
@@ -370,7 +378,6 @@ const resolveSelectedFromValue = (
   depth: number,
   valueKey: string
 ) => {
-  console.log('value==', value)
   const leaf = {}
   if (!isArray(value) && value != null) {
     value = [value]
@@ -577,7 +584,7 @@ const SelectorCore = forwardRef(function _SelectorCore(
         if (depth === cursor + 1) {
           // 判断是否超出🚫
           const willChecked = resolveWillSelected(copy, selected)
-          console.log('willSelected')
+          console.log('willSelected', copy, willChecked)
           const counts = calcSelectedCounts(willChecked, depth!)
           if (counts > limit!) {
             return onExceed?.()
@@ -652,14 +659,11 @@ const SelectorCore = forwardRef(function _SelectorCore(
     const active = activeIndexes[cursor - 1]
     const nexParent = cursor ? tmpOpts[active] || null : (null as unknown as Option)
 
-    if (tmpParent && !nexParent) {
-    } else {
-      console.log('object', checkAllRef.current)
+    if (!(tmpParent && !nexParent)) {
       tmpParent = nexParent
     }
-    // if (!checkAllRef.current) {
-    // }
-    console.log('_tmpParent', tmpParent)
+
+    // console.log('_tmpParent', tmpParent)
     tmpOpts = cursor ? tmpOpts[active]?.[fieldNames!.children] || [] : options
     tmpLeaf = (cursor ? tmpLeaf[active] : tmpLeaf) || ({} as IndexLeaf)
     tmpIndexes = Object.keys(tmpLeaf).map(Number)
