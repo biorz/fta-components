@@ -293,14 +293,22 @@ const resolveOptsFromIndexLeaf = (
 
   const keys = Object.keys(leaf).map(Number)
   keys.forEach((k) => {
-    if (leaf[k]) {
+    if (k === -1) {
+      selectedOpts.push([parent])
+      lastSelectedOpts.push(parent)
+      if (depth === 1) {
+        console.log('===parent===', parent)
+      }
+    } else if (leaf[k]) {
       // shallow copy
       const option = options[k]
+      // 如果option不存在，说明有全选的情况
+
       const opts = [option]
       selectedOpts.push(opts)
       const copy = { ...option } as OptionWithParent
       copy.__parent__ = parent
-      copy.__index__ = +k
+      copy.__index__ = k
       if (depth === 1) {
         lastSelectedOpts.push(copy)
       }
@@ -415,7 +423,12 @@ const traverseSearch = (
 const formatTagText = (option: OptionWithParent, labelKey: string, valueKey: string) => {
   let str = option[labelKey] as string
   const parent = option.__parent__
-  if (parent && parent[valueKey] !== option[valueKey]) {
+  if (
+    parent &&
+    parent[valueKey] !== option[valueKey] &&
+    // 如 北京/北京 格式成 北京
+    str !== parent[labelKey]
+  ) {
     return parent[labelKey] + '/' + str
   }
   return str
@@ -538,6 +551,7 @@ const SelectorCore = forwardRef(function _SelectorCore(
   }
 
   const onSelectChange = (index: number, cursor: number, cancel: boolean) => {
+    // 标记当前选择是否为全选
     checkAllRef.current = index === -1
     const copy = activeIndexes.slice()
     // 多选模式
@@ -553,7 +567,7 @@ const SelectorCore = forwardRef(function _SelectorCore(
         for (let i = cursor + 1; i < copy.length; i++) {
           // TODO:
           if (i + 1 === copy.length) {
-            copy[i] = NaN
+            copy[i] = null as unknown as number
           } else {
             copy[i] = 0
           }
@@ -563,6 +577,7 @@ const SelectorCore = forwardRef(function _SelectorCore(
         if (depth === cursor + 1) {
           // 判断是否超出🚫
           const willChecked = resolveWillSelected(copy, selected)
+          console.log('willSelected')
           const counts = calcSelectedCounts(willChecked, depth!)
           if (counts > limit!) {
             return onExceed?.()
@@ -633,12 +648,13 @@ const SelectorCore = forwardRef(function _SelectorCore(
   // 解析每一列该展示的选项列表
   let tmpCounts = counts
   const resolveOpts = (cursor: number) => {
-    const parentActive = activeIndexes[cursor]
+    // const parentActive = activeIndexes[cursor]
     const active = activeIndexes[cursor - 1]
     const nexParent = cursor ? tmpOpts[active] || null : (null as unknown as Option)
 
     if (tmpParent && !nexParent) {
     } else {
+      console.log('object', checkAllRef.current)
       tmpParent = nexParent
     }
     // if (!checkAllRef.current) {
@@ -705,7 +721,9 @@ const SelectorCore = forwardRef(function _SelectorCore(
                 multiple={multiple}
                 autoHeight={autoHeight}
                 limit={limit}
-                enableCheckAll={enableCheckAll![i - 1] || checkAllRef.current}
+                enableCheckAll={
+                  tmpOpts.length === 1 && i + 1 !== depth ? false : enableCheckAll![i - 1]
+                }
                 counts={formatCount(tmpCounts)}
                 {...extraProps}
                 onChange={onSelectChange}
