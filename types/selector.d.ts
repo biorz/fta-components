@@ -1,11 +1,5 @@
 import { ScrollViewProps } from '@tarojs/components/types/ScrollView'
-import {
-  ComponentType,
-  CSSProperties,
-  ForwardRefExoticComponent,
-  ReactNode,
-  RefAttributes,
-} from 'react'
+import React, { CSSProperties, ForwardRefExoticComponent, ReactNode, RefAttributes } from 'react'
 import BaseComponent from './base'
 
 export interface IndexLeaf {
@@ -23,7 +17,7 @@ export interface TagProps extends BaseComponent {
   /**
    * tag文本
    */
-  children: string
+  children: string | number
   /**
    * 文字和边框颜色
    */
@@ -146,15 +140,31 @@ export interface ScrollAreaProps {
   /**
    * 自定义渲染
    */
-  component?: ComponentType<{
-    option: Option
-    active: boolean
-  }>
+  /**
+   * 格式化item标签显示
+   */
+  labelFormatter?: (
+    label: string,
+    option: Option,
+    isFullCheck: boolean,
+    depth: number
+  ) => string | number
+  /**
+   * 判断每个Item项是否禁用
+   */
+  isDisabled?: (label: string, value: string | number, option: Option, depth: number) => boolean
+  // component?: ComponentType<{
+  //   option: Option
+  //   active: boolean
+  // }>
   /**
    * 选择项发生变化
    */
   onChange?: (index: number, cursor: number, cancel: boolean) => void
-
+  /**
+   * 点击
+   */
+  onSelectDisabled?: (option: Option) => void
   /**
    * @internal
    */
@@ -214,6 +224,9 @@ export interface SelectorContext
     | 'showCount'
     | 'autoHeight'
     | 'theme'
+    | 'labelFormatter'
+    | 'isDisabled'
+    | 'onSelectDisabled'
   > {
   /**
    * 传递给各列ScrollView组件的props
@@ -259,10 +272,10 @@ export interface SelectorProps extends BaseComponent, SelectorContext {
    */
   strictSearch?: boolean | HitFn
   /**
-   * 是否显示选择结果
+   * 是否显示选择结果，转入element节点可自定义渲染
    * @default false
    */
-  showResult?: boolean
+  showResult?: boolean | ReactNode
   /**
    * 输入框文本
    * @default '支持按城市、区县名称搜索'
@@ -294,6 +307,10 @@ export interface SelectorProps extends BaseComponent, SelectorContext {
    * 标签背景颜色
    */
   tagBgColor?: string
+  /**
+   * 格式化标签文字显示
+   */
+  tagFormatter?: (option: OptionWithParent, labelKey: string, valueKey: string) => string | number
   /**
    * 滚动列类名
    */

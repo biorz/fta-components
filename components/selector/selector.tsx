@@ -3,6 +3,7 @@ import classNames from 'classnames'
 import React, {
   ForwardedRef,
   forwardRef,
+  isValidElement,
   useEffect,
   useImperativeHandle,
   useMemo,
@@ -80,7 +81,10 @@ function ScrollArea(props: ScrollAreaProps) {
     itemStyle,
     activeItemStyle,
     enableCheckAll,
+    isDisabled,
+    labelFormatter,
     onChange,
+    onSelectDisabled,
     _index,
     _end,
     _parent,
@@ -96,8 +100,12 @@ function ScrollArea(props: ScrollAreaProps) {
   const textClass = getDefaultItemTextClass(depth, careMode)
   const textActiveClass = getDefaultActiveItemTextClass(depth)
 
-  const onSelect = (idx: number) => {
-    onChange!(idx, _index!, multiple! && _end! && seletedIndexes.includes(idx))
+  const onSelect = (idx: number, disabled: boolean, option: Option) => {
+    if (disabled) {
+      onSelectDisabled?.(option)
+    } else {
+      onChange!(idx, _index!, multiple! && _end! && seletedIndexes.includes(idx))
+    }
   }
   // 判断当前索引是否是激活状态
   const isActive =
@@ -132,6 +140,12 @@ function ScrollArea(props: ScrollAreaProps) {
         {resolveOptions(options!, _parent!, enableCheckAll!).map((opt, index) => {
           const i = resolveIndex(index)
           const active = isActive(i)
+          const disabled = isDisabled!(
+            opt[fieldNames!.label],
+            opt[fieldNames!.value],
+            opt,
+            _index! + 1
+          )
           const itemCls = classNames(
             itemStaticClass,
             active && itemActiveClass,
@@ -152,11 +166,19 @@ function ScrollArea(props: ScrollAreaProps) {
           }
 
           return (
-            <View className={itemCls} style={itemStyl} key={i} onClick={() => onSelect(i)}>
+            <View
+              className={itemCls}
+              style={itemStyl}
+              key={i}
+              onClick={() => onSelect(i, disabled, opt)}>
               <Text
-                className={classNames(textStaticClass, active && textActiveClass)}
+                className={classNames(
+                  textStaticClass,
+                  active && textActiveClass,
+                  disabled && 'fta-selector-text--disabled'
+                )}
                 style={themeStyle}>
-                {(i === -1 ? '全' : '') + opt[fieldNames!.label]}
+                {labelFormatter!(opt[fieldNames!.label], opt, i === -1, _index! + 1)}
               </Text>
               <View>
                 {_end ? (
@@ -184,6 +206,10 @@ function ScrollArea(props: ScrollAreaProps) {
 ScrollArea.defaultProps = {
   activeIndex: 0,
   onChange() {},
+  isDisabled: () => false,
+  labelFormatter(label, _option, isfullCheck) {
+    return (isfullCheck ? '全' : '') + label
+  },
 }
 
 /** 浅比较选择的值是否相等 */
@@ -300,8 +326,6 @@ const resolveOptsFromIndexLeaf = (
   lastSelectedOpts = [] as OptionWithParent[],
   parent = null as unknown as OptionWithParent
 ) => {
-  // const selectedOpts = []
-
   const keys = Object.keys(leaf).map(Number)
   keys.forEach((k) => {
     if (k === -1) {
@@ -333,13 +357,6 @@ const resolveOptsFromIndexLeaf = (
   return [selectedOpts, lastSelectedOpts] as const
 }
 
-// const resolveIndexesFromValue = (value: any, options: Option[], depth: number) => {
-//   if (value != null) {
-//     console.log('value', value)
-//   }
-//   return new Array(depth).fill(0)
-// }
-
 const lookupLeaf = (
   value: (string | number)[],
   options: Option[],
@@ -359,7 +376,7 @@ const lookupLeaf = (
       const index = value.indexOf(optVal)
       // console.log(option.shortName, 'optVal')
       if (index > -1) {
-        console.log(nextLinkedList.resolvePath(), 'nextLinkedList.resolvePath()', nextLinkedList)
+        // console.log(nextLinkedList.resolvePath(), 'nextLinkedList.resolvePath()', nextLinkedList)
         // 找到索引
         value.splice(index, 1)
         result.push(nextLinkedList.resolvePath())
@@ -469,6 +486,7 @@ const SelectorCore = forwardRef(function _SelectorCore(
     containerStyle,
     tagBgColor,
     tagColor,
+    tagFormatter,
     onExceed,
     onChange,
     defaultValue: value = multiple ? [] : null,
@@ -479,7 +497,9 @@ const SelectorCore = forwardRef(function _SelectorCore(
   // 记录useEffect是否第一次触发
   const firstRef = useRef(true)
   const _loops = useRef(new Array(depth).fill(0)).current
+  // 当前选择项是否是全选
   const checkAllRef = useRef(false)
+  // const sortRef = useRef<Record<string, number>>({}).current
 
   const [activeIndexes, setActiveIndexes] = useState<number[]>(_loops)
   const [selected, setSelected] = useState<IndexLeaf>({})
@@ -633,6 +653,12 @@ const SelectorCore = forwardRef(function _SelectorCore(
   useEffect(() => {
     if (multiple) {
       const [selectedOpts, lastSelectedOpts] = resolveOptsFromIndexLeaf(selected, options, depth!)
+      // 这里的选项要排序，找出差异的项目，排在最后
+      // if (activeList.length && lastSelectedOpts.length) {
+      //   sortList(lastSelectedOpts, activeList)
+      //   console.log('需要进行排序')
+      // }
+
       setActiveList(lastSelectedOpts)
       // console.log('setter', lastSelectedOpts.length)
       if (firstRef.current) {
@@ -681,7 +707,9 @@ const SelectorCore = forwardRef(function _SelectorCore(
             <Search placeholder={placeholder} onChange={onSearch} />
           </View>
         ) : null}
-        {showResult && activeList.length ? (
+        {isValidElement(showResult) ? (
+          showResult
+        ) : showResult && activeList.length ? (
           <View className='fta-selector-result'>
             <ScrollView
               scrollX
@@ -697,7 +725,7 @@ const SelectorCore = forwardRef(function _SelectorCore(
                     color={tagColor}
                     bgColor={tagBgColor}
                     onClose={() => uncheckFromList(option)}>
-                    {formatTagText(option, fieldNames!.label, fieldNames!.value)}
+                    {tagFormatter!(option, fieldNames!.label, fieldNames!.value)}
                   </Tag>
                 ))}
               </View>
@@ -725,9 +753,7 @@ const SelectorCore = forwardRef(function _SelectorCore(
                 multiple={multiple}
                 autoHeight={autoHeight}
                 limit={limit}
-                enableCheckAll={
-                  tmpOpts.length === 1 && i + 1 !== depth ? false : enableCheckAll![i - 1]
-                }
+                enableCheckAll={tmpOpts.length === 1 ? false : enableCheckAll![i - 1]}
                 counts={formatCount(tmpCounts)}
                 {...extraProps}
                 onChange={onSelectChange}
@@ -759,6 +785,7 @@ const defaultProps: SelectorProps = {
   autoHeight: true,
   options: [],
   enableCheckAll: [],
+  tagFormatter: formatTagText,
   fieldNames: {
     label: 'label',
     value: 'value',
