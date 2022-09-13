@@ -557,7 +557,7 @@ const SelectorCore = forwardRef(function _SelectorCore(
       tmp = tmp.__parent__
     }
 
-    console.log('==indexes==', indexes)
+    // console.log('==indexes==', indexes)
     uncheck(indexes.reverse())
   }
 
