@@ -161,7 +161,7 @@ $color-grey: #666;
       color: $color-white;
       font-size: 24px;
       font-weight: bold;
-      line-height: 36px;
+      line-height: 30px;
 
       &--care {
         font-size: 31px;
@@ -202,7 +202,13 @@ $color-grey: #666;
       @include flex-center();
       color: #ff5b00;
       font-size: 36px;
-      line-height: 36px;
+      @include rn {
+        line-height: 40px;
+      }
+      @include nrn {
+        line-height: 36px;
+        vertical-align: text-top;
+      }
     }
   }
 

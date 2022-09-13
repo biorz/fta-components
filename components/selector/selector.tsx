@@ -132,6 +132,8 @@ function ScrollArea(props: ScrollAreaProps) {
   return (
     <View className={rootClass} style={style}>
       <ScrollView
+        // @ts-ignore
+        nestedScrollEnabled
         scrollY
         scrollWithAnimation
         scrollTop={scrollTop}
@@ -505,10 +507,6 @@ const SelectorCore = forwardRef(function _SelectorCore(
   const [selected, setSelected] = useState<IndexLeaf>({})
   const [activeList, setActiveList] = useState<OptionWithParent[]>([])
 
-  // useEffect(() => {
-  //   console.log('selected', selected)
-  // }, [])
-
   useEffect(() => {
     if (options.length && value != null) {
       const [leaf, indexes] = resolveSelectedFromValue(value, options, depth!, fieldNames!.value)
@@ -753,7 +751,12 @@ const SelectorCore = forwardRef(function _SelectorCore(
                 multiple={multiple}
                 autoHeight={autoHeight}
                 limit={limit}
-                enableCheckAll={tmpOpts.length === 1 ? false : enableCheckAll![i - 1]}
+                enableCheckAll={
+                  tmpOpts.length === 1 &&
+                  tmpOpts[0][fieldNames!.label] === tmpParent[fieldNames!.label]
+                    ? false
+                    : enableCheckAll![i - 1]
+                }
                 counts={formatCount(tmpCounts)}
                 {...extraProps}
                 onChange={onSelectChange}
