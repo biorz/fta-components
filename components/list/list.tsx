@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
 import React from 'react'
 import '../../style/components/icon/index.scss'
-import '../../style/components/list/index.scss'
+import '../../style/components/list/list.scss'
 import { ListProps } from '../../types/list'
 import ListItem from './list-item'
 export { ListItem }
