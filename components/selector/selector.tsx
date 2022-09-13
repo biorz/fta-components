@@ -46,6 +46,16 @@ const formatCount = (record: Record<string, any>) => {
 }
 
 /**
+ * 格式化每一级的选项
+ */
+const resolveOptions = (options: Option[], parent: Option, enableCheckAll: boolean) => {
+  if (enableCheckAll && parent) {
+    return [parent].concat(options)
+  }
+  return options
+}
+
+/**
  * @component
  */
 function ScrollArea(props: ScrollAreaProps) {
@@ -69,9 +79,11 @@ function ScrollArea(props: ScrollAreaProps) {
     activeItemClassName,
     itemStyle,
     activeItemStyle,
+    enableCheckAll,
     onChange,
     _index,
     _end,
+    _parent,
   } = props
 
   const depth = _index! + 1
@@ -105,9 +117,9 @@ function ScrollArea(props: ScrollAreaProps) {
     textClass,
     autoHeight && `fta-selector-text--auto ${careMode ? 'fta-selector-text--auto--care' : ''}`
   )
-
   const iconClass = useCareClass.single('fta-selector-suffix__icon')
-  const labelKey = fieldNames!.label
+
+  const resolveIndex = enableCheckAll ? (index: number) => index - 1 : (index: number) => index
 
   return (
     <View className={rootClass} style={style}>
@@ -117,13 +129,16 @@ function ScrollArea(props: ScrollAreaProps) {
         scrollTop={scrollTop}
         // @ts-ignore
         showsVerticalScrollIndicator={false}>
-        {[{ [labelKey]: '全国' }].concat(options || [])!.map((opt, i) => {
+        {resolveOptions(options!, _parent!, enableCheckAll!).map((opt, index) => {
+          const i = resolveIndex(index)
           const active = isActive(i)
           const itemCls = classNames(
             itemStaticClass,
             active && itemActiveClass,
             active && activeItemClassName
           )
+
+          // console.log('===opt==', opt, _parent)
 
           const [themeStyle, themeBgStyle] =
             theme && active ? [{ color: theme }, { backgroundColor: theme }] : [{}, {}]
@@ -141,7 +156,7 @@ function ScrollArea(props: ScrollAreaProps) {
               <Text
                 className={classNames(textStaticClass, active && textActiveClass)}
                 style={themeStyle}>
-                {opt[fieldNames!.label]}
+                {(i === -1 ? '全' : '') + opt[fieldNames!.label]}
               </Text>
               <View>
                 {_end ? (
@@ -418,6 +433,7 @@ const SelectorCore = forwardRef(function _SelectorCore(
     showSearch,
     showResult,
     strictSearch,
+    enableCheckAll,
     theme,
     placeholder,
     columnClassName,
@@ -443,6 +459,7 @@ const SelectorCore = forwardRef(function _SelectorCore(
   // 记录useEffect是否第一次触发
   const firstRef = useRef(true)
   const _loops = useRef(new Array(depth).fill(0)).current
+  const checkAllRef = useRef(false)
 
   const [activeIndexes, setActiveIndexes] = useState<number[]>(_loops)
   const [selected, setSelected] = useState<IndexLeaf>({})
@@ -521,12 +538,14 @@ const SelectorCore = forwardRef(function _SelectorCore(
   }
 
   const onSelectChange = (index: number, cursor: number, cancel: boolean) => {
+    checkAllRef.current = index === -1
     const copy = activeIndexes.slice()
     // 多选模式
     if (multiple) {
       // 取消勾选
       if (cancel) {
-        copy[cursor] = NaN
+        // 置为空指针
+        copy[cursor] = null as unknown as number
         // 将勾选项目从selectedIndexes移出
         uncheck(copy.slice(0, -1).concat([index]))
       } else {
@@ -609,26 +628,23 @@ const SelectorCore = forwardRef(function _SelectorCore(
   let tmpOpts: typeof options
   let tmpIndexes: number[]
   let tmpLeaf: IndexLeaf = selected
+  let tmpParent: Option
+  // let tmpCount = 0
   // 解析每一列该展示的选项列表
   let tmpCounts = counts
   const resolveOpts = (cursor: number) => {
     const parentActive = activeIndexes[cursor]
     const active = activeIndexes[cursor - 1]
-    let opts = (cursor ? tmpOpts[active]?.[fieldNames!.children] || [] : options).slice()
+    const nexParent = cursor ? tmpOpts[active] || null : (null as unknown as Option)
 
-    // const parent = tmpOpts?.[parentActive] ?? null
-    // console.log('parent', parent)
-    // const labelKey = fieldNames!.label
-    // opts.forEach((opt) => (opt.__parent__ = parent))
-    // if (cursor + 1 <= depth! && parent) {
-    //   const copy = { ...parent }
-    //   copy.__parent__ = parent
-    //   copy.__label__ = copy[labelKey]
-
-    //   copy[fieldNames!.label] = '全' + (parent?.__label__ ?? parent[labelKey])
-    //   opts = parentActive ? [copy] : [copy, ...opts]
+    if (tmpParent && !nexParent) {
+    } else {
+      tmpParent = nexParent
+    }
+    // if (!checkAllRef.current) {
     // }
-    tmpOpts = opts
+    console.log('_tmpParent', tmpParent)
+    tmpOpts = cursor ? tmpOpts[active]?.[fieldNames!.children] || [] : options
     tmpLeaf = (cursor ? tmpLeaf[active] : tmpLeaf) || ({} as IndexLeaf)
     tmpIndexes = Object.keys(tmpLeaf).map(Number)
     tmpCounts = (cursor ? tmpCounts[active] : tmpCounts) || {}
@@ -689,12 +705,14 @@ const SelectorCore = forwardRef(function _SelectorCore(
                 multiple={multiple}
                 autoHeight={autoHeight}
                 limit={limit}
+                enableCheckAll={enableCheckAll![i - 1] || checkAllRef.current}
                 counts={formatCount(tmpCounts)}
                 {...extraProps}
                 onChange={onSelectChange}
                 // @private
                 _index={i}
                 _end={i + 1 === _loops.length}
+                _parent={tmpParent}
               />
             )
           })}
@@ -718,6 +736,7 @@ const defaultProps: SelectorProps = {
   showCount: true,
   autoHeight: true,
   options: [],
+  enableCheckAll: [],
   fieldNames: {
     label: 'label',
     value: 'value',
