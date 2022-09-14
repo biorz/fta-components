@@ -121,7 +121,7 @@ function ScrollArea(props: ScrollAreaProps) {
         : 0 + Math.random()
       : (activeIndex! > 1 ? activeIndex! - 1 : 0) * itemHeight!
 
-  console.log('scrollTop', scrollTop)
+  // console.log('scrollTop', scrollTop)
   const itemStaticClass = classNames(
     itemClass,
     itemClassName,
