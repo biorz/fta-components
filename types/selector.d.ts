@@ -269,6 +269,15 @@ export interface SelectorProps extends BaseComponent, SelectorContext {
    */
   placeholder?: string
   /**
+   * 搜索无结果的文本
+   * @default '暂无搜索结果'
+   */
+  emptyHint?: string
+  /**
+   * 最多可选择几项的提示
+   */
+  limitHint?: string
+  /**
    * （单选时生效）当此项为 true 时，点选每级菜单选项值都会发生变化，具体见上面的演示
    * @default false
    */

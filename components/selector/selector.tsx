@@ -153,12 +153,9 @@ function ScrollArea(props: ScrollAreaProps) {
         {resolveOptions(options!, _parent!, enableCheckAll!).map((opt, index) => {
           const i = resolveIndex(index)
           const active = isActive(i)
-          const disabled = isDisabled!(
-            opt[fieldNames!.label],
-            opt[fieldNames!.value],
-            opt,
-            _index! + 1
-          )
+          const itemLabel = opt[fieldNames!.label]
+          const itemValue = opt[fieldNames!.value]
+          const disabled = isDisabled!(itemLabel, itemValue, opt, _index! + 1)
           const itemCls = classNames(
             itemStaticClass,
             active && itemActiveClass,
@@ -182,7 +179,7 @@ function ScrollArea(props: ScrollAreaProps) {
             <View
               className={itemCls}
               style={itemStyl}
-              key={i}
+              key={`${itemValue}-${i}`}
               onClick={() => onSelect(i, disabled, opt)}>
               <Text
                 className={classNames(
@@ -191,7 +188,7 @@ function ScrollArea(props: ScrollAreaProps) {
                   disabled && 'fta-selector-text--disabled'
                 )}
                 style={themeStyle}>
-                {labelFormatter!(opt[fieldNames!.label], opt, i === -1, _index! + 1)}
+                {labelFormatter!(itemLabel, opt, i === -1, _index! + 1)}
               </Text>
               <View>
                 {_end ? (
@@ -370,6 +367,11 @@ const resolveOptsFromIndexLeaf = (
   return [selectedOpts, lastSelectedOpts] as const
 }
 
+function fillupList<T>(list: T[], depth: number, defaultValue: T) {
+  if (list.length === depth) return list
+  return list.concat(new Array(depth).fill(defaultValue)).slice(0, depth)
+}
+
 const lookupLeaf = (
   value: (string | number)[],
   options: Option[],
@@ -389,10 +391,14 @@ const lookupLeaf = (
       const index = value.indexOf(optVal)
       // console.log(option.shortName, 'optVal')
       if (index > -1) {
-        // console.log(nextLinkedList.resolvePath(), 'nextLinkedList.resolvePath()', nextLinkedList)
         // 找到索引
+        // console.log('找到索引', index, nextLinkedList.resolvePath(), depth)
+        const path = nextLinkedList.resolvePath()
         value.splice(index, 1)
-        result.push(nextLinkedList.resolvePath())
+        // const fullPath = fillupList(path, depth, 1)
+        // console.log('fullPath', fullPath, path)
+
+        result.push(path)
         if (!value.length) break
       } else if (option.children && depth > 0) {
         lookupLeaf(value, option.children, depth - 1, valueKey, nextLinkedList, result)
@@ -402,11 +408,41 @@ const lookupLeaf = (
   return result
 }
 
+/** 补全默认选择结果 */
+const fillResult = (
+  result: number[][],
+  // options: Option[],
+  depth: number,
+  enableCheckAll: boolean[]
+) => {
+  return result.map((list) => {
+    const copy = list.slice()
+    if (copy.length < depth) {
+      let root
+      // 是补0还是补1
+      for (let i = copy.length; i < depth; i++) {
+        if (i - 1 > -1) {
+          const checkAll = enableCheckAll[i - 1]
+          if (root === void 0) {
+            root = checkAll
+          } else if (checkAll) {
+            root = true
+          }
+          // 如果两个label相等的话就
+          copy.push(root ? -1 : 0)
+        }
+      }
+    }
+    return copy
+  })
+}
+
 const resolveSelectedFromValue = (
   value: any,
   options: Option[],
   depth: number,
-  valueKey: string
+  valueKey: string,
+  enableCheckAll: boolean[]
 ) => {
   const leaf = {}
   if (!isArray(value) && value != null) {
@@ -414,14 +450,19 @@ const resolveSelectedFromValue = (
   }
   if (isArray(value) && value.length) {
     const result = lookupLeaf(value.slice(), options, depth, valueKey)
-    // console.log('result==', result)
-    result.forEach((path) => {
+    const filledResult = fillResult(result, depth, enableCheckAll)
+    // console.log('filledResult==', filledResult)
+    filledResult.forEach((path) => {
       path.reduce((prev, cur) => {
         return (prev[cur] = prev[cur] || {})
       }, leaf)
     })
     // console.log('leaffff', leaf)
-    return [leaf, result[0]] as const
+    return [
+      leaf,
+      filledResult[0],
+      // fillupList(result[0], depth, -1)
+    ] as const
   }
   return [leaf, [] as number[]] as const
 }
@@ -492,6 +533,7 @@ const SelectorCore = forwardRef(function _SelectorCore(
     // @ts-ignore
     style,
     limit,
+    limitHint,
     multiple,
     autoHeight,
     customStyle,
@@ -500,6 +542,7 @@ const SelectorCore = forwardRef(function _SelectorCore(
     tagBgColor,
     tagColor,
     tagFormatter,
+    emptyHint,
     onExceed,
     onChange,
     defaultValue: value = multiple ? [] : null,
@@ -513,14 +556,21 @@ const SelectorCore = forwardRef(function _SelectorCore(
   // 当前选择项是否是全选
   const checkAllRef = useRef(false)
   // const sortRef = useRef<Record<string, number>>({}).current
-
+  const [showEmpty, setEmpty] = useState(false)
   const [activeIndexes, setActiveIndexes] = useState<number[]>(_loops)
   const [selected, setSelected] = useState<IndexLeaf>({})
   const [activeList, setActiveList] = useState<OptionWithParent[]>([])
 
   useEffect(() => {
     if (options.length && value != null) {
-      const [leaf, indexes] = resolveSelectedFromValue(value, options, depth!, fieldNames!.value)
+      const [leaf, indexes] = resolveSelectedFromValue(
+        value,
+        options,
+        depth!,
+        fieldNames!.value,
+        enableCheckAll!
+      )
+      // console.log('leaf', leaf, indexes)
       setSelected(leaf)
       if (indexes?.length) {
         setActiveIndexes(indexes)
@@ -571,6 +621,10 @@ const SelectorCore = forwardRef(function _SelectorCore(
   }
 
   const onSearch = (keyword: string) => {
+    if (!keyword) {
+      setEmpty(false)
+      return
+    }
     const hit = isFunction(strictSearch)
       ? strictSearch
       : strictSearch === true
@@ -581,8 +635,10 @@ const SelectorCore = forwardRef(function _SelectorCore(
     if (result.length) {
       const indexes = result.concat(_loops).slice(0, depth)
       setActiveIndexes(indexes)
+      setEmpty(false)
     } else {
       console.log('search result: null')
+      setEmpty(true)
     }
   }
 
@@ -613,7 +669,7 @@ const SelectorCore = forwardRef(function _SelectorCore(
         if (depth === cursor + 1) {
           // 判断是否超出🚫
           const willChecked = resolveWillSelected(copy, selected)
-          console.log('willSelected', copy, willChecked)
+          // console.log('willSelected', copy, willChecked)
           const counts = calcSelectedCounts(willChecked, depth!)
           if (counts > limit!) {
             return onExceed?.()
@@ -649,6 +705,7 @@ const SelectorCore = forwardRef(function _SelectorCore(
   }))
 
   useEffect(() => {
+    // console.log('activeIndeses', activeIndexes)
     if (!multiple && activeIndexes.every((v) => v >= 0)) {
       if (firstRef.current) {
         firstRef.current = false
@@ -689,16 +746,16 @@ const SelectorCore = forwardRef(function _SelectorCore(
   // let tmpCount = 0
   // 解析每一列该展示的选项列表
   let tmpCounts = counts
+  let active
   const resolveOpts = (cursor: number) => {
-    // const parentActive = activeIndexes[cursor]
-    const active = activeIndexes[cursor - 1]
+    // parentActive = activeIndexes[cursor - 2]
+    active = activeIndexes[cursor - 1]
     const nexParent = cursor ? tmpOpts[active] || null : (null as unknown as Option)
 
     if (!(tmpParent && !nexParent)) {
       tmpParent = nexParent
     }
 
-    // console.log('_tmpParent', tmpParent)
     tmpOpts = cursor ? tmpOpts[active]?.[fieldNames!.children] || [] : options
     tmpLeaf = (cursor ? tmpLeaf[active] : tmpLeaf) || ({} as IndexLeaf)
     tmpIndexes = Object.keys(tmpLeaf).map(Number)
@@ -720,30 +777,40 @@ const SelectorCore = forwardRef(function _SelectorCore(
           showResult
         ) : showResult && activeList.length ? (
           <View className='fta-selector-result'>
-            <ScrollView
-              // @ts-ignore
-              nestedScrollEnabled
-              scrollX
-              scrollY={false}
-              enableFlex
-              // @ts-ignore
-              showsHorizontalScrollIndicator={false}
-              className='fta-selector-result-wrap'>
-              <View className='fta-selector-result-tags'>
-                {activeList.map((option, i) => (
-                  <Tag
-                    key={option[fieldNames!.value] + '__' + i}
-                    color={tagColor}
-                    bgColor={tagBgColor}
-                    onClose={() => uncheckFromList(option)}>
-                    {tagFormatter!(option, fieldNames!.label, fieldNames!.value)}
-                  </Tag>
-                ))}
-              </View>
-            </ScrollView>
+            <View className='fta-selector-result-container'>
+              {limitHint ? <Text className='fta-selector-result-limit'>{limitHint}</Text> : null}
+              <ScrollView
+                // @ts-ignore
+                nestedScrollEnabled
+                scrollX
+                scrollY={false}
+                enableFlex
+                // @ts-ignore
+                showsHorizontalScrollIndicator={false}
+                className={`fta-selector-result-wrap${
+                  limitHint ? '' : ' fta-selector-result-container'
+                }`}>
+                <View className='fta-selector-result-tags'>
+                  {activeList.map((option, i) => (
+                    <Tag
+                      key={option[fieldNames!.value] + '__' + i}
+                      color={tagColor}
+                      bgColor={tagBgColor}
+                      onClose={() => uncheckFromList(option)}>
+                      {tagFormatter!(option, fieldNames!.label, fieldNames!.value)}
+                    </Tag>
+                  ))}
+                </View>
+              </ScrollView>
+            </View>
           </View>
         ) : null}
         <View className={containerClass} style={containerStyle}>
+          {emptyHint && showEmpty ? (
+            <View className='fta-selector-empty'>
+              <Text className='fta-selector-empty__text'>{emptyHint}</Text>
+            </View>
+          ) : null}
           {_loops.map((_, i) => {
             const colClass = columnClassName?.(i + 1)
             const colStyle = columnStyle?.(i + 1)
@@ -765,9 +832,12 @@ const SelectorCore = forwardRef(function _SelectorCore(
                 autoHeight={autoHeight}
                 limit={limit}
                 enableCheckAll={
+                  // 较为恶心的逻辑
                   tmpOpts.length === 1 &&
-                  tmpOpts[0][fieldNames!.label] === tmpParent[fieldNames!.label]
+                  tmpOpts[0][fieldNames!.label] === tmpParent[fieldNames!.label] // 诸如北京等
                     ? false
+                    : !tmpOpts.length && active === -1 // 其他省
+                    ? true
                     : enableCheckAll![i - 1]
                 }
                 counts={formatCount(tmpCounts)}
@@ -801,6 +871,8 @@ const defaultProps: SelectorProps = {
   autoHeight: true,
   options: [],
   enableCheckAll: [],
+  placeholder: '搜索',
+  emptyHint: '暂无搜索结果',
   tagFormatter: formatTagText,
   fieldNames: {
     label: 'label',
