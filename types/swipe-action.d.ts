@@ -1,3 +1,4 @@
+import { ViewProps } from '@tarojs/components/types/View'
 import { CSSProperties, FC, ReactNode } from 'react'
 
 export interface SwipeActionRef {
@@ -82,6 +83,10 @@ export interface SwipeActionProps {
   onToggle?: (isOpened: boolean) => void
 
   children?: ReactNode
+  /**
+   * 滑动层其他props
+   */
+  swipeProps?: ViewProps & { [key: string]: any }
 }
 
 declare const SwipeAction: FC<SwipeActionProps>

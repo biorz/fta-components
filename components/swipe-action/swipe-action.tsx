@@ -38,6 +38,7 @@ function SwipeAction(props: SwipeActionProps): JSX.Element {
     swipeClassName,
     swipeStyle,
     follow,
+    swipeProps,
   } = props
 
   const [distance, setDistance] = useState<number>(props.distance || 0)
@@ -159,6 +160,7 @@ function SwipeAction(props: SwipeActionProps): JSX.Element {
   return (
     <View className={rootClass} style={style}>
       <View
+        {...swipeProps}
         className={classNames('fta-swipe-action-modal', transition, swipeClassName)}
         style={{ ...swipeStyle, left: px(offset) }}
         onTouchStart={onTouchStart}
