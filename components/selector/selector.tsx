@@ -92,6 +92,7 @@ function ScrollArea(props: ScrollAreaProps) {
 
   const depth = _index! + 1
   const careMode = useCareMode()
+  const prevParentRef = useRef(_parent)
   // const [activeIndex, setActiveIndex] = useState(multiple && _end ? [] : 0)
   const builtInClass = getDefaultColClass(depth)
   const rootClass = classNames('fta-selector-scrollarea', builtInClass, className)
@@ -107,14 +108,20 @@ function ScrollArea(props: ScrollAreaProps) {
       onChange!(idx, _index!, multiple! && _end! && seletedIndexes.includes(idx))
     }
   }
+
   // 判断当前索引是否是激活状态
   const isActive =
     _end && multiple ? (i: number) => seletedIndexes.includes(i) : (i: number) => i === activeIndex
 
   // TODO: 选择时滚动定位
   const scrollTop =
-    autoHeight || multiple ? undefined : (activeIndex! > 0 ? activeIndex! - 1 : 0) * itemHeight!
+    autoHeight || multiple
+      ? prevParentRef.current === _parent
+        ? undefined
+        : 0 + Math.random()
+      : (activeIndex! > 1 ? activeIndex! - 1 : 0) * itemHeight!
 
+  console.log('scrollTop', scrollTop)
   const itemStaticClass = classNames(
     itemClass,
     itemClassName,
@@ -128,6 +135,10 @@ function ScrollArea(props: ScrollAreaProps) {
   const iconClass = useCareClass.single('fta-selector-suffix__icon')
 
   const resolveIndex = enableCheckAll ? (index: number) => index - 1 : (index: number) => index
+
+  useEffect(() => {
+    prevParentRef.current = _parent
+  }, [_parent])
 
   return (
     <View className={rootClass} style={style}>
@@ -710,6 +721,8 @@ const SelectorCore = forwardRef(function _SelectorCore(
         ) : showResult && activeList.length ? (
           <View className='fta-selector-result'>
             <ScrollView
+              // @ts-ignore
+              nestedScrollEnabled
               scrollX
               scrollY={false}
               enableFlex
