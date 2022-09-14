@@ -220,7 +220,7 @@ $color-grey: #666;
       color: #ff5b00;
       font-size: 36px;
       @include rn {
-        line-height: 40px;
+        line-height: 38px;
       }
       @include nrn {
         line-height: 36px;
@@ -230,7 +230,7 @@ $color-grey: #666;
   }
 
   &-result {
-    min-height: 124px;
+    height: 124px;
     // @include display-flex(row);
     // align-items: center;
 
@@ -245,7 +245,7 @@ $color-grey: #666;
       justify-content: flex-start;
       min-width: 0;
       // height: 100%;
-      flex: 1;
+      // flex: 1;
       flex-wrap: nowrap;
     }
 
