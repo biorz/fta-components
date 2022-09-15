@@ -10,15 +10,30 @@ import { SwitchProps, SwitchState } from '../../types/switch'
 export default class Switch extends React.Component<SwitchProps, SwitchState> {
   public static defaultProps: SwitchProps
   public static propTypes: InferProps<SwitchProps>
+
+  private $ref: any
+
   public state: SwitchState = {
     checked: !!this.props.checked,
   }
 
-  public componentDidUpdate(prevProps: SwitchProps) {
-    if (prevProps.checked !== this.state.checked && prevProps.checked !== this.props.checked) {
-      this.setState({
-        checked: !!this.props.checked,
-      })
+  public componentDidUpdate(prevProps: SwitchProps, prevState: SwitchState) {
+    if (
+      prevState.checked === this.state.checked &&
+      prevProps.checked !== this.props.checked &&
+      this.state.checked !== this.props.checked
+    ) {
+      // console.log('切换')
+      const willChecked = !!this.props.checked
+      this.setState(
+        {
+          checked: willChecked,
+        },
+        () => {
+          // RN端逻辑修复
+          this.$ref?.onCheckedChange?.(willChecked)
+        }
+      )
     }
   }
 
@@ -61,6 +76,7 @@ export default class Switch extends React.Component<SwitchProps, SwitchState> {
       <View className={containerCls}>
         {disabled && <View className='fta-switch__mask'></View>}
         <TaroSwitch
+          ref={(ref) => (this.$ref = ref)}
           style={swithStyle}
           disabled={disabled}
           className={switchClz}
