@@ -693,7 +693,7 @@ const SelectorCore = forwardRef(function _SelectorCore(
     reset() {
       setActiveIndexes(_loops)
       setSelected({} as IndexLeaf)
-      setActiveList([])
+      setActiveList([]) 
     },
     uncheck(option) {
       if (isArray(option)) {
