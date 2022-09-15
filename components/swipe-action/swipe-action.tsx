@@ -124,7 +124,7 @@ function SwipeAction(props: SwipeActionProps): JSX.Element {
   }
 
   function handleLayout(e) {
-    !distance && setDistance(e.nativeEvent.layout.width)
+    !props.distance && setDistance(e.nativeEvent.layout.width)
   }
 
   function onTouchEnd(e: ITouchEvent) {
