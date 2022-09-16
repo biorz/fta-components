@@ -693,7 +693,7 @@ const SelectorCore = forwardRef(function _SelectorCore(
     reset() {
       setActiveIndexes(_loops)
       setSelected({} as IndexLeaf)
-      setActiveList([]) 
+      setActiveList([])
     },
     uncheck(option) {
       if (isArray(option)) {
@@ -706,12 +706,13 @@ const SelectorCore = forwardRef(function _SelectorCore(
 
   useEffect(() => {
     // console.log('activeIndeses', activeIndexes)
-    if (!multiple && activeIndexes.every((v) => v >= 0)) {
+    if (!multiple && activeIndexes.every((v) => v >= -1)) {
       if (firstRef.current) {
         firstRef.current = false
         return
       }
       const [selectedOpts, lastSelectedOpt] = resolveOptsFromIndexes(activeIndexes, options)
+      // console.log('activeIndexes', selectedOpts, lastSelectedOpt)
       onChange?.(selectedOpts, lastSelectedOpt)
     }
   }, [activeIndexes])
