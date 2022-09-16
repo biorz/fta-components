@@ -20,9 +20,6 @@
   font-size: $fta-modal-content-size;
   font-weight: $font-weight-normal;
   line-height: $line-height-base * $fta-modal-content-size;
-  @include rn {
-    text-align: center;
-  }
 }
 
 $fta-modal-duration: 200ms;
@@ -89,7 +86,10 @@ $fta-modal-duration: 200ms;
   }
 
   .content-simple {
-    /* #ifndef rn */
+    &--center {
+      text-align: center;
+    }
+
     &--left {
       text-align: left;
     }
@@ -97,27 +97,11 @@ $fta-modal-duration: 200ms;
     &--right {
       text-align: right;
     }
-    /* #endif */
-
-    /* #ifdef rn */
-    flex-direction: row;
-    justify-content: center;
-    // align-items: stretch;
-    &--left {
-      justify-content: flex-start;
-    }
-
-    &--right {
-      justify-content: flex-end;
-    }
-    /* #endif */
   }
 
-  /* #ifdef rn */
   .content-simple__text {
     @extend %content;
   }
-  /* #endif */
 }
 
 .fta-modal__action {

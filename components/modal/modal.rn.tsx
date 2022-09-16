@@ -2,7 +2,7 @@ import { Text, View } from '@tarojs/components'
 import { CommonEvent } from '@tarojs/components/types/common'
 import classNames from 'classnames'
 import PropTypes, { InferProps } from 'prop-types'
-import React, { Fragment } from 'react'
+import React from 'react'
 import { handleTouchScroll } from '../../common'
 import Modal from '../../common/components/modal'
 import '../../style/components/modal/index.scss'
@@ -71,7 +71,7 @@ export default class FTAModal extends React.Component<ModalProps, ModalState> {
   //   e.stopPropagation()
   // }
 
-  public render(): JSX.Element {
+  public render(): JSX.Element | null {
     const { _isOpened } = this.state
     const {
       title,
@@ -106,7 +106,7 @@ export default class FTAModal extends React.Component<ModalProps, ModalState> {
     )
 
     // console.log('_isOpened', _isOpened)
-    if (!_isOpened) return <Fragment />
+    if (!_isOpened) return null
 
     if (title || content) {
       const isRenderAction = cancelText || confirmText
@@ -128,12 +128,14 @@ export default class FTAModal extends React.Component<ModalProps, ModalState> {
                   style={contentStyle}
                   withTitle={!!title}>
                   <View
-                    className={classNames(
-                      'content-simple',
-                      !title && 'cotent-simple--notitle',
-                      `content-simple--${contentAlign}`
-                    )}>
-                    {<Text className={'content-simple__text'}>{content}</Text>}
+                    className={classNames('content-simple', !title && 'cotent-simple--notitle')}>
+                    <Text
+                      className={classNames(
+                        'content-simple__text',
+                        `content-simple--${contentAlign}`
+                      )}>
+                      {content}
+                    </Text>
                   </View>
                 </FTAModalContent>
               )}
@@ -167,6 +169,7 @@ export default class FTAModal extends React.Component<ModalProps, ModalState> {
 
     return (
       <Modal
+        useNative={useNativeModal}
         className='fta-modal'
         visible={_isOpened}
         animationType='none'
