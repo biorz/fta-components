@@ -58,7 +58,7 @@
       position: relative;
       z-index: 0;
     }
-    // background-color: red;
+    background-color: red;
   }
 
   &-menu {
@@ -70,7 +70,7 @@
 
   &-item {
     @include flex-center(row);
-    flex: 1;
+    flex: 1 1 auto;
     height: zoom(80px);
 
     &__text {

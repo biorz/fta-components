@@ -76,6 +76,7 @@ function Dropdown(props: DropdownProps, ref: Ref<DropdownRef>): JSX.Element {
 
   const [mRef, measure] = useMeasure()
 
+  /** 定位 */
   const positioning = () =>
     measure().then((res) => {
       const stretchHeight = systemInfo.windowHeight - res.bottom
@@ -117,7 +118,8 @@ function Dropdown(props: DropdownProps, ref: Ref<DropdownRef>): JSX.Element {
     refs.delete(ref)
   }
 
-  const toggle = (params) => {
+  const toggle = async (params) => {
+    await positioning()
     const { ref, ...state } = params
     closeItems(ref)
     if (!state.preventDefault) {
@@ -203,47 +205,42 @@ function Dropdown(props: DropdownProps, ref: Ref<DropdownRef>): JSX.Element {
 
   const rootClass = classNames('fta-dropdown', state.isOpened && 'fta-dropdown--full')
 
-  const sibling = (
-    <DropdownProvider
-      value={{
-        register,
-        unregister,
-        toggle,
-        arrow,
-        check,
-      }}>
-      <View className={rootClass} style={{ top: inRN ? state.rect.top : void 0 }}>
-        <View className='fta-dropdown-menu'>
-          {(props as DropdownWithChildren).children ||
-            (props as DropdownWithList).list?.map((cprops, i) => (
-              <DropdownItem {...cprops} key={i} />
-            ))}
-        </View>
-        {state.isOpened ? (
-          <View
-            style={{ [overlay ? 'height' : 'maxHeight']: px(state.height) }}
-            className={classNames(
-              'fta-dropdown-options',
-              !inRN && props.absolute && 'fta-dropdown-options--absolute'
-            )}>
-            <ScrollViewContainer>
-              <ScrollView scrollY bounces={false} className='fta-dropdown-scrollview'>
-                {isArray(state.options) ? renderOptions(state.options) : renderOptions(opts)}
-              </ScrollView>
-            </ScrollViewContainer>
+  const itemsFragment = (
+    <NativeView className='fta-dropdown-menu' {...mRef}>
+      {(props as DropdownWithChildren).children ||
+        (props as DropdownWithList).list?.map((cprops, i) => <DropdownItem {...cprops} key={i} />)}
+    </NativeView>
+  )
 
-            {overlay ? (
-              <View
-                className={classNames('fta-dropdown-modal', overlayClassName)}
-                style={overlayStyle}
-                onClick={closePanel}
-              />
-            ) : null}
-            <SafeArea {...safeArea} />
-          </View>
-        ) : null}
-      </View>
-    </DropdownProvider>
+  const dynamicStyle = inRN ? { top: state.rect.bottom } : { top: px(state.rect.bottom) }
+
+  const sibling = (
+    <View className={rootClass} style={dynamicStyle}>
+      {/* 占位符 */}
+      {state.isOpened ? (
+        <View
+          style={{ [overlay ? 'height' : 'maxHeight']: px(state.height) }}
+          className={classNames(
+            'fta-dropdown-options',
+            !inRN && props.absolute && 'fta-dropdown-options--absolute'
+          )}>
+          <ScrollViewContainer>
+            <ScrollView scrollY bounces={false} className='fta-dropdown-scrollview'>
+              {isArray(state.options) ? renderOptions(state.options) : renderOptions(opts)}
+            </ScrollView>
+          </ScrollViewContainer>
+
+          {overlay ? (
+            <View
+              className={classNames('fta-dropdown-modal', overlayClassName)}
+              style={overlayStyle}
+              onClick={closePanel}
+            />
+          ) : null}
+          <SafeArea {...safeArea} />
+        </View>
+      ) : null}
+    </View>
   )
   const sRef = useOnceCallback(() => createRootSiblings(sibling))
 
@@ -255,10 +252,20 @@ function Dropdown(props: DropdownProps, ref: Ref<DropdownRef>): JSX.Element {
 
   return (
     <Fragment>
-      {inRN ? null : sibling}
-      <NativeView className='fta-dropdown fta-dropdown--blank' {...mRef}>
-        <View className='fta-dropdown-item'></View>
-      </NativeView>
+      <DropdownProvider
+        value={{
+          register,
+          unregister,
+          toggle,
+          arrow,
+          check,
+        }}>
+        {inRN ? null : sibling}
+        {itemsFragment}
+        {/* <NativeView className='fta-dropdown fta-dropdown--blank' {...mRef}>
+        <View className='fta-dropdown-item' />
+      </NativeView> */}
+      </DropdownProvider>
     </Fragment>
   )
 }
