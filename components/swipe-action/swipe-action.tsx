@@ -58,14 +58,14 @@ function SwipeAction(props: SwipeActionProps): JSX.Element {
 
   useEffect(() => {
     !inRN &&
-      !distance &&
+      !props.distance &&
       setTimeout(() =>
         PolyCreateSelectorQuery('.fta-swipe-action-button-group', (rect) => {
           setDistance(rect.width)
         })
       ),
       17
-  }, [])
+  }, [options!.length])
 
   useEffect(() => {
     ref.current.show = show
@@ -208,6 +208,7 @@ const defaultProps: SwipeActionProps = {
   breakpoint: 0.3,
   swipeStyle: {},
   follow: false,
+  options: [],
 }
 
 SwipeAction.defaultProps = defaultProps

@@ -467,6 +467,33 @@ const resolveSelectedFromValue = (
   return [leaf, [] as number[]] as const
 }
 
+/** 从已选项里面获取选项的索引 */
+const resolveIndexesFromCheckedOption = (option: OptionWithParent) => {
+  const indexes = [] as number[]
+  let tmp: OptionWithParent | null = option
+  while (tmp) {
+    indexes.unshift(tmp.__index__)
+    tmp = tmp.__parent__
+  }
+  return indexes
+}
+
+/** 从leaf节点里面删除指定的路径 */
+const removeIndexesFromLeaf = (indexes: number[], leaf: IndexLeaf) => {
+  const prevs = indexes.slice(0, -1)
+  const end = indexes.slice(-1)[0]
+
+  const endMap = prevs.reduce(
+    (prev, cur) =>
+      prev[cur] ||
+      // ⚠️容错性
+      {},
+    leaf
+  )
+  delete endMap![end]
+  return leaf
+}
+
 /** 遍历搜索 */
 const traverseSearch = (
   options: Option[],
@@ -590,34 +617,29 @@ const SelectorCore = forwardRef(function _SelectorCore(
   const rootStyle = Object.assign({}, style, customStyle)
   const containerClass = classNames('fta-selector-container', containerClassName)
 
+  // 取消多个选中的节点
+  const uncheckMultipleFromList = (optionList: OptionWithParent[]) => {
+    if (!isArray(optionList)) return
+    const selectedCopy = { ...selected }
+    optionList.forEach((option) => {
+      const indexes = resolveIndexesFromCheckedOption(option)
+      removeIndexesFromLeaf(indexes, selectedCopy)
+    })
+    setSelected(selectedCopy)
+  }
+
   // 取消选中的节点
   const uncheck = (indexes: number[]) => {
     const selectedCopy = { ...selected }
-    const prevs = indexes.slice(0, -1)
-    const end = indexes.slice(-1)[0]
-
-    const endMap = prevs.reduce(
-      (prev, cur) =>
-        prev[cur] ||
-        // ⚠️容错性
-        {},
-      selectedCopy
-    )
-    delete endMap![end]
+    removeIndexesFromLeaf(indexes, selectedCopy)
     setSelected(selectedCopy)
   }
 
   // 从选择的列表中取消选中节点
   const uncheckFromList = (option: OptionWithParent) => {
-    const indexes = [] as number[]
-    let tmp: OptionWithParent | null = option
-    while (tmp) {
-      indexes.push(tmp.__index__)
-      tmp = tmp.__parent__
-    }
-
+    const indexes = resolveIndexesFromCheckedOption(option)
     // console.log('==indexes==', indexes)
-    uncheck(indexes.reverse())
+    uncheck(indexes)
   }
 
   const onSearch = (keyword: string) => {
@@ -693,7 +715,7 @@ const SelectorCore = forwardRef(function _SelectorCore(
     reset() {
       setActiveIndexes(_loops)
       setSelected({} as IndexLeaf)
-      setActiveList([]) 
+      setActiveList([])
     },
     uncheck(option) {
       if (isArray(option)) {
@@ -702,21 +724,24 @@ const SelectorCore = forwardRef(function _SelectorCore(
         uncheckFromList(option)
       }
     },
+    uncheckMultiple: uncheckMultipleFromList,
   }))
 
   useEffect(() => {
-    // console.log('activeIndeses', activeIndexes)
-    if (!multiple && activeIndexes.every((v) => v >= 0)) {
+    // 单选模式
+    if (!multiple && activeIndexes.every((v) => v >= -1)) {
       if (firstRef.current) {
         firstRef.current = false
         return
       }
       const [selectedOpts, lastSelectedOpt] = resolveOptsFromIndexes(activeIndexes, options)
+      // console.log('activeIndexes', selectedOpts, lastSelectedOpt)
       onChange?.(selectedOpts, lastSelectedOpt)
     }
   }, [activeIndexes])
 
   useEffect(() => {
+    // 多选模式
     if (multiple) {
       const [selectedOpts, lastSelectedOpts] = resolveOptsFromIndexLeaf(selected, options, depth!)
       // 这里的选项要排序，找出差异的项目，排在最后
