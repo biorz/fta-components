@@ -41,6 +41,8 @@ function InfiniteScroll(props: InfiniteScrollProps): JSX.Element {
     // toggleLoading(false)
     loadingRef.current = false
   }
+  const loadedEl = isString(loaded) ? <Loader title={loaded} /> : loaded
+  const loaderEl = isString(loader) ? <Loader title={loader} /> : loader
   return (
     <ScrollView
       scrollY
@@ -50,19 +52,7 @@ function InfiniteScroll(props: InfiniteScrollProps): JSX.Element {
       onScrollToLower={onLoad}
       {...extraProps}>
       {children}
-      {!hasLoad || hasMore ? (
-        showLoader ? (
-          isString(loader) ? (
-            <Loader title={loader} />
-          ) : (
-            loader
-          )
-        ) : null
-      ) : isString(loaded) ? (
-        <Loader title={loaded} />
-      ) : (
-        loaded
-      )}
+      {hasMore ? (showLoader || !hasLoad ? loaderEl : null) : loadedEl}
     </ScrollView>
   )
 }
