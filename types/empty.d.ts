@@ -1,8 +1,9 @@
 import { ComponentClass } from 'react'
+import BaseComponent from './base'
 
 export type EmptyType = 'empty' | 'error'
 
-export interface EmptyProps {
+export interface EmptyProps extends BaseComponent {
   /**
    * 空状态或者是错误页面
    * @default 'empty'

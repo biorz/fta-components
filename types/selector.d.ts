@@ -331,6 +331,8 @@ export interface SelectorCoreRefMethods {
   reset: () => void
   /** 取消选中 */
   uncheck: ((indexes: number[]) => void) | ((option: OptionWithParent) => void)
+  /** 取消选中多个 */
+  uncheckMultiple: (optionList: OptionWithParent) => void
 }
 
 declare const SelectorCore: ForwardRefExoticComponent<SelectorProps> &

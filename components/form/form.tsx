@@ -318,7 +318,7 @@ function FormItem(props: FormItemProps, ref: Ref<FormItemRefMethods>): JSX.Eleme
       return value
     },
     scrollIntoView() {
-      inRN ? scrollRef.current.scrollIntoView() : ctx.scrollIntoView!(formItemId!)
+      inRN ? scrollRef.current.scrollIntoView?.() : ctx.scrollIntoView!(formItemId!)
     },
     highlight(message?: string, scrollIntoView = true) {
       setState({

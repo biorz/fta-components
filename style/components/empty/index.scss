@@ -1,6 +1,9 @@
 @import '../../mixins/index.scss';
 @import '../../variables/default.scss';
 
+$fta-empty-button-height: zoom(64px);
+$fta-empty-button-radius: zoom(12px);
+
 .fta-empty {
   @include flex-center();
   flex-direction: column;
@@ -11,10 +14,10 @@
   }
 
   &-title {
-    margin-top: $fta-empty-desc-margin-top;
     &__text {
       font-weight: $font-weight-bolder;
       color: $fta-empty-title-color;
+      line-height: $font-size-xl;
     }
   }
 
@@ -22,10 +25,13 @@
     margin-top: $fta-empty-desc-margin-top;
     &__text {
       color: $fta-empty-desc-color;
+      line-height: $font-size-md;
     }
   }
 
   &-button {
     margin-top: $fta-empty-button-margin-top;
+    height: $fta-empty-button-height;
+    border-radius: $fta-empty-button-radius;
   }
 }
