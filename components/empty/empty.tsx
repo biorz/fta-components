@@ -1,4 +1,5 @@
 import { Image, View } from '@tarojs/components'
+import classNames from 'classnames'
 import React, { Component } from 'react'
 import { Assets } from '../../common'
 import '../../style/components/empty/index.scss'
@@ -25,7 +26,16 @@ class Empty extends Component<EmptyProps> {
   public render(): JSX.Element | null {
     if (!this.props.show) return null
     // const copiedProps
-    const { type, showBtn, btnText, onClick } = this.props
+    const {
+      className,
+      // @ts-ignore
+      style,
+      customStyle,
+      type,
+      showBtn,
+      btnText,
+      onClick,
+    } = this.props
     const { src, title, desc } = {
       ...defaultDesc[type!],
       ...this.props,
@@ -37,26 +47,31 @@ class Empty extends Component<EmptyProps> {
       'fta-empty-button',
     ]
 
+    const rootClass = classNames('fta-empty', className)
+    const rootStyle = { ...style, ...customStyle }
+
     return (
-      <View className='fta-empty'>
+      <View className={rootClass} style={rootStyle}>
         <Image className='fta-empty-image' src={src} mode='aspectFit'></Image>
         {title ? (
           <View className='fta-empty-title'>
-            <Text level={3} className={titleClz}>
+            <Text level={5} className={titleClz}>
               {title}
             </Text>
           </View>
         ) : null}
         {desc ? (
           <View className='fta-empty-desc'>
-            <Text level={4} className={descClz}>
+            <Text level={6} className={descClz}>
               {desc}
             </Text>
           </View>
         ) : null}
         {showBtn ? (
           <Button className={btnClz} onClick={onClick}>
-            {btnText}
+            <Text color='#ffffff' level={5}>
+              {btnText}
+            </Text>
           </Button>
         ) : null}
       </View>
@@ -69,7 +84,6 @@ Empty.defaultProps = {
   showBtn: true,
   show: true,
   btnText: '刷新试试',
-  // ...defaultDesc.empty,
 }
 
 export default Empty
