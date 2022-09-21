@@ -14,7 +14,7 @@ export interface InfiniteScrollProps
   /**
    * 加载更多的回调函数
    */
-  loadMore?: () => any | Promise<any>
+  loadMore?: (...args: any[]) => any | Promise<any>
   /**
    * 触发加载事件的滚动触底距离阈值，单位为像素(包含底部loader高度)
    * @default 100

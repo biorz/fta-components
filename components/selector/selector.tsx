@@ -56,6 +56,9 @@ const resolveOptions = (options: Option[], parent: Option, enableCheckAll: boole
   return options
 }
 
+/** 是否是空对象 */
+const isEmptyRecord = (record: unknown) => JSON.stringify(record) === '{}'
+
 /**
  * @component
  */
@@ -310,17 +313,19 @@ const resolveWillSelected = (indexes: number[], selected: IndexLeaf) => {
 }
 
 /** 单选模式下，从索引处获得选项数组 */
-const resolveOptsFromIndexes = (indexes: number[], options: Option[]) => {
+const resolveOptsFromIndexes = (indexes: number[], options: Option[], childrenKey: string) => {
   let tmpOpts = options
   let lastSelectedOpts: OptionWithParent = null as unknown as OptionWithParent
-  const selectedOpts = indexes.reduce((prev, cur, i) => {
+  const selectedOpts = indexes.reduce((prev, cur) => {
     const tmp = tmpOpts[cur]
-    const copy = { ...tmp } as OptionWithParent
-    copy.__parent__ = lastSelectedOpts
-    copy.__index__ = i
-    lastSelectedOpts = copy
-    prev.push(tmp)
-    tmpOpts = tmp?.children || []
+    if (tmp) {
+      const copy = { ...tmp } as OptionWithParent
+      copy.__parent__ = lastSelectedOpts
+      copy.__index__ = cur
+      lastSelectedOpts = copy
+      prev.push(tmp)
+      tmpOpts = tmp?.[childrenKey] || []
+    }
     return prev
   }, [] as Option[])
 
@@ -332,6 +337,7 @@ const resolveOptsFromIndexLeaf = (
   leaf: IndexLeaf,
   options: Option[],
   depth: number,
+  childrenKey: string,
   selectedOpts = [] as (Option[] | Option)[],
   lastSelectedOpts = [] as OptionWithParent[],
   parent = null as unknown as OptionWithParent
@@ -356,8 +362,9 @@ const resolveOptsFromIndexLeaf = (
       }
       resolveOptsFromIndexLeaf(
         leaf[k] as IndexLeaf,
-        (option.children || []) as Option[],
+        (option[childrenKey] || []) as Option[],
         depth - 1,
+        childrenKey,
         opts,
         lastSelectedOpts,
         copy
@@ -367,16 +374,17 @@ const resolveOptsFromIndexLeaf = (
   return [selectedOpts, lastSelectedOpts] as const
 }
 
-function fillupList<T>(list: T[], depth: number, defaultValue: T) {
-  if (list.length === depth) return list
-  return list.concat(new Array(depth).fill(defaultValue)).slice(0, depth)
-}
+// function fillupList<T>(list: T[], depth: number, defaultValue: T) {
+//   if (list.length === depth) return list
+//   return list.concat(new Array(depth).fill(defaultValue)).slice(0, depth)
+// }
 
 const lookupLeaf = (
   value: (string | number)[],
   options: Option[],
   depth: number,
   valueKey: string,
+  childrenKey: string,
   linkedList = new DoublyLinkedList(0),
   result = [] as number[][]
 ) => {
@@ -400,8 +408,16 @@ const lookupLeaf = (
 
         result.push(path)
         if (!value.length) break
-      } else if (option.children && depth > 0) {
-        lookupLeaf(value, option.children, depth - 1, valueKey, nextLinkedList, result)
+      } else if (option[childrenKey] && depth > 0) {
+        lookupLeaf(
+          value,
+          option[childrenKey],
+          depth - 1,
+          valueKey,
+          childrenKey,
+          nextLinkedList,
+          result
+        )
       }
     }
   }
@@ -442,6 +458,7 @@ const resolveSelectedFromValue = (
   options: Option[],
   depth: number,
   valueKey: string,
+  childrenKey: string,
   enableCheckAll: boolean[]
 ) => {
   const leaf = {}
@@ -449,7 +466,7 @@ const resolveSelectedFromValue = (
     value = [value]
   }
   if (isArray(value) && value.length) {
-    const result = lookupLeaf(value.slice(), options, depth, valueKey)
+    const result = lookupLeaf(value.slice(), options, depth, valueKey, childrenKey)
     const filledResult = fillResult(result, depth, enableCheckAll)
     // console.log('filledResult==', filledResult)
     filledResult.forEach((path) => {
@@ -499,6 +516,7 @@ const traverseSearch = (
   options: Option[],
   hit: HitFn,
   labelKey: string,
+  childrenKey: string,
   keyword: string,
   needbreakRef = { current: false },
   linkedList = new DoublyLinkedList(0),
@@ -517,8 +535,17 @@ const traverseSearch = (
     const newLinkedList = new DoublyLinkedList(i)
     newLinkedList.prepend(linkedList)
     linkedList.append(newLinkedList)
-    if (option.children) {
-      traverseSearch(option.children, hit, labelKey, keyword, needbreakRef, newLinkedList, result)
+    if (option[childrenKey]) {
+      traverseSearch(
+        option[childrenKey],
+        hit,
+        labelKey,
+        childrenKey,
+        keyword,
+        needbreakRef,
+        newLinkedList,
+        result
+      )
     }
   }
 
@@ -578,7 +605,7 @@ const SelectorCore = forwardRef(function _SelectorCore(
 
   const prevValueRef = useRef(value)
   // 记录useEffect是否第一次触发
-  const firstRef = useRef(true)
+  // const firstRef = useRef(true)
   const _loops = useRef(new Array(depth).fill(0)).current
   // 当前选择项是否是全选
   const checkAllRef = useRef(false)
@@ -595,15 +622,16 @@ const SelectorCore = forwardRef(function _SelectorCore(
         options,
         depth!,
         fieldNames!.value,
+        fieldNames!.children,
         enableCheckAll!
       )
       // console.log('leaf', leaf, indexes)
-      setSelected(leaf)
+      if (!(isEmptyRecord(leaf) && isEmptyRecord(selected))) {
+        setSelected(leaf)
+      }
       if (indexes?.length) {
         setActiveIndexes(indexes)
       }
-
-      // console.log('useEffect indexes', indexes, leaf, value, [value])
     }
   }, [options])
 
@@ -653,7 +681,7 @@ const SelectorCore = forwardRef(function _SelectorCore(
       ? (keyword: string, label: string) => keyword === label
       : (keyword: string, label: string) => String(label).indexOf(keyword) > -1
 
-    const result = traverseSearch(options, hit, fieldNames!.label, keyword)
+    const result = traverseSearch(options, hit, fieldNames!.label, fieldNames!.children, keyword)
     if (result.length) {
       const indexes = result.concat(_loops).slice(0, depth)
       setActiveIndexes(indexes)
@@ -729,38 +757,30 @@ const SelectorCore = forwardRef(function _SelectorCore(
 
   useEffect(() => {
     // 单选模式
-    if (!multiple && activeIndexes.every((v) => v >= -1)) {
-      if (firstRef.current) {
-        firstRef.current = false
-        return
-      }
-      const [selectedOpts, lastSelectedOpt] = resolveOptsFromIndexes(activeIndexes, options)
-      // console.log('activeIndexes', selectedOpts, lastSelectedOpt)
+    if (!multiple && activeIndexes.every((v) => v >= -1 && options.length)) {
+      const [selectedOpts, lastSelectedOpt] = resolveOptsFromIndexes(
+        activeIndexes,
+        options,
+        fieldNames!.children
+      )
       onChange?.(selectedOpts, lastSelectedOpt)
     }
-  }, [activeIndexes])
+  }, [activeIndexes, options])
 
   useEffect(() => {
     // 多选模式
-    if (multiple) {
-      const [selectedOpts, lastSelectedOpts] = resolveOptsFromIndexLeaf(selected, options, depth!)
-      // 这里的选项要排序，找出差异的项目，排在最后
-      // if (activeList.length && lastSelectedOpts.length) {
-      //   sortList(lastSelectedOpts, activeList)
-      //   console.log('需要进行排序')
-      // }
-
+    if (multiple && options.length) {
+      const [selectedOpts, lastSelectedOpts] = resolveOptsFromIndexLeaf(
+        selected,
+        options,
+        depth!,
+        fieldNames!.children
+      )
+      // TODO: 这里的选项要排序，找出差异的项目，排在最后
       setActiveList(lastSelectedOpts)
-      // console.log('setter', lastSelectedOpts.length)
-      if (firstRef.current) {
-        firstRef.current = false
-        return
-      }
-      // console.log('effect: selected', selected)
-      // console.log('on Change: ', selectedOpts)
       onChange?.(selectedOpts, lastSelectedOpts)
     }
-  }, [selected])
+  }, [selected, options])
 
   const counts = resolveCounts(selected, depth!)
 
