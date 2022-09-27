@@ -1,0 +1,24 @@
+.fta-debugger{
+  position:absolute;
+  position:fixed;
+  display:flex;
+  box-shadow:0 0.27778vw 1.66667vw 0 rgba(0, 0, 0, 0.1);
+  bottom:13.88889vw;
+  right:5.55556vw;
+  width:11.11111vw;
+  height:11.11111vw;
+  background-color:#fff;
+  border-radius:41.66667vw;
+  border:1PX solid #fa871e;
+  align-items:center;
+  justify-content:center;
+  z-index:100;
+}
+.fta-debugger__text{
+  color:#fa871e;
+  font-size:4.44444vw;
+}
+.fta-debugger--care{
+  width:13.88889vw;
+  height:13.88889vw;
+}

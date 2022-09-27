@@ -1,0 +1,170 @@
+.fta-modal__action .button, .fta-modal__action__button{
+  color:#333;
+  font-size:5vw;
+  font-weight:400;
+  margin-top:0;
+  border:0;
+  border-radius:0;
+}
+
+.fta-modal .content-simple__text{
+  color:#333;
+  font-size:4.44444vw;
+  font-weight:400;
+  line-height:5.77778vw;
+}
+
+.fta-modal{
+  display:flex;
+  flex:1;
+  position:fixed;
+  top:0;
+  left:0;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  width:100%;
+  height:100%;
+  z-index:1000;
+}
+.fta-modal__overlay, .fta-modal__container{
+  opacity:0;
+}
+.fta-modal--active{
+  display:flex;
+}
+.fta-modal--active .fta-modal__overlay,
+.fta-modal--active .fta-modal__container{
+  opacity:1;
+}
+.fta-modal__overlay{
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  position:absolute;
+  background-color:rgba(0, 0, 0, 0.5);
+}
+.fta-modal__container{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  width:81.94444vw;
+  border-radius:2.22222vw;
+  background-color:#fff;
+  overflow:hidden;
+}
+.fta-modal__header-text{
+  color:#333;
+  font-size:5vw;
+  font-weight:bold;
+}
+.fta-modal .content-simple--center{
+  text-align:center;
+}
+.fta-modal .content-simple--left{
+  text-align:left;
+}
+.fta-modal .content-simple--right{
+  text-align:right;
+}
+.fta-modal__action{
+}
+.fta-modal__action__button{
+  overflow:hidden;
+  white-space:nowrap;
+  transition:background-color 0.3s;
+  flex:auto;
+  -webkit-box-flex:auto;
+  background-color:transparent;
+  flex:1;
+  height:13.88889vw;
+}
+.fta-modal__action__button:active{
+  background-color:#f5f5f5;
+}
+.fta-modal__action__button::after{
+  border:0;
+  border-radius:0;
+  width:initial;
+  height:initial;
+}
+.fta-modal__action__button:not(:first-child){
+  position:relative;
+}
+.fta-modal__action__button:not(:first-child)::after{
+  position:absolute;
+  content:"";
+  transform-origin:center;
+  box-sizing:border-box;
+  pointer-events:none;
+  top:0;
+  left:0;
+  right:auto;
+  bottom:0;
+  transform:scaleX(0.5);
+  border-left:1PX solid #e8e8e8;
+}
+.fta-modal__action .button--border{
+  border-left-width:0.5PX;
+  border-color:#e8e8e8;
+}
+.fta-modal__action .button-confirm__text{
+  color:#fa871e;
+}
+.fta-modal__action__button--confirm{
+  color:#fa871e;
+}
+.fta-modal__footer{
+  margin-top:8.33333vw;
+  display:flex;
+  flex-direction:row;
+  position:relative;
+}
+.fta-modal__footer::before{
+  position:absolute;
+  content:"";
+  transform-origin:center;
+  box-sizing:border-box;
+  pointer-events:none;
+  top:0;
+  left:0;
+  right:0;
+  bottom:auto;
+  transform:scaleY(0.5);
+  border-top:1PX solid #e8e8e8;
+}
+.fta-modal__footer .fta-modal__action{
+  display:flex;
+  flex-direction:row;
+  justify-content:center;
+  flex:1;
+}
+.fta-modal__content{
+  color:#333;
+  font-size:4.44444vw;
+  font-weight:400;
+  line-height:5.77778vw;
+}
+
+.fta-modal__content{
+  max-height:50vh;
+  box-sizing:border-box;
+  margin-top:3.33333vw;
+  padding:0 8.33333vw;
+  text-align:center;
+  width:100%;
+}
+.fta-modal__content--no-title{
+  margin-top:8.33333vw;
+}
+.fta-modal__header{
+  padding:8.33333vw 8.33333vw 0;
+  text-align:center;
+}
+.fta-modal__header-text{
+  color:#333;
+  font-size:5vw;
+  font-weight:bold;
+}

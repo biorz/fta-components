@@ -1,0 +1,54 @@
+.fta-view-hover__0{
+  opacity:0;
+}
+
+.fta-view-hover__1{
+  opacity:.1;
+}
+
+.fta-view-hover__2{
+  opacity:.2;
+}
+
+.fta-view-hover__3{
+  opacity:.3;
+}
+
+.fta-view-hover__4{
+  opacity:.4;
+}
+
+.fta-view-hover__5{
+  opacity:.5;
+}
+
+.fta-view-hover__6{
+  opacity:.6;
+}
+
+.fta-view-hover__7{
+  opacity:.7;
+}
+
+.fta-view-hover__8{
+  opacity:.8;
+}
+
+.fta-view-hover__9{
+  opacity:.9;
+}
+
+.fta-view-hover__10{
+  opacity:1;
+}
+
+.fta-view-hover__black{
+  background-color:#000;
+}
+
+.fta-view-hover__white{
+  background-color:#fff;
+}
+.fta-view-disabled{
+  opacity:0.8;
+}

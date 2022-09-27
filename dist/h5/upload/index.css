@@ -1,0 +1,43 @@
+.fta-upload{
+  box-sizing:border-box;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  overflow:hidden;
+  width:46.11111vw;
+  height:28.05556vw;
+  border-radius:1.11111vw;
+}
+.fta-upload-camera{
+  position:relative;
+  width:10.41667vw;
+  height:10.41667vw;
+  margin-top:6.52778vw;
+}
+.fta-upload-placeholder{
+  position:relative;
+  display:block;
+  margin-top:1.94444vw;
+  color:#333;
+  font-size:3.33333vw;
+}
+.fta-upload-image{
+  position:absolute;
+  width:100%;
+  height:100%;
+}
+.fta-upload--empty{
+  background-color:#ecf5fd;
+}
+.fta-upload--error{
+  border:1PX solid #ff3330;
+}
+.fta-upload-errortip{
+  display:block;
+  margin-top:1.38889vw;
+  text-align:center;
+  font-size:3.33333vw;
+  color:#ff3330;
+  line-height:4.33333vw;
+}

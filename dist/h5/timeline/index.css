@@ -1,0 +1,44 @@
+.fta-timeline{
+  margin-left:1.94444vw;
+}
+
+.fta-timeline-item{
+  position:relative;
+}
+.fta-timeline-item-view{
+  margin-left:4.44444vw;
+  padding-bottom:3.33333vw;
+}
+.fta-timeline-item-node{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  position:absolute;
+  top:1.38889vw;
+  bottom:-1.38889vw;
+  height:100%;
+}
+.fta-timeline-item-dot{
+  border-radius:1388.88889vw;
+  width:2.22222vw;
+  height:2.22222vw;
+  background-color:#ddd;
+}
+.fta-timeline-item-dot--care{
+  width:2.91667vw;
+  height:2.91667vw;
+}
+.fta-timeline-item-dot--hollow{
+  border-width:0.55556vw;
+  background-color:transparent;
+  border-style:solid;
+  box-sizing:border-box;
+}
+.fta-timeline-item-line{
+  border-left-width:1PX;
+  border-left-color:#ddd;
+  flex:1;
+  border-left-style:solid;
+  transform:scaleX(0.5);
+}

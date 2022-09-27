@@ -1,0 +1,50 @@
+.fta-divider{
+  display:flex;
+  flex-direction:row;
+  justify-content:center;
+  align-items:center;
+}
+.fta-divider-line{
+  border:0;
+  flex:1;
+  width:100%;
+  border-bottom:1PX solid #ccc;
+  transform:scaleY(0.5);
+  vertical-align:middle;
+}
+.fta-divider-line--care{
+  transform:scaleY(1);
+}
+.fta-divider-line--offset{
+  width:16.66667vw;
+  flex:0 0 auto;
+}
+.fta-divider-line--bold{
+  transform:none;
+}
+.fta-divider-line--bold--care{
+  border-bottom-width:2PX;
+}
+.fta-divider-dot{
+  width:2.22222vw;
+  height:2.22222vw;
+  border-radius:1388.88889vw;
+  background-color:#999;
+}
+.fta-divider-dot--care{
+  width:2.91667vw;
+  height:2.91667vw;
+}
+.fta-divider-line--dashed{
+  border-style:dashed;
+}
+.fta-divider-text{
+  margin:0 3.88889vw;
+}
+.fta-divider-text__label{
+  font-size:4.44444vw;
+  color:#666;
+}
+.fta-divider-text__label--care{
+  font-size:5.83333vw;
+}

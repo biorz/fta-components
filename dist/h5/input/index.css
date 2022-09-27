@@ -1,0 +1,136 @@
+.fta-input{
+  position:relative;
+  padding:2.77778vw 0;
+  color:#333;
+  background-color:#fff;
+  padding-left:4.44444vw;
+  margin-left:0;
+  margin-bottom:0.13889vw;
+}
+.fta-input__overlay{
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  z-index:700;
+}
+.fta-input__overlay--hidden{
+  display:none;
+}
+.fta-input__container{
+  display:flex;
+  align-items:center;
+}
+.fta-input__title{
+  margin-right:2.22222vw;
+  width:23.88889vw;
+  font-size:4.44444vw;
+  line-height:1.3;
+  vertical-align:middle;
+  text-align:left;
+}
+.fta-input__title--required::before{
+  display:inline-block;
+  margin-right:1.11111vw;
+  color:#ff3330;
+  font-size:3.88889vw;
+  font-family:SimSun, sans-serif;
+  line-height:1;
+  content:"*";
+}
+.fta-input__input{
+  flex:1;
+  display:inline-block;
+  padding-right:2.22222vw;
+  color:#333;
+  font-size:4.44444vw;
+  line-height:1.3;
+  vertical-align:middle;
+}
+.placeholder{
+  color:#ccc;
+}
+
+.fta-input__input::-moz-placeholder{
+  color:#ccc;
+}
+
+.fta-input__input::placeholder{
+  color:#ccc;
+}
+.fta-input input{
+  color:#333;
+  font-size:4.44444vw;
+  height:6.22222vw;
+  line-height:1.3;
+  border:none;
+}
+.fta-input input:focus, .fta-input input:active, .fta-input input:focus-visible{
+  border:none;
+}
+.fta-input__icon{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  margin-right:1.38889vw;
+  width:5.55556vw;
+  min-width:5.55556vw;
+  height:100%;
+  font-size:4.44444vw;
+  text-align:center;
+  line-height:1;
+}
+.fta-input__icon-close{
+  color:#ccc;
+}
+.fta-input__icon-alert{
+  color:#ff3330;
+}
+.fta-input__children{
+  display:inline-flex;
+  position:relative;
+}
+.fta-input__children::after{
+  position:absolute;
+  content:"";
+  transform-origin:center;
+  box-sizing:border-box;
+  pointer-events:none;
+  top:-50%;
+  left:-50%;
+  right:-50%;
+  bottom:-50%;
+  border:0 solid #e9e9e9;
+  transform:scale(0.5);
+  border-left-width:1PX;
+}
+.fta-input__children > view,
+.fta-input__children div,
+.fta-input__children span,
+.fta-input__children text,
+.fta-input__children image,
+.fta-input__children .taro-img{
+  display:inline-block;
+  padding:0 2.22222vw;
+  color:#ff5b60;
+  font-size:4.44444vw;
+  text-align:center;
+}
+.fta-input__children > image,
+.fta-input__children img,
+.fta-input__children .taro-img{
+  display:inline-block;
+  width:20.13889vw;
+  height:8.33333vw;
+  vertical-align:middle;
+}
+.fta-input--error{
+  color:#ff3330;
+}
+.fta-input--disabled{
+  opacity:0.3;
+}
+.fta-input--without-border::after{
+  border:none;
+}

@@ -1,0 +1,31 @@
+.fta-line{
+  border-radius:13.88889vw;
+  border-width:0;
+  border-style:solid;
+}
+.fta-line--row{
+  height:0;
+  width:100%;
+  border-bottom-color:#e8e8e8;
+  border-bottom-width:1PX;
+}
+.fta-line--col{
+  width:0;
+  height:100%;
+  border-right-color:#e8e8e8;
+  border-right-width:1PX;
+}
+.fta-line--hairline--row{
+  transform:scaleY(50%);
+}
+.fta-line--hairline--col{
+  transform:scaleX(50%);
+}
+.fta-line--dashed--row{
+  border-style:dashed;
+  border-bottom-style:dashed;
+}
+.fta-line--dashed--col{
+  border-style:dashed;
+  border-right-style:dashed;
+}

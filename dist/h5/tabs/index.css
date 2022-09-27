@@ -1,0 +1,68 @@
+.fta-tabs{
+  background-color:#fff;
+  display:flex;
+  flex-direction:row;
+  border-bottom-width:1PX;
+  border-bottom-color:#f5f5f5;
+  border-bottom-style:solid;
+}
+
+.fta-tabs--vertical{
+  width:-moz-fit-content;
+  width:fit-content;
+  flex-direction:column;
+  border-bottom-width:0;
+  margin:0;
+}
+
+.fta-tab{
+  display:flex;
+  flex-direction:row;
+  width:-moz-fit-content;
+  width:fit-content;
+  position:relative;
+  margin:0 3.33333vw;
+  justify-content:center;
+  align-items:center;
+  height:12.22222vw;
+  transition:0.2s ease;
+}
+.fta-tab__text{
+  font-size:5vw;
+  color:#333;
+}
+.fta-tab__text--care{
+  font-size:6.52778vw;
+}
+.fta-tab__dot{
+  background-color:red;
+  top:-2.22222vw;
+  width:2.22222vw;
+  height:2.22222vw;
+  border-radius:1388.88889vw;
+  position:relative;
+}
+.fta-tab__line{
+  position:absolute;
+  width:50%;
+  bottom:0PX;
+  border-bottom-width:0.83333vw;
+  border-bottom-color:#fa871e;
+  border-bottom-style:solid;
+}
+.fta-tab taro-text-core{
+  white-space:nowrap;
+}
+
+.fta-tab--vertical{
+  margin:0;
+  padding:0 2.77778vw;
+}
+
+.fta-tab--active__text{
+  color:#fa871e;
+}
+
+.fta-tab--active--care{
+  border-bottom-width:0.55556vw;
+}

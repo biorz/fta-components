@@ -1,0 +1,60 @@
+.fta-swipe-action{
+  position:relative;
+  overflow:hidden;
+  width:100%;
+  flex:auto;
+  height:auto;
+}
+.fta-swipe-action-modal{
+  position:relative;
+  height:100%;
+  width:100%;
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;
+  background-color:#fff;
+  z-index:1;
+}
+.fta-swipe-action-modal__transition{
+  transition:0.2s;
+}
+.fta-swipe-action-button-group{
+  position:absolute;
+  top:0;
+  right:0;
+  left:auto;
+  display:flex;
+  flex-direction:row;
+  height:100%;
+  z-index:0;
+}
+.fta-swipe-action-button-group-left{
+  position:absolute;
+  top:0;
+  left:0;
+  right:auto;
+  display:flex;
+  flex-direction:row;
+  height:100%;
+  z-index:0;
+}
+.fta-swipe-action-button{
+  height:100%;
+  background-color:#999;
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;
+  padding:0 5.55556vw;
+}
+.fta-swipe-action-button__text{
+  color:#fff;
+  font-size:4.44444vw;
+}
+.fta-swipe-action-follow{
+  right:auto;
+}
+.fta-swipe-action-follow-left{
+  left:auto;
+}

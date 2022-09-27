@@ -1,0 +1,46 @@
+.fta-segmented-control{
+  position:relative;
+  box-sizing:border-box;
+  border-top:0.13889vw #fa871e solid;
+  border-bottom:0.13889vw #fa871e solid;
+  border-right:0.13889vw #fa871e solid;
+  border-left:0.13889vw #fa871e solid;
+  display:inline-flex;
+  white-space:nowrap;
+  width:100%;
+  border-radius:1.66667vw;
+  overflow:hidden;
+  flex-direction:row;
+}
+.fta-segmented-control__item{
+  box-sizing:border-box;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  transition:all 0.2s;
+  flex:1;
+  text-align:center;
+  padding:1.11111vw 1.11111vw;
+  min-width:16.66667vw;
+  background-color:#fff;
+  overflow:hidden;
+}
+.fta-segmented-control__item--bordered{
+  border-left:0.13889vw #fa871e solid;
+}
+.fta-segmented-control__item__text{
+  text-align:center;
+  color:#fa871e;
+  font-size:4.44444vw;
+}
+.fta-segmented-control__item--active{
+  background-color:#fa871e;
+}
+.fta-segmented-control__item--active__text{
+  color:#fff;
+}
+.fta-segmented-control__item + .fta-segmented-control__item{
+  border-left:0.13889vw #fa871e solid;
+}
+.fta-segmented-control--disabled{
+  opacity:0.3;
+}

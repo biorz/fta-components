@@ -1,0 +1,57 @@
+.fta-text{
+  line-height:1.3;
+}
+.fta-text--1{
+  font-size:6.11111vw;
+  line-height:7.94444vw;
+}
+.fta-text--1--care{
+  font-size:7.91667vw;
+}
+.fta-text--2{
+  font-size:5.55556vw;
+  line-height:7.22222vw;
+}
+.fta-text--2--care{
+  font-size:7.22222vw;
+}
+.fta-text--3{
+  font-size:5vw;
+  line-height:6.5vw;
+}
+.fta-text--3--care{
+  font-size:6.52778vw;
+}
+.fta-text--4{
+  font-size:4.44444vw;
+  line-height:5.77778vw;
+}
+.fta-text--4--care{
+  font-size:5.83333vw;
+}
+.fta-text--5{
+  font-size:3.88889vw;
+  line-height:5.05556vw;
+}
+.fta-text--5--care{
+  font-size:5vw;
+}
+.fta-text--6{
+  font-size:3.33333vw;
+  line-height:4.33333vw;
+}
+.fta-text--6--care{
+  font-size:4.30556vw;
+}
+.fta-text--success{
+  color:#1fb080;
+}
+.fta-text--error{
+  color:#ff3330;
+}
+.fta-text--warning{
+  color:#ff7000;
+}
+.fta-text--info{
+  color:#1a6ff0;
+}

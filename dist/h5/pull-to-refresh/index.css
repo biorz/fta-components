@@ -1,0 +1,20 @@
+.fta-pull-to-refresh{
+  flex:1;
+}
+.fta-pull-to-refresh-head{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-end;
+  position:relative;
+  overflow:hidden;
+}
+.fta-pull-to-refresh-content{
+  height:55.55556vw;
+  overflow:hidden;
+}
+.fta-pull-to-refresh-scrollview{
+  height:100%;
+  background-color:red;
+  flex:1;
+}

@@ -22,7 +22,10 @@
   "Gap": { "replace": "components/gap", "default": true },
   "Icon": { "replace": "components/icon", "default": true },
   "Image": { "replace": "components/image", "default": true },
-  "InfiniteScroll": { "replace": "components/infinite-scroll", "default": true },
+  "InfiniteScroll": {
+    "replace": "components/infinite-scroll",
+    "default": true
+  },
   "Input": { "replace": "components/input", "default": true },
   "InputNumber": { "replace": "components/input-number", "default": true },
   "Intro": { "replace": "components/intro", "default": true },
@@ -52,7 +55,10 @@
   "SafeArea": { "replace": "components/safe-area", "default": true },
   "SafeAreaView": { "replace": "components/safe-area", "default": false },
   "Search": { "replace": "components/search", "default": true },
-  "SegmentedControl": { "replace": "components/segmented-control", "default": true },
+  "SegmentedControl": {
+    "replace": "components/segmented-control",
+    "default": true
+  },
   "SelectorCore": { "replace": "components/selector", "default": false },
   "useSelectorCore": { "replace": "components/selector", "default": false },
   "Steps": { "replace": "components/steps", "default": true },

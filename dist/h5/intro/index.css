@@ -1,0 +1,112 @@
+.fta-intro-wrapper{
+  position:absolute;
+}
+.fta-intro-wrapper--readonly{
+  pointer-events:none;
+}
+.fta-intro-tooltip{
+  width:-moz-fit-content;
+  width:fit-content;
+  pointer-events:auto;
+  position:absolute;
+  border-radius:2.77778vw;
+  background-color:#fff;
+}
+.fta-intro-tooltip-title{
+  padding:3.33333vw 4.44444vw 3.05556vw;
+}
+.fta-intro-tooltip-title__text{
+  font-size:4.44444vw;
+  color:#333;
+  font-weight:500;
+  line-height:6.25vw;
+}
+.fta-intro-tooltip-title--simple{
+  padding-bottom:1.94444vw;
+}
+.fta-intro-tooltip-desc{
+  margin-bottom:3.88889vw;
+  padding:0 4.44444vw;
+}
+.fta-intro-tooltip-desc__text{
+  font-size:3.88889vw;
+  line-height:4.44444vw;
+  color:#999;
+}
+.fta-intro-tooltip-button{
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;
+  border-top-color:#e7e7e7;
+  border-top-width:1PX;
+  border-top-style:solid;
+  pointer-events:auto;
+  height:12.22222vw;
+}
+.fta-intro-tooltip-button__text{
+  font-size:4.44444vw;
+  color:#fa871e;
+  font-weight:500;
+}
+.fta-intro-tooltip-icon{
+  width:0;
+  height:0;
+  position:absolute;
+  z-index:1;
+  border-width:1.94444vw;
+  border-color:transparent;
+  border-style:solid;
+}
+.fta-intro-tooltip-icon--top{
+  border-top-color:#fff;
+  top:99%;
+}
+.fta-intro-tooltip-icon--bottom{
+  border-bottom-color:#fff;
+  bottom:99%;
+}
+.fta-overlay-container, .fta-overlay{
+  top:0;
+  left:0;
+  bottom:0;
+  right:0;
+}
+
+.fta-overlay{
+  position:absolute;
+  z-index:99;
+  background-color:#000000;
+  opacity:0.5;
+}
+.fta-overlay-container{
+  position:relative;
+  position:absolute;
+  background-color:transparent;
+  z-index:100;
+  pointer-events:none;
+}
+.fta-overlay-container--center{
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;
+}
+.fta-overlay--anim{
+  animation:fta-overlay 300ms;
+}
+.fta-overlay--fixed{
+  position:fixed;
+}
+
+@keyframes fta-overlay{
+  from{
+    opacity:0;
+  }
+  to{
+    opacity:0.5;
+  }
+}
+.fta-overlay-container *{
+  pointer-events:auto;
+}

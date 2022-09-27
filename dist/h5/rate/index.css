@@ -1,0 +1,38 @@
+.fta-rate{
+  display:flex;
+  flex-direction:row;
+  width:-moz-fit-content;
+  width:fit-content;
+}
+
+.fta-star{
+  position:relative;
+  width:5vw;
+  height:5vw;
+  margin-right:2.22222vw;
+}
+.fta-star--last{
+  margin-right:0;
+}
+.fta-star-image{
+  width:100%;
+  height:100%;
+}
+.fta-star-image taro-image-core{
+  -webkit-user-select:none;
+     -moz-user-select:none;
+          user-select:none;
+}
+.fta-star--placeholder{
+  position:absolute;
+  width:50%;
+  height:100%;
+  z-index:1;
+  top:0;
+}
+.fta-star--left{
+  left:0;
+}
+.fta-star--right{
+  right:0;
+}

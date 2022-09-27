@@ -1,0 +1,53 @@
+.fta-tooltip-overlay{
+  position:fixed;
+  top:0;
+  left:0;
+  bottom:0;
+  right:0;
+}
+
+.fta-tooltip{
+  position:relative;
+}
+.fta-tooltip-popover{
+  position:absolute;
+  width:50vw;
+  flex-wrap:nowrap;
+  z-index:1;
+  bottom:150%;
+  left:-2.77778vw;
+}
+.fta-tooltip-popover__content{
+  border-radius:2.22222vw;
+  padding:2.22222vw 3.33333vw;
+  background-color:#ff5b00;
+  align-self:flex-start;
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;
+  width:-moz-fit-content;
+  width:fit-content;
+}
+.fta-tooltip-popover__content__text{
+  font-size:4.44444vw;
+  line-height:4.88889vw;
+  color:#fff;
+  white-space:nowrap;
+}
+.fta-tooltip-popover__icon{
+  position:absolute;
+  z-index:1;
+  top:99%;
+  left:3.33333vw;
+  width:3.88889vw;
+  height:1.94444vw;
+}
+.fta-tooltip-wrapper{
+  z-index:100;
+  position:relative;
+}
+.fta-tooltip-overlay{
+  background-color:transparent;
+  z-index:99;
+}

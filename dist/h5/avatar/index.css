@@ -1,0 +1,84 @@
+.fta-avatar{
+  text-align:center;
+  border-radius:1.66667vw;
+  background:#ccc;
+  overflow:hidden;
+}
+.fta-avatar__text{
+  color:#fff;
+  font-weight:600;
+}
+.fta-avatar__img{
+  width:100%;
+  height:100%;
+}
+.fta-avatar--large{
+  width:26.66667vw !important;
+  height:26.66667vw !important;
+  line-height:26.66667vw;
+  border-radius:2.22222vw;
+}
+.fta-avatar--large__text{
+  font-size:10vw;
+}
+.fta-avatar--medium{
+  width:20vw !important;
+  height:20vw !important;
+  line-height:20vw;
+  border-radius:1.66667vw;
+}
+.fta-avatar--medium__text{
+  font-size:8.88889vw;
+}
+.fta-avatar--small{
+  width:15.55556vw !important;
+  height:15.55556vw !important;
+  line-height:15.55556vw;
+  border-radius:1.38889vw;
+}
+.fta-avatar--small__text{
+  font-size:6.66667vw;
+}
+.fta-avatar--mini{
+  width:13.33333vw !important;
+  height:13.33333vw !important;
+  line-height:13.33333vw;
+  border-radius:1.11111vw;
+}
+.fta-avatar--mini__text{
+  font-size:5.55556vw;
+}
+.fta-avatar--circle{
+  border-radius:1388.88889vw;
+  background-clip:border-box;
+  overflow:hidden;
+}
+.fta-image{
+  width:33.33333vw;
+  height:33.33333vw;
+  vertical-align:middle;
+}
+.fta-image--errored{
+  display:none;
+}
+
+.fta-image--circle{
+  border-radius:1388.88889vw;
+  overflow:hidden;
+}
+
+.fta-image--loading{
+  position:absolute;
+  width:0;
+  height:0;
+}
+
+.fta-image--flex{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background-color:#fafbfc;
+}
+.fta-image--flex__text{
+  color:#666;
+}

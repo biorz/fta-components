@@ -1,0 +1,44 @@
+.fta-overlay-container, .fta-overlay{
+  top:0;
+  left:0;
+  bottom:0;
+  right:0;
+}
+
+.fta-overlay{
+  position:absolute;
+  z-index:99;
+  background-color:#000000;
+  opacity:0.5;
+}
+.fta-overlay-container{
+  position:relative;
+  position:absolute;
+  background-color:transparent;
+  z-index:100;
+  pointer-events:none;
+}
+.fta-overlay-container--center{
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;
+}
+.fta-overlay--anim{
+  animation:fta-overlay 300ms;
+}
+.fta-overlay--fixed{
+  position:fixed;
+}
+
+@keyframes fta-overlay{
+  from{
+    opacity:0;
+  }
+  to{
+    opacity:0.5;
+  }
+}
+.fta-overlay-container *{
+  pointer-events:auto;
+}

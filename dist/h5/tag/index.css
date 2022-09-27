@@ -1,0 +1,56 @@
+.fta-tag{
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;
+  height:5.55556vw;
+  padding:0 1.66667vw;
+  border-radius:1.11111vw;
+}
+.fta-tag--care{
+  height:7.22222vw;
+  padding:0 2.22222vw;
+  border-radius:1.38889vw;
+}
+.fta-tag--bordered{
+  border-width:1PX;
+  border-style:solid;
+}
+.fta-tag--primary{
+  border-color:#fa871e;
+}
+.fta-tag--warning{
+  border-color:#ff7000;
+}
+.fta-tag--success{
+  border-color:#1fb080;
+}
+.fta-tag--error{
+  border-color:#ff3330;
+}
+.fta-tag--info{
+  border-color:#1a6ff0;
+}
+.fta-tag__text{
+  white-space:nowrap;
+  font-size:3.33333vw;
+  font-weight:400;
+}
+.fta-tag__text--care{
+  font-size:4.30556vw;
+}
+.fta-tag__text--primary{
+  color:#fa871e;
+}
+.fta-tag__text--warning{
+  color:#ff7000;
+}
+.fta-tag__text--success{
+  color:#1fb080;
+}
+.fta-tag__text--error{
+  color:#ff3330;
+}
+.fta-tag__text--info{
+  color:#1a6ff0;
+}

@@ -1,0 +1,136 @@
+.fta-badge{
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;
+  border-radius:1388.88889vw;
+  position:relative;
+  overflow:hidden;
+  height:4.44444vw;
+  padding:0 1.52778vw;
+  min-width:4.44444vw;
+  width:-moz-fit-content;
+  width:fit-content;
+}
+.fta-badge-text{
+  position:relative;
+  z-index:1;
+  color:#fff;
+  font-size:3.33333vw;
+  line-height:4.44444vw;
+  white-space:nowrap;
+}
+.fta-badge-text--care{
+  font-size:4.30556vw;
+  line-height:5.83333vw;
+}
+.fta-badge--error{
+  background-color:#ff3330;
+}
+.fta-badge--warning{
+  background-color:#ff7000;
+}
+.fta-badge--success{
+  background-color:#1fb080;
+}
+.fta-badge--info{
+  background-color:#1a6ff0;
+}
+.fta-badge--primary{
+  background-color:#fa871e;
+}
+.fta-badge--dot{
+  border-radius:1388.88889vw;
+  padding:0;
+  min-width:0;
+  width:2.22222vw;
+  height:2.22222vw;
+}
+.fta-badge--dot--care{
+  width:2.91667vw;
+  height:2.91667vw;
+}
+.fta-badge--horn{
+  border-bottom-left-radius:0;
+}
+.fta-badge--square{
+  border-radius:0;
+}
+.fta-badge--absolute{
+  position:absolute;
+}
+.fta-badge--care{
+  height:5.83333vw;
+  min-width:5.83333vw;
+  padding:0 1.94444vw;
+}
+.fta-badge--rimless{
+  padding:0;
+}
+.fta-badge--coupon{
+  border-radius:0;
+}
+.fta-badge--sector{
+  width:11.11111vw;
+  height:11.11111vw;
+}
+.fta-badge-coupon{
+  width:1.66667vw;
+  height:1.66667vw;
+  border-radius:1388.88889vw;
+  position:absolute;
+  top:1.38889vw;
+  background-color:#fff;
+}
+.fta-badge-coupon--care{
+  width:2.22222vw;
+  height:2.22222vw;
+  border-radius:1388.88889vw;
+  top:1.80556vw;
+}
+.fta-badge .coupon-left{
+  left:-0.83333vw;
+}
+.fta-badge .coupon-left--care{
+  left:-1.11111vw;
+}
+.fta-badge .coupon-right{
+  right:-1.11111vw;
+}
+.fta-badge .coupon-right--care{
+  right:-1.11111vw;
+}
+.fta-badge--sector{
+  width:11.11111vw;
+  height:11.11111vw;
+  border-radius:0;
+  background-color:transparent;
+  flex-direction:row;
+  align-items:flex-start;
+  justify-content:flex-end;
+}
+.fta-badge--sector--care{
+  width:14.44444vw;
+  height:14.44444vw;
+}
+.fta-badge--sector__text{
+  padding-top:1.66667vw;
+}
+.fta-badge--sector__text--care{
+  padding-top:2.22222vw;
+}
+.fta-badge-sector{
+  position:absolute;
+  z-index:0;
+  width:22.22222vw;
+  height:22.22222vw;
+  border-radius:1388.88889vw;
+  bottom:0;
+  right:-11.11111vw;
+}
+.fta-badge-sector--care{
+  width:28.88889vw;
+  height:28.88889vw;
+  border-radius:1388.88889vw;
+  right:-14.44444vw;
+}

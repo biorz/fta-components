@@ -1,0 +1,15 @@
+.fta-infinite-scroll{
+  flex:1;
+  height:100%;
+}
+.fta-infinite-scroll-loader{
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;
+  height:13.88889vw;
+}
+.fta-infinite-scroll-loader__text{
+  color:#999;
+  font-size:4.44444vw;
+}

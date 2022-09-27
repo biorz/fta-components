@@ -1,0 +1,29 @@
+.fta-image{
+  width:33.33333vw;
+  height:33.33333vw;
+  vertical-align:middle;
+}
+.fta-image--errored{
+  display:none;
+}
+
+.fta-image--circle{
+  border-radius:1388.88889vw;
+  overflow:hidden;
+}
+
+.fta-image--loading{
+  position:absolute;
+  width:0;
+  height:0;
+}
+
+.fta-image--flex{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background-color:#fafbfc;
+}
+.fta-image--flex__text{
+  color:#666;
+}

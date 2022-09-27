@@ -1,0 +1,55 @@
+.fta-textarea{
+  padding:2.22222vw;
+  width:100%;
+  font-size:5vw;
+  line-height:6.5vw;
+  border-radius:1.66667vw;
+  background-color:#fff;
+  box-sizing:border-box;
+}
+.fta-textarea--WEB .fta-textarea__textarea, .fta-textarea--WEAPP .fta-textarea__textarea{
+  line-height:1.3;
+}
+.fta-textarea__textarea{
+  width:100%;
+  height:20vw;
+  font-size:5vw;
+  outline:none;
+  resize:none;
+  -webkit-appearance:none;
+  border-radius:0;
+  padding:0;
+  margin:0;
+  border:0;
+}
+.placeholder{
+  color:#ccc;
+}
+
+.fta-textarea__textarea::-moz-placeholder{
+  color:#ccc;
+}
+
+.fta-textarea__textarea::placeholder{
+  color:#ccc;
+}
+.fta-textarea__textarea textarea{
+  resize:none;
+}
+.fta-textarea__counter{
+  display:block;
+  text-align:right;
+  padding-top:1.66667vw;
+  width:100%;
+}
+.fta-textarea__counter-current{
+  line-height:5.77778vw;
+  color:#c9c9c9;
+}
+.fta-textarea__counter-full{
+  color:#ff3330;
+}
+.fta-textarea__counter-limit{
+  line-height:5.77778vw;
+  color:#c9c9c9;
+}

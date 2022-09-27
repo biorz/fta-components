@@ -1,0 +1,111 @@
+.fta-search-input .weui-input::-moz-placeholder{
+  font-size:3.88889vw;
+  font-weight:400;
+  height:100%;
+}
+.fta-search-input--placeholder, .fta-search-input .weui-input::placeholder, .fta-search-input, .fta-search-input .weui-input{
+  font-size:3.88889vw;
+  font-weight:400;
+  height:100%;
+}
+
+.fta-search-input, .fta-search-input .weui-input{
+  color:#333;
+}
+
+.fta-search-input .weui-input::-moz-placeholder{
+  text-align:left;
+  color:#ccc;
+}
+
+.fta-search-input--placeholder, .fta-search-input .weui-input::placeholder{
+  text-align:left;
+  color:#ccc;
+}
+
+.fta-search{
+  display:flex;
+  flex-direction:row;
+}
+.fta-search-root{
+  background-color:#fff;
+}
+.fta-search-container{
+  flex:1;
+  height:11.11111vw;
+  border-radius:2.22222vw;
+  background-color:#f6f6f6;
+  margin:2.77778vw 3.88889vw 1.94444vw;
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;
+}
+.fta-search-icon{
+  width:5vw;
+  height:5vw;
+  margin-left:3.88889vw;
+  margin-right:1.11111vw;
+}
+.fta-search-input{
+  height:100%;
+  flex:1;
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;
+}
+.fta-search-clear{
+  width:5vw;
+  height:5vw;
+  margin-right:2.77778vw;
+}
+.fta-search-cancel{
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  margin-right:3.88889vw;
+}
+.fta-search-cancel__text{
+  font-size:4.44444vw;
+  color:#999;
+}
+.fta-search-result__empty{
+  height:38.33333vw;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+.fta-search-result-item{
+  box-sizing:border-box;
+  display:flex;
+  flex-direction:row;
+  margin:0 3.88889vw;
+  height:12.77778vw;
+  align-items:center;
+  border-bottom-width:1PX;
+  border-bottom-color:#e8e8e8;
+  border-bottom-style:solid;
+}
+.fta-search-result__text{
+  color:#333;
+  font-size:3.88889vw;
+}
+.fta-search-result__text--hightlight{
+  color:#ff5b00;
+}
+.fta-search-title__text{
+  font-size:3.88889vw;
+  font-weight:500;
+  color:#666;
+  line-height:5.55556vw;
+}
+.fta-search-desc{
+  margin-top:0.83333vw;
+}
+.fta-search-desc__text{
+  font-size:3.33333vw;
+  color:#999;
+  line-height:3.88889vw;
+}
